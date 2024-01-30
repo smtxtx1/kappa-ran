@@ -7,6 +7,7 @@ using System;
 using System.Reflection.Emit;
 using System.Windows.Forms.Automation;
 using System.Threading;
+using Newtonsoft.Json;
 
 
 namespace Kappa
@@ -14,6 +15,7 @@ namespace Kappa
 
     public partial class Form1 : Form
     {
+        public string Server = "InterRanz";
         Mem m = new Mem();
         Mem mem = new Mem();
         public string Drone_adr = "MiniA.exe+2E48A60";
@@ -29,6 +31,7 @@ namespace Kappa
         public float GetY2 = 0f;
         public float GetZ2 = 0f;
         private bool autoAddItems;
+        public string saveID;
         /// <summary>
         /// //////////////////
         /// </summary>
@@ -1073,5 +1076,74 @@ namespace Kappa
             button10.Enabled = false;
             autoskillsstand = !autoskillsstand;
         }
+        public class LocationData
+        {
+            public string Position { get; set; }
+
+            public string X { get; set; }
+
+            public string Y { get; set; }
+
+            public string Z { get; set; }
+        }
+        private void SaveListViewToJSON(ListView listView, string fileName)
+        {
+            List<LocationData> list = new List<LocationData>();
+            foreach (ListViewItem item2 in listView.Items)
+            {
+                LocationData item = new LocationData
+                {
+                    Position = item2.SubItems[0].Text,
+                    X = item2.SubItems[1].Text,
+                    Y = item2.SubItems[2].Text,
+                    Z = item2.SubItems[3].Text
+                };
+                list.Add(item);
+            }
+            string contents = JsonConvert.SerializeObject(list);
+            File.WriteAllText(fileName, contents);
+        }
+        private void LoadListViewFromJSON(ListView listView, string fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                return;
+            }
+            foreach (LocationData item in JsonConvert.DeserializeObject<List<LocationData>>(File.ReadAllText(fileName)))
+            {
+                ListViewItem listViewItem = new ListViewItem(item.Position);
+                listViewItem.SubItems.Add(item.X);
+                listViewItem.SubItems.Add(item.Y);
+                listViewItem.SubItems.Add(item.Z);
+                listView.Items.Add(listViewItem);
+            }
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedItem != null)
+            {
+                saveID = m.ReadString(IDadr);
+                string key = comboBox4.SelectedItem.ToString();
+                if (listViewDictionary.TryGetValue(key, out var value))
+                {
+                    SaveListViewToJSON(value, $"{comboBox4.SelectedItem}{saveID}.json");
+                    MessageBox.Show($"เซฟ{comboBox4.SelectedItem}{saveID}เร\u0e35ยบร\u0e49อย", "Save Complete");
+                }
+            }
+        }
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedItem != null)
+            {
+                saveID = m.ReadString(IDadr);
+                string key = comboBox4.SelectedItem.ToString();
+                if (listViewDictionary.TryGetValue(key, out var value))
+                {
+                    LoadListViewFromJSON(value, $"{comboBox4.SelectedItem}{saveID}.json");
+                    MessageBox.Show($"โหลด{comboBox2.SelectedItem}{saveID}เร\u0e35ยบร\u0e49อย", "Load Complete");
+                }
+            }
+        }
+
     }
 }
