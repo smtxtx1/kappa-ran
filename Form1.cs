@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using System;
 using System.Reflection.Emit;
 using System.Windows.Forms.Automation;
+using System.Threading;
+
 
 namespace Kappa
 {
@@ -14,67 +16,68 @@ namespace Kappa
     {
         Mem m = new Mem();
         Mem mem = new Mem();
-        public string Drone_adr = "MiniA.exe+2E94C50";
-        public string FastZoom = "03294C5C";
+        public string Drone_adr = "MiniA.exe+2E48A60";
+        public string FastZoom = "03248A6C";
         public string AOE_adr = "";
         public string LongRange_adr = "";
-        public string NameAdr = "00BE82B8";
-        public string IDadr = "00BE84A8";
+        public string NameAdr = "00BDC140";
+        public string IDadr = "00BDC330";
         public float GetX1 = 0f;
         public float GetY1 = 0f;
         public float GetZ1 = 0f;
         public float GetX2 = 0f;
         public float GetY2 = 0f;
         public float GetZ2 = 0f;
+        private bool autoAddItems;
         /// <summary>
         /// //////////////////
         /// </summary>
-        public string CurrentX = "00BEA478";
-        public string CurrentY = "00BEA47C";
-        public string CurrentZ = "00BEA480";
+        public string CurrentX = "00BDE300";
+        public string CurrentY = "00BDE304";
+        public string CurrentZ = "00BDE308";
+        private int positionCounter = 1;
+        public string ZoomAdr = "03248B04";
 
-        public string ZoomAdr = "MINIA.EXE+2E94CF4";
+        public string AngleAdr = "03248AE4";
 
-        public string AngleAdr = "03294CD4";
+        public string RightArrow = "03248499";
+        public string gotoX = "00BDE400";
 
-        public string RightArrow = "03294689";
-        public string gotoX = "00BEA4BC";
+        public string gotoY = "00BDE404";
 
-        public string gotoY = "00BEA4C0";
-
-        public string gotoZ = "00BEA4C4";
+        public string gotoZ = "00BDE408";
         /// <summary>
         /// //////
         /// </summary>
         /// 
         public float currentrange = 0.0f;
         public float currentrange2 = 0.0f;
-        public string LeftClick = "032947C8";
-        public string RightClick = "032947C9";
+        public string LeftClick = "032485D8";
+        public string RightClick = "032485D9";
 
-        public string AltButton = "32945F4";
+        public string AltButton = "03248404";
 
-        public string key1button = "032945BE";
+        public string prevskill1_adr = "00BDE490";
 
-        public string key2button = "032945BF";
-        public string prevskill1_adr = "00BEA608";
+        public string prevskill2_adr = "00BDE492";
 
-        public string prevskill2_adr = "00BEA60A";
+        public string Skilluse1_adr = "00BDE48C";
 
-        public string Skilluse1_adr = "00BEA604";
+        public string Skilluse2_adr = "00BDE48E";
 
-        public string Skilluse2_adr = "00BEA606";
-
-        public string forceattack_adr = "MINIA.EXE+7EA698";
-        public string Spacebar = "32945F5";
-        public string Superpot = "00770BBB";
-        public string HpFreeze_1 = "MiniA.exe+7E8398";
-        public string HpFreeze_2 = "MiniA.exe+7E839A";
+        public string forceattack_adr = "MiniA.exe+7DE520";
+        public string Spacebar = "03248405";
+        public string Superpot = "0077394B";
+        public string HpFreeze_1 = "00BDC220";
+        public string HpFreeze_2 = "00BDC222";
+        public bool autoskillsstand = true;
         int selectedProcessId = -1;
         int selectedProcessId2 = -1;
         public Form1()
         {
+
             InitializeComponent();
+            backgroundWorker1.WorkerSupportsCancellation = true;
         }
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -99,10 +102,27 @@ namespace Kappa
         private IntPtr allocate_adr_aoe;
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
-
+        private Dictionary<string, ListView> listViewDictionary = new Dictionary<string, ListView>();
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            comboBox4.Items.Add("listView1");
+            comboBox4.Items.Add("listView2");
+            comboBox4.Items.Add("listView3");
+            comboBox4.Items.Add("listView4");
+            comboBox4.Items.Add("listView5");
+            comboBox4.Items.Add("listView6");
+            comboBox4.Items.Add("listView7");
+            comboBox4.Items.Add("listView8");
+            listViewDictionary.Add("listView1", listView1);
+            listViewDictionary.Add("listView2", listView2);
+            listViewDictionary.Add("listView3", listView3);
+            listViewDictionary.Add("listView4", listView4);
+            listViewDictionary.Add("listView5", listView5);
+            listViewDictionary.Add("listView6", listView6);
+            listViewDictionary.Add("listView7", listView7);
+            listViewDictionary.Add("listView8", listView8);
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -178,7 +198,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0x1E5366 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0x1E6F76 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -192,15 +212,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_aoe - ((int)baseModuleadr + 0x1E5360 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_aoe - ((int)baseModuleadr + 0x1E6F70 + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("005E5360", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("005E6F70", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("005E5360", "bytes", originalcode_ALE);
+                m.WriteMemory("005E6F70", "bytes", originalcode_ALE);
                 textBox2.Enabled = true;
                 if (allocate_adr_aoe != IntPtr.Zero)
                 {
@@ -241,7 +261,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xEBB2E - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0xDED1E - ((int)allocate_adr + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -255,15 +275,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xEBB27 + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xDED17 + jmpCode.Length - 2);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004EBB27", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("004DED17", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("004EBB27", "bytes", originalcode_LR);
+                m.WriteMemory("004DED17", "bytes", originalcode_LR);
                 textBox3.Enabled = true;
                 if (allocate_adr != IntPtr.Zero)
                 {
@@ -279,11 +299,7 @@ namespace Kappa
         {
         }
 
-        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
 
-
-        }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
@@ -344,8 +360,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)baseModuleadr + 0x3479D - ((int)allocate_adr_Path + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)baseModuleadr + 0x3477A - ((int)allocate_adr_Path + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)baseModuleadr + 0x35A6D - ((int)allocate_adr_Path + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)baseModuleadr + 0x35A4A - ((int)allocate_adr_Path + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
@@ -361,10 +377,10 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x34774 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x35A44 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory("00434774", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory("00435A44", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
             {
@@ -376,7 +392,7 @@ namespace Kappa
                 }
 
                 // Restore the original code
-                m.WriteMemory("00434774", "bytes", originalcode_Path);
+                m.WriteMemory("00435A44", "bytes", originalcode_Path);
 
             }
 
@@ -397,10 +413,90 @@ namespace Kappa
         }
         private CancellationTokenSource followLeaderCancellationTokenSource;
         private CancellationTokenSource AutosearchCancellationTokenSource;
+
+        private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            while (!backgroundWorker1.CancellationPending)
+            {
+                try
+                {
+                    await UpdateListViewItemsAsync(listView1);
+                    if (listView2.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView2);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView3.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView3);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView4.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView4);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView5.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView5);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView6.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView6);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView7.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView7);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (listView8.Items.Count > 0)
+                    {
+                        await UpdateListViewItemsAsync(listView8);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    if (backgroundWorker1.CancellationPending)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(100);
+
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception details
+                    Console.WriteLine($"Exception in UpdateListViewItemsAsync: {ex.Message}");
+                }
+
+            }
+        }
         private async Task FollowLeaderTask()
         {
             await Task.Delay(0);
-            m.WriteMemory("00434BBD", "bytes", "90 90");
+            m.WriteMemory("00435E8D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 m.FreezeValue(RightArrow, "byte", "3F");
@@ -421,9 +517,9 @@ namespace Kappa
                 m.ReadInt("MINIA.EXE+7EB454");
                 mem.ReadInt("MINIA.EXE+7EB454");
                 int num3 = mem.ReadInt("MINIA.EXE+7EB454");
-                float followXnew = num - 25f;
-                float followZnew = num2 - 35f;
-                if (mem.Read2Byte("MINIA.EXE+7EA568") == 1 && m.Read2Byte("MINIA.EXE+7EA568") != 3)
+                float followXnew = num - 15f;
+                float followZnew = num2 - 15f;
+                if (mem.Read2Byte("MiniA.exe+7DE3F0") == 1 && m.Read2Byte("MiniA.exe+7DE3F0") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
@@ -433,10 +529,13 @@ namespace Kappa
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
                         m.WriteMemory(LeftClick, "byte", "63");
+
+
+                        Thread.Sleep(1);
+                        m.WriteMemory(LeftClick, "byte", "01");
                         previousX = followXnew;
                         previousZ = followZnew;
-                        Thread.Sleep(10);
-                        m.WriteMemory(LeftClick, "byte", "01");
+
                     }
                 }
                 else
@@ -444,21 +543,21 @@ namespace Kappa
                     m.WriteMemory(LeftClick, "byte", "01");
                     if (!checkBox8.Checked)
                     {
-                        if (mem.Read2Byte("MINIA.EXE+7EA568") != 3)
+                        if (mem.Read2Byte("MiniA.exe+7DE3F0") != 3)
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
-                                m.WriteMemory("MINIA.EXE+7EB454", "int", num3.ToString());
+                                m.WriteMemory(prevskill1_adr, "int", num3.ToString());
+                                m.WriteMemory(prevskill2_adr, "int", num3.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
                             }
                         }
                     }
-                    else if (checkBox8.Checked && mem.Read2Byte("MINIA.EXE+7EA568") != 1)
+                    else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7DE3F0") != 1)
                     {
                         m.WriteMemory(LeftClick, "byte", "01");
                         List<int> list = new List<int>();
-                        for (int j = 12490212; j <= 12492500; j += 176)
+                        for (int j = 0x00BDD46C; j <= 0x00BDDD5C; j += 176)
                         {
                             if (m.Read2Byte(j.ToString("x")) != 65535)
                             {
@@ -469,7 +568,7 @@ namespace Kappa
                                 list.Add(item2);
                             }
                         }
-                        for (int k = 12487140; k <= 12487176; k += 4)
+                        for (int k = 0x00BDC86C; k <= 0x00BDC890; k += 4)
                         {
                             if (m.Read2Byte(k.ToString("x")) == 65535)
                             {
@@ -500,7 +599,7 @@ namespace Kappa
                     previousX = num;
                     previousZ = num2;
                 }
-                Thread.Sleep(1);
+                await Task.Delay(500);
             }
             Thread.Sleep(1);
             m.FreezeValue(RightArrow, "byte", "01");
@@ -588,7 +687,7 @@ namespace Kappa
             {
                 try
                 {
-                    if (MonsterHP >= 1020 && m.Read2Byte("MINIA.EXE+7EA568") != 3)
+                    if (MonsterHP >= 1020 && m.Read2Byte("MiniA.exe+7DE3F0") != 3)
                     {
 
                         m.WriteMemory("MiniA.exe+7EA6B0", "int", MonsterID.ToString());
@@ -659,11 +758,11 @@ namespace Kappa
         {
             if (checkBox11.Checked)
             {
-                m.WriteMemory("004EBF92", "bytes", "90 90 90 90");
+                m.WriteMemory("004DF182", "bytes", "90 90 90 90");
             }
             else
             {
-                m.WriteMemory("004EBF92", "bytes", "D9 44 24 44");
+                m.WriteMemory("004DF182", "bytes", "D9 44 24 44");
             }
         }
 
@@ -671,12 +770,308 @@ namespace Kappa
         {
             if (checkBox12.Checked)
             {
-                m.WriteMemory("005E0A91", "bytes", "EB");
+                m.WriteMemory("005E2771", "bytes", "EB");
             }
             else
             {
-                m.WriteMemory("005E0A91", "bytes", "74");
+                m.WriteMemory("005E2771", "bytes", "74");
             }
+        }
+
+        private CancellationTokenSource cancellationTokenSource;
+
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (comboBox3.SelectedItem != null)
+            {
+                try
+                {
+                    string key = comboBox3.SelectedItem.ToString();
+                    if (listViewDictionary.TryGetValue(key, out var value))
+                    {
+                        value.Items.Clear();
+                        positionCounter = 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selected ListView not found");
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error clearing items: " + ex.Message);
+                    return;
+                }
+            }
+            MessageBox.Show("Please select a ListView");
+        }
+
+        private async void button6_Click(object sender, EventArgs e)
+        {
+            autoAddItems = !autoAddItems;
+            if (autoAddItems)
+            {
+                await AddItemsAutomaticallyAsync();
+            }
+        }
+        private async Task AddItemsAutomaticallyAsync()
+        {
+            float previousX = float.MinValue;
+            float previousY = float.MinValue;
+            float previousZ = float.MinValue;
+            while (autoAddItems)
+            {
+                if (comboBox4.SelectedItem == null)
+                {
+                    continue;
+                }
+                string key = comboBox4.SelectedItem.ToString();
+                if (!listViewDictionary.TryGetValue(key, out var selectedListView))
+                {
+                    continue;
+                }
+                float num = m.ReadFloat(gotoX);
+                float num2 = m.ReadFloat(gotoY);
+                float num3 = m.ReadFloat(gotoZ);
+                if (num != previousX || num2 != previousY || num3 != previousZ)
+                {
+                    ListViewItem location = new ListViewItem($"Position {positionCounter++}");
+                    location.SubItems.Add(num.ToString());
+                    location.SubItems.Add(num2.ToString());
+                    location.SubItems.Add(num3.ToString());
+                    selectedListView.Invoke((MethodInvoker)delegate
+                    {
+                        selectedListView.Items.Add(location);
+                    });
+                    previousX = num;
+                    previousY = num2;
+                    previousZ = num3;
+                }
+                await Task.Delay(1);
+            }
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            autoAddItems = false;
+        }
+
+        private void button8_Click_1(object sender, EventArgs e)
+        {
+            if (comboBox4.SelectedItem != null)
+            {
+                try
+                {
+                    string key = comboBox4.SelectedItem.ToString();
+                    if (listViewDictionary.TryGetValue(key, out var value))
+                    {
+                        value.Items.Clear();
+                        positionCounter = 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selected ListView not found");
+                    }
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error clearing items: " + ex.Message);
+                    return;
+                }
+            }
+            MessageBox.Show("Please select a ListView");
+        }
+        private async Task AutoSkills()
+        {
+            m.FreezeValue(RightArrow, "byte", "3F");
+            m.FreezeValue(RightClick, "byte", "63");
+            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+            await Task.Delay(100);
+            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+            await Task.Delay(100);
+            for (int i = 0x00BDC7F4; i <= 0x00BDC818; i += 4)
+            {
+                int idskilltype1 = m.ReadByte(i.ToString("X"));
+                int num = i + 2;
+                int idskilltype2 = m.ReadByte(num.ToString("X"));
+                m.ReadByte(prevskill1_adr);
+                int prevskill2 = m.ReadByte(prevskill2_adr);
+                await Task.Delay(300);
+                if (m.Read2Byte("MiniA.exe+7DE3F0") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7DE3F0") != 3)
+                {
+                    m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
+                    m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
+                    await Task.Delay(300);
+                }
+
+            }
+            await Task.Delay(100);
+
+            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+            await Task.Delay(10);
+            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+            await Task.Delay(10);
+            m.UnfreezeValue(RightClick);
+            m.UnfreezeValue(RightArrow);
+            m.WriteMemory(RightArrow, "byte", "01");
+            m.WriteMemory(RightClick, "byte", "01");
+        }
+        private async Task UpdateListViewItemsAsync(ListView listView)
+        {
+            try
+            {
+                int itemCount = listView.Items.Count;
+                int currentIndex = 0;
+                int direction = 1;
+                int iterations = (checkBox9.Checked ? 1 : 2);
+                float currentX = m.ReadFloat(CurrentX);
+                float currentY = m.ReadFloat(CurrentY);
+                float currentZ = m.ReadFloat(CurrentZ);
+                for (int i = 0; i < iterations * itemCount; i++)
+                {
+                    if (backgroundWorker1.CancellationPending)
+                    {
+                        break;
+                    }
+
+                    ListViewItem listViewItem = listView.Items[currentIndex];
+                    await Task.Delay(10);
+                    float newX = float.Parse(listViewItem.SubItems[1].Text);
+                    float newY = float.Parse(listViewItem.SubItems[2].Text);
+                    float newZ = float.Parse(listViewItem.SubItems[3].Text);
+                    m.WriteMemory(ZoomAdr, "float", "1");
+                    m.WriteMemory(AngleAdr, "float", "75");
+                    m.FreezeValue(AltButton, "byte", "63");
+                    m.FreezeValue(LeftClick, "byte", "63");
+                    m.WriteMemory(getadr + "+4", "float", newX.ToString());
+                    m.WriteMemory(getadr + "+C", "float", newY.ToString());
+                    m.WriteMemory(getadr + "+14", "float", newZ.ToString());
+                    while (!(currentX >= newX - 20f) || !(currentX <= newX + 20f) || !(currentY >= newY - 20f) || !(currentY <= newY + 20f) || !(currentZ >= newZ - 20f) || !(currentZ <= newZ + 20f))
+                    {
+                        currentX = m.ReadFloat(CurrentX);
+                        currentY = m.ReadFloat(CurrentY);
+                        currentZ = m.ReadFloat(CurrentZ);
+                        await Task.Delay(100);
+                    }
+                    if (currentX >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
+                    {
+                        m.WriteMemory(getadr + "+4", "float", newX.ToString());
+                        m.WriteMemory(getadr + "+C", "float", newY.ToString());
+                        m.WriteMemory(getadr + "+14", "float", newZ.ToString());
+                    }
+                    currentIndex += direction;
+                    if ((currentIndex != itemCount - 1 && currentIndex != 0) || !(currentX >= newX - 20f) || !(currentX <= newX + 20f) || !(currentY >= newY - 20f) || !(currentY <= newY + 20f) || !(currentZ >= newZ - 20f) || !(currentZ <= newZ + 20f))
+                    {
+                        continue;
+                    }
+                    m.UnfreezeValue(AltButton);
+                    m.UnfreezeValue(LeftClick);
+                    m.WriteMemory(LeftClick, "byte", "01");
+                    m.WriteMemory(AltButton, "byte", "01");
+
+
+                    if (checkBox15.Checked)
+                    {
+                        int j;
+                        if (int.TryParse(textBox1.Text, out var numberOfIterations))
+                        {
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            m.WriteMemory(LeftClick, "byte", "01");
+                            await Task.Delay(10);
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            await Task.Delay(10);
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            await Task.Delay(10);
+                            for (j = 0; j < numberOfIterations; j++)
+                            {
+                                await AutoSkills();
+                                await Task.Delay(100);
+
+                            }
+                        }
+                        if (checkBox14.Checked && int.TryParse(textBox4.Text, out j))
+                        {
+                            m.WriteMemory("00435A44", "bytes", originalcode_Path);
+                            for (int u2 = 0; u2 < j; u2++)
+                            {
+
+                                m.WriteMemory(Spacebar, "byte", "63");
+                                await Task.Delay(50);
+                                m.WriteMemory(Spacebar, "byte", "01");
+                                await Task.Delay(50);
+                            }
+                            m.WriteMemory("00435A44", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                        }
+                    }
+                    m.WriteMemory(LeftClick, "byte", "00");
+
+                    await Task.Delay(50);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details
+                Console.WriteLine($"Exception in UpdateListViewItemsAsync: {ex.Message}");
+            }
+        }
+
+        private void checkBox13_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox13.Checked && !backgroundWorker1.IsBusy)
+            {
+
+                backgroundWorker1.RunWorkerAsync();
+                return;
+            }
+            else
+            {
+                backgroundWorker1.CancelAsync();
+                m.UnfreezeValue(CurrentX);
+                m.UnfreezeValue(CurrentY);
+                m.UnfreezeValue(CurrentZ);
+                m.UnfreezeValue(LeftClick);
+                m.UnfreezeValue(AltButton);
+
+            }
+        }
+
+        private async void button9_Click(object sender, EventArgs e)
+        {
+            button9.Enabled = false;
+            button10.Enabled = true;
+            autoskillsstand = false;
+            if (autoskillsstand)
+            {
+                return;
+            }
+            while (!autoskillsstand)
+            {
+                await AutoSkills();
+                await Task.Delay(100);
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            button9.Enabled = true;
+            button10.Enabled = false;
+            autoskillsstand = !autoskillsstand;
         }
     }
 }
