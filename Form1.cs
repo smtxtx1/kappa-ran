@@ -458,7 +458,7 @@ namespace Kappa
                     {
                         m.WriteMemory(LeftClick, "byte", "01");
                         List<int> list = new List<int>();
-                        for (int j = 12490212; j <= 12492500; j += 176)
+                        for (int j = 12490212; j <= 12492500; j += 0xB0)
                         {
                             if (m.Read2Byte(j.ToString("x")) != 65535)
                             {
@@ -469,7 +469,7 @@ namespace Kappa
                                 list.Add(item2);
                             }
                         }
-                        for (int k = 12487140; k <= 12487176; k += 4)
+                        for (int k = 0x00BDC86C; k <= 0x00BDC890; k += 4)
                         {
                             if (m.Read2Byte(k.ToString("x")) == 65535)
                             {
@@ -479,6 +479,7 @@ namespace Kappa
                             int num6 = m.Read2Byte(k.ToString("x"));
                             int num7 = m.Read2Byte(num5.ToString("x"));
                             bool flag = false;
+
                             foreach (int item3 in list)
                             {
                                 if (item3 == num7)
@@ -487,6 +488,7 @@ namespace Kappa
                                     break;
                                 }
                             }
+
                             if (!flag)
                             {
                                 m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
