@@ -128,6 +128,7 @@
             checkBox8 = new CheckBox();
             checkBox7 = new CheckBox();
             groupBox5 = new GroupBox();
+            checkBox16 = new CheckBox();
             button7 = new Button();
             button6 = new Button();
             button3 = new Button();
@@ -335,6 +336,7 @@
             groupBox3.Controls.Add(button4);
             groupBox3.Controls.Add(checkBox10);
             groupBox3.Controls.Add(checkBox9);
+            groupBox3.Enabled = false;
             groupBox3.Location = new Point(6, 198);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(382, 197);
@@ -775,6 +777,7 @@
             // 
             groupBox6.Controls.Add(checkBox8);
             groupBox6.Controls.Add(checkBox7);
+            groupBox6.Enabled = false;
             groupBox6.Location = new Point(6, 6);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(84, 100);
@@ -805,6 +808,7 @@
             // 
             // groupBox5
             // 
+            groupBox5.Controls.Add(checkBox16);
             groupBox5.Controls.Add(button7);
             groupBox5.Controls.Add(button6);
             groupBox5.Controls.Add(button3);
@@ -816,6 +820,17 @@
             groupBox5.TabStop = false;
             groupBox5.Text = "Misc";
             // 
+            // checkBox16
+            // 
+            checkBox16.AutoSize = true;
+            checkBox16.Location = new Point(6, 75);
+            checkBox16.Name = "checkBox16";
+            checkBox16.Size = new Size(72, 19);
+            checkBox16.TabIndex = 12;
+            checkBox16.Text = "Anti AFK";
+            checkBox16.UseVisualStyleBackColor = true;
+            checkBox16.CheckedChanged += checkBox16_CheckedChanged;
+            // 
             // button7
             // 
             button7.Location = new Point(80, 51);
@@ -824,6 +839,7 @@
             button7.TabIndex = 6;
             button7.Text = "Stop";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button6
             // 
@@ -833,6 +849,7 @@
             button6.TabIndex = 5;
             button6.Text = "Start";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // button3
             // 
@@ -999,5 +1016,6 @@
         private ColumnHeader columnHeader44;
         private ColumnHeader columnHeader45;
         private TextBox textBox5;
+        private CheckBox checkBox16;
     }
 }

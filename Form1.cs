@@ -101,9 +101,9 @@ namespace Kappa
 
         public string Superpot = "0077F06B";
 
-        public string HpFreeze_1 = "00BDD220";
+        public string HpFreeze_1 = "00BB9858";
 
-        public string HpFreeze_2 = "00BDD222";
+        public string HpFreeze_2 = "00BB985A";
 
         public bool autoskillsstand = true;
 
@@ -232,7 +232,7 @@ namespace Kappa
             {
                 textBox2.Enabled = false;
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-          //      m.WriteMemory("00581F41", "bytes", "0F B7 0D 00 20 FF 00"); // æ√–Œ’≈‰°≈ ∫—ø‰°≈
+                //      m.WriteMemory("00581F41", "bytes", "0F B7 0D 00 20 FF 00"); // æ√–Œ’≈‰°≈ ∫—ø‰°≈
 
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
@@ -432,7 +432,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00BDE46C; j <= 0x00BDED5C; j += 0xB0)
+            for (int j = 0x00BBA7D4; j <= 0x00BBB0C4; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -448,7 +448,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00BDD86C; k <= 0x00BDD890; k += 0x4)
+            for (int k = 0x00BB9E8C; k <= 0x00BB9EB0; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -1325,6 +1325,42 @@ namespace Kappa
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private async void button6_Click(object sender, EventArgs e)
+        {
+            button6.Enabled = false;
+            button7.Enabled = true;
+            autoskillsstand = false;
+            if (autoskillsstand)
+            {
+                return;
+            }
+            while (!autoskillsstand)
+            {
+                await AutoSkills();
+                if (checkBox10.Checked)
+                {
+                    Autobuff();
+                    await Task.Delay(200);
+                }
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            button6.Enabled = true;
+            button7.Enabled = false;
+            autoskillsstand = !autoskillsstand;
+        }
+
+        private void checkBox16_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox16.Checked)
+            {
+                m.WriteMemory("00959528", "float", "-1");
+                m.WriteMemory("0043CA99", "byte", "EB");
+            }
         }
     }
 }
