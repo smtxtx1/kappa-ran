@@ -524,8 +524,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)baseModuleadr + 0x3580D - ((int)allocate_adr_Path + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)baseModuleadr + 0x357EA - ((int)allocate_adr_Path + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)baseModuleadr + 0x46C75 - ((int)allocate_adr_Path + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)baseModuleadr + 0x46C5A - ((int)allocate_adr_Path + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
@@ -541,10 +541,10 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x357E4 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x446C5A + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory("004357E4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory("00446C5A", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
             {
@@ -556,7 +556,7 @@ namespace Kappa
                 }
 
                 // Restore the original code
-                m.WriteMemory("004357E4", "bytes", originalcode_Path);
+                m.WriteMemory("00446C5A", "bytes", originalcode_Path);
 
             }
 
