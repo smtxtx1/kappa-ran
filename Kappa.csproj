@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
-    <AssemblyName>$(MSBuildProjectName)321</AssemblyName>
+    <AssemblyName>$Inter</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
