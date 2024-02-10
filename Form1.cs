@@ -69,7 +69,7 @@ namespace Kappa
 
         public string AngleAdr = "03231E5C";
 
-        public string RightArrow = "03249499";
+        public string RightArrow = "03231809";
 
         public string gotoX = "00BBB760";
 
