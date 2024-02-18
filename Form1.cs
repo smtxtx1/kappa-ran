@@ -30,14 +30,16 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Inter";
-        public string FastZoom = "03249A6C";
+        public string ServerName = "Jupiter";
+        public string FastZoom = "0326232C";
 
         public string AOE_adr = "";
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00BDD140";
+        public string NameAdr = "00BA9B98";
+
+        public string Antislide = "004324D8";
 
         public string IDadr = "MiniA.exe+758DF8";
 
@@ -99,7 +101,9 @@ namespace Kappa
 
         public string Spacebar = "03249405";
 
-        public string Superpot = "0077455B";
+        public string Bypasspot = "00432D81";
+
+        public string Superpot = "0076E67B";
 
         public string HpFreeze_1 = "00BDD220";
 
@@ -202,13 +206,13 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "200");
-                m.WriteMemory("005C7A28", "byte", "eb");
+                m.WriteMemory("005C5AA8", "byte", "eb");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(FastZoom, "float", "80");
-                m.WriteMemory("005C7A28", "byte", "75");
+                m.WriteMemory("005C5AA8", "byte", "75");
 
             }
 
@@ -1325,6 +1329,42 @@ namespace Kappa
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void checkBox16_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox16.Checked && textBox6.Text != null)
+            {
+                m.WriteMemory("MiniA.exe+54DB94", "float", textBox6.Text);
+            }
+            else
+            {
+                m.WriteMemory("MiniA.exe+54DB94", "float", "4800");
+            }
+        }
+
+        private void checkBox17_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox17.Checked)
+            {
+                m.WriteMemory(Antislide, "byte", "00");
+            }
+            else
+            {
+                m.WriteMemory(Antislide, "byte", "05");
+            }
+        }
+
+        private void checkBox18_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox18.Checked)
+            {
+                m.WriteMemory("009944FC", "float", "-1");
+            }
+            else
+            {
+                m.WriteMemory("009944FC", "float", "30");
+            }
         }
     }
 }

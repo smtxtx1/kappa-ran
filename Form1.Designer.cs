@@ -31,6 +31,9 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox4 = new GroupBox();
+            checkBox17 = new CheckBox();
+            textBox6 = new TextBox();
+            checkBox16 = new CheckBox();
             checkBox12 = new CheckBox();
             checkBox11 = new CheckBox();
             checkBox1 = new CheckBox();
@@ -133,6 +136,7 @@
             button3 = new Button();
             checkBox6 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            checkBox18 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -172,6 +176,10 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox18);
+            groupBox4.Controls.Add(checkBox17);
+            groupBox4.Controls.Add(textBox6);
+            groupBox4.Controls.Add(checkBox16);
             groupBox4.Controls.Add(checkBox12);
             groupBox4.Controls.Add(checkBox11);
             groupBox4.Controls.Add(checkBox1);
@@ -183,15 +191,46 @@
             groupBox4.Controls.Add(textBox3);
             groupBox4.Location = new Point(212, 6);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(171, 177);
+            groupBox4.Size = new Size(171, 197);
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
             // 
+            // checkBox17
+            // 
+            checkBox17.AutoSize = true;
+            checkBox17.Location = new Point(92, 86);
+            checkBox17.Name = "checkBox17";
+            checkBox17.Size = new Size(76, 19);
+            checkBox17.TabIndex = 15;
+            checkBox17.Text = "Anti Slide";
+            checkBox17.UseVisualStyleBackColor = true;
+            checkBox17.CheckedChanged += checkBox17_CheckedChanged;
+            // 
+            // textBox6
+            // 
+            textBox6.Location = new Point(105, 61);
+            textBox6.Multiline = true;
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(57, 19);
+            textBox6.TabIndex = 14;
+            textBox6.Text = "4800";
+            // 
+            // checkBox16
+            // 
+            checkBox16.AutoSize = true;
+            checkBox16.Location = new Point(6, 63);
+            checkBox16.Name = "checkBox16";
+            checkBox16.Size = new Size(95, 19);
+            checkBox16.TabIndex = 13;
+            checkBox16.Text = "Attack Speed";
+            checkBox16.UseVisualStyleBackColor = true;
+            checkBox16.CheckedChanged += checkBox16_CheckedChanged;
+            // 
             // checkBox12
             // 
             checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(6, 144);
+            checkBox12.Location = new Point(6, 171);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(79, 19);
             checkBox12.TabIndex = 12;
@@ -202,7 +241,7 @@
             // checkBox11
             // 
             checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(6, 122);
+            checkBox11.Location = new Point(6, 149);
             checkBox11.Name = "checkBox11";
             checkBox11.Size = new Size(61, 19);
             checkBox11.TabIndex = 11;
@@ -213,7 +252,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 100);
+            checkBox1.Location = new Point(6, 127);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(58, 19);
             checkBox1.TabIndex = 3;
@@ -235,7 +274,7 @@
             // checkBox5
             // 
             checkBox5.AutoSize = true;
-            checkBox5.Location = new Point(6, 79);
+            checkBox5.Location = new Point(6, 106);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new Size(78, 19);
             checkBox5.TabIndex = 10;
@@ -257,7 +296,7 @@
             // checkBox4
             // 
             checkBox4.AutoSize = true;
-            checkBox4.Location = new Point(6, 59);
+            checkBox4.Location = new Point(6, 86);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new Size(77, 19);
             checkBox4.TabIndex = 9;
@@ -859,6 +898,17 @@
             // 
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             // 
+            // checkBox18
+            // 
+            checkBox18.AutoSize = true;
+            checkBox18.Location = new Point(92, 106);
+            checkBox18.Name = "checkBox18";
+            checkBox18.Size = new Size(66, 19);
+            checkBox18.TabIndex = 16;
+            checkBox18.Text = "Anti CB";
+            checkBox18.UseVisualStyleBackColor = true;
+            checkBox18.CheckedChanged += checkBox18_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -999,5 +1049,9 @@
         private ColumnHeader columnHeader44;
         private ColumnHeader columnHeader45;
         private TextBox textBox5;
+        private TextBox textBox6;
+        private CheckBox checkBox16;
+        private CheckBox checkBox17;
+        private CheckBox checkBox18;
     }
 }
