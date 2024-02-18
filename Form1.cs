@@ -418,6 +418,7 @@ namespace Kappa
             if (checkBox4.Checked)
             {
                 m.WriteMemory(Superpot, "byte", "01");
+                m.WriteMemory(Bypasspot, "byte", "00");
             }
             else
             {
