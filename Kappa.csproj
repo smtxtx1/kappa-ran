@@ -7,10 +7,12 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
+    <AssemblyName>$(MSBuildProjectName)321</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Memory.dll.x64" Version="1.2.24" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
 </Project>
