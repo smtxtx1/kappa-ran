@@ -12,7 +12,7 @@ using KeyAuth;
 
 public class Login : Form
 {
-    public static api KeyAuthApp = new api("smbotenglish", "zbtz7lqHV9", "bc923a5105f16fd9b12ae6a1ceee8660f1116f8af26061a1b75e9dae2c590e22", "1.4.6"); private IContainer components;
+    public static api KeyAuthApp = new api("Autotracing", "zbtz7lqHV9", "87e66ca811406726d54a7708245d5476f5a08178e3bb906d04080392928d71e3", "1.0"); private IContainer components;
 
     private TextBox key;
 

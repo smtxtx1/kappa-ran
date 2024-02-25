@@ -1562,6 +1562,7 @@ namespace Kappa
             if (!backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.RunWorkerAsync();
+                m.WriteMemory("0094E464", "float", "-1");
             }
         }
 
