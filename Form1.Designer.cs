@@ -30,6 +30,9 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            groupBox9 = new GroupBox();
+            button13 = new Button();
+            comboBox4 = new ComboBox();
             groupBox4 = new GroupBox();
             checkBox18 = new CheckBox();
             checkBox17 = new CheckBox();
@@ -139,8 +142,10 @@
             checkBox6 = new CheckBox();
             checkBox20 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            groupBox9.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -165,6 +170,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(groupBox9);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox2);
             tabPage1.Controls.Add(groupBox3);
@@ -175,6 +181,36 @@
             tabPage1.Size = new Size(394, 401);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
+            // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(button13);
+            groupBox9.Controls.Add(comboBox4);
+            groupBox9.Location = new Point(6, 198);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(157, 61);
+            groupBox9.TabIndex = 16;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "groupBox9";
+            // 
+            // button13
+            // 
+            button13.Location = new Point(84, 22);
+            button13.Name = "button13";
+            button13.Size = new Size(59, 23);
+            button13.TabIndex = 4;
+            button13.Text = "Save";
+            button13.UseVisualStyleBackColor = true;
+            button13.Click += button13_Click;
+            // 
+            // comboBox4
+            // 
+            comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(6, 22);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(72, 23);
+            comboBox4.TabIndex = 4;
             // 
             // groupBox4
             // 
@@ -207,6 +243,7 @@
             checkBox18.TabIndex = 16;
             checkBox18.Text = "Anti CB";
             checkBox18.UseVisualStyleBackColor = true;
+            checkBox18.Visible = false;
             checkBox18.CheckedChanged += checkBox18_CheckedChanged;
             // 
             // checkBox17
@@ -218,6 +255,7 @@
             checkBox17.TabIndex = 15;
             checkBox17.Text = "Anti Slide";
             checkBox17.UseVisualStyleBackColor = true;
+            checkBox17.Visible = false;
             checkBox17.CheckedChanged += checkBox17_CheckedChanged;
             // 
             // checkBox16
@@ -387,12 +425,13 @@
             groupBox3.Controls.Add(button4);
             groupBox3.Controls.Add(checkBox10);
             groupBox3.Controls.Add(checkBox9);
-            groupBox3.Location = new Point(6, 198);
+            groupBox3.Location = new Point(400, 320);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(382, 197);
             groupBox3.TabIndex = 12;
             groupBox3.TabStop = false;
             groupBox3.Text = "Auto Farm";
+            groupBox3.Visible = false;
             // 
             // textBox5
             // 
@@ -888,6 +927,7 @@
             button7.TabIndex = 6;
             button7.Text = "Stop";
             button7.UseVisualStyleBackColor = true;
+            button7.Click += button7_Click;
             // 
             // button6
             // 
@@ -897,6 +937,7 @@
             button6.TabIndex = 5;
             button6.Text = "Start";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // button3
             // 
@@ -934,6 +975,10 @@
             // 
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             // 
+            // backgroundWorker2
+            // 
+            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -949,6 +994,7 @@
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            groupBox9.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -1081,5 +1127,9 @@
         private TextBox textBox6;
         private CheckBox checkBox19;
         private CheckBox checkBox20;
+        private GroupBox groupBox9;
+        private Button button13;
+        private ComboBox comboBox4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }
