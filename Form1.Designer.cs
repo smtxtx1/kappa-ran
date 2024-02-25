@@ -129,6 +129,7 @@
             checkBox13 = new CheckBox();
             checkBox14 = new CheckBox();
             groupBox6 = new GroupBox();
+            checkBox19 = new CheckBox();
             checkBox8 = new CheckBox();
             checkBox7 = new CheckBox();
             groupBox5 = new GroupBox();
@@ -136,8 +137,8 @@
             button6 = new Button();
             button3 = new Button();
             checkBox6 = new CheckBox();
+            checkBox20 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            checkBox19 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -834,6 +835,17 @@
             groupBox6.TabStop = false;
             groupBox6.Text = "Follow Lead";
             // 
+            // checkBox19
+            // 
+            checkBox19.AutoSize = true;
+            checkBox19.Location = new Point(6, 69);
+            checkBox19.Name = "checkBox19";
+            checkBox19.Size = new Size(70, 19);
+            checkBox19.TabIndex = 7;
+            checkBox19.Text = "BestAim";
+            checkBox19.UseVisualStyleBackColor = true;
+            checkBox19.CheckedChanged += checkBox19_CheckedChanged;
+            // 
             // checkBox8
             // 
             checkBox8.AutoSize = true;
@@ -907,26 +919,27 @@
             checkBox6.UseVisualStyleBackColor = true;
             checkBox6.CheckedChanged += checkBox6_CheckedChanged;
             // 
+            // checkBox20
+            // 
+            checkBox20.AutoSize = true;
+            checkBox20.Location = new Point(450, 200);
+            checkBox20.Name = "checkBox20";
+            checkBox20.Size = new Size(59, 19);
+            checkBox20.TabIndex = 7;
+            checkBox20.Text = "Active";
+            checkBox20.UseVisualStyleBackColor = true;
+            checkBox20.CheckedChanged += checkBox20_CheckedChanged;
+            // 
             // backgroundWorker1
             // 
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
-            // 
-            // checkBox19
-            // 
-            checkBox19.AutoSize = true;
-            checkBox19.Location = new Point(6, 69);
-            checkBox19.Name = "checkBox19";
-            checkBox19.Size = new Size(70, 19);
-            checkBox19.TabIndex = 7;
-            checkBox19.Text = "BestAim";
-            checkBox19.UseVisualStyleBackColor = true;
-            checkBox19.CheckedChanged += checkBox19_CheckedChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(406, 437);
+            ClientSize = new Size(405, 437);
+            Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -953,6 +966,7 @@
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
         #endregion
 
@@ -1066,5 +1080,6 @@
         private CheckBox checkBox16;
         private TextBox textBox6;
         private CheckBox checkBox19;
+        private CheckBox checkBox20;
     }
 }

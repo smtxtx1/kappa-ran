@@ -98,7 +98,7 @@ namespace Kappa
 
         public string Skilluse2_adr = "00BDF48E";
 
-        public string forceattack_adr = "00BDF520";
+        public string forceattack_adr = "MiniA.exe+7DF520";
 
         public string Spacebar = "03249405";
 
@@ -121,6 +121,8 @@ namespace Kappa
 
         public Form1()
         {
+            timer.Tick += Timer_Tick;
+            timer.Interval = 10000; // 10 seconds
             InitializeComponent();
             backgroundWorker1.WorkerSupportsCancellation = true;
         }
@@ -147,7 +149,7 @@ namespace Kappa
         private IntPtr allocate_adr_aoe;
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
-
+        private IntPtr allocate_adr_BA;
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBox3.Items.Add("listView1");
@@ -225,6 +227,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
+        string originalcode_BA = "83 7F 44 01 0F 85 66 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -548,7 +551,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x46C54 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x357E4 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory("004357E4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -732,7 +735,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xA27D6 - ((int)allocate_adr_Monview + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0xA2F16 - ((int)allocate_adr_Monview + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -746,16 +749,16 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Monview - ((int)baseModuleadr + 0xA27D0 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Monview - ((int)baseModuleadr + 0xA2F10 + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004A27D0", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("004A2F10", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
 
             }
             else
             {
-                m.WriteMemory("004A27D0", "bytes", originalcode_Monview);
+                m.WriteMemory("004A2F10", "bytes", originalcode_Monview);
                 if (allocate_adr_Monview != IntPtr.Zero)
                 {
                     processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -767,9 +770,9 @@ namespace Kappa
         }
         private async Task Autosearchmonster()
         {
-            m.WriteMemory("00435E8D", "bytes", "90 90"); // bypass attacking
+            m.WriteMemory("00435C2D", "bytes", "90 90"); // bypass attacking
 
-            int[] valuesToWrite = { 9, 7, 13 };
+            int[] valuesToWrite = { 7, 10, 8, 6 };
 
             while (checkBox9.Checked)
             {
@@ -804,17 +807,42 @@ namespace Kappa
                     MessageBox.Show($"An error occurred: {ex.Message}");
                 }
             }
-        }
 
+        }
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
+
+
+        private int previousCount = 0;
+        private DateTime lastUpdate = DateTime.MinValue;
+        private bool Position = false;
         private void UpdateListView(List<int> check_id_mon, int id_mon, int hp_mon, float x_mon, float y_mon, float z_mon)
         {
-            if (check_id_mon.Count == 5)
+            if (check_id_mon.Count == 8)
             {
                 check_id_mon.Clear();
                 listView11.Items.Clear();
             }
+            if (DateTime.Now.Subtract(lastUpdate).TotalSeconds >= 6 && previousCount == check_id_mon.Count - 1)
+            {
+                if (!Position)
+                {
+                    UpdatePosition(GetX1, GetY1, GetZ1);
+                    Position = !Position;
+                }
+                else
+                {
+                    UpdatePosition(GetX2, GetY2, GetZ2);
+                    Position = !Position;
 
-            if (!check_id_mon.Contains(id_mon))
+                }
+            }
+
+            previousCount = check_id_mon.Count;
+            lastUpdate = DateTime.Now;
+
+            int hptoadds;
+            if (!check_id_mon.Contains(id_mon) && int.TryParse(textBox5.Text, out hptoadds) && hptoadds == hp_mon)
             {
                 check_id_mon.Add(id_mon);
 
@@ -824,30 +852,27 @@ namespace Kappa
                 item.SubItems.Add(y_mon.ToString());
                 item.SubItems.Add(z_mon.ToString());
                 listView11.Items.Add(item);
+
+                // Check if the list has been updated within the last 10 seconds
             }
             else
             {
-                // Update the position in real-time for the target already in check_id_mon
-                // Find the item in the ListView and update its subitems
-                foreach (ListViewItem item in listView11.Items)
-                {
-                    if (item.SubItems[0].Text == id_mon.ToString())
-                    {
-                        item.SubItems[2].Text = x_mon.ToString();
-                        item.SubItems[3].Text = y_mon.ToString();
-                        item.SubItems[4].Text = z_mon.ToString();
-                        break;  // Exit the loop once the item is found and updated
-                    }
-                }
+                // Show error message if item could not be added
+              //  MessageBox.Show("Error: Unable to add item to check_id_mon.");
             }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Show message box if the list is not updated within 10 seconds
         }
 
         private async void SearchAndPrintTargets(int id_mon, int hp_mon, float x_mon, float y_mon, float z_mon, int[] valuesToWrite)
         {
-            int current_target = m.ReadInt("MiniA.exe+7DF2DC");
+            int current_target = m.ReadInt("MiniA.exe+7E02DC");
             int Hpcheckmon;
 
-            if (int.TryParse(textBox5.Text, out Hpcheckmon) && hp_mon <= Hpcheckmon)
+            if (int.TryParse(textBox5.Text, out Hpcheckmon) && hp_mon == Hpcheckmon)
             {
                 float currentX_ = m.ReadFloat(CurrentX);
                 float currentZ_ = m.ReadFloat(CurrentZ);
@@ -855,50 +880,50 @@ namespace Kappa
                 // Calculate the distance
                 float distance = CalculateDistance(currentX_, currentZ_, x_mon, z_mon);
 
-                if (distance <= 100f && current_target != id_mon && hp_mon > 10)
+                if (Hpcheckmon == hp_mon && distance > 1f)
                 {
                     UpdateCurrentTarget(id_mon);
-                    PerformActionsForTarget(valuesToWrite);
+                    PerformActionsForTarget();
+                    Autobuff();
+                    await Task.Delay(10);
                 }
-                else if (distance >= 100f)
-                {
-                    m.WriteMemory("004357E4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
-                    await UpdateListViewItemsAsync(listView1);
-                    m.WriteMemory("004357E4", "bytes", originalcode_Path);
-                    m.UnfreezeValue(CurrentX);
-                    m.UnfreezeValue(CurrentY);
-                    m.UnfreezeValue(CurrentZ);
-                    m.UnfreezeValue(LeftClick);
-                    m.UnfreezeValue(AltButton);
-                    m.WriteMemory(AltButton, "byte", "01");
-
-
-                }
+                
+                
             }
         }
 
         private void UpdateCurrentTarget(int newTargetId)
         {
-            m.WriteMemory("MiniA.exe+7DF2DC", "int", newTargetId.ToString());
-            m.WriteMemory("MiniA.exe+7DE538", "int", newTargetId.ToString());
-            m.WriteMemory("MiniA.exe+868250", "int", newTargetId.ToString());
+            m.WriteMemory("MiniA.exe+869250", "int", newTargetId.ToString());
+            m.WriteMemory("MiniA.exe+7E02DC", "int", newTargetId.ToString());
+            m.WriteMemory("MiniA.exe+7DF538", "int", newTargetId.ToString());
         }
 
-        private void PerformActionsForTarget(int[] valuesToWrite)
+        private void PerformActionsForTarget()
         {
             int current_target = m.ReadInt("MiniA.exe+7DF2DC");
 
-            if (current_target != -1)
+            if (current_target > -1)
             {
 
-                foreach (int value in valuesToWrite)
+                for (int i = 0x00BDD7F4; i <= 0x00BDD810; i += 4)
                 {
-
-                    m.WriteMemory(prevskill2_adr, "2bytes", value.ToString());
-                    m.WriteMemory("MiniA.exe+7DE520", "int", "5");
-                    Thread.Sleep(100);
+                    int idskilltype1 = m.ReadByte(i.ToString("X"));
+                    int num = i + 2;
+                    int idskilltype2 = m.ReadByte(num.ToString("X"));
+                    int prevskill2 = m.ReadByte(prevskill2_adr);
+                    Thread.Sleep(200);
+                    if (m.Read2Byte("00BDF3F0") != 3)
+                    {
+                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(100);
+                    }
                 }
+                Thread.Sleep(100);
+
             }
         }
 
@@ -1202,7 +1227,7 @@ namespace Kappa
                             for (j = 0; j < numberOfIterations; j++)
                             {
                                 await AutoSkills();
-                                await Task.Delay(100);
+                                await Task.Delay(50);
                             }
                         }
                         if (checkBox15.Checked && int.TryParse(textBox4.Text, out j))
@@ -1233,7 +1258,7 @@ namespace Kappa
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills();
-                                    await Task.Delay(100);
+                                    await Task.Delay(50);
                                 }
                                 m.WriteMemory("004357E4", "bytes", originalcode_Path);
 
@@ -1251,7 +1276,7 @@ namespace Kappa
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
                                         Autobuff();
-                                        await Task.Delay(1000);
+                                        await Task.Delay(100);
                                     }
                                 }
 
@@ -1287,13 +1312,13 @@ namespace Kappa
                 int idskilltype2 = m.ReadByte(num.ToString("X"));
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
-                await Task.Delay(300);
+                await Task.Delay(100);
                 if (m.Read2Byte("00BDF3F0") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("00BDF3F0") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
                     Autobuff();
-                    await Task.Delay(300);
+                    await Task.Delay(100);
                 }
             }
             await Task.Delay(100);
@@ -1380,22 +1405,88 @@ namespace Kappa
 
         private void checkBox19_CheckedChanged(object sender, EventArgs e)
         {
+            BestAim();
+
             if (checkBox19.Checked)
             {
-                m.WriteMemory(sword1_adr, "int", "3");
-                m.WriteMemory(sword2_adr, "int", "3");
-                m.WriteMemory(sword3_adr, "int", "3");
-                m.WriteMemory(sword4_adr, "int", "3");
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                getadr = allocate_adr_BA.ToString("x");
 
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
+                0x0F, 0x85, 0x1D, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
+                };
+
+                // Calculate the jump offsets for the je and jmp instructions
+                int jumpOffset1 = (int)baseModuleadr + 0xDEFEC - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)baseModuleadr + 0xDEE86 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+
+                // Replace the jump offsets in the assembly code
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                jmpCodemy = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x0F, 0x1F, 0x44
+
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)baseModuleadr + 0xDEE7C + jmpCodemy.Length - 3);
+                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                m.WriteMemory("004DEE7C", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory(sword1_adr, "int", "1");
-                m.WriteMemory(sword2_adr, "int", "1");
-                m.WriteMemory(sword3_adr, "int", "1");
-                m.WriteMemory(sword4_adr, "int", "1");
+                if (allocate_adr_BA != IntPtr.Zero)
+                {
+                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                    allocate_adr_BA = IntPtr.Zero;
+                }
+
+                // Restore the original code
+                m.WriteMemory("004DEE7C", "bytes", originalcode_BA);
 
             }
         }
+
+        private async Task BestAim()
+        {
+            while (checkBox19.Checked)
+            {
+                if (checkBox19.Checked)
+                {
+                    int currentSkill = m.ReadInt("00FF8000,44");
+                    if (currentSkill > 0)
+                    {
+                        m.WriteMemory("00FF8000,44", "int", "3");
+                    }
+                    await Task.Delay(100);
+
+                }
+                Thread.Sleep(100);
+
+            }
+        }
+
+        private void checkBox20_CheckedChanged(object sender, EventArgs e)
+        {
+
+
+        }
     }
+
 }
