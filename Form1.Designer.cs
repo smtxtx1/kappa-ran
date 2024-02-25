@@ -192,7 +192,7 @@
             // checkBox12
             // 
             checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(6, 144);
+            checkBox12.Location = new Point(6, 98);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(79, 19);
             checkBox12.TabIndex = 12;
@@ -203,23 +203,25 @@
             // checkBox11
             // 
             checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(6, 122);
+            checkBox11.Location = new Point(90, 115);
             checkBox11.Name = "checkBox11";
             checkBox11.Size = new Size(61, 19);
             checkBox11.TabIndex = 11;
             checkBox11.Text = "Hit Tru";
             checkBox11.UseVisualStyleBackColor = true;
+            checkBox11.Visible = false;
             checkBox11.CheckedChanged += checkBox11_CheckedChanged;
             // 
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 100);
+            checkBox1.Location = new Point(105, 90);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(58, 19);
             checkBox1.TabIndex = 3;
             checkBox1.Text = "Drone";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.Visible = false;
             checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // checkBox2

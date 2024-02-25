@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
     <AssemblyName>interformnew</AssemblyName>
+    <Configurations>Debug;Release;RAN-INTER</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
