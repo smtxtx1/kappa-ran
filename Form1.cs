@@ -62,6 +62,10 @@ namespace Kappa
 
         public string saveID;
 
+        /// <summary>
+        /// POSITION 
+        /// </summary>
+
         public string CurrentX = "00BDF300";
 
         public string CurrentY = "00BDF304";
@@ -77,10 +81,17 @@ namespace Kappa
         public string gotoY = "00BDF404";
 
         public string gotoZ = "00BDF408";
+        /// <summary>
+        /// POSITION END
+        /// </summary>
 
         public float currentrange;
 
         public float currentrange2;
+
+        /// <summary>
+        /// ////// BUTTON START ////////////
+        /// </summary>
 
         public string LeftClick = "0324B5E8";
 
@@ -92,6 +103,13 @@ namespace Kappa
 
         public string RightArrow = "0324B4A9";
 
+        /// <summary>
+        /// ////// BUTTON END ////////////
+        /// </summary>
+
+            /// <summary>
+            /// Autoskill START ///////////////
+            /// </summary>
         public string prevskill1_adr = "00BDF490";
 
         public string prevskill2_adr = "00BDF492";
@@ -101,6 +119,11 @@ namespace Kappa
         public string Skilluse2_adr = "00BDF48E";
 
         public string forceattack_adr = "MiniA.exe+7DF520";
+
+
+        /// <summary>
+        /// Autoskill END ///////////////
+        /// </summary>
 
         public string Superpot = "0077572B";
 
