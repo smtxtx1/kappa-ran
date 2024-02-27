@@ -139,6 +139,7 @@
             checkBox6 = new CheckBox();
             checkBox20 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -897,6 +898,7 @@
             button6.TabIndex = 5;
             button6.Text = "Start";
             button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // button3
             // 
@@ -933,6 +935,10 @@
             // backgroundWorker1
             // 
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+            // 
+            // backgroundWorker2
+            // 
+            backgroundWorker2.DoWork += backgroundWorker2_DoWork;
             // 
             // Form1
             // 
@@ -1081,5 +1087,6 @@
         private TextBox textBox6;
         private CheckBox checkBox19;
         private CheckBox checkBox20;
+        private System.ComponentModel.BackgroundWorker backgroundWorker2;
     }
 }

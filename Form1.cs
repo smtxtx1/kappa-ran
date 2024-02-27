@@ -10,6 +10,7 @@ using Newtonsoft;
 using Newtonsoft.Json;
 using System.Web;
 using System.IO;
+using System.ComponentModel;
 
 namespace Kappa
 {
@@ -38,11 +39,11 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00BDD140";
+        public string NameAdr = "00BDF150";
 
-        public string DroneBypass = "005C7A28";
+        public string DroneBypass = "005C7A78";
 
-        public string IDadr = "MiniA.exe+7DD330";
+        public string IDadr = "00BDF340";
 
         public float GetX1;
 
@@ -66,21 +67,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00BDF300";
+        public string CurrentX = "00BE1310";
 
-        public string CurrentY = "00BDF304";
+        public string CurrentY = "00BE1314";
 
-        public string CurrentZ = "00BDF308";
+        public string CurrentZ = "00BE1318";
 
-        public string ZoomAdr = "03249B04";
+        public string ZoomAdr = "0324BB14";
 
-        public string AngleAdr = "03249AE4";
+        public string AngleAdr = "0324BAF4";
 
-        public string gotoX = "00BDF400";
+        public string gotoX = "00BE1410";
 
-        public string gotoY = "00BDF404";
+        public string gotoY = "00BE1414";
 
-        public string gotoZ = "00BDF408";
+        public string gotoZ = "00BE1418";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -107,18 +108,18 @@ namespace Kappa
         /// ////// BUTTON END ////////////
         /// </summary>
 
-            /// <summary>
-            /// Autoskill START ///////////////
-            /// </summary>
-        public string prevskill1_adr = "00BDF490";
+        /// <summary>
+        /// Autoskill START ///////////////
+        /// </summary>
+        public string prevskill1_adr = "00BE14A0";
 
-        public string prevskill2_adr = "00BDF492";
+        public string prevskill2_adr = "00BE14A2";
 
-        public string Skilluse1_adr = "00BDF48C";
+        public string Skilluse1_adr = "00BE149C";
 
-        public string Skilluse2_adr = "00BDF48E";
+        public string Skilluse2_adr = "00BE149E";
 
-        public string forceattack_adr = "MiniA.exe+7DF520";
+        public string forceattack_adr = "MiniA.exe+7E1530";
 
 
         /// <summary>
@@ -219,6 +220,7 @@ namespace Kappa
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
+            m.WriteMemory("0094FB3C", "float", "-1");
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -236,7 +238,7 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "200");
-                m.WriteMemory(DroneBypass, "byte", "eb");
+                m.WriteMemory(DroneBypass, "byte", "EB");
             }
             else
             {
@@ -467,7 +469,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00BDE46C; j <= 0x00BDED5C; j += 0xB0)
+            for (int j = 0x00BE047C; j <= 0x00BE0D6C; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -483,7 +485,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00BDD86C; k <= 0x00BDD890; k += 0x4)
+            for (int k = 0x00BDF87C; k <= 0x00BDF8A0; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -576,7 +578,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x357E4 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x358F4 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -795,7 +797,7 @@ namespace Kappa
         }
         private async Task Autosearchmonster()
         {
-            m.WriteMemory("00435C2D", "bytes", "90 90"); // bypass attacking
+            m.WriteMemory("00435D3D", "bytes", "90 90"); // bypass attacking
 
             int[] valuesToWrite = { 7, 10, 8, 6 };
 
@@ -883,7 +885,7 @@ namespace Kappa
             else
             {
                 // Show error message if item could not be added
-              //  MessageBox.Show("Error: Unable to add item to check_id_mon.");
+                //  MessageBox.Show("Error: Unable to add item to check_id_mon.");
             }
         }
 
@@ -913,8 +915,8 @@ namespace Kappa
                     await Task.Delay(10);
                 }
 
-                
-                
+
+
             }
         }
 
@@ -939,7 +941,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("00BDF3F0") != 3)
+                    if (m.Read2Byte("MiniA.exe+7E1400") != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1330,7 +1332,7 @@ namespace Kappa
             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
             await Task.Delay(100);
-            for (int i = 0x00BDD7F4; i <= 0x00BDD810; i += 4)
+            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
             {
                 int idskilltype1 = m.ReadByte(i.ToString("X"));
                 int num = i + 2;
@@ -1338,7 +1340,7 @@ namespace Kappa
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(100);
-                if (m.Read2Byte("00BDF3F0") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("00BDF3F0") != 3)
+                if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
@@ -1468,7 +1470,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset3 = (int)allocate_adr_BA - ((int)baseModuleadr + 0xDEE7C + jmpCodemy.Length - 3);
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)baseModuleadr + 0xDEBAC + jmpCodemy.Length - 3);
                 BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory("004DEBAC", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -1512,6 +1514,33 @@ namespace Kappa
 
 
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            autoskillsstand = true;
+            if (!backgroundWorker2.IsBusy)
+            {
+                backgroundWorker2.RunWorkerAsync();
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            autoskillsstand = false;
+            if (backgroundWorker2.IsBusy)
+            {
+                backgroundWorker2.CancelAsync();
+            }
+        }
+
+        private async void backgroundWorker2_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            while (autoskillsstand)
+            {
+              await AutoSkills();
+            }
+        }
+
     }
 
 }
