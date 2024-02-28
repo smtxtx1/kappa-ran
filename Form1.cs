@@ -1537,9 +1537,11 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-              await AutoSkills();
+                await AutoSkills();
+
             }
         }
+
 
     }
 
