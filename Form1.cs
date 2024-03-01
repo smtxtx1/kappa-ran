@@ -185,7 +185,8 @@ namespace Kappa
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
-            m.WriteMemory("0094FB3C", "float", "-1");
+            m.WriteMemory("0043C1D9", "byte", "EB");
+            m.WriteMemory("00954C04", "float", "-1");
 
 
         }
@@ -543,7 +544,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x46C54 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x46474 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory("00446474", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
