@@ -140,6 +140,7 @@
             checkBox20 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            checkBox21 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -179,6 +180,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox21);
             groupBox4.Controls.Add(checkBox18);
             groupBox4.Controls.Add(checkBox17);
             groupBox4.Controls.Add(checkBox16);
@@ -194,7 +196,7 @@
             groupBox4.Controls.Add(textBox3);
             groupBox4.Location = new Point(212, 6);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(171, 177);
+            groupBox4.Size = new Size(176, 177);
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
@@ -320,7 +322,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(105, 12);
+            textBox2.Location = new Point(61, 13);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(57, 19);
@@ -941,6 +943,17 @@
             // 
             backgroundWorker2.DoWork += backgroundWorker2_DoWork;
             // 
+            // checkBox21
+            // 
+            checkBox21.AutoSize = true;
+            checkBox21.Location = new Point(122, 13);
+            checkBox21.Name = "checkBox21";
+            checkBox21.Size = new Size(50, 19);
+            checkBox21.TabIndex = 17;
+            checkBox21.Text = "New";
+            checkBox21.UseVisualStyleBackColor = true;
+            checkBox21.CheckedChanged += checkBox21_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1089,5 +1102,6 @@
         private CheckBox checkBox19;
         private CheckBox checkBox20;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
+        private CheckBox checkBox21;
     }
 }
