@@ -126,11 +126,11 @@ namespace Kappa
         /// Autoskill END ///////////////
         /// </summary>
 
-        public string Superpot = "0077572B";
+        public string Superpot = "0077579B";
 
-        public string HpFreeze_1 = "00BDD220";
+        public string HpFreeze_1 = "MiniA.exe+7DF230";
 
-        public string HpFreeze_2 = "00BDD222";
+        public string HpFreeze_2 = "MiniA.exe+7DF232";
 
         public string Antislide = "004324D8";
 
@@ -766,7 +766,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xA2F16 - ((int)allocate_adr_Monview + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0xA2B76 - ((int)allocate_adr_Monview + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -780,16 +780,16 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Monview - ((int)baseModuleadr + 0xA2F10 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Monview - ((int)baseModuleadr + 0xA2B70 + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004A2F10", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("004A2B70", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
 
             }
             else
             {
-                m.WriteMemory("004A2F10", "bytes", originalcode_Monview);
+                m.WriteMemory("004A2B70", "bytes", originalcode_Monview);
                 if (allocate_adr_Monview != IntPtr.Zero)
                 {
                     processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -957,8 +957,29 @@ namespace Kappa
 
             }
         }
+        List<int> SkillID = new List<int>();
 
-        private void UpdatePositionAndPerformActions(float distance, float currentX_, float currentZ_)
+        private void GetSkillID()
+        {
+            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+            {
+                int idskilltype1 = m.ReadByte(i.ToString("X"));
+                int num = i + 2;
+                int idskilltype2 = m.ReadByte(num.ToString("X"));
+                int prevskill2 = m.ReadByte(prevskill2_adr);
+                if (idskilltype1 == 65535)
+                {
+                    continue;
+                }
+                if (idskilltype2 == 65535)
+                {
+                    continue;
+                }
+                SkillID.Add(i);
+                SkillID.Add(num);
+            }
+        }
+            private void UpdatePositionAndPerformActions(float distance, float currentX_, float currentZ_)
         {
             if (CurrentPos && IsPositionInRange(currentX_, GetX1, currentZ_, GetZ1))
             {
@@ -1343,13 +1364,13 @@ namespace Kappa
                 int idskilltype2 = m.ReadByte(num.ToString("X"));
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
-                await Task.Delay(100);
+                await Task.Delay(400);
                 if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
                     Autobuff();
-                    await Task.Delay(100);
+                    await Task.Delay(400);
                 }
             }
             await Task.Delay(100);
@@ -1407,11 +1428,11 @@ namespace Kappa
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory("007F95FE", "byte", "0");
+                m.WriteMemory("007FA900", "byte", "0");
             }
             else
             {
-                m.WriteMemory("007F95FE", "byte", "1");
+                m.WriteMemory("007FA900", "byte", "1");
             }
         }
 
