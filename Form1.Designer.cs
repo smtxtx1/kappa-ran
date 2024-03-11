@@ -164,7 +164,7 @@
             tabControl1.Location = new Point(2, 6);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(402, 429);
+            tabControl1.Size = new Size(402, 295);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -178,7 +178,7 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(394, 401);
+            tabPage1.Size = new Size(394, 267);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
             // 
@@ -211,6 +211,7 @@
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(72, 23);
             comboBox4.TabIndex = 4;
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
             // 
             // groupBox4
             // 
@@ -582,7 +583,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(394, 401);
+            tabPage2.Size = new Size(394, 267);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Settings";
             // 
@@ -669,6 +670,7 @@
             listView5.TabIndex = 15;
             listView5.UseCompatibleStateImageBehavior = false;
             listView5.View = View.Details;
+            listView5.Visible = false;
             // 
             // listView4
             // 
@@ -683,6 +685,7 @@
             listView4.TabIndex = 13;
             listView4.UseCompatibleStateImageBehavior = false;
             listView4.View = View.Details;
+            listView4.Visible = false;
             // 
             // listView3
             // 
@@ -697,6 +700,7 @@
             listView3.TabIndex = 14;
             listView3.UseCompatibleStateImageBehavior = false;
             listView3.View = View.Details;
+            listView3.Visible = false;
             // 
             // listView2
             // 
@@ -711,6 +715,7 @@
             listView2.TabIndex = 12;
             listView2.UseCompatibleStateImageBehavior = false;
             listView2.View = View.Details;
+            listView2.Visible = false;
             // 
             // listView1
             // 
@@ -725,6 +730,7 @@
             listView1.TabIndex = 11;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
+            listView1.Visible = false;
             // 
             // groupBox8
             // 
@@ -740,6 +746,7 @@
             groupBox8.TabIndex = 10;
             groupBox8.TabStop = false;
             groupBox8.Text = "Record Panel";
+            groupBox8.Visible = false;
             // 
             // comboBox3
             // 
@@ -983,7 +990,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 437);
+            ClientSize = new Size(405, 304);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.FixedSingle;

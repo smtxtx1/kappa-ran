@@ -72,9 +72,9 @@ namespace Kappa
 
         public string CurrentZ = "00BDF308";
 
-        public string ZoomAdr = "02F2D364";
+        public string ZoomAdr = "02F2C3F4";
 
-        public string AngleAdr = "02F2D344";
+        public string AngleAdr = "02F2C3D4";
 
         public string RightArrow = "02F2CD01";
 
@@ -88,33 +88,33 @@ namespace Kappa
 
         public float currentrange2;
 
-        public string LeftClick = "02F2CE40";
+        public string LeftClick = "02F2BED0";
 
-        public string RightClick = "02F2CE41";
+        public string RightClick = "02F2BD91";
 
-        public string AltButton = "02F2CC6C";
+        public string AltButton = "02F2BCFC";
 
-        public string prevskill1_adr = "00B748EC";
+        public string prevskill1_adr = "00B7397C";
 
-        public string prevskill2_adr = "00B748EE";
+        public string prevskill2_adr = "00B7397E";
 
-        public string Skilluse1_adr = "00B748E8";
+        public string Skilluse1_adr = "00B73978";
 
-        public string Skilluse2_adr = "00B748EA";
+        public string Skilluse2_adr = "00B7397A";
 
         public string forceattack_adr = "MiniA.exe+7DF520";
 
-        public string Spacebar = "03249405";
+        public string Spacebar = "02F2BCFD";
 
-        public string Superpot = "0078AD8B";
+        public string Superpot = "007815FB";
 
-        public string HpFreeze_1 = "00B71EA8";
+        public string HpFreeze_1 = "00B70F38";
 
-        public string HpFreeze_2 = "00B71EAC";
+        public string HpFreeze_2 = "00B70F3C";
 
         public string Antislide = "004324D8";
 
-        public string Wallhack = "005E4341";
+        public string Wallhack = "005DC891";
 
         public bool autoskillsstand = false;
 
@@ -240,6 +240,7 @@ namespace Kappa
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
+            m.WriteMemory("0094D46C", "float", "-1");
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -278,7 +279,7 @@ namespace Kappa
         {
             if (textBox2.Text != null && checkBox2.Checked)
             {
-                m.WriteMemory("00FF2000", "float", textBox2.Text);
+                m.WriteMemory("00FF3000", "float", textBox2.Text);
             }
 
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -960,7 +961,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("MiniA.exe+77484C") != 3)
+                    if (m.Read2Byte("MiniA.exe+7738DC") != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1357,18 +1358,18 @@ namespace Kappa
 
             for (int i = 0x00B7152C; i <= 0x00B71550; i += 4)
             {
-                
+
                 int idskilltype1 = m.ReadByte(i.ToString("X"));
                 int num = i + 2;
                 int idskilltype2 = m.ReadByte(num.ToString("X"));
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(100);
-                if(i == 65535)
+                if (i == 65535)
                 {
                     continue;
                 }
-                if (m.Read2Byte("MiniA.exe+77484C") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+77484C") != 3)
+                if (m.Read2Byte("MiniA.exe+7738DC") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7738DC") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
@@ -1548,7 +1549,7 @@ namespace Kappa
             int num = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
             if (num != 0)
             {
-                m.FreezeValue("00B757A6", "2bytes", num.ToString());
+                m.FreezeValue("00B74836", "2bytes", num.ToString());
 
             }
 
@@ -1581,10 +1582,14 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-               await AutoSkills();
+                await AutoSkills();
             }
         }
 
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
