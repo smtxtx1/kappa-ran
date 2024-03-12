@@ -127,6 +127,9 @@ namespace Kappa
         /// </summary>
 
         public string Superpot = "0077579B";
+        public string Superpot2 = "007757B8";
+        public string Superpot3 = "007757D6";
+
 
         public string HpFreeze_1 = "MiniA.exe+7DF230";
 
@@ -454,11 +457,18 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
-                m.WriteMemory(Superpot, "byte", "01");
+                m.WriteMemory(Superpot, "byte", "00");
+                m.WriteMemory(Superpot2, "byte", "00");
+
+                m.WriteMemory(Superpot3, "byte", "00");
+
             }
             else
             {
-                m.WriteMemory(Superpot, "byte", "02");
+                m.WriteMemory(Superpot, "byte", "01");
+                m.WriteMemory(Superpot2, "byte", "01");
+                m.WriteMemory(Superpot3, "byte", "01");
+
 
             }
         }
@@ -1364,13 +1374,13 @@ namespace Kappa
                 int idskilltype2 = m.ReadByte(num.ToString("X"));
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
-                await Task.Delay(400);
+                await Task.Delay(200);
                 if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
                     Autobuff();
-                    await Task.Delay(400);
+                    await Task.Delay(200);
                 }
             }
             await Task.Delay(100);
