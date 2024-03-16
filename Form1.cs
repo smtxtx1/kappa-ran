@@ -126,9 +126,9 @@ namespace Kappa
         /// Autoskill END ///////////////
         /// </summary>
 
-        public string Superpot = "0077579B";
-        public string Superpot2 = "007757B8";
-        public string Superpot3 = "007757D6";
+        public string Superpot = "007757B8";
+        public string Superpot2 = "007757D6";
+        public string Superpot3 = "007757F4";
 
 
         public string HpFreeze_1 = "MiniA.exe+7DF230";
@@ -649,9 +649,9 @@ namespace Kappa
                 float num = mem.ReadFloat(CurrentX);
                 float followY = mem.ReadFloat(CurrentY);
                 float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt("MINIA.EXE+7EB454");
-                mem.ReadInt("MINIA.EXE+7EB454");
-                int num3 = mem.ReadInt("MINIA.EXE+7EB454");
+                m.ReadInt("MiniA.exe+7E133C");
+                mem.ReadInt("MiniA.exe+7E133C");
+                int num3 = mem.ReadInt("MiniA.exe+7E133C");
                 float followXnew = num - 25f;
                 float followZnew = num2 - 35f;
                 if (mem.Read2Byte("MINIA.EXE+7EA568") == 1 && m.Read2Byte("MINIA.EXE+7EA568") != 3)
@@ -659,7 +659,7 @@ namespace Kappa
                     if (followXnew != previousX || followZnew != previousZ)
                     {
 
-                        mem.ReadInt("MINIA.EXE+7EB454");
+                        mem.ReadInt("MiniA.exe+7E133C");
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
@@ -677,12 +677,12 @@ namespace Kappa
                     {
                         if (mem.Read2Byte("MINIA.EXE+7EA568") != 3)
                         {
-                            for (int i = 0; i < 5; i++)
-                            {
-                                m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
-                                m.WriteMemory("MINIA.EXE+7EB454", "int", num3.ToString());
-                                m.WriteMemory(forceattack_adr, "int", "5");
-                            }
+                            //for (int i = 0; i < 5; i++)
+                            //{
+                            //    //m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
+                            //    //m.WriteMemory("MiniA.exe+7E133C", "int", num3.ToString());
+                            //    //m.WriteMemory(forceattack_adr, "int", "5");
+                            //}
                         }
                     }
                     else if (checkBox8.Checked && mem.Read2Byte("MINIA.EXE+7EA568") != 1)
@@ -700,35 +700,7 @@ namespace Kappa
                                 list.Add(item2);
                             }
                         }
-                        for (int k = 0x00BDC86C; k <= 0x00BDC890; k += 4)
-                        {
-                            if (m.Read2Byte(k.ToString("x")) == 65535)
-                            {
-                                continue;
-                            }
-                            int num5 = k + 2;
-                            int num6 = m.Read2Byte(k.ToString("x"));
-                            int num7 = m.Read2Byte(num5.ToString("x"));
-                            bool flag = false;
 
-                            foreach (int item3 in list)
-                            {
-                                if (item3 == num7)
-                                {
-                                    flag = true;
-                                    break;
-                                }
-                            }
-
-                            if (!flag)
-                            {
-                                m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
-                                m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                                m.WriteMemory(forceattack_adr, "int", "5");
-                                m.Read2Byte(k.ToString("x"));
-                                m.Read2Byte(num5.ToString("x"));
-                            }
-                        }
                     }
                     previousX = num;
                     previousZ = num2;
