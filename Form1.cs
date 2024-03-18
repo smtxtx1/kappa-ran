@@ -99,7 +99,7 @@ namespace Kappa
 
         public string Spacebar = "0322F815";
 
-        public string Superpot = "0077F06B";
+        public string Superpot = "0077B91B";
 
         public string HpFreeze_1 = "00BB78F8";
 
@@ -309,7 +309,7 @@ namespace Kappa
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xEE331 - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0xEDD61 - ((int)allocate_adr + assemblyCode.Length + 0); //+ 7
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -323,15 +323,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xEE32A + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xEDD5A + jmpCode.Length - 2);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004EE32A", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("004EDD5A", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("004EE32A", "bytes", originalcode_LR);
+                m.WriteMemory("004EDD5A", "bytes", originalcode_LR);
                 textBox3.Enabled = true;
                 if (allocate_adr != IntPtr.Zero)
                 {
@@ -983,11 +983,11 @@ namespace Kappa
         {
             if (checkBox12.Checked)
             {
-                m.WriteMemory("005F0251", "bytes", "EB");
+                m.WriteMemory("005EFFA1", "bytes", "EB");
             }
             else
             {
-                m.WriteMemory("005F0251", "bytes", "74");
+                m.WriteMemory("005EFFA1", "bytes", "74");
             }
         }
 
