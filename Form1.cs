@@ -241,6 +241,35 @@ namespace Kappa
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             m.WriteMemory("0095546C", "float", "-1");
+            m.WriteMemory("0094FB3C", "float", "-1");
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 66 01", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
+            IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
+            IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
+
+
+            long last = test.FirstOrDefault();
+
+            MessageBox.Show("" + last);
+            AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
+            AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
+            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
+            AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
+            AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
+            AOB_LR = AoB_Scan_LR.FirstOrDefault();
+            AOB_BA = AoB_Scan_BA.FirstOrDefault();
+            //
+            HT_ADR_RESULT = AOB_HT.ToString("x");
+            WH_ADR_RESULT = AOB_WH.ToString("x");
+            SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
+            AOE_ADR_RESULT = AOB_AOE.ToString("x");
+            LR_ADR_RESULT = AOB_LR.ToString("x");
+            BA_ADR_RESULT = AOB_BA.ToString("x");
+            PATH_ADR_RESULT = AOB_PATH.ToString("x");
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
