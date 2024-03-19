@@ -2,8 +2,10 @@
 // ranall.Login
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Security.AccessControl;
 using System.Windows.Forms;
 using Kappa;
@@ -12,18 +14,24 @@ using KeyAuth;
 
 public class Login : Form
 {
-    public static api KeyAuthApp = new api("smbotenglish", "zbtz7lqHV9", "bc923a5105f16fd9b12ae6a1ceee8660f1116f8af26061a1b75e9dae2c590e22", "1.4.6"); private IContainer components;
+
+    public static api KeyAuthApp = new api(
+        name: "smbotenglish",
+        ownerid: "zbtz7lqHV9",
+        secret: "bc923a5105f16fd9b12ae6a1ceee8660f1116f8af26061a1b75e9dae2c590e22",
+        version: "1.4.6" /*,
+    path: @"Your_Path_Here" */ // see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
+    );
+
+    private IContainer components;
 
     private TextBox key;
 
     private Button button1;
-
     public Login()
     {
-        KeyAuthApp.init();
         InitializeComponent();
     }
-
     private void button1_Click(object sender, EventArgs e)
     {
         KeyAuthApp.license(key.Text);
@@ -80,6 +88,50 @@ public class Login : Form
 
     private void Login_Load(object sender, EventArgs e)
     {
+        KeyAuthApp.init();
+
+        if (KeyAuthApp.response.message == "invalidver")
+        {
+            if (!string.IsNullOrEmpty(KeyAuthApp.app_data.downloadLink))
+            {
+                DialogResult dialogResult = MessageBox.Show("Yes to open file in browser\nNo to download file automatically", "Auto update", MessageBoxButtons.YesNo);
+                switch (dialogResult)
+                {
+                    case DialogResult.Yes:
+                        Process.Start(KeyAuthApp.app_data.downloadLink);
+                        Environment.Exit(0);
+                        break;
+                    case DialogResult.No:
+                        WebClient webClient = new WebClient();
+                        string destFile = Application.ExecutablePath;
+                        webClient.DownloadFile(KeyAuthApp.app_data.downloadLink, destFile);
+
+                        Process.Start(destFile);
+                        Process.Start(new ProcessStartInfo()
+                        {
+                            Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Application.ExecutablePath + "\"",
+                            WindowStyle = ProcessWindowStyle.Hidden,
+                            CreateNoWindow = true,
+                            FileName = "cmd.exe"
+                        });
+                        Environment.Exit(0);
+
+                        break;
+                    default:
+                        MessageBox.Show("Invalid option");
+                        Environment.Exit(0);
+                        break;
+                }
+            }
+            MessageBox.Show("Version of this program does not match the one online. Furthermore, the download link online isn't set. You will need to manually obtain the download link from the developer");
+            Environment.Exit(0);
+        }
+
+        if (!KeyAuthApp.response.success)
+        {
+            MessageBox.Show(KeyAuthApp.response.message);
+            Environment.Exit(0);
+        }
     }
 
     private string ReadKeyFromFile()
@@ -163,6 +215,8 @@ public class Login : Form
 
     private void Login_Load_1(object sender, EventArgs e)
     {
+        KeyAuthApp.init();
+
         string value = ReadKeyFromFile();
         if (!string.IsNullOrEmpty(value))
         {

@@ -41,6 +41,32 @@ namespace Kappa
 
         public string NameAdr = "00BDF150";
 
+        public long AOB_AOE;
+        public long AOB_PATH;
+        public long AOB_BA;
+        public long AOB_LR;
+        public long AOB_Superpot;
+        public long AOB_WH;
+        public long AOB_HT;
+
+        public string HT_ADR_RESULT;
+        public string WH_ADR_RESULT;
+        public string AOE_ADR_RESULT;
+        public string LR_ADR_RESULT;
+        public string BA_ADR_RESULT;
+        public string PATH_ADR_RESULT;
+        public string SUPERPOT_ADR_RESULT;
+
+
+
+
+        //    //            AOE_ADR_RESULT = AOB_AOE.ToString("x");
+        //    LR_ADR_RESULT = AOB_LR.ToString("x");
+        //BA_ADR_RESULT = AOB_BA.ToString("x");
+        //    PATH_ADR_RESULT = AOB_PATH.ToString("x");
+
+
+
         public string DroneBypass = "005C7A78";
 
         public string IDadr = "00BDF340";
@@ -217,13 +243,41 @@ namespace Kappa
             }
 
         }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        
+        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             m.WriteMemory("0094FB3C", "float", "-1");
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 66 01", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
+            IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
+            IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
+
+            
+            long last = test.FirstOrDefault();
+
+            MessageBox.Show(""+last);
+            AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
+            AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
+            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
+            AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
+            AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
+            AOB_LR = AoB_Scan_LR.FirstOrDefault();
+            AOB_BA = AoB_Scan_BA.FirstOrDefault();
+            //
+            HT_ADR_RESULT = AOB_HT.ToString("x");
+            WH_ADR_RESULT = AOB_WH.ToString("x");
+            SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
+            AOE_ADR_RESULT = AOB_AOE.ToString("x");
+            LR_ADR_RESULT = AOB_LR.ToString("x");
+            BA_ADR_RESULT = AOB_BA.ToString("x");
+            PATH_ADR_RESULT = AOB_PATH.ToString("x");
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -276,16 +330,16 @@ namespace Kappa
             {
                 textBox2.Enabled = false;
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-
+                
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
-            0xD8,0x25,0x00,0x50,0xFF,0x00,0xD8,0x5C,0x24,0x0C,0xDF,0xE0,// fnstsw ax
-            0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
+                    0xD8,0x25,0x00,0x50,0xFF,0x00,0xD8,0x5C,0x24,0x0C,0xDF,0xE0,// fnstsw ax
+                    0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
                 };
 
                 // Calculate the jump offset
-                int jumpOffset = (int)baseModuleadr + 0x1E7EA6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_AOE+6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the assembly code to the allocated address
@@ -294,16 +348,16 @@ namespace Kappa
                 // Code for jmp to allocated address with nop
                 byte[] jmpCode = new byte[]
                 {
-            0xE9, 0x00, 0x00, 0x00, 0x00,
-            0x90
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
                 };
 
                 // Calculate the jump offset
-                int jmpOffset2 = (int)allocate_adr_aoe - ((int)baseModuleadr + 0x1E7EA0 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_aoe - ((int)AOB_AOE + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);
 
                 // Write the second jmp instruction to the specified address
-                m.WriteMemory("005E7EA0", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory(AOE_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
@@ -316,7 +370,7 @@ namespace Kappa
                 }
 
                 // Write the original code back
-                m.WriteMemory("005E7EA0", "bytes", originalcode_ALE);
+                m.WriteMemory(AOE_ADR_RESULT, "bytes", originalcode_ALE);
             }
         }
 
@@ -350,7 +404,7 @@ namespace Kappa
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xDF08E - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_LR+7 - ((int)allocate_adr + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -364,15 +418,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xDF087 + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr - ((int)AOB_LR + jmpCode.Length - 2);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004DF087", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory(LR_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("004DF087", "bytes", originalcode_LR);
+                m.WriteMemory(LR_ADR_RESULT, "bytes", originalcode_LR);
                 textBox3.Enabled = true;
                 if (allocate_adr != IntPtr.Zero)
                 {
@@ -457,19 +511,11 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
-                m.WriteMemory(Superpot, "byte", "00");
-                m.WriteMemory(Superpot2, "byte", "00");
-
-                m.WriteMemory(Superpot3, "byte", "00");
-
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
             }
             else
             {
-                m.WriteMemory(Superpot, "byte", "01");
-                m.WriteMemory(Superpot2, "byte", "01");
-                m.WriteMemory(Superpot3, "byte", "01");
-
-
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
             }
         }
 
@@ -1034,11 +1080,11 @@ namespace Kappa
         {
             if (checkBox11.Checked)
             {
-                m.WriteMemory("004DF7C2", "bytes", "90 90 90 90");
+                m.WriteMemory(HT_ADR_RESULT, "bytes", "90 90 90 90");
             }
             else
             {
-                m.WriteMemory("004DF7C2", "bytes", "D9 44 24 44");
+                m.WriteMemory(HT_ADR_RESULT, "bytes", "D9 44 24 44");
             }
         }
 
@@ -1046,11 +1092,11 @@ namespace Kappa
         {
             if (checkBox12.Checked)
             {
-                m.WriteMemory(Wallhack, "bytes", "EB");
+                m.WriteMemory(WH_ADR_RESULT, "bytes", "EB 23 8B 4C 24 34");
             }
             else
             {
-                m.WriteMemory(Wallhack, "bytes", "74");
+                m.WriteMemory(WH_ADR_RESULT, "bytes", "74 23 8B 4C 24 34");
             }
         }
 
@@ -1459,8 +1505,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)baseModuleadr + 0xDED1C - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)baseModuleadr + 0xDEBB6 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)AOB_BA + 170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)AOB_BA + 10 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
@@ -1477,13 +1523,13 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset3 = (int)allocate_adr_BA - ((int)baseModuleadr + 0xDEBAC + jmpCodemy.Length - 3);
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)AOB_BA + jmpCodemy.Length - 3);
                 BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory("004DEBAC", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
-            {
+            { 
                 if (allocate_adr_BA != IntPtr.Zero)
                 {
                     IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -1492,7 +1538,7 @@ namespace Kappa
                 }
 
                 // Restore the original code
-                m.WriteMemory("004DEBAC", "bytes", originalcode_BA);
+                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
 
             }
         }
