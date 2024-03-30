@@ -33,13 +33,13 @@ namespace Kappa
         // public string Drone_adr = "MiniA.exe+2E49A60";
         public string ServerName = "Kappa";
 
-        public string FastZoom = "0324BA7C";
+        public string FastZoom = "031F1E1C";
 
         public string AOE_adr = "";
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00BDF150";
+        public string NameAdr = "00D2F8D8";
 
         public long AOB_AOE;
         public long AOB_PATH;
@@ -69,7 +69,7 @@ namespace Kappa
 
         public string DroneBypass = "005C7A78";
 
-        public string IDadr = "00BDF340";
+        public string IDadr = "00D2FAC8";
 
         public float GetX1;
 
@@ -93,21 +93,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00BE1310";
+        public string CurrentX = "00D31A98";
 
-        public string CurrentY = "00BE1314";
+        public string CurrentY = "00D31A98+4";
 
-        public string CurrentZ = "00BE1318";
+        public string CurrentZ = "00D31A98+8";
 
-        public string ZoomAdr = "0324BB14";
+        public string ZoomAdr = "minia.exe+2DF1ED4";
 
-        public string AngleAdr = "0324BAF4";
+        public string AngleAdr = "minia.exe+2DF1ED4+20";
 
-        public string gotoX = "00BE1410";
+        public string gotoX = "00D31ADC";
 
-        public string gotoY = "00BE1414";
+        public string gotoY = "00D31ADC+4";
 
-        public string gotoZ = "00BE1418";
+        public string gotoZ = "00D31ADC+8";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -120,15 +120,15 @@ namespace Kappa
         /// ////// BUTTON START ////////////
         /// </summary>
 
-        public string LeftClick = "0324B5E8";
+        public string LeftClick = "031F1998";
 
-        public string RightClick = "0324B5E9";
+        public string RightClick = "031F1998+1";
 
-        public string AltButton = "0324B414";
+        public string AltButton = "031F17C4";
 
-        public string Spacebar = "0324B415";
+        public string Spacebar = "031F17C4+1";
 
-        public string RightArrow = "0324B4A9";
+        public string RightArrow = "031F1859";
 
         /// <summary>
         /// ////// BUTTON END ////////////
@@ -137,13 +137,13 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00BE14A0";
+        public string prevskill1_adr = "00D31C28";
 
-        public string prevskill2_adr = "00BE14A2";
+        public string prevskill2_adr = "00D31C2A";
 
-        public string Skilluse1_adr = "00BE149C";
+        public string Skilluse1_adr = "00D31C24";
 
-        public string Skilluse2_adr = "00BE149E";
+        public string Skilluse2_adr = "00D31C26";
 
         public string forceattack_adr = "MiniA.exe+7E1530";
 
@@ -157,9 +157,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "MiniA.exe+7DF230";
+        public string HpFreeze_1 = "minia.exe+92F9B8";
 
-        public string HpFreeze_2 = "MiniA.exe+7DF232";
+        public string HpFreeze_2 = "minia.exe+92F9B8+2";
 
         public string Antislide = "004324D8";
 
@@ -252,7 +252,7 @@ namespace Kappa
             m.WriteMemory("0094FB3C", "float", "-1");
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 66 01", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 66 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
@@ -262,7 +262,7 @@ namespace Kappa
             
             long last = test.FirstOrDefault();
 
-            MessageBox.Show(""+last);
+            
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -311,7 +311,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
-        string originalcode_BA = "83 7F 44 01 0F 85 66 01";
+        string originalcode_BA = "83 7F 44 01 0F 85 66 01 00 00";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -522,7 +522,6 @@ namespace Kappa
         private async void Autobuff()
         {
             await Task.Delay(1);
-            m.WriteMemory(LeftClick, "byte", "01");
             List<int> list = new List<int>();
             if (list.Count == 5)
             {
@@ -558,13 +557,13 @@ namespace Kappa
 
                 if (!list.Contains(num7))
                 {
-                    m.FreezeValue(RightClick, "int", "63");
                     m.WriteMemory(Skilluse1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    Thread.Sleep(10);
-                    m.UnfreezeValue(RightClick);
+                    m.WriteMemory("MiniA.exe+7E1530", "int", "5");
+
+                    Thread.Sleep(500);
 
                 }
                 if (list.Contains(num7))
@@ -1505,8 +1504,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)AOB_BA + 10 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)AOB_BA + 368 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)AOB_BA + 16 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
