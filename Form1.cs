@@ -99,9 +99,9 @@ namespace Kappa
 
         public string CurrentZ = "00D31A98+8";
 
-        public string ZoomAdr = "minia.exe+2DF1ED4";
+        public string ZoomAdr = "minia.exe+2DF1EB4";
 
-        public string AngleAdr = "minia.exe+2DF1ED4+20";
+        public string AngleAdr = "031F1E94";
 
         public string gotoX = "00D31ADC";
 
@@ -252,14 +252,14 @@ namespace Kappa
             m.WriteMemory("0094FB3C", "float", "-1");
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 66 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
 
-            
+            m.WriteMemory("004234FD", "bytes", "90 90");
             long last = test.FirstOrDefault();
 
             
@@ -311,7 +311,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
-        string originalcode_BA = "83 7F 44 01 0F 85 66 01 00 00";
+        string originalcode_BA = "83 7F 44 01 0F 85 64 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -528,7 +528,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00BE047C; j <= 0x00BE0D6C; j += 0xB0)
+            for (int j = 0x00D30C04; j <= 0x00BE0D6C; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -544,7 +544,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00BDF87C; k <= 0x00BDF8A0; k += 0x4)
+            for (int k = 0x00D30004; k <= 0x00D30028; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -564,6 +564,7 @@ namespace Kappa
                     m.WriteMemory("MiniA.exe+7E1530", "int", "5");
 
                     Thread.Sleep(500);
+                    
 
                 }
                 if (list.Contains(num7))
@@ -620,8 +621,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)baseModuleadr + 0x3591D - ((int)allocate_adr_Path + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)baseModuleadr + 0x358FA - ((int)allocate_adr_Path + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)AOB_PATH + 0x29 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // -29
+                int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
@@ -637,10 +638,10 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x358F4 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)AOB_PATH + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
             {
@@ -652,7 +653,7 @@ namespace Kappa
                 }
 
                 // Restore the original code
-                m.WriteMemory("004358F4", "bytes", originalcode_Path);
+                m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
             }
 
@@ -836,7 +837,7 @@ namespace Kappa
             {
                 try
                 {
-                    m.WriteMemory("004358F4", "bytes", originalcode_Path);
+                    m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
                     List<int> check_id_mon = new List<int>();
                     listView11.Items.Clear();
@@ -1026,7 +1027,7 @@ namespace Kappa
 
         private void UpdatePosition(float x, float y, float z)
         {
-            m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             m.WriteMemory(getadr + "+4", "float", x.ToString());
             m.WriteMemory(getadr + "+C", "float", y.ToString());
             m.WriteMemory(getadr + "+14", "float", z.ToString());
@@ -1034,7 +1035,7 @@ namespace Kappa
             Thread.Sleep(10);
             m.WriteMemory(LeftClick, "int", "01");
             Thread.Sleep(100);
-            m.WriteMemory("004358F4", "bytes", originalcode_Path);
+            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
         }
 
@@ -1307,11 +1308,13 @@ namespace Kappa
                             {
                                 await AutoSkills();
                                 await Task.Delay(50);
+                                 Autobuff();
+
                             }
                         }
                         if (checkBox15.Checked && int.TryParse(textBox4.Text, out j))
                         {
-                            m.WriteMemory("004358F4", "bytes", originalcode_Path);
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 m.WriteMemory(Spacebar, "byte", "63");
@@ -1319,7 +1322,7 @@ namespace Kappa
                                 m.WriteMemory(Spacebar, "byte", "01");
                                 await Task.Delay(50);
                             }
-                            m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
                             int j2;
                             if (int.TryParse(textBox1.Text, out var numberOfIterations2))
@@ -1339,7 +1342,7 @@ namespace Kappa
                                     await AutoSkills();
                                     await Task.Delay(50);
                                 }
-                                m.WriteMemory("004358F4", "bytes", originalcode_Path);
+                                m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
@@ -1348,7 +1351,7 @@ namespace Kappa
                                     m.WriteMemory(Spacebar, "byte", "01");
                                     await Task.Delay(50);
                                 }
-                                m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                                m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
                                 {
                                     int j3;
@@ -1361,7 +1364,7 @@ namespace Kappa
 
                             }
 
-                            m.WriteMemory("004358F4", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                         }
                     }
 
@@ -1384,7 +1387,7 @@ namespace Kappa
             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
             await Task.Delay(100);
-            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+            for (int i = 0x00D2FF8C; i <= 0x00D2FFB0; i += 4)
             {
                 int idskilltype1 = m.ReadByte(i.ToString("X"));
                 int num = i + 2;
@@ -1499,13 +1502,13 @@ namespace Kappa
                 byte[] assemblyCode = new byte[]
                 {
                 0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x1D, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 368 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)AOB_BA + 16 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);

@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
     <AssemblyName>$(MSBuildProjectName)321</AssemblyName>
-    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD</Configurations>
+    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
