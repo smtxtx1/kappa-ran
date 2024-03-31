@@ -519,7 +519,7 @@ namespace Kappa
             }
         }
 
-        private async void Autobuff()
+        private async Task Autobuff()
         {
             await Task.Delay(1);
             List<int> list = new List<int>();
@@ -528,7 +528,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D30C04; j <= 0x00BE0D6C; j += 0xB0)
+            for (int j = 0x00D30C04; j <= 0x00D314F4; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -557,14 +557,14 @@ namespace Kappa
 
                 if (!list.Contains(num7))
                 {
+                    
                     m.WriteMemory(Skilluse1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    m.WriteMemory("MiniA.exe+7E1530", "int", "5");
-
-                    Thread.Sleep(500);
-                    
+                    m.WriteMemory(RightClick, "byte", "63");
+                    await Task.Delay(500);
+                    m.WriteMemory(RightClick, "byte", "01");
 
                 }
                 if (list.Contains(num7))
@@ -973,7 +973,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                    if (m.Read2Byte("minia.exe+931B88") != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1253,6 +1253,7 @@ namespace Kappa
                 {
                     if (backgroundWorker1.CancellationPending)
                     {
+                        backgroundWorker1.CancelAsync();
                         break;
                     }
                     ListViewItem listViewItem = listView.Items[currentIndex];
@@ -1308,7 +1309,6 @@ namespace Kappa
                             {
                                 await AutoSkills();
                                 await Task.Delay(50);
-                                 Autobuff();
 
                             }
                         }
@@ -1395,11 +1395,10 @@ namespace Kappa
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(200);
-                if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype2 != prevskill2 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
+                if (m.Read2Byte("minia.exe+931B88") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("minia.exe+931B88") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
-                    Autobuff();
                     await Task.Delay(200);
                 }
             }
@@ -1593,6 +1592,7 @@ namespace Kappa
             while (autoskillsstand)
             {
                 await AutoSkills();
+                await Autobuff();
 
             }
         }
