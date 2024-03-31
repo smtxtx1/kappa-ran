@@ -30,7 +30,11 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            groupBox9 = new GroupBox();
+            button13 = new Button();
+            comboBox4 = new ComboBox();
             groupBox4 = new GroupBox();
+            checkBox21 = new CheckBox();
             checkBox18 = new CheckBox();
             checkBox17 = new CheckBox();
             checkBox16 = new CheckBox();
@@ -48,18 +52,6 @@
             button2 = new Button();
             label2 = new Label();
             comboBox2 = new ComboBox();
-            groupBox3 = new GroupBox();
-            textBox5 = new TextBox();
-            listView11 = new ListView();
-            columnHeader41 = new ColumnHeader();
-            columnHeader42 = new ColumnHeader();
-            columnHeader43 = new ColumnHeader();
-            columnHeader44 = new ColumnHeader();
-            columnHeader45 = new ColumnHeader();
-            button5 = new Button();
-            button4 = new Button();
-            checkBox10 = new CheckBox();
-            checkBox9 = new CheckBox();
             groupBox1 = new GroupBox();
             button1 = new Button();
             label1 = new Label();
@@ -137,21 +129,33 @@
             button6 = new Button();
             button3 = new Button();
             checkBox6 = new CheckBox();
+            groupBox3 = new GroupBox();
+            textBox5 = new TextBox();
+            listView11 = new ListView();
+            columnHeader41 = new ColumnHeader();
+            columnHeader42 = new ColumnHeader();
+            columnHeader43 = new ColumnHeader();
+            columnHeader44 = new ColumnHeader();
+            columnHeader45 = new ColumnHeader();
+            button5 = new Button();
+            button4 = new Button();
+            checkBox10 = new CheckBox();
+            checkBox9 = new CheckBox();
             checkBox20 = new CheckBox();
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            checkBox21 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            groupBox9.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
             tabPage2.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -167,9 +171,9 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(groupBox9);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox2);
-            tabPage1.Controls.Add(groupBox3);
             tabPage1.Controls.Add(groupBox1);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
@@ -177,6 +181,36 @@
             tabPage1.Size = new Size(394, 401);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
+            // 
+            // groupBox9
+            // 
+            groupBox9.Controls.Add(button13);
+            groupBox9.Controls.Add(comboBox4);
+            groupBox9.Location = new Point(6, 198);
+            groupBox9.Name = "groupBox9";
+            groupBox9.Size = new Size(324, 59);
+            groupBox9.TabIndex = 4;
+            groupBox9.TabStop = false;
+            groupBox9.Text = "Pet Skills";
+            // 
+            // button13
+            // 
+            button13.Location = new Point(239, 21);
+            button13.Name = "button13";
+            button13.Size = new Size(59, 23);
+            button13.TabIndex = 3;
+            button13.Text = "Get PID";
+            button13.UseVisualStyleBackColor = true;
+            button13.Click += button13_Click;
+            // 
+            // comboBox4
+            // 
+            comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox4.FormattingEnabled = true;
+            comboBox4.Location = new Point(6, 22);
+            comboBox4.Name = "comboBox4";
+            comboBox4.Size = new Size(107, 23);
+            comboBox4.TabIndex = 1;
             // 
             // groupBox4
             // 
@@ -200,6 +234,17 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox21
+            // 
+            checkBox21.AutoSize = true;
+            checkBox21.Location = new Point(122, 13);
+            checkBox21.Name = "checkBox21";
+            checkBox21.Size = new Size(50, 19);
+            checkBox21.TabIndex = 17;
+            checkBox21.Text = "New";
+            checkBox21.UseVisualStyleBackColor = true;
+            checkBox21.CheckedChanged += checkBox21_CheckedChanged;
             // 
             // checkBox18
             // 
@@ -381,108 +426,6 @@
             comboBox2.Size = new Size(107, 23);
             comboBox2.TabIndex = 1;
             comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
-            // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(textBox5);
-            groupBox3.Controls.Add(listView11);
-            groupBox3.Controls.Add(button5);
-            groupBox3.Controls.Add(button4);
-            groupBox3.Controls.Add(checkBox10);
-            groupBox3.Controls.Add(checkBox9);
-            groupBox3.Location = new Point(6, 198);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(382, 197);
-            groupBox3.TabIndex = 12;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Auto Farm";
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(173, 38);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(57, 23);
-            textBox5.TabIndex = 16;
-            // 
-            // listView11
-            // 
-            listView11.BackColor = SystemColors.InactiveCaptionText;
-            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43, columnHeader44, columnHeader45 });
-            listView11.ForeColor = SystemColors.Info;
-            listView11.GridLines = true;
-            listView11.Location = new Point(6, 67);
-            listView11.Name = "listView11";
-            listView11.Size = new Size(362, 124);
-            listView11.TabIndex = 15;
-            listView11.UseCompatibleStateImageBehavior = false;
-            listView11.View = View.Details;
-            // 
-            // columnHeader41
-            // 
-            columnHeader41.Text = "ID mon";
-            columnHeader41.Width = 65;
-            // 
-            // columnHeader42
-            // 
-            columnHeader42.Text = "Hp mon";
-            columnHeader42.Width = 65;
-            // 
-            // columnHeader43
-            // 
-            columnHeader43.Text = "X mon";
-            columnHeader43.Width = 65;
-            // 
-            // columnHeader44
-            // 
-            columnHeader44.Text = "Y mon";
-            columnHeader44.Width = 65;
-            // 
-            // columnHeader45
-            // 
-            columnHeader45.Text = "Z mon";
-            columnHeader45.Width = 65;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(87, 38);
-            button5.Name = "button5";
-            button5.Size = new Size(75, 23);
-            button5.TabIndex = 14;
-            button5.Text = "Get2pos";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // button4
-            // 
-            button4.Location = new Point(6, 38);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 13;
-            button4.Text = "Get1pos";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // checkBox10
-            // 
-            checkBox10.AutoSize = true;
-            checkBox10.Location = new Point(6, 13);
-            checkBox10.Name = "checkBox10";
-            checkBox10.Size = new Size(86, 19);
-            checkBox10.TabIndex = 12;
-            checkBox10.Text = "Code inject";
-            checkBox10.UseVisualStyleBackColor = true;
-            checkBox10.CheckedChanged += checkBox10_CheckedChanged;
-            // 
-            // checkBox9
-            // 
-            checkBox9.AutoSize = true;
-            checkBox9.Location = new Point(105, 13);
-            checkBox9.Name = "checkBox9";
-            checkBox9.Size = new Size(89, 19);
-            checkBox9.TabIndex = 11;
-            checkBox9.Text = "Auto Attack";
-            checkBox9.UseVisualStyleBackColor = true;
-            checkBox9.CheckedChanged += checkBox9_CheckedChanged;
             // 
             // groupBox1
             // 
@@ -924,6 +867,108 @@
             checkBox6.UseVisualStyleBackColor = true;
             checkBox6.CheckedChanged += checkBox6_CheckedChanged;
             // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(textBox5);
+            groupBox3.Controls.Add(listView11);
+            groupBox3.Controls.Add(button5);
+            groupBox3.Controls.Add(button4);
+            groupBox3.Controls.Add(checkBox10);
+            groupBox3.Controls.Add(checkBox9);
+            groupBox3.Location = new Point(476, 299);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(382, 197);
+            groupBox3.TabIndex = 12;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Auto Farm";
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(173, 38);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(57, 23);
+            textBox5.TabIndex = 16;
+            // 
+            // listView11
+            // 
+            listView11.BackColor = SystemColors.InactiveCaptionText;
+            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43, columnHeader44, columnHeader45 });
+            listView11.ForeColor = SystemColors.Info;
+            listView11.GridLines = true;
+            listView11.Location = new Point(6, 67);
+            listView11.Name = "listView11";
+            listView11.Size = new Size(362, 124);
+            listView11.TabIndex = 15;
+            listView11.UseCompatibleStateImageBehavior = false;
+            listView11.View = View.Details;
+            // 
+            // columnHeader41
+            // 
+            columnHeader41.Text = "ID mon";
+            columnHeader41.Width = 65;
+            // 
+            // columnHeader42
+            // 
+            columnHeader42.Text = "Hp mon";
+            columnHeader42.Width = 65;
+            // 
+            // columnHeader43
+            // 
+            columnHeader43.Text = "X mon";
+            columnHeader43.Width = 65;
+            // 
+            // columnHeader44
+            // 
+            columnHeader44.Text = "Y mon";
+            columnHeader44.Width = 65;
+            // 
+            // columnHeader45
+            // 
+            columnHeader45.Text = "Z mon";
+            columnHeader45.Width = 65;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(87, 38);
+            button5.Name = "button5";
+            button5.Size = new Size(75, 23);
+            button5.TabIndex = 14;
+            button5.Text = "Get2pos";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(6, 38);
+            button4.Name = "button4";
+            button4.Size = new Size(75, 23);
+            button4.TabIndex = 13;
+            button4.Text = "Get1pos";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // checkBox10
+            // 
+            checkBox10.AutoSize = true;
+            checkBox10.Location = new Point(6, 13);
+            checkBox10.Name = "checkBox10";
+            checkBox10.Size = new Size(86, 19);
+            checkBox10.TabIndex = 12;
+            checkBox10.Text = "Code inject";
+            checkBox10.UseVisualStyleBackColor = true;
+            checkBox10.CheckedChanged += checkBox10_CheckedChanged;
+            // 
+            // checkBox9
+            // 
+            checkBox9.AutoSize = true;
+            checkBox9.Location = new Point(105, 13);
+            checkBox9.Name = "checkBox9";
+            checkBox9.Size = new Size(89, 19);
+            checkBox9.TabIndex = 11;
+            checkBox9.Text = "Auto Attack";
+            checkBox9.UseVisualStyleBackColor = true;
+            checkBox9.CheckedChanged += checkBox9_CheckedChanged;
+            // 
             // checkBox20
             // 
             checkBox20.AutoSize = true;
@@ -943,24 +988,14 @@
             // 
             backgroundWorker2.DoWork += backgroundWorker2_DoWork;
             // 
-            // checkBox21
-            // 
-            checkBox21.AutoSize = true;
-            checkBox21.Location = new Point(122, 13);
-            checkBox21.Name = "checkBox21";
-            checkBox21.Size = new Size(50, 19);
-            checkBox21.TabIndex = 17;
-            checkBox21.Text = "New";
-            checkBox21.UseVisualStyleBackColor = true;
-            checkBox21.CheckedChanged += checkBox21_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 437);
+            ClientSize = new Size(406, 441);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
+            Controls.Add(groupBox3);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Form1";
@@ -969,12 +1004,11 @@
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            groupBox9.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tabPage2.ResumeLayout(false);
@@ -985,6 +1019,8 @@
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1103,5 +1139,8 @@
         private CheckBox checkBox20;
         private System.ComponentModel.BackgroundWorker backgroundWorker2;
         private CheckBox checkBox21;
+        private GroupBox groupBox9;
+        private Button button13;
+        private ComboBox comboBox4;
     }
 }

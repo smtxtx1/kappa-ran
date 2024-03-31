@@ -27,11 +27,29 @@ namespace Kappa
 
             public string Z { get; set; }
         }
+        public class ComboBoxItem
+        {
+            public string DisplayText { get; set; }
+
+            public string Value { get; set; }
+
+            public ComboBoxItem(string displayText, string value)
+            {
+                DisplayText = displayText;
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return DisplayText;
+            }
+        }
+
         private Mem m = new Mem();
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Kappa";
+        public string ServerName = "Ran-Next";
 
         public string FastZoom = "031F1E1C";
 
@@ -48,6 +66,7 @@ namespace Kappa
         public long AOB_Superpot;
         public long AOB_WH;
         public long AOB_HT;
+        public long AOB_DRONE;
 
         public string HT_ADR_RESULT;
         public string WH_ADR_RESULT;
@@ -57,6 +76,20 @@ namespace Kappa
         public string PATH_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT;
 
+        private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
+    {
+        { "1", "Hp+Sp+MP" },
+        { "2", "Power" },
+        { "3", "Defender" },
+        { "4", "Auto Pot" },
+        { "5", "Protect Item" },
+        { "6", "Collect All" },
+        { "7", "Collect Rare" },
+        { "8", "Collect Potion" },
+        { "9", "Collect Gold" },
+        { "10", "Collect Ore" },
+        { "11", "Collect Box" }
+    };
 
 
 
@@ -67,7 +100,7 @@ namespace Kappa
 
 
 
-        public string DroneBypass = "005C7A78";
+        public string DroneBypass = "005B6738";
 
         public string IDadr = "00D2FAC8";
 
@@ -165,7 +198,7 @@ namespace Kappa
 
         public string Wallhack = "005E2FC1";
 
-        public string ASPD_adr = "MiniA.exe+54FB94";
+        public string ASPD_adr = "minia.exe+53B4EC";
 
         public bool autoskillsstand = true;
 
@@ -228,6 +261,12 @@ namespace Kappa
             listViewDictionary.Add("listView9", listView9);
             listViewDictionary.Add("listView10", listView10);
             comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
+            foreach (KeyValuePair<string, string> itemDescription in itemDescriptions)
+            {
+
+                comboBox4.Items.Add(new ComboBoxItem(itemDescription.Value, itemDescription.Key));
+
+            }
 
         }
 
@@ -243,13 +282,13 @@ namespace Kappa
             }
 
         }
-        
+
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
-            m.WriteMemory("0094FB3C", "float", "-1");
+            m.WriteMemory("0093A198", "float", "-1");
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
@@ -258,11 +297,11 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
-
+            m.WriteMemory("00583712", "bytes", "90 90 90 90 90 90"); //pet bypass
             m.WriteMemory("004234FD", "bytes", "90 90");
             long last = test.FirstOrDefault();
 
-            
+
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -330,7 +369,7 @@ namespace Kappa
             {
                 textBox2.Enabled = false;
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-                
+
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
@@ -339,7 +378,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset
-                int jumpOffset = (int)AOB_AOE+6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_AOE + 6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the assembly code to the allocated address
@@ -404,7 +443,7 @@ namespace Kappa
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_LR+7 - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_LR + 7 - ((int)allocate_adr + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -557,7 +596,7 @@ namespace Kappa
 
                 if (!list.Contains(num7))
                 {
-                    
+
                     m.WriteMemory(Skilluse1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
@@ -1007,7 +1046,7 @@ namespace Kappa
                 SkillID.Add(num);
             }
         }
-            private void UpdatePositionAndPerformActions(float distance, float currentX_, float currentZ_)
+        private void UpdatePositionAndPerformActions(float distance, float currentX_, float currentZ_)
         {
             if (CurrentPos && IsPositionInRange(currentX_, GetX1, currentZ_, GetZ1))
             {
@@ -1309,6 +1348,7 @@ namespace Kappa
                             {
                                 await AutoSkills();
                                 await Task.Delay(50);
+                                await Autobuff();
 
                             }
                         }
@@ -1530,7 +1570,7 @@ namespace Kappa
                 m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
-            { 
+            {
                 if (allocate_adr_BA != IntPtr.Zero)
                 {
                     IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -1599,7 +1639,7 @@ namespace Kappa
 
         private void checkBox21_CheckedChanged(object sender, EventArgs e)
         {
-           if (checkBox21.Checked)
+            if (checkBox21.Checked)
             {
                 m.WriteMemory("005E7EB1", "bytes", "31 d0");
             }
@@ -1607,6 +1647,17 @@ namespace Kappa
             {
                 m.WriteMemory("005E7EB1", "bytes", "33 c0");
             }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            m.FreezeValue("minia.exe+932B7C", "float", "500");
+            comboBox4.Invoke((Action)delegate
+            {
+                int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
+                m.WriteMemory("00D32B3E", "2bytes", num2.ToString());
+            });
+
         }
     }
 

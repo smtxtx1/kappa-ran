@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
-    <AssemblyName>$(MSBuildProjectName)321</AssemblyName>
+    <AssemblyName>Nextbot</AssemblyName>
     <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next</Configurations>
   </PropertyGroup>
 
