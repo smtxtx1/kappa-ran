@@ -188,18 +188,18 @@
             groupBox9.Controls.Add(comboBox4);
             groupBox9.Location = new Point(6, 198);
             groupBox9.Name = "groupBox9";
-            groupBox9.Size = new Size(324, 59);
+            groupBox9.Size = new Size(205, 59);
             groupBox9.TabIndex = 4;
             groupBox9.TabStop = false;
             groupBox9.Text = "Pet Skills";
             // 
             // button13
             // 
-            button13.Location = new Point(239, 21);
+            button13.Location = new Point(119, 21);
             button13.Name = "button13";
             button13.Size = new Size(59, 23);
             button13.TabIndex = 3;
-            button13.Text = "Get PID";
+            button13.Text = "Active skill";
             button13.UseVisualStyleBackColor = true;
             button13.Click += button13_Click;
             // 

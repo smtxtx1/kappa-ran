@@ -67,7 +67,9 @@ namespace Kappa
         public long AOB_WH;
         public long AOB_HT;
         public long AOB_DRONE;
+        public long AOB_ASPD;
 
+        public string ASPD_ADR_RESULT;
         public string HT_ADR_RESULT;
         public string WH_ADR_RESULT;
         public string AOE_ADR_RESULT;
@@ -75,6 +77,7 @@ namespace Kappa
         public string BA_ADR_RESULT;
         public string PATH_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT;
+        public string DRONE_ADR_RESULT;
 
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
     {
@@ -100,7 +103,7 @@ namespace Kappa
 
 
 
-        public string DroneBypass = "005B6738";
+        public string DroneBypass = "005B72F8";
 
         public string IDadr = "00D2FAC8";
 
@@ -198,7 +201,7 @@ namespace Kappa
 
         public string Wallhack = "005E2FC1";
 
-        public string ASPD_adr = "minia.exe+53B4EC";
+        public string ASPD_adr = "0093B4EC";
 
         public bool autoskillsstand = true;
 
@@ -285,6 +288,7 @@ namespace Kappa
 
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            MessageBox.Show("Scaning address..");
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
@@ -296,12 +300,15 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
-            IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
+
+            //
             m.WriteMemory("00583712", "bytes", "90 90 90 90 90 90"); //pet bypass
-            m.WriteMemory("004234FD", "bytes", "90 90");
-            long last = test.FirstOrDefault();
+                                                                     //  m.WriteMemory("004234FD", "bytes", "90 90");
 
-
+            AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
+            AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -310,6 +317,8 @@ namespace Kappa
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             //
+            ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
+            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
@@ -317,6 +326,9 @@ namespace Kappa
             LR_ADR_RESULT = AOB_LR.ToString("x");
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
+            MessageBox.Show("All Done");
+
+
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -334,13 +346,13 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "200");
-                m.WriteMemory(DroneBypass, "byte", "EB");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "EB");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(FastZoom, "float", "80");
-                m.WriteMemory(DroneBypass, "byte", "75");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "75");
 
             }
 
@@ -1312,7 +1324,7 @@ namespace Kappa
                         currentX = m.ReadFloat(CurrentX);
                         currentY = m.ReadFloat(CurrentY);
                         currentZ = m.ReadFloat(CurrentZ);
-                        await Task.Delay(100);
+                        await Task.Delay(10);
                     }
                     if (currentX >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
                     {
@@ -1507,6 +1519,7 @@ namespace Kappa
 
         private void checkBox16_CheckedChanged(object sender, EventArgs e)
         {
+            
             if (checkBox16.Checked)
             {
                 m.WriteMemory(ASPD_adr, "float", textBox6.Text);
@@ -1523,6 +1536,7 @@ namespace Kappa
         public string sword3_adr = "MiniA.exe+11E223C,44";
 
         public string sword4_adr = "MiniA.exe+11E2240,44";
+
 
         private void checkBox19_CheckedChanged(object sender, EventArgs e)
         {
@@ -1655,7 +1669,7 @@ namespace Kappa
             comboBox4.Invoke((Action)delegate
             {
                 int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
-                m.WriteMemory("00D32B3E", "2bytes", num2.ToString());
+                m.FreezeValue("00D32B3E", "2bytes", num2.ToString());
             });
 
         }
