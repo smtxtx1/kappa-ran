@@ -262,7 +262,6 @@ namespace Kappa
             
             long last = test.FirstOrDefault();
 
-            MessageBox.Show(""+last);
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -1506,7 +1505,7 @@ namespace Kappa
 
                 // Calculate the jump offsets for the je and jmp instructions
                 int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)AOB_BA + 0x - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
