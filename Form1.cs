@@ -68,6 +68,9 @@ namespace Kappa
         public long AOB_HT;
         public long AOB_DRONE;
         public long AOB_ASPD;
+        public long AOB_CUTAM;
+
+        public string CUTAM_ADR_RESULT;
 
         public string ASPD_ADR_RESULT;
         public string HT_ADR_RESULT;
@@ -216,6 +219,7 @@ namespace Kappa
             timer.Interval = 10000; // 10 seconds
             InitializeComponent();
             backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker5.WorkerSupportsCancellation = true;
         }
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -237,6 +241,8 @@ namespace Kappa
         public const uint PAGE_READWRITE = 0x04;
 
         private IntPtr allocate_adr;
+        private IntPtr allocate_adr_cutam;
+
         private IntPtr allocate_adr_aoe;
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
@@ -302,11 +308,12 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
 
             //
             m.WriteMemory("00583712", "bytes", "90 90 90 90 90 90"); //pet bypass
                                                                      //  m.WriteMemory("004234FD", "bytes", "90 90");
-
+            AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
@@ -317,6 +324,7 @@ namespace Kappa
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             //
+            CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
@@ -358,6 +366,7 @@ namespace Kappa
 
 
         }
+        string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
@@ -570,8 +579,11 @@ namespace Kappa
             }
         }
 
+        public int frenzzy_tar;
+
         private async Task Autobuff()
         {
+
             await Task.Delay(1);
             List<int> list = new List<int>();
             if (list.Count == 5)
@@ -613,9 +625,20 @@ namespace Kappa
                     m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
+
+
                     m.WriteMemory(RightClick, "byte", "63");
-                    await Task.Delay(500);
+                    await Task.Delay(100);
                     m.WriteMemory(RightClick, "byte", "01");
+                    //if (frenzzy_tar != null)
+                    //{
+                    //    Thread.Sleep(300);
+
+                    //    m.WriteMemory("MiniA.exe+931CCC", "int", "0");
+                    //    m.WriteMemory("MiniA.exe+931CD0", "int", frenzzy_tar.ToString());
+                    //    m.WriteMemory("MiniA.exe+931CB8", "int", "5");
+                    //    Thread.Sleep(300);
+                    //}
 
                 }
                 if (list.Contains(num7))
@@ -746,24 +769,24 @@ namespace Kappa
                 float num = mem.ReadFloat(CurrentX);
                 float followY = mem.ReadFloat(CurrentY);
                 float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt("MiniA.exe+7E133C");
-                mem.ReadInt("MiniA.exe+7E133C");
-                int num3 = mem.ReadInt("MiniA.exe+7E133C");
+                m.ReadInt("MiniA.exe+931B88");
+                mem.ReadInt("MiniA.exe+931B88");
+                int num3 = mem.ReadInt("MiniA.exe+931B88");
                 float followXnew = num - 25f;
                 float followZnew = num2 - 35f;
-                if (mem.Read2Byte("MINIA.EXE+7EA568") == 1 && m.Read2Byte("MINIA.EXE+7EA568") != 3)
+                if (mem.Read2Byte("MiniA.exe+931B88") == 1 && m.Read2Byte("MiniA.exe+931B88") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
 
-                        mem.ReadInt("MiniA.exe+7E133C");
+                        mem.ReadInt("MiniA.exe+931B88");
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
                         m.WriteMemory(LeftClick, "byte", "63");
                         previousX = followXnew;
                         previousZ = followZnew;
-                        Thread.Sleep(10);
+                        await Task.Delay(50);
                         m.WriteMemory(LeftClick, "byte", "01");
                     }
                 }
@@ -772,32 +795,19 @@ namespace Kappa
                     m.WriteMemory(LeftClick, "byte", "01");
                     if (!checkBox8.Checked)
                     {
-                        if (mem.Read2Byte("MINIA.EXE+7EA568") != 3)
+                        if (mem.Read2Byte("MiniA.exe+931B88") != 3)
                         {
                             //for (int i = 0; i < 5; i++)
                             //{
                             //    //m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
-                            //    //m.WriteMemory("MiniA.exe+7E133C", "int", num3.ToString());
+                            //    //m.WriteMemory("MiniA.exe+931B88", "int", num3.ToString());
                             //    //m.WriteMemory(forceattack_adr, "int", "5");
                             //}
                         }
                     }
-                    else if (checkBox8.Checked && mem.Read2Byte("MINIA.EXE+7EA568") != 1)
+                    else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+931B88") != 1)
                     {
-                        m.WriteMemory(LeftClick, "byte", "01");
-                        List<int> list = new List<int>();
-                        for (int j = 0x00BDD46C; j <= 0x00BDDD5C; j += 0xB0)
-                        {
-                            if (m.Read2Byte(j.ToString("x")) != 65535)
-                            {
-                                int num4 = j + 2;
-                                int item = mem.Read2Byte(j.ToString("x"));
-                                int item2 = mem.Read2Byte(num4.ToString("x"));
-                                list.Add(item);
-                                list.Add(item2);
-                            }
-                        }
-
+                        await Autobuff();
                     }
                     previousX = num;
                     previousZ = num2;
@@ -1519,7 +1529,7 @@ namespace Kappa
 
         private void checkBox16_CheckedChanged(object sender, EventArgs e)
         {
-            
+
             if (checkBox16.Checked)
             {
                 m.WriteMemory(ASPD_adr, "float", textBox6.Text);
@@ -1671,6 +1681,124 @@ namespace Kappa
                 int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
                 m.FreezeValue("00D32B3E", "2bytes", num2.ToString());
             });
+
+        }
+
+        private void checkBox22_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox22.Checked)
+            {
+                m.FreezeValue("MiniA.exe+92F910", "int", textBox7.Text);
+            }
+            else
+            {
+                m.WriteMemory("MiniA.exe+92F910", "int", "0");
+
+                m.UnfreezeValue("MiniA.exe+92F910");
+            }
+
+        }
+
+        private void checkBox23_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox23.Checked)
+            {
+                // Start the background worker if the checkbox is checked
+                if (!backgroundWorker5.IsBusy)
+                {
+                    backgroundWorker5.RunWorkerAsync();
+                }
+            }
+            else
+            {
+                // Stop the background worker if the checkbox is unchecked
+                if (backgroundWorker5.IsBusy)
+                {
+                    backgroundWorker5.CancelAsync();
+                }
+            }
+        }
+
+        private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+
+            while (!backgroundWorker5.CancellationPending)
+            {
+                int Petcheck = m.Read2Byte("MiniA.exe+932B54");
+
+                while (Petcheck == 0)
+                {
+                    Petcheck = m.Read2Byte("MiniA.exe+932B54");
+                    m.WriteMemory("031F17AC", "byte", "63");
+                    Thread.Sleep(20);
+                    m.WriteMemory("031F17AC", "byte", "01");
+                    Thread.Sleep(500);
+                    Petcheck = m.Read2Byte("MiniA.exe+932B54");
+                }
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            frenzzy_tar = m.ReadInt("MiniA.exe+932A7C");
+        }
+
+        private void checkBox24_CheckedChanged(object sender, EventArgs e)
+        {
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            allocate_adr_cutam = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+            if (textBox8.Text != null && checkBox24.Checked)
+            {
+                m.WriteMemory("00FF8800", "float", textBox8.Text);
+            }
+
+
+            if (checkBox24.Checked)
+            {
+                textBox8.Enabled = false;
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0xD8,0x25,0x00,0x88,0xFF,0x00,0xD8,0x4C,0x24,0x10,0x8B,0xCE,
+                    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+                //004DF357
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_CUTAM + 6 - ((int)allocate_adr_cutam + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_cutam.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_cutam - ((int)AOB_CUTAM + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the specified address (004EBB27)
+                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            else
+            {
+                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", originalcode_cutam);
+                textBox8.Enabled = true;
+                if (allocate_adr_cutam != IntPtr.Zero)
+                {
+                    processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_cutam, 0, 0x8000);
+                    allocate_adr_cutam = IntPtr.Zero;
+                }
+            }
 
         }
     }
