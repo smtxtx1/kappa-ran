@@ -153,6 +153,7 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
+            checkBox25 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -787,6 +788,7 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(checkBox25);
             groupBox7.Controls.Add(textBox4);
             groupBox7.Controls.Add(textBox1);
             groupBox7.Controls.Add(checkBox15);
@@ -1068,6 +1070,16 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
+            // checkBox25
+            // 
+            checkBox25.AutoSize = true;
+            checkBox25.Location = new Point(73, 22);
+            checkBox25.Name = "checkBox25";
+            checkBox25.Size = new Size(51, 19);
+            checkBox25.TabIndex = 12;
+            checkBox25.Text = "Card";
+            checkBox25.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1232,5 +1244,6 @@
         private Button button14;
         private CheckBox checkBox24;
         private TextBox textBox8;
+        private CheckBox checkBox25;
     }
 }

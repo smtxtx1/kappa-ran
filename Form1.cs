@@ -51,13 +51,13 @@ namespace Kappa
         // public string Drone_adr = "MiniA.exe+2E49A60";
         public string ServerName = "Ran-Next";
 
-        public string FastZoom = "031F1E1C";
+        public string FastZoom = "031F3E5C";
 
         public string AOE_adr = "";
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00D2F8D8";
+        public string NameAdr = "00D31910";
 
         public long AOB_AOE;
         public long AOB_PATH;
@@ -108,7 +108,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00D2FAC8";
+        public string IDadr = "00D31B08";
 
         public float GetX1;
 
@@ -132,21 +132,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00D31A98";
+        public string CurrentX = "00D33AD8";
 
-        public string CurrentY = "00D31A98+4";
+        public string CurrentY = "00D33AD8+4";
 
-        public string CurrentZ = "00D31A98+8";
+        public string CurrentZ = "00D33AD8+8";
 
-        public string ZoomAdr = "minia.exe+2DF1EB4";
+        public string ZoomAdr = "031F3EF4";
 
-        public string AngleAdr = "031F1E94";
+        public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00D31ADC";
+        public string gotoX = "00D33B1C";
 
-        public string gotoY = "00D31ADC+4";
+        public string gotoY = "00D33B1C+4";
 
-        public string gotoZ = "00D31ADC+8";
+        public string gotoZ = "00D33B1C+8";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -159,15 +159,15 @@ namespace Kappa
         /// ////// BUTTON START ////////////
         /// </summary>
 
-        public string LeftClick = "031F1998";
+        public string LeftClick = "031F39D8";
 
-        public string RightClick = "031F1998+1";
+        public string RightClick = "031F39D8+1";
 
-        public string AltButton = "031F17C4";
+        public string AltButton = "031F3804";
 
-        public string Spacebar = "031F17C4+1";
+        public string Spacebar = "031F3804+1";
 
-        public string RightArrow = "031F1859";
+        public string RightArrow = "031F3899";
 
         /// <summary>
         /// ////// BUTTON END ////////////
@@ -176,15 +176,15 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00D31C28";
+        public string prevskill1_adr = "00D33C68";
 
-        public string prevskill2_adr = "00D31C2A";
+        public string prevskill2_adr = "00D33C6A";
 
-        public string Skilluse1_adr = "00D31C24";
+        public string Skilluse1_adr = "00D33C64";
 
-        public string Skilluse2_adr = "00D31C26";
+        public string Skilluse2_adr = "00D33C66";
 
-        public string forceattack_adr = "MiniA.exe+7E1530";
+        public string forceattack_adr = "MiniA.exe+933CF8";
 
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Kappa
 
         public string Wallhack = "005E2FC1";
 
-        public string ASPD_adr = "0093B4EC";
+        public string ASPD_adr = "MiniA.exe+53C524";
 
         public bool autoskillsstand = true;
 
@@ -298,7 +298,7 @@ namespace Kappa
             m.OpenProcess(int.Parse(comboBox1.Text));
             label1.Text = m.ReadString(NameAdr);
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
-            m.WriteMemory("0093A198", "float", "-1");
+            m.WriteMemory("0093B198", "float", "-1");
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
@@ -311,8 +311,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
 
             //
-            m.WriteMemory("00583712", "bytes", "90 90 90 90 90 90"); //pet bypass
-                                                                     //  m.WriteMemory("004234FD", "bytes", "90 90");
+            m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
+            //  m.WriteMemory("004234FD", "bytes", "90 90");
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
@@ -591,7 +591,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D30C04; j <= 0x00D314F4; j += 0xB0)
+            for (int j = 0x00D32C44; j <= 0x00D33534; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -607,7 +607,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D30004; k <= 0x00D30028; k += 0x4)
+            for (int k = 0x00D32044; k <= 0x00D32068; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -737,6 +737,7 @@ namespace Kappa
         {
             if (checkBox7.Checked)
             {
+                m.WriteMemory("0042396D", "bytes", "90 90");
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
             }
@@ -769,17 +770,17 @@ namespace Kappa
                 float num = mem.ReadFloat(CurrentX);
                 float followY = mem.ReadFloat(CurrentY);
                 float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt("MiniA.exe+931B88");
-                mem.ReadInt("MiniA.exe+931B88");
-                int num3 = mem.ReadInt("MiniA.exe+931B88");
+                m.ReadInt("MiniA.exe+933BC8");
+                mem.ReadInt("MiniA.exe+933BC8");
+                int num3 = mem.ReadInt("MiniA.exe+933BC8");
                 float followXnew = num - 25f;
                 float followZnew = num2 - 35f;
-                if (mem.Read2Byte("MiniA.exe+931B88") == 1 && m.Read2Byte("MiniA.exe+931B88") != 3)
+                if (mem.Read2Byte("MiniA.exe+933BC8") == 1 && m.Read2Byte("MiniA.exe+933BC8") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
 
-                        mem.ReadInt("MiniA.exe+931B88");
+                        mem.ReadInt("MiniA.exe+933BC8");
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
@@ -795,17 +796,17 @@ namespace Kappa
                     m.WriteMemory(LeftClick, "byte", "01");
                     if (!checkBox8.Checked)
                     {
-                        if (mem.Read2Byte("MiniA.exe+931B88") != 3)
+                        if (mem.Read2Byte("MiniA.exe+933BC8") != 3)
                         {
                             //for (int i = 0; i < 5; i++)
                             //{
                             //    //m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
-                            //    //m.WriteMemory("MiniA.exe+931B88", "int", num3.ToString());
+                            //    //m.WriteMemory("MiniA.exe+933BC8", "int", num3.ToString());
                             //    //m.WriteMemory(forceattack_adr, "int", "5");
                             //}
                         }
                     }
-                    else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+931B88") != 1)
+                    else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+933BC8") != 1)
                     {
                         await Autobuff();
                     }
@@ -1034,7 +1035,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("minia.exe+931B88") != 3)
+                    if (m.Read2Byte("MiniA.exe+933BC8") != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1351,6 +1352,19 @@ namespace Kappa
                     m.UnfreezeValue(LeftClick);
                     m.WriteMemory(LeftClick, "byte", "01");
                     m.WriteMemory(AltButton, "byte", "01");
+                    if (checkBox25.Checked)
+                    {
+                        m.WriteMemory("031F37EA", "byte", "63");
+                        Thread.Sleep(100);
+                        m.WriteMemory("031F37EA", "byte", "01");
+                        Thread.Sleep(2000);
+
+                        m.WriteMemory("031F37EB", "byte", "63");
+                        Thread.Sleep(100);
+                        m.WriteMemory("031F37EB", "byte", "01");
+
+
+                    }
                     if (checkBox14.Checked)
                     {
                         int j;
@@ -1449,7 +1463,7 @@ namespace Kappa
             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
             await Task.Delay(100);
-            for (int i = 0x00D2FF8C; i <= 0x00D2FFB0; i += 4)
+            for (int i = 0x00D31FCC; i <= 0x00D31FF0; i += 4)
             {
                 int idskilltype1 = m.ReadByte(i.ToString("X"));
                 int num = i + 2;
@@ -1457,7 +1471,7 @@ namespace Kappa
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(200);
-                if (m.Read2Byte("minia.exe+931B88") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("minia.exe+931B88") != 3)
+                if (m.Read2Byte("MiniA.exe+933BC8") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+933BC8") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
@@ -1675,11 +1689,11 @@ namespace Kappa
 
         private void button13_Click(object sender, EventArgs e)
         {
-            m.FreezeValue("minia.exe+932B7C", "float", "500");
+            m.FreezeValue("MiniA.exe+934BBC", "float", "500");
             comboBox4.Invoke((Action)delegate
             {
                 int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
-                m.FreezeValue("00D32B3E", "2bytes", num2.ToString());
+                m.FreezeValue("00D34B7E", "2bytes", num2.ToString());
             });
 
         }
@@ -1725,16 +1739,16 @@ namespace Kappa
 
             while (!backgroundWorker5.CancellationPending)
             {
-                int Petcheck = m.Read2Byte("MiniA.exe+932B54");
+                int Petcheck = m.Read2Byte("00D34B84");
 
                 while (Petcheck == 0)
                 {
-                    Petcheck = m.Read2Byte("MiniA.exe+932B54");
-                    m.WriteMemory("031F17AC", "byte", "63");
+                    Petcheck = m.Read2Byte("00D34B84");
+                    m.WriteMemory("031F37EC", "byte", "63");
                     Thread.Sleep(20);
-                    m.WriteMemory("031F17AC", "byte", "01");
+                    m.WriteMemory("031F37EC", "byte", "01");
                     Thread.Sleep(500);
-                    Petcheck = m.Read2Byte("MiniA.exe+932B54");
+                    Petcheck = m.Read2Byte("00D34B84");
                 }
             }
         }
