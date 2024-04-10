@@ -1520,11 +1520,11 @@ namespace Kappa
         {
             if (checkBox17.Checked)
             {
-                m.WriteMemory("00432468", "byte", "00");
+                m.WriteMemory("0041FF88", "byte", "00");
             }
             else
             {
-                m.WriteMemory("00432468", "byte", "05");
+                m.WriteMemory("0041FF88", "byte", "05");
 
             }
         }
