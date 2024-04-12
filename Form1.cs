@@ -48,7 +48,9 @@ namespace Kappa
         public long AOB_Superpot;
         public long AOB_WH;
         public long AOB_HT;
+        public long AOB_DRONE;
 
+        public string DRONE_ADR_RESULT;
         public string HT_ADR_RESULT;
         public string WH_ADR_RESULT;
         public string AOE_ADR_RESULT;
@@ -258,10 +260,12 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> test = await m.AoBScan("88 94 37 74 0F 00 00 8D 8E 74", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
 
-            
+
             long last = test.FirstOrDefault();
 
+            AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -270,6 +274,7 @@ namespace Kappa
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             //
+            DRONE_ADR_RESULT = AOB_DRONE.ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
@@ -294,13 +299,13 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "200");
-                m.WriteMemory(DroneBypass, "byte", "EB");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "EB");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(FastZoom, "float", "80");
-                m.WriteMemory(DroneBypass, "byte", "75");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "75");
 
             }
 
