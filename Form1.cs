@@ -773,8 +773,8 @@ namespace Kappa
                 m.ReadInt("MiniA.exe+933BC8");
                 mem.ReadInt("MiniA.exe+933BC8");
                 int num3 = mem.ReadInt("MiniA.exe+933BC8");
-                float followXnew = num - 25f;
-                float followZnew = num2 - 35f;
+                float followXnew = num - 5f;
+                float followZnew = num2 - 5f;
                 if (mem.Read2Byte("MiniA.exe+933BC8") == 1 && m.Read2Byte("MiniA.exe+933BC8") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
@@ -1520,11 +1520,11 @@ namespace Kappa
         {
             if (checkBox17.Checked)
             {
-                m.WriteMemory("0041FF88", "byte", "00");
+                m.WriteMemory("0041FF88", "byte", "0");
             }
             else
             {
-                m.WriteMemory("0041FF88", "byte", "05");
+                m.WriteMemory("0041FF88", "byte", "5");
 
             }
         }
