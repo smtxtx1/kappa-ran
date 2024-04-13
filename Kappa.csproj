@@ -7,12 +7,18 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
+    <AssemblyName>Inter-new2</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Memory.dll.x64" Version="1.2.24" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Siticone.Desktop.UI" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Memory">
+      <HintPath>bin\52HzKappa\net6.0-windows\Memory.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

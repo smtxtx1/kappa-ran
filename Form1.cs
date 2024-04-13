@@ -19,11 +19,11 @@ namespace Kappa
         Mem m = new Mem();
         Mem mem = new Mem();
         public string Drone_adr = "MiniA.exe+2E48A60";
-        public string FastZoom = "03248A6C";
+        public string FastZoom = "03277464";
         public string AOE_adr = "";
         public string LongRange_adr = "";
-        public string NameAdr = "00BDC140";
-        public string IDadr = "00BDC330";
+        public string NameAdr = "00BBEB68";
+        public string IDadr = "00BBED40";
         public float GetX1 = 0f;
         public float GetY1 = 0f;
         public float GetZ1 = 0f;
@@ -35,30 +35,30 @@ namespace Kappa
         /// <summary>
         /// //////////////////
         /// </summary>
-        public string CurrentX = "00BDE300";
-        public string CurrentY = "00BDE304";
-        public string CurrentZ = "00BDE308";
+        public string CurrentX = "00BC0A70";
+        public string CurrentY = "00BC0A70+4";
+        public string CurrentZ = "00BC0A70+8";
         private int positionCounter = 1;
-        public string ZoomAdr = "03248B04";
+        public string ZoomAdr = "032774FC";
 
-        public string AngleAdr = "03248AE4";
+        public string AngleAdr = "032774FC-20";
 
-        public string RightArrow = "03248499";
-        public string gotoX = "00BDE400";
+        public string RightArrow = "03236E89";
+        public string gotoX = "00BC0CB0";
 
-        public string gotoY = "00BDE404";
+        public string gotoY = "00BC0CB0+4";
 
-        public string gotoZ = "00BDE408";
+        public string gotoZ = "00BC0CB0+8";
         /// <summary>
         /// //////
         /// </summary>
         /// 
         public float currentrange = 0.0f;
         public float currentrange2 = 0.0f;
-        public string LeftClick = "032485D8";
-        public string RightClick = "032485D9";
+        public string LeftClick = "03236FC8";
+        public string RightClick = "03236FC8+1";
 
-        public string AltButton = "03248404";
+        public string AltButton = "03236DF4";
 
         public string prevskill1_adr = "00BDE490";
 
@@ -69,8 +69,8 @@ namespace Kappa
         public string Skilluse2_adr = "00BDE48E";
 
         public string forceattack_adr = "MiniA.exe+7DE520";
-        public string Spacebar = "03248405";
-        public string Superpot = "0077394B";
+        public string Spacebar = "03236DF4+1";
+        public string Superpot = "0077F94B";
         public string HpFreeze_1 = "00BDC220";
         public string HpFreeze_2 = "00BDC222";
         public bool autoskillsstand = true;
@@ -173,7 +173,7 @@ namespace Kappa
 
 
         }
-        string originalcode_LR = "D9 5C 24 38 FF 52 10";
+        string originalcode_LR = "D9 5C 24 3C FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
@@ -201,7 +201,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0x1E6F76 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0x1F68B6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -215,15 +215,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_aoe - ((int)baseModuleadr + 0x1E6F70 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_aoe - ((int)baseModuleadr + 0x1F68B0 + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("005E6F70", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("005F68B0", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("005E6F70", "bytes", originalcode_ALE);
+                m.WriteMemory("005F68B0", "bytes", originalcode_ALE);
                 textBox2.Enabled = true;
                 if (allocate_adr_aoe != IntPtr.Zero)
                 {
@@ -259,12 +259,12 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x38, 0xFF, 0x52, 0x10,
+                    0xD8,0x25,0x00,0x10,0xFF,0x00,0xD9,0x5C,0x24,0x3C,0xFF,0x52,0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)baseModuleadr + 0xDED1E - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)baseModuleadr + 0xEEC01 - ((int)allocate_adr + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -278,15 +278,15 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xDED17 + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr - ((int)baseModuleadr + 0xEEBFA + jmpCode.Length - 2);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory("004DED17", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory("004EEBFA", "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory("004DED17", "bytes", originalcode_LR);
+                m.WriteMemory("004EEBFA", "bytes", originalcode_LR);
                 textBox3.Enabled = true;
                 if (allocate_adr != IntPtr.Zero)
                 {
@@ -363,8 +363,8 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)baseModuleadr + 0x35A6D - ((int)allocate_adr_Path + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)baseModuleadr + 0x35A4A - ((int)allocate_adr_Path + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)baseModuleadr + 0x46725 - ((int)allocate_adr_Path + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)baseModuleadr + 0x4670A - ((int)allocate_adr_Path + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
@@ -380,10 +380,10 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x35A44 + jmpCodemy.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)baseModuleadr + 0x46704 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory("00435A44", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory("00446704", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
             }
             else
             {
@@ -395,7 +395,7 @@ namespace Kappa
                 }
 
                 // Restore the original code
-                m.WriteMemory("00435A44", "bytes", originalcode_Path);
+                m.WriteMemory("00446704", "bytes", originalcode_Path);
 
             }
 
@@ -902,7 +902,7 @@ namespace Kappa
             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
             await Task.Delay(100);
-            for (int i = 0x00BDC7F4; i <= 0x00BDC818; i += 4)
+            for (int i = 0x00BBF204; i <= 0x00BBF228; i += 4)
             {
                 int idskilltype1 = m.ReadByte(i.ToString("X"));
                 int num = i + 2;
@@ -1009,7 +1009,7 @@ namespace Kappa
                         }
                         if (checkBox14.Checked && int.TryParse(textBox4.Text, out j))
                         {
-                            m.WriteMemory("00435A44", "bytes", originalcode_Path);
+                            m.WriteMemory("00446704", "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
 
@@ -1018,7 +1018,7 @@ namespace Kappa
                                 m.WriteMemory(Spacebar, "byte", "01");
                                 await Task.Delay(50);
                             }
-                            m.WriteMemory("00435A44", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                            m.WriteMemory("00446704", "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                         }
                     }
                     m.WriteMemory(LeftClick, "byte", "00");
