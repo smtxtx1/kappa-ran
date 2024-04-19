@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using System.Web;
 using System.IO;
 using System.ComponentModel;
+using System.Numerics;
+using System.Text.Encodings;
 
 namespace Kappa
 {
@@ -196,9 +198,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "minia.exe+92F9B8";
+        public string HpFreeze_1 = "00D319F8";
 
-        public string HpFreeze_2 = "minia.exe+92F9B8+2";
+        public string HpFreeze_2 = "00D319F8+2";
 
         public string Antislide = "004324D8";
 
@@ -249,6 +251,8 @@ namespace Kappa
         private IntPtr allocate_adr_BA;
         private void Form1_Load(object sender, EventArgs e)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var enc1252 = Encoding.GetEncoding(874);
             comboBox3.Items.Add("listView1");
             comboBox3.Items.Add("listView2");
             comboBox3.Items.Add("listView3");
@@ -291,12 +295,26 @@ namespace Kappa
             }
 
         }
+        string rawString;
+        int maxLength = 20;
+
 
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+
             MessageBox.Show("Scaning address..");
             m.OpenProcess(int.Parse(comboBox1.Text));
-            label1.Text = m.ReadString(NameAdr);
+            int num = 20;
+            byte[] array = m.ReadBytes(NameAdr, num);
+            if (array != null)
+            {
+                string @string = Encoding.GetEncoding(874).GetString(array);
+                label1.Text = @string + " " + comboBox1.Text;
+            }
+            // Check for null before converting to string
+
+
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
         //    m.WriteMemory("0093B198", "float", "-1");
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
@@ -654,7 +672,7 @@ namespace Kappa
         {
             if (checkBox5.Checked)
             {
-                m.FreezeValue(HpFreeze_1, "2bytes", "65533");
+                m.FreezeValue(HpFreeze_1, "2bytes", "999");
                 m.FreezeValue(HpFreeze_2, "2bytes", "65535");
             }
             else
@@ -1276,7 +1294,7 @@ namespace Kappa
                 if (listViewDictionary.TryGetValue(key, out var value))
                 {
                     SaveListViewToJSON(value, $"{comboBox3.SelectedItem}{saveID}.json");
-                    MessageBox.Show($"à«¿{comboBox2.SelectedItem}{saveID}àÃ\u0e35ÂºÃ\u0e49ÍÂ", "Save Complete");
+                    MessageBox.Show($"à«¿{comboBox2.SelectedItem}{saveID}ï¿½ï¿½\u0e35Âºï¿½\u0e49ï¿½ï¿½", "Save Complete");
                 }
             }
         }
@@ -1290,7 +1308,7 @@ namespace Kappa
                 if (listViewDictionary.TryGetValue(key, out var value))
                 {
                     LoadListViewFromJSON(value, $"{comboBox3.SelectedItem}{saveID}.json");
-                    MessageBox.Show($"âËÅ´{comboBox2.SelectedItem}{saveID}àÃ\u0e35ÂºÃ\u0e49ÍÂ", "Load Complete");
+                    MessageBox.Show($"ï¿½ï¿½Å´{comboBox2.SelectedItem}{saveID}ï¿½ï¿½\u0e35Âºï¿½\u0e49ï¿½ï¿½", "Load Complete");
                 }
             }
         }
