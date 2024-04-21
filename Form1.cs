@@ -13,6 +13,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Numerics;
 using System.Text.Encodings;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace Kappa
 {
@@ -186,7 +187,7 @@ namespace Kappa
 
         public string Skilluse2_adr = "00D33C66";
 
-        public string forceattack_adr = "MiniA.exe+933CF8";
+        public string forceattack_adr = "minia.exe+933CF8";
 
 
         /// <summary>
@@ -769,8 +770,9 @@ namespace Kappa
         private CancellationTokenSource AutosearchCancellationTokenSource;
         private async Task FollowLeaderTask()
         {
-            await Task.Delay(0);
-            m.WriteMemory("00434BBD", "bytes", "90 90");
+             Random rand = new Random();
+
+            m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 m.FreezeValue(RightArrow, "byte", "3F");
@@ -783,6 +785,9 @@ namespace Kappa
                 m.ReadFloat(CurrentX);
                 m.ReadFloat(CurrentY);
                 m.ReadFloat(CurrentZ);
+                int mainSK1 = mem.Read2Byte(prevskill1_adr);
+                int mainSK2 = mem.Read2Byte(prevskill2_adr);
+                int target = mem.ReadInt("MiniA.exe+934ABC");
                 float previousX = float.MinValue;
                 float previousZ = float.MinValue;
                 float num = mem.ReadFloat(CurrentX);
@@ -791,9 +796,9 @@ namespace Kappa
                 m.ReadInt("MiniA.exe+933BC8");
                 mem.ReadInt("MiniA.exe+933BC8");
                 int num3 = mem.ReadInt("MiniA.exe+933BC8");
-                float followXnew = num - 5f;
-                float followZnew = num2 - 5f;
-                if (mem.Read2Byte("MiniA.exe+933BC8") == 1 && m.Read2Byte("MiniA.exe+933BC8") != 3)
+                float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
+                float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
+                if (mem.Read2Byte("MiniA.exe+933BC8") == 1 && mem.Read2Byte("MiniA.exe+933BC8") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
@@ -805,34 +810,47 @@ namespace Kappa
                         m.WriteMemory(LeftClick, "byte", "63");
                         previousX = followXnew;
                         previousZ = followZnew;
-                        await Task.Delay(50);
+                        await Task.Delay(10);
                         m.WriteMemory(LeftClick, "byte", "01");
-                    }
-                }
-                else
-                {
-                    m.WriteMemory(LeftClick, "byte", "01");
-                    if (!checkBox8.Checked)
-                    {
-                        if (mem.Read2Byte("MiniA.exe+933BC8") != 3)
+                       if ( mem.ReadByte(Spacebar) != 01)
                         {
-                            //for (int i = 0; i < 5; i++)
-                            //{
-                            //    //m.WriteMemory("MINIA.EXE+7EA6B0", "int", num3.ToString());
-                            //    //m.WriteMemory("MiniA.exe+933BC8", "int", num3.ToString());
-                            //    //m.WriteMemory(forceattack_adr, "int", "5");
-                            //}
+                            m.WriteMemory(Spacebar, "byte", "63");
+                            Thread.Sleep(10);
+                            m.WriteMemory(Spacebar, "byte", "01");
+                            Thread.Sleep(10);
+
                         }
                     }
+                }
                     else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+933BC8") != 1)
                     {
-                        await Autobuff();
+                        mainSK1 = mem.ReadByte(prevskill1_adr);
+                        mainSK2 = mem.ReadByte(prevskill2_adr);
+                        target = mem.ReadInt("MiniA.exe+934ABC");
+                        if (mem.Read2Byte("MiniA.exe+933BC8") == 3)
+                        {
+                            if (mainSK2 == 9)
+                            {
+                                Thread.Sleep(1500);
+
+                            }
+                            m.WriteMemory("MiniA.exe+933D10","int",target.ToString());
+                            m.WriteMemory("minia.exe+933D0C", "int", "2");
+                            m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
+                            m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
+                            m.WriteMemory(forceattack_adr, "int", "5");
+
+                        }
+
                     }
+                    mainSK1 = mem.Read2Byte(prevskill1_adr);
+                    mainSK2 = mem.Read2Byte(prevskill2_adr);
+
                     previousX = num;
                     previousZ = num2;
                 }
                 Thread.Sleep(1);
-            }
+            
             Thread.Sleep(1);
             m.FreezeValue(RightArrow, "byte", "01");
             m.WriteMemory(LeftClick, "byte", "01");
