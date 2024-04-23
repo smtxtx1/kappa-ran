@@ -72,9 +72,9 @@ namespace Kappa
         public long AOB_DRONE;
         public long AOB_ASPD;
         public long AOB_CUTAM;
-
+        public long AOB_ANTIAFK;
         public string CUTAM_ADR_RESULT;
-
+        public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
         public string HT_ADR_RESULT;
         public string WH_ADR_RESULT;
@@ -317,7 +317,7 @@ namespace Kappa
 
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
-        //    m.WriteMemory("0093B198", "float", "-1");
+
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
@@ -328,24 +328,28 @@ namespace Kappa
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
+            IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
 
             //
-         //   m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
+               m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
+
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
-            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
+            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();  
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
             AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
+            AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
-            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
+            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x"); 
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
@@ -354,8 +358,8 @@ namespace Kappa
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
             MessageBox.Show("All Done");
-
-
+            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory("00FD0012", "float", "-1");
 
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
