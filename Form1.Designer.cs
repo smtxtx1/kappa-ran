@@ -121,6 +121,7 @@
             button9 = new Button();
             button8 = new Button();
             groupBox7 = new GroupBox();
+            checkBox25 = new CheckBox();
             textBox4 = new TextBox();
             textBox1 = new TextBox();
             checkBox15 = new CheckBox();
@@ -153,7 +154,7 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
-            checkBox25 = new CheckBox();
+            button15 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -224,6 +225,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(button15);
             groupBox4.Controls.Add(checkBox24);
             groupBox4.Controls.Add(textBox8);
             groupBox4.Controls.Add(checkBox19);
@@ -801,6 +803,16 @@
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
             // 
+            // checkBox25
+            // 
+            checkBox25.AutoSize = true;
+            checkBox25.Location = new Point(73, 22);
+            checkBox25.Name = "checkBox25";
+            checkBox25.Size = new Size(51, 19);
+            checkBox25.TabIndex = 12;
+            checkBox25.Text = "Card";
+            checkBox25.UseVisualStyleBackColor = true;
+            // 
             // textBox4
             // 
             textBox4.Location = new Point(87, 69);
@@ -1070,15 +1082,15 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
-            // checkBox25
+            // button15
             // 
-            checkBox25.AutoSize = true;
-            checkBox25.Location = new Point(73, 22);
-            checkBox25.Name = "checkBox25";
-            checkBox25.Size = new Size(51, 19);
-            checkBox25.TabIndex = 12;
-            checkBox25.Text = "Card";
-            checkBox25.UseVisualStyleBackColor = true;
+            button15.Location = new Point(93, 213);
+            button15.Name = "button15";
+            button15.Size = new Size(59, 23);
+            button15.TabIndex = 4;
+            button15.Text = "Active skill";
+            button15.UseVisualStyleBackColor = true;
+            button15.Click += button15_Click;
             // 
             // Form1
             // 
@@ -1245,5 +1257,6 @@
         private CheckBox checkBox24;
         private TextBox textBox8;
         private CheckBox checkBox25;
+        private Button button15;
     }
 }

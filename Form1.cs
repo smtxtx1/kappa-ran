@@ -60,7 +60,7 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00D31910";
+        public string NameAdr = "00B39D90";
 
         public long AOB_AOE;
         public long AOB_PATH;
@@ -80,7 +80,7 @@ namespace Kappa
         public long AOB_RUN4;
         public long AOB_RUN5;
         public long AOB_RUN6;
-
+        public long AOB_RUN7;
 
 
         public string RUN1_ADR_RESULT;
@@ -131,7 +131,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00D31B08";
+        public string IDadr = "MiniA.exe+739FB0";
 
         public float GetX1;
 
@@ -155,21 +155,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00D33AD8";
+        public string CurrentX = "00B80AA0";
 
-        public string CurrentY = "00D33AD8+4";
+        public string CurrentY = "00B80AA0+4";
 
-        public string CurrentZ = "00D33AD8+8";
+        public string CurrentZ = "00B80AA0+8";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00D33B1C";
+        public string gotoX = "00B80AE4";
 
-        public string gotoY = "00D33B1C+4";
+        public string gotoY = "00B80AE4+4";
 
-        public string gotoZ = "00D33B1C+8";
+        public string gotoZ = "00B80AE4+8";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -354,10 +354,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Run3 = await m.AoBScan("74 ?? ?? 74 24 10 8B 7C 24 14", false, true);
             IEnumerable<long> AoB_Scan_Run4 = await m.AoBScan("F6 C3 0E 74 ??", false, true);
             IEnumerable<long> AoB_Scan_Run5 = await m.AoBScan("74 ?? E8 ?? ?? ?? 00 8B C8 E8 ?? ?? ?? 00 8D 8E 3C 2C 00 00 E8 ?? ?? ?? ?? 8B 86 F8 2A 00 00 8B 94 24 A0 00 00 00", false, true);
-            // run 6 - 9 run5
-            // run 6 + 63F = run7
-            // run 7 + 11 = run8
-            //74 ?? E8 ?? ?? ?? 00 8B C8 E8 ?? ?? ?? 00 8D 8E 3C 2C 00 00 E8 ?? ?? ?? ?? 8B 86 F8 2A 00 00 8B 94 24 A0 00 00 00
+            IEnumerable<long> AoB_Scan_Run7 = await m.AoBScan("39 A8 C8 03 00 00 74 ?? 55", false, true);
+            //39 A8 C8 03 00 00 74 ?? 55
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
             AOB_RUN1 = AoB_Scan_Run1.FirstOrDefault();
@@ -365,13 +363,13 @@ namespace Kappa
             AOB_RUN3 = AoB_Scan_Run3.FirstOrDefault();
             AOB_RUN4 = AoB_Scan_Run4.FirstOrDefault();
             AOB_RUN5 = AoB_Scan_Run5.FirstOrDefault();
-
+            AOB_RUN7 = AoB_Scan_Run7.FirstOrDefault();
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
-            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();  
+            AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
             AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
@@ -381,15 +379,14 @@ namespace Kappa
             RUN1_ADR_RESULT = AOB_RUN1.ToString("x");
             RUN2_ADR_RESULT = AOB_RUN2.ToString("x");
             RUN3_ADR_RESULT = AOB_RUN3.ToString("x");
-            RUN4_ADR_RESULT = AOB_RUN4.ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN4 + 0x03).ToString("x");
             RUN5_ADR_RESULT = AOB_RUN5.ToString("x");
-            RUN6_ADR_RESULT = (AOB_RUN5 - 0x9).ToString("x");
-            RUN7_ADR_RESULT = (AOB_RUN5 - 0x9 + 0x63F).ToString("x");
-            RUN8_ADR_RESULT = (AOB_RUN5 - 0x9 + 0x63F + 0x11).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN5 - 0x09).ToString("x");
+            RUN7_ADR_RESULT = (AOB_RUN7 + 0x06).ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
-            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x"); 
+            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
@@ -411,8 +408,19 @@ namespace Kappa
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb 6f");
             m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN7_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN8_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN7_ADR_RESULT, "byte", "eb");
+
+        }
+        public void RunDeactive()
+        {
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "74 3c");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 5c");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74 7d");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 6f");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+            m.WriteMemory(RUN7_ADR_RESULT, "byte", "74");
+
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -587,44 +595,80 @@ namespace Kappa
                     await UpdateListViewItemsAsync(listView1);
                     if (listView2.Items.Count > 0)
                     {
+                        RunActive();
                         await UpdateListViewItemsAsync(listView2);
+                        RunDeactive();
                     }
                     if (listView3.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView3);
+                        RunDeactive();
+
                     }
                     if (listView4.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView4);
+                        RunDeactive();
+
                     }
                     if (listView5.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView5);
+                        RunDeactive();
+
                     }
                     if (listView6.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView6);
+                        RunDeactive();
+
                     }
                     if (listView7.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView7);
+                        RunDeactive();
+
                     }
                     if (listView8.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView8);
+                        RunDeactive();
+
                     }
                     if (listView9.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView9);
+                        RunDeactive();
+
                     }
                     if (listView10.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView10);
+                        RunDeactive();
+
                     }
 
 
                     if (backgroundWorker1.CancellationPending)
                     {
+                        RunDeactive();
+
                         break;
                     }
                 }
@@ -761,20 +805,14 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1,
-                0x39, 0x5C, 0x24, 0x28,
-                0x0F, 0x84, 0x1D, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0xC7,0x44,0x24,0x10,0x4F,0xD2,0x70,0xC3,0xC7,0x44,0x24,0x14,0x05,0x56,0x20,0x41,0xC7,0x44,0x24,0x18,0x3F,0xE4,0x03,0xC5,0x39,0x5C,0x24,0x28,0x90,0x90,0x90,0x90,0x90,0x90,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_PATH + 0x29 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // -29
                 int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
@@ -826,7 +864,7 @@ namespace Kappa
         private CancellationTokenSource AutosearchCancellationTokenSource;
         private async Task FollowLeaderTask()
         {
-             Random rand = new Random();
+            Random rand = new Random();
 
             m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
@@ -868,7 +906,7 @@ namespace Kappa
                         previousZ = followZnew;
                         await Task.Delay(10);
                         m.WriteMemory(LeftClick, "byte", "01");
-                       if ( mem.ReadByte(Spacebar) != 01)
+                        if (mem.ReadByte(Spacebar) != 01)
                         {
                             m.WriteMemory(Spacebar, "byte", "63");
                             Thread.Sleep(10);
@@ -878,35 +916,35 @@ namespace Kappa
                         }
                     }
                 }
-                    else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+933BC8") != 1)
+                else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+933BC8") != 1)
+                {
+                    mainSK1 = mem.ReadByte(prevskill1_adr);
+                    mainSK2 = mem.ReadByte(prevskill2_adr);
+                    target = mem.ReadInt("MiniA.exe+934ABC");
+                    if (mem.Read2Byte("MiniA.exe+933BC8") == 3)
                     {
-                        mainSK1 = mem.ReadByte(prevskill1_adr);
-                        mainSK2 = mem.ReadByte(prevskill2_adr);
-                        target = mem.ReadInt("MiniA.exe+934ABC");
-                        if (mem.Read2Byte("MiniA.exe+933BC8") == 3)
+                        if (mainSK2 == 9)
                         {
-                            if (mainSK2 == 9)
-                            {
-                                Thread.Sleep(1500);
-
-                            }
-                            m.WriteMemory("MiniA.exe+933D10","int",target.ToString());
-                            m.WriteMemory("minia.exe+933D0C", "int", "2");
-                            m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
-                            m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
-                            m.WriteMemory(forceattack_adr, "int", "5");
+                            Thread.Sleep(1500);
 
                         }
+                        m.WriteMemory("MiniA.exe+933D10", "int", target.ToString());
+                        m.WriteMemory("minia.exe+933D0C", "int", "2");
+                        m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
+                        m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
+                        m.WriteMemory(forceattack_adr, "int", "5");
 
                     }
-                    mainSK1 = mem.Read2Byte(prevskill1_adr);
-                    mainSK2 = mem.Read2Byte(prevskill2_adr);
 
-                    previousX = num;
-                    previousZ = num2;
                 }
-                Thread.Sleep(1);
-            
+                mainSK1 = mem.Read2Byte(prevskill1_adr);
+                mainSK2 = mem.Read2Byte(prevskill2_adr);
+
+                previousX = num;
+                previousZ = num2;
+            }
+            Thread.Sleep(1);
+
             Thread.Sleep(1);
             m.FreezeValue(RightArrow, "byte", "01");
             m.WriteMemory(LeftClick, "byte", "01");
@@ -1415,10 +1453,7 @@ namespace Kappa
                     float newX = float.Parse(listViewItem.SubItems[1].Text);
                     float newY = float.Parse(listViewItem.SubItems[2].Text);
                     float newZ = float.Parse(listViewItem.SubItems[3].Text);
-                    m.WriteMemory(ZoomAdr, "float", "1");
-                    m.WriteMemory(AngleAdr, "float", "75");
-                    m.FreezeValue(AltButton, "byte", "63");
-                    m.FreezeValue(LeftClick, "byte", "63");
+                    RunActive();
                     m.WriteMemory(getadr + "+4", "float", newX.ToString());
                     m.WriteMemory(getadr + "+C", "float", newY.ToString());
                     m.WriteMemory(getadr + "+14", "float", newZ.ToString());
@@ -1440,11 +1475,7 @@ namespace Kappa
                     {
                         continue;
                     }
-                    m.UnfreezeValue(AltButton);
-                    m.UnfreezeValue(LeftClick);
-                    m.WriteMemory(LeftClick, "byte", "01");
-                    m.WriteMemory(AltButton, "byte", "01");
-                    if (checkBox25.Checked)
+                        if (checkBox25.Checked)
                     {
                         m.WriteMemory("031F37EA", "byte", "63");
                         Thread.Sleep(100);
@@ -1462,6 +1493,8 @@ namespace Kappa
                         int j;
                         if (int.TryParse(textBox1.Text, out var numberOfIterations))
                         {
+                                                RunDeactive();
+
                             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
                             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
                             m.WriteMemory(LeftClick, "byte", "01");
@@ -1906,6 +1939,11 @@ namespace Kappa
                 }
             }
 
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            RunActive();
         }
     }
 
