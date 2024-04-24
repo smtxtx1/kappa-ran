@@ -73,6 +73,26 @@ namespace Kappa
         public long AOB_ASPD;
         public long AOB_CUTAM;
         public long AOB_ANTIAFK;
+
+        public long AOB_RUN1;
+        public long AOB_RUN2;
+        public long AOB_RUN3;
+        public long AOB_RUN4;
+        public long AOB_RUN5;
+        public long AOB_RUN6;
+
+
+
+        public string RUN1_ADR_RESULT;
+        public string RUN2_ADR_RESULT;
+        public string RUN3_ADR_RESULT;
+        public string RUN4_ADR_RESULT;
+        public string RUN5_ADR_RESULT;
+        public string RUN6_ADR_RESULT;
+        public string RUN7_ADR_RESULT;
+        public string RUN8_ADR_RESULT;
+        public string RUN9_ADR_RESULT;
+
         public string CUTAM_ADR_RESULT;
         public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
@@ -321,7 +341,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
-            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
@@ -329,10 +349,22 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
-
-            //
-               m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
+            IEnumerable<long> AoB_Scan_Run1 = await m.AoBScan("0F ?? ?? ?? ?? ?? 8B 5C 24 34 8B 6C 24 3C 8B C3", false, true);
+            IEnumerable<long> AoB_Scan_Run2 = await m.AoBScan("74 ?? ?? C9 8D 9E 14 3A 00 00", false, true);
+            IEnumerable<long> AoB_Scan_Run3 = await m.AoBScan("74 ?? ?? 74 24 10 8B 7C 24 14", false, true);
+            IEnumerable<long> AoB_Scan_Run4 = await m.AoBScan("F6 C3 0E 74 ??", false, true);
+            IEnumerable<long> AoB_Scan_Run5 = await m.AoBScan("74 ?? E8 ?? ?? ?? 00 8B C8 E8 ?? ?? ?? 00 8D 8E 3C 2C 00 00 E8 ?? ?? ?? ?? 8B 86 F8 2A 00 00 8B 94 24 A0 00 00 00", false, true);
+            // run 6 - 9 run5
+            // run 6 + 63F = run7
+            // run 7 + 11 = run8
+            //74 ?? E8 ?? ?? ?? 00 8B C8 E8 ?? ?? ?? 00 8D 8E 3C 2C 00 00 E8 ?? ?? ?? ?? 8B 86 F8 2A 00 00 8B 94 24 A0 00 00 00
+            m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
+            AOB_RUN1 = AoB_Scan_Run1.FirstOrDefault();
+            AOB_RUN2 = AoB_Scan_Run2.FirstOrDefault();
+            AOB_RUN3 = AoB_Scan_Run3.FirstOrDefault();
+            AOB_RUN4 = AoB_Scan_Run4.FirstOrDefault();
+            AOB_RUN5 = AoB_Scan_Run5.FirstOrDefault();
 
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
@@ -346,6 +378,14 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            RUN1_ADR_RESULT = AOB_RUN1.ToString("x");
+            RUN2_ADR_RESULT = AOB_RUN2.ToString("x");
+            RUN3_ADR_RESULT = AOB_RUN3.ToString("x");
+            RUN4_ADR_RESULT = AOB_RUN4.ToString("x");
+            RUN5_ADR_RESULT = AOB_RUN5.ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN5 - 0x9).ToString("x");
+            RUN7_ADR_RESULT = (AOB_RUN5 - 0x9 + 0x63F).ToString("x");
+            RUN8_ADR_RESULT = (AOB_RUN5 - 0x9 + 0x63F + 0x11).ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
@@ -361,6 +401,18 @@ namespace Kappa
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
 
+        }
+
+        public void RunActive()
+        {
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "eb 3c");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb 6f");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN7_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN8_ADR_RESULT, "bytes", "90 90 90 90 90 90");
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -709,9 +761,9 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1,
                 0x39, 0x5C, 0x24, 0x28,
                 0x0F, 0x84, 0x1D, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
