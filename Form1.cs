@@ -73,6 +73,15 @@ namespace Kappa
         public long AOB_ASPD;
         public long AOB_CUTAM;
         public long AOB_ANTIAFK;
+        public long AOB_RUN;
+
+        public string RUN1_ADR_RESULT;
+        public string RUN2_ADR_RESULT;
+        public string RUN3_ADR_RESULT;
+        public string RUN4_ADR_RESULT;
+        public string RUN5_ADR_RESULT;
+        public string RUN6_ADR_RESULT;
+
         public string CUTAM_ADR_RESULT;
         public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
@@ -329,10 +338,13 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 8E 8C 32 00 00 85 C9", false, true);
 
             //
-               m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
+            m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
+
+            AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
 
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
@@ -346,6 +358,14 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+
+            RUN1_ADR_RESULT = AOB_RUN.ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x63).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN - 0x6C).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xA75).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xA7E).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
+
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
@@ -362,6 +382,28 @@ namespace Kappa
             m.WriteMemory("00FD0012", "float", "-1");
 
         }
+        public void RunActive()
+        {
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB 12");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "E9 0D 02 00 00 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB 0E");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "EB 69");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
+
+        }
+
+        public void RunDeActive()
+        {
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 12");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 0C 02 00 00");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0E");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 69");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
+
+        }
+
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             mem.OpenProcess(int.Parse(comboBox2.Text));
@@ -536,43 +578,62 @@ namespace Kappa
                     if (listView2.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView2);
+                        RunDeActive();
                     }
                     if (listView3.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView3);
+                        RunDeActive();
+
                     }
                     if (listView4.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView4);
+                        RunDeActive();
+
                     }
                     if (listView5.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView5);
+                        RunDeActive();
+
                     }
                     if (listView6.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView6);
+                        RunDeActive();
+
                     }
                     if (listView7.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView7);
+                        RunDeActive();
+
                     }
                     if (listView8.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView8);
+                        RunDeActive();
+
                     }
                     if (listView9.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView9);
+                        RunDeActive();
+
                     }
                     if (listView10.Items.Count > 0)
                     {
                         await UpdateListViewItemsAsync(listView10);
+                        RunDeActive();
+
                     }
 
 
                     if (backgroundWorker1.CancellationPending)
                     {
+                        RunDeActive();
+
                         break;
                     }
                 }
@@ -713,16 +774,14 @@ namespace Kappa
                 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
                 0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
                 0x39, 0x5C, 0x24, 0x28,
-                0x0F, 0x84, 0x1D, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x90, 0x90, 0x90, 0x90, 0x90, 0x90, // je 0x0000001D (to be replaced later)
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_PATH + 0x29 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // -29
                 int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
@@ -779,13 +838,6 @@ namespace Kappa
             m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
-                m.FreezeValue(RightArrow, "byte", "3F");
-                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
                 m.ReadFloat(CurrentX);
                 m.ReadFloat(CurrentY);
                 m.ReadFloat(CurrentZ);
@@ -811,12 +863,12 @@ namespace Kappa
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
-                        m.WriteMemory(LeftClick, "byte", "63");
+                        RunActive();
                         previousX = followXnew;
                         previousZ = followZnew;
                         await Task.Delay(10);
-                        m.WriteMemory(LeftClick, "byte", "01");
-                       if ( mem.ReadByte(Spacebar) != 01)
+                        RunDeActive();
+                        if ( mem.ReadByte(Spacebar) != 01)
                         {
                             m.WriteMemory(Spacebar, "byte", "63");
                             Thread.Sleep(10);
@@ -1363,10 +1415,7 @@ namespace Kappa
                     float newX = float.Parse(listViewItem.SubItems[1].Text);
                     float newY = float.Parse(listViewItem.SubItems[2].Text);
                     float newZ = float.Parse(listViewItem.SubItems[3].Text);
-                    m.WriteMemory(ZoomAdr, "float", "1");
-                    m.WriteMemory(AngleAdr, "float", "75");
-                    m.FreezeValue(AltButton, "byte", "63");
-                    m.FreezeValue(LeftClick, "byte", "63");
+                    RunActive();
                     m.WriteMemory(getadr + "+4", "float", newX.ToString());
                     m.WriteMemory(getadr + "+C", "float", newY.ToString());
                     m.WriteMemory(getadr + "+14", "float", newZ.ToString());
@@ -1388,10 +1437,7 @@ namespace Kappa
                     {
                         continue;
                     }
-                    m.UnfreezeValue(AltButton);
-                    m.UnfreezeValue(LeftClick);
-                    m.WriteMemory(LeftClick, "byte", "01");
-                    m.WriteMemory(AltButton, "byte", "01");
+                    RunDeActive();
                     if (checkBox25.Checked)
                     {
                         m.WriteMemory("031F37EA", "byte", "63");
