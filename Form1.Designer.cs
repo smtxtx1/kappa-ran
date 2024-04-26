@@ -154,7 +154,7 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
-            button15 = new Button();
+            checkBox26 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -225,7 +225,6 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(button15);
             groupBox4.Controls.Add(checkBox24);
             groupBox4.Controls.Add(textBox8);
             groupBox4.Controls.Add(checkBox19);
@@ -790,6 +789,7 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(checkBox26);
             groupBox7.Controls.Add(checkBox25);
             groupBox7.Controls.Add(textBox4);
             groupBox7.Controls.Add(textBox1);
@@ -853,11 +853,11 @@
             // checkBox14
             // 
             checkBox14.AutoSize = true;
-            checkBox14.Location = new Point(6, 46);
+            checkBox14.Location = new Point(6, 47);
             checkBox14.Name = "checkBox14";
-            checkBox14.Size = new Size(52, 19);
+            checkBox14.Size = new Size(32, 19);
             checkBox14.TabIndex = 5;
-            checkBox14.Text = "Skills";
+            checkBox14.Text = "S";
             checkBox14.UseVisualStyleBackColor = true;
             // 
             // groupBox6
@@ -1082,15 +1082,15 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
-            // button15
+            // checkBox26
             // 
-            button15.Location = new Point(93, 213);
-            button15.Name = "button15";
-            button15.Size = new Size(59, 23);
-            button15.TabIndex = 4;
-            button15.Text = "Active skill";
-            button15.UseVisualStyleBackColor = true;
-            button15.Click += button15_Click;
+            checkBox26.AutoSize = true;
+            checkBox26.Location = new Point(37, 47);
+            checkBox26.Name = "checkBox26";
+            checkBox26.Size = new Size(33, 19);
+            checkBox26.TabIndex = 13;
+            checkBox26.Text = "B";
+            checkBox26.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1257,6 +1257,6 @@
         private CheckBox checkBox24;
         private TextBox textBox8;
         private CheckBox checkBox25;
-        private Button button15;
+        private CheckBox checkBox26;
     }
 }

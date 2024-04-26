@@ -1618,6 +1618,8 @@ namespace Kappa
             m.WriteMemory(RightClick, "byte", "01");
         }
 
+
+
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
