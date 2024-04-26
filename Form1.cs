@@ -1049,7 +1049,7 @@ namespace Kappa
 
                     while (checkBox9.Checked)
                     {
-                        string base_mon = "00FF5000";
+                        string base_mon = "00FF5500";
                         int id_mon = m.ReadInt($"{base_mon},1408");
                         int hp_mon = m.ReadInt($"{base_mon},127C");
                         float x_mon = m.ReadFloat($"{base_mon},12DC");
@@ -1520,9 +1520,8 @@ namespace Kappa
                             await Task.Delay(10);
                             for (j = 0; j < numberOfIterations; j++)
                             {
-                                await AutoSkills();
+                                await AutoSkills2();
                                 await Task.Delay(50);
-                                await Autobuff();
 
                             }
                         }
@@ -1640,7 +1639,7 @@ namespace Kappa
                 Console.WriteLine("Clear Monster List");
             }
 
-            string base_mon = "00FF5000";
+            string base_mon = "00FF5500";
             int id_mon = m.ReadInt($"{base_mon},1408");
             int hp_mon = m.ReadInt($"{base_mon},127C");
             float x_mon = m.ReadFloat($"{base_mon},12DC");
@@ -1649,7 +1648,7 @@ namespace Kappa
             float myX = m.ReadFloat(CurrentX);
             float myY = m.ReadFloat(CurrentY);
             float myZ = m.ReadFloat(CurrentZ);
-            int check_hp_mon = m.ReadInt($"{base_mon},A90");
+            int check_hp_mon = m.ReadInt($"{base_mon},127C");
 
             float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
             if (hp_mon > 5 && distance_mon <= 40f)
@@ -1677,7 +1676,7 @@ namespace Kappa
                         m.WriteMemory(forceattack_adr, "int", "5");
                         await Task.Delay(10);
                         distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                        check_hp_mon = m.ReadInt($"{base_mon},A90");
+                        check_hp_mon = m.ReadInt($"{base_mon},127C");
                         if (check_hp_mon <= 5 || distance_mon >= 40f)
                         {
                             break;
@@ -1685,7 +1684,7 @@ namespace Kappa
                         await Task.Delay(10);
                     }
                     distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                    check_hp_mon = m.ReadInt($"{base_mon},A90");
+                    check_hp_mon = m.ReadInt($"{base_mon},127C");
                     if (check_hp_mon <= 5 || distance_mon >= 40f)
                     {
                         break;
@@ -1693,7 +1692,7 @@ namespace Kappa
 
                 }
                 distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                check_hp_mon = m.ReadInt($"{base_mon},A90");
+                check_hp_mon = m.ReadInt($"{base_mon},127C");
                 if (check_hp_mon <= 5 || distance_mon >= 40f)
                 {
                     break;
@@ -1744,7 +1743,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89,0x0D,0x00,0x50,0xFF,0x00,0x8B,0x81,0x08,0x14,0x00,0x00,
+                    0x89,0x0D,0x00,0x55,0xFF,0x00,0x8B,0x81,0x08,0x14,0x00,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -1925,6 +1924,8 @@ namespace Kappa
 
         private void button7_Click(object sender, EventArgs e)
         {
+            m.WriteMemory(MONVIEW_ADR_RESULT, "bytes", "8B 81 08 14 00 00");
+
             autoskillsstand = false;
             if (backgroundWorker2.IsBusy)
             {
@@ -1934,7 +1935,6 @@ namespace Kappa
 
         private async void backgroundWorker2_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            m.WriteMemory(MONVIEW_ADR_RESULT, "bytes", "8B 81 08 14 00 00");
             while (autoskillsstand)
             {
                 await AutoSkills2();
