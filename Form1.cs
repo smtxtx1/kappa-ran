@@ -1723,6 +1723,54 @@ namespace Kappa
             m.UnfreezeValue(LeftClick);
             m.UnfreezeValue(AltButton);
         }
+        public void MonsterAlloc()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_Monview == IntPtr.Zero)
+                {
+                    allocate_adr_Monview = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x89,0x0D,0x00,0x50,0xFF,0x00,0x8B,0x81,0x18,0x0C,0x00,0x00,0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_MONVIEW + 6 - ((int)allocate_adr_Monview + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_Monview.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_Monview - ((int)AOB_MONVIEW + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(MONVIEW_ADR, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
+
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
