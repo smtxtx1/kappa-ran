@@ -207,8 +207,9 @@ namespace Kappa
 
         public string Skilluse2_adr = "00D33C66";
 
-        public string forceattack_adr = "minia.exe+933CF8";
+        public string forceattack_adr = "MiniA.exe+780CFC";
 
+        public string actioncheck = "MiniA.exe+780D10";
 
         /// <summary>
         /// Autoskill END ///////////////
@@ -710,7 +711,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D32C44; j <= 0x00D33534; j += 0xB0)
+            for (int j = 0x00B7F3A4; j <= 0x00B7FC94; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -726,7 +727,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D32044; k <= 0x00D32068; k += 0x4)
+            for (int k = 0x00B7E874; k <= 0x00B7E898; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -744,11 +745,6 @@ namespace Kappa
                     m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-
-
-                    m.WriteMemory(RightClick, "byte", "63");
-                    await Task.Delay(100);
-                    m.WriteMemory(RightClick, "byte", "01");
                     //if (frenzzy_tar != null)
                     //{
                     //    Thread.Sleep(300);
