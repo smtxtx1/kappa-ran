@@ -121,6 +121,7 @@
             button9 = new Button();
             button8 = new Button();
             groupBox7 = new GroupBox();
+            checkBox25 = new CheckBox();
             textBox4 = new TextBox();
             textBox1 = new TextBox();
             checkBox15 = new CheckBox();
@@ -153,7 +154,7 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
-            checkBox25 = new CheckBox();
+            checkBox26 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -788,6 +789,7 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(checkBox26);
             groupBox7.Controls.Add(checkBox25);
             groupBox7.Controls.Add(textBox4);
             groupBox7.Controls.Add(textBox1);
@@ -800,6 +802,16 @@
             groupBox7.TabIndex = 9;
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
+            // 
+            // checkBox25
+            // 
+            checkBox25.AutoSize = true;
+            checkBox25.Location = new Point(73, 22);
+            checkBox25.Name = "checkBox25";
+            checkBox25.Size = new Size(51, 19);
+            checkBox25.TabIndex = 12;
+            checkBox25.Text = "Card";
+            checkBox25.UseVisualStyleBackColor = true;
             // 
             // textBox4
             // 
@@ -841,11 +853,11 @@
             // checkBox14
             // 
             checkBox14.AutoSize = true;
-            checkBox14.Location = new Point(6, 46);
+            checkBox14.Location = new Point(6, 47);
             checkBox14.Name = "checkBox14";
-            checkBox14.Size = new Size(52, 19);
+            checkBox14.Size = new Size(32, 19);
             checkBox14.TabIndex = 5;
-            checkBox14.Text = "Skills";
+            checkBox14.Text = "S";
             checkBox14.UseVisualStyleBackColor = true;
             // 
             // groupBox6
@@ -1070,15 +1082,15 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
-            // checkBox25
+            // checkBox26
             // 
-            checkBox25.AutoSize = true;
-            checkBox25.Location = new Point(73, 22);
-            checkBox25.Name = "checkBox25";
-            checkBox25.Size = new Size(51, 19);
-            checkBox25.TabIndex = 12;
-            checkBox25.Text = "Card";
-            checkBox25.UseVisualStyleBackColor = true;
+            checkBox26.AutoSize = true;
+            checkBox26.Location = new Point(37, 47);
+            checkBox26.Name = "checkBox26";
+            checkBox26.Size = new Size(33, 19);
+            checkBox26.TabIndex = 13;
+            checkBox26.Text = "B";
+            checkBox26.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1245,5 +1257,6 @@
         private CheckBox checkBox24;
         private TextBox textBox8;
         private CheckBox checkBox25;
+        private CheckBox checkBox26;
     }
 }
