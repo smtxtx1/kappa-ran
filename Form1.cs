@@ -741,18 +741,24 @@ namespace Kappa
                 if (!list.Contains(num7))
                 {
 
-                    m.WriteMemory(Skilluse1_adr, "byte", num6.ToString("x"));
-                    m.WriteMemory(Skilluse2_adr, "byte", num7.ToString("x"));
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
+                    if (m.ReadInt("MiniA.exe+933BC8") != 3)
+                    {
+                        m.WriteMemory(actioncheck, "int", "2");
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(300);
+
+                    }
                     //if (frenzzy_tar != null)
                     //{
-                    //    Thread.Sleep(300);
 
                     //    m.WriteMemory("MiniA.exe+931CCC", "int", "0");
                     //    m.WriteMemory("MiniA.exe+931CD0", "int", frenzzy_tar.ToString());
                     //    m.WriteMemory("MiniA.exe+931CB8", "int", "5");
-                    //    Thread.Sleep(300);
+                    Thread.Sleep(300);
                     //}
 
                 }
