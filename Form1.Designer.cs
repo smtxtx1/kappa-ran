@@ -121,6 +121,7 @@
             button9 = new Button();
             button8 = new Button();
             groupBox7 = new GroupBox();
+            checkBox26 = new CheckBox();
             checkBox25 = new CheckBox();
             textBox4 = new TextBox();
             textBox1 = new TextBox();
@@ -142,8 +143,6 @@
             columnHeader41 = new ColumnHeader();
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
-            columnHeader44 = new ColumnHeader();
-            columnHeader45 = new ColumnHeader();
             button5 = new Button();
             button4 = new Button();
             checkBox10 = new CheckBox();
@@ -154,7 +153,6 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
-            checkBox26 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -183,6 +181,7 @@
             // 
             tabPage1.BackColor = Color.DimGray;
             tabPage1.Controls.Add(groupBox9);
+            tabPage1.Controls.Add(listView11);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox2);
             tabPage1.Controls.Add(groupBox1);
@@ -803,6 +802,16 @@
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
             // 
+            // checkBox26
+            // 
+            checkBox26.AutoSize = true;
+            checkBox26.Location = new Point(37, 47);
+            checkBox26.Name = "checkBox26";
+            checkBox26.Size = new Size(33, 19);
+            checkBox26.TabIndex = 13;
+            checkBox26.Text = "B";
+            checkBox26.UseVisualStyleBackColor = true;
+            // 
             // checkBox25
             // 
             checkBox25.AutoSize = true;
@@ -960,12 +969,11 @@
             // groupBox3
             // 
             groupBox3.Controls.Add(textBox5);
-            groupBox3.Controls.Add(listView11);
             groupBox3.Controls.Add(button5);
             groupBox3.Controls.Add(button4);
             groupBox3.Controls.Add(checkBox10);
             groupBox3.Controls.Add(checkBox9);
-            groupBox3.Location = new Point(476, 299);
+            groupBox3.Location = new Point(410, 293);
             groupBox3.Name = "groupBox3";
             groupBox3.Size = new Size(382, 197);
             groupBox3.TabIndex = 12;
@@ -982,10 +990,10 @@
             // listView11
             // 
             listView11.BackColor = SystemColors.InactiveCaptionText;
-            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43, columnHeader44, columnHeader45 });
+            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
             listView11.ForeColor = SystemColors.Info;
             listView11.GridLines = true;
-            listView11.Location = new Point(6, 67);
+            listView11.Location = new Point(12, 263);
             listView11.Name = "listView11";
             listView11.Size = new Size(362, 124);
             listView11.TabIndex = 15;
@@ -994,28 +1002,20 @@
             // 
             // columnHeader41
             // 
-            columnHeader41.Text = "ID mon";
+            columnHeader41.Text = "ITEM TYPE";
             columnHeader41.Width = 65;
             // 
             // columnHeader42
             // 
-            columnHeader42.Text = "Hp mon";
+            columnHeader42.Text = "ID ITEM";
+            columnHeader42.TextAlign = HorizontalAlignment.Center;
             columnHeader42.Width = 65;
             // 
             // columnHeader43
             // 
-            columnHeader43.Text = "X mon";
+            columnHeader43.Text = "ชื่อไอเท็ม";
+            columnHeader43.TextAlign = HorizontalAlignment.Center;
             columnHeader43.Width = 65;
-            // 
-            // columnHeader44
-            // 
-            columnHeader44.Text = "Y mon";
-            columnHeader44.Width = 65;
-            // 
-            // columnHeader45
-            // 
-            columnHeader45.Text = "Z mon";
-            columnHeader45.Width = 65;
             // 
             // button5
             // 
@@ -1082,21 +1082,11 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
-            // checkBox26
-            // 
-            checkBox26.AutoSize = true;
-            checkBox26.Location = new Point(37, 47);
-            checkBox26.Name = "checkBox26";
-            checkBox26.Size = new Size(33, 19);
-            checkBox26.TabIndex = 13;
-            checkBox26.Text = "B";
-            checkBox26.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(404, 435);
+            ClientSize = new Size(405, 436);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             Controls.Add(groupBox3);
@@ -1233,8 +1223,6 @@
         private ColumnHeader columnHeader41;
         private ColumnHeader columnHeader42;
         private ColumnHeader columnHeader43;
-        private ColumnHeader columnHeader44;
-        private ColumnHeader columnHeader45;
         private TextBox textBox5;
         private CheckBox checkBox18;
         private CheckBox checkBox17;

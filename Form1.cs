@@ -449,7 +449,7 @@ namespace Kappa
         {
             if (textBox2.Text != null && checkBox2.Checked)
             {
-                m.WriteMemory("00FF5000", "float", textBox2.Text);
+                m.WriteMemory("00FF6000", "float", textBox2.Text);
             }
 
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -467,7 +467,7 @@ namespace Kappa
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8,0x25,0x00,0x50,0xFF,0x00,0xD8,0x5C,0x24,0x0C,0xDF,0xE0,// fnstsw ax
+                    0xD8,0x25,0x00,0x60,0xFF,0x00,0xD8,0x5C,0x24,0x0C,0xDF,0xE0,// fnstsw ax
                     0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
                 };
 
@@ -1921,6 +1921,7 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
+                await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
             }
