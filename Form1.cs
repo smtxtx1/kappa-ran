@@ -81,8 +81,12 @@ namespace Kappa
         public long AOB_RUN5;
         public long AOB_RUN6;
         public long AOB_RUN7;
+        public long AOB_ITEMDROP;
         public long AOB_MONVIEW;
+        public long AOB_ACTION_BP;
 
+        public string ITEMDROP_ADR_RESULT;
+        public string ACTION_BP_ADR_RESULT;
         public string MONVIEW_ADR_RESULT;
         public string RUN1_ADR_RESULT;
         public string RUN2_ADR_RESULT;
@@ -269,7 +273,7 @@ namespace Kappa
 
         private IntPtr allocate_adr;
         private IntPtr allocate_adr_cutam;
-
+        private IntPtr allocate_adr_Display;
         private IntPtr allocate_adr_aoe;
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
@@ -355,7 +359,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A? ??", false, true);
             IEnumerable<long> AoB_Scan_PETBP = await m.AoBScan("0F ?? ?? ?? 00 00 E8 64 8C F5 FF 33 C9 66 8B 4F 1E", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 08 14 00 00", false, true);
-
+            var AoB_Scan_Action_BP = await m.AoBScan("74 ?? 8D BE 50 2C 00 00 8B C7", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             IEnumerable<long> AoB_Scan_Run1 = await m.AoBScan("0F ?? ?? ?? ?? ?? 8B 5C 24 34 8B 6C 24 3C 8B C3", false, true);
             IEnumerable<long> AoB_Scan_Run2 = await m.AoBScan("74 ?? ?? C9 8D 9E 14 3A 00 00", false, true);
             IEnumerable<long> AoB_Scan_Run3 = await m.AoBScan("74 ?? ?? 74 24 10 8B 7C 24 14", false, true);
@@ -364,7 +369,9 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Run7 = await m.AoBScan("39 A8 C8 03 00 00 74 ?? 55", false, true);
 
 
-            //0F ?? ?? ?? 00 00 E8 64 8C F5 FF 33 C9 66 8B 4F 1E
+            //74 ?? 8D BE 50 2C 00 00 8B C7
+            AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
+            AOB_ACTION_BP = AoB_Scan_Action_BP.FirstOrDefault();
             AOB_MONVIEW = AoB_Scan_Monview.FirstOrDefault();
             AOB_PETBP = AoB_Scan_PETBP.FirstOrDefault();
             AOB_RUN1 = AoB_Scan_Run1.FirstOrDefault();
@@ -385,6 +392,8 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
+            ACTION_BP_ADR_RESULT = AOB_ACTION_BP.ToString("x");
             MONVIEW_ADR_RESULT = AOB_MONVIEW.ToString("x");
             PETBP_ADR_RESULT = AOB_PETBP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN1.ToString("x");
@@ -409,6 +418,7 @@ namespace Kappa
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //pet bypass
+            m.WriteMemory(ACTION_BP_ADR_RESULT, "bytes", "90 90");  
 
         }
 
@@ -1501,12 +1511,13 @@ namespace Kappa
 
 
                     }
+                    RunDeactive();
+
                     if (checkBox14.Checked)
                     {
                         int j;
                         if (int.TryParse(textBox1.Text, out var numberOfIterations))
                         {
-                                                RunDeactive();
 
                             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
                             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
@@ -1579,6 +1590,32 @@ namespace Kappa
 
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                         }
+                    }
+                    if (checkBox26.Checked)
+                    {
+                        if (int.TryParse(textBox1.Text, out var numberOfIterations))
+                        {
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            m.WriteMemory(LeftClick, "byte", "01");
+                            await Task.Delay(10);
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            await Task.Delay(10);
+                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
+                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
+                            await Task.Delay(10);
+                            int j = 0;
+                            for (j = 0; j < numberOfIterations; j++)
+                            {
+                                await Task.Delay(150);
+
+                                await Autobuff();
+                                await Task.Delay(150);
+
+                            }
+                        }
+
                     }
 
                     m.WriteMemory(LeftClick, "byte", "00");
@@ -1774,8 +1811,107 @@ namespace Kappa
                 Console.WriteLine($"Error while finding monster: {ex.Message}");
             }
         }
+        public void DisplayAlloc()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_Display == IntPtr.Zero)
+                {
+                    allocate_adr_Display = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x89,0x35,0x50,0x45,0xFF,0x00,0x8B,0x96,0xB8,0x03,0x00,0x00,
+                    0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_ITEMDROP + 6 - ((int)allocate_adr_Display + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_Display.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_Display - ((int)AOB_ITEMDROP + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
 
 
+        private async Task ItemGet()
+        {
+            int num = 20;
+            int ItemType = m.ReadInt("00FF4550,3b8");
+            int ItemID = m.ReadInt("00FF4550,3bc");
+            byte[] array = m.ReadBytes("00FF4550,3d1", num);
+            byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
+
+            string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+            string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
+
+            if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("พลอย"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("แปรง"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("ขัด"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+
+            if (ItemType == 4)
+            {
+                m.WriteMemory(actioncheck, "int", "4");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+
+            }
+
+            await Task.Delay(100);
+
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
@@ -1915,6 +2051,7 @@ namespace Kappa
         private void button6_Click(object sender, EventArgs e)
         {
             MonsterAlloc();
+            DisplayAlloc();
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
@@ -1925,7 +2062,7 @@ namespace Kappa
         private void button7_Click(object sender, EventArgs e)
         {
             m.WriteMemory(MONVIEW_ADR_RESULT, "bytes", "8B 81 08 14 00 00");
-
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 B8 03 00 00");
             autoskillsstand = false;
             if (backgroundWorker2.IsBusy)
             {
@@ -1938,7 +2075,10 @@ namespace Kappa
             while (autoskillsstand)
             {
                 await AutoSkills2();
+                Thread.Sleep(100);
                 await Autobuff();
+                Thread.Sleep(100);
+                await ItemGet();
 
             }
         }

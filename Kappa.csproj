@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
     <AssemblyName>Nextbot</AssemblyName>
-    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;CAFE</Configurations>
+    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;CAFE;CAF@2</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
