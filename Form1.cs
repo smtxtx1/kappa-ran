@@ -203,6 +203,8 @@ namespace Kappa
 
         public string forceattack_adr = "minia.exe+933CF8";
 
+        public string actioncheck = "MiniA.exe+933BC8";
+
 
         /// <summary>
         /// Autoskill END ///////////////
@@ -1758,6 +1760,57 @@ namespace Kappa
             m.UnfreezeValue(CurrentZ);
             m.UnfreezeValue(LeftClick);
             m.UnfreezeValue(AltButton);
+        }
+        private async Task ItemGet()
+        {
+            int num = 20;
+            int ItemType = m.ReadInt("00FF4550,378");
+            int ItemID = m.ReadInt("00FF4550,37C");
+            byte[] array = m.ReadBytes("00FF4550,391", num);
+            byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
+
+            string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+            string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
+
+            if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("พลอย"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("แปรง"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+            if (stringFromBytes.Contains("ขัด"))
+            {
+                m.WriteMemory(actioncheck, "int", "3");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(10);
+            }
+
+            if (ItemType == 4)
+            {
+                m.WriteMemory(actioncheck, "int", "4");
+                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
+                m.WriteMemory(forceattack_adr, "int", "4");
+
+            }
+
+            await Task.Delay(100);
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
