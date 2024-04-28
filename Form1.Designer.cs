@@ -33,6 +33,10 @@
             groupBox9 = new GroupBox();
             button13 = new Button();
             comboBox4 = new ComboBox();
+            listView11 = new ListView();
+            columnHeader41 = new ColumnHeader();
+            columnHeader42 = new ColumnHeader();
+            columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
             checkBox24 = new CheckBox();
             textBox8 = new TextBox();
@@ -139,10 +143,6 @@
             checkBox6 = new CheckBox();
             groupBox3 = new GroupBox();
             textBox5 = new TextBox();
-            listView11 = new ListView();
-            columnHeader41 = new ColumnHeader();
-            columnHeader42 = new ColumnHeader();
-            columnHeader43 = new ColumnHeader();
             button5 = new Button();
             button4 = new Button();
             checkBox10 = new CheckBox();
@@ -221,6 +221,36 @@
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(107, 23);
             comboBox4.TabIndex = 1;
+            // 
+            // listView11
+            // 
+            listView11.BackColor = SystemColors.InactiveCaptionText;
+            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
+            listView11.ForeColor = SystemColors.Info;
+            listView11.GridLines = true;
+            listView11.Location = new Point(6, 263);
+            listView11.Name = "listView11";
+            listView11.Size = new Size(200, 124);
+            listView11.TabIndex = 15;
+            listView11.UseCompatibleStateImageBehavior = false;
+            listView11.View = View.Details;
+            // 
+            // columnHeader41
+            // 
+            columnHeader41.Text = "ITEM TYPE";
+            columnHeader41.Width = 65;
+            // 
+            // columnHeader42
+            // 
+            columnHeader42.Text = "ID ITEM";
+            columnHeader42.TextAlign = HorizontalAlignment.Center;
+            columnHeader42.Width = 65;
+            // 
+            // columnHeader43
+            // 
+            columnHeader43.Text = "ชื่อไอเท็ม";
+            columnHeader43.TextAlign = HorizontalAlignment.Center;
+            columnHeader43.Width = 65;
             // 
             // groupBox4
             // 
@@ -986,36 +1016,6 @@
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(57, 23);
             textBox5.TabIndex = 16;
-            // 
-            // listView11
-            // 
-            listView11.BackColor = SystemColors.InactiveCaptionText;
-            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
-            listView11.ForeColor = SystemColors.Info;
-            listView11.GridLines = true;
-            listView11.Location = new Point(12, 263);
-            listView11.Name = "listView11";
-            listView11.Size = new Size(362, 124);
-            listView11.TabIndex = 15;
-            listView11.UseCompatibleStateImageBehavior = false;
-            listView11.View = View.Details;
-            // 
-            // columnHeader41
-            // 
-            columnHeader41.Text = "ITEM TYPE";
-            columnHeader41.Width = 65;
-            // 
-            // columnHeader42
-            // 
-            columnHeader42.Text = "ID ITEM";
-            columnHeader42.TextAlign = HorizontalAlignment.Center;
-            columnHeader42.Width = 65;
-            // 
-            // columnHeader43
-            // 
-            columnHeader43.Text = "ชื่อไอเท็ม";
-            columnHeader43.TextAlign = HorizontalAlignment.Center;
-            columnHeader43.Width = 65;
             // 
             // button5
             // 

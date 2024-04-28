@@ -77,7 +77,7 @@ namespace Kappa
         public long AOB_CUTAM;
         public long AOB_ANTIAFK;
         public long AOB_RUN;
-
+        public long AOB_ITEMDROP;
         public string MONVIEW_ADR;
 
         public string RUN1_ADR_RESULT;
@@ -86,7 +86,7 @@ namespace Kappa
         public string RUN4_ADR_RESULT;
         public string RUN5_ADR_RESULT;
         public string RUN6_ADR_RESULT;
-
+        public string ITEMDROP_ADR_RESULT;
         public string CUTAM_ADR_RESULT;
         public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
@@ -203,7 +203,7 @@ namespace Kappa
 
         public string forceattack_adr = "minia.exe+933CF8";
 
-        public string actioncheck = "MiniA.exe+933BC8";
+        public string actioncheck = "00D33D0C";
 
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Kappa
 
         private IntPtr allocate_adr;
         private IntPtr allocate_adr_cutam;
-
+        private IntPtr allocate_adr_Display;
         private IntPtr allocate_adr_aoe;
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
@@ -347,11 +347,11 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 8E 8C 32 00 00 85 C9", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
-
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
-
+            AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
             AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
             AOB_MONVIEW = AoB_Scan_Monview.FirstOrDefault();
 
@@ -368,6 +368,7 @@ namespace Kappa
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
 
+            ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
             RUN2_ADR_RESULT = (AOB_RUN + 0x63).ToString("x");
             RUN3_ADR_RESULT = (AOB_RUN - 0x6C).ToString("x");
@@ -1761,53 +1762,138 @@ namespace Kappa
             m.UnfreezeValue(LeftClick);
             m.UnfreezeValue(AltButton);
         }
+        public void DisplayAlloc()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_Display == IntPtr.Zero)
+                {
+                    allocate_adr_Display = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x8B,0x96,0x78,0x03,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
+                    0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_ITEMDROP + 6 - ((int)allocate_adr_Display + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_Display.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_Display - ((int)AOB_ITEMDROP + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
+
+
+        List<int> ItemID = new List<int>();
+
         private async Task ItemGet()
         {
             int num = 20;
-            int ItemType = m.ReadInt("00FF4550,378");
-            int ItemID = m.ReadInt("00FF4550,37C");
-            byte[] array = m.ReadBytes("00FF4550,391", num);
+            int ItemType = m.ReadInt("00FA7800,378");
+            int ItemID = m.ReadInt("00FA7800,37C");
+            byte[] array = m.ReadBytes("00FA7800,391", num);
             byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
-
             string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
             string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
 
-            if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
+            if (ItemType != 0 && ItemType != 5 && ItemType != 2)
             {
-                m.WriteMemory(actioncheck, "int", "3");
-                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
-                m.WriteMemory(forceattack_adr, "int", "4");
-                await Task.Delay(10);
+                // Check if the ItemID is not already in the listView11
+                if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
+                {
+                    string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
+                    var listViewItem = new ListViewItem(row);
+                    listView11.Items.Add(listViewItem);
+                }
             }
-            if (stringFromBytes.Contains("พลอย"))
+            foreach (ListViewItem item in listView11.Items)
             {
-                m.WriteMemory(actioncheck, "int", "3");
-                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
-                m.WriteMemory(forceattack_adr, "int", "4");
-                await Task.Delay(10);
+                if (item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                {
+                    m.WriteMemory(actioncheck, "int", "3");
+                    m.WriteMemory("00D33D10", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                    m.WriteMemory(forceattack_adr, "int", "4");
+                    await Task.Delay(10);
+                    item.Remove();
+                }
+                if (item.SubItems[0].Text == "4")
+                {
+                    m.WriteMemory(actioncheck, "int", "4");
+                    m.WriteMemory("00D33D10", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                    m.WriteMemory(forceattack_adr, "int", "4");
+                    await Task.Delay(10);
+
+                }
             }
-            if (stringFromBytes.Contains("แปรง"))
+            if (listView11.Items.Count >= 8)
             {
-                m.WriteMemory(actioncheck, "int", "3");
-                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
-                m.WriteMemory(forceattack_adr, "int", "4");
-                await Task.Delay(10);
-            }
-            if (stringFromBytes.Contains("ขัด"))
-            {
-                m.WriteMemory(actioncheck, "int", "3");
-                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
-                m.WriteMemory(forceattack_adr, "int", "4");
-                await Task.Delay(10);
+                listView11.Items.Clear();
             }
 
-            if (ItemType == 4)
-            {
-                m.WriteMemory(actioncheck, "int", "4");
-                m.WriteMemory("MiniA.exe+780D14", "int", ItemID.ToString());
-                m.WriteMemory(forceattack_adr, "int", "4");
+            //if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
+            //{
+            //    m.WriteMemory(actioncheck, "int", "3");
+            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory(forceattack_adr, "int", "4");
+            //    await Task.Delay(10);
+            //}
+            //if (stringFromBytes.Contains("พลอย"))
+            //{
+            //    m.WriteMemory(actioncheck, "int", "3");
+            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory(forceattack_adr, "int", "4");
+            //    await Task.Delay(10);
+            //}
+            //if (stringFromBytes.Contains("แปรง"))
+            //{
+            //    m.WriteMemory(actioncheck, "int", "3");
+            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory(forceattack_adr, "int", "4");
+            //    await Task.Delay(10);
+            //}
+            //if (stringFromBytes.Contains("ขัด"))
+            //{
+            //    m.WriteMemory(actioncheck, "int", "3");
+            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory(forceattack_adr, "int", "4");
+            //    await Task.Delay(10);
+            //}
 
-            }
+            //if (ItemType == 4)
+            //{
+            //    m.WriteMemory(actioncheck, "int", "4");
+            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory(forceattack_adr, "int", "4");
+
+            //}
 
             await Task.Delay(100);
 
@@ -1954,6 +2040,7 @@ namespace Kappa
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
+                DisplayAlloc();
                 MonsterAlloc();
                 backgroundWorker2.RunWorkerAsync();
             }
@@ -1963,7 +2050,7 @@ namespace Kappa
         {
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
-
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.CancelAsync();
@@ -1974,9 +2061,11 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
+                await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
+                
             }
         }
 
