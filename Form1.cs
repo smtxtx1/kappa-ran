@@ -1487,6 +1487,8 @@ namespace Kappa
                             m.WriteMemory(AngleAdr, "float", currentrange.ToString());
                             m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
                             await Task.Delay(10);
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+
                             for (j = 0; j < numberOfIterations; j++)
                             {
                                 await AutoSkills2();
@@ -1494,6 +1496,8 @@ namespace Kappa
                                 await Autobuff();
 
                             }
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+
                         }
                         if (checkBox15.Checked && int.TryParse(textBox4.Text, out j))
                         {
@@ -1529,9 +1533,9 @@ namespace Kappa
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
-                                    m.WriteMemory(Spacebar, "byte", "63");
+                                    await ItemGet();
                                     await Task.Delay(50);
-                                    m.WriteMemory(Spacebar, "byte", "01");
+                                    await ItemGet();
                                     await Task.Delay(50);
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -1540,7 +1544,7 @@ namespace Kappa
                                     int j3;
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
-                                        Autobuff();
+                                        await Autobuff();
                                         await Task.Delay(100);
                                     }
                                 }
@@ -1809,6 +1813,8 @@ namespace Kappa
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
+            m.WriteMemory("00435D3D", "bytes", "90 90");
+            DisplayAlloc();
             if (checkBox13.Checked && !backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
