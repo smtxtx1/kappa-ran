@@ -1650,7 +1650,7 @@ namespace Kappa
             int check_hp_mon = m.ReadInt($"{base_mon},A90");
 
             float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-            if (hp_mon > 5 && distance_mon <= 100f)
+            if (hp_mon > 5 && distance_mon <= 200f)
             {
                 if (!check_id_mon.Contains(id_mon))
                 {
@@ -1660,6 +1660,11 @@ namespace Kappa
 
             foreach (int monsterId in check_id_mon)
             {
+                if (!check_id_mon.Contains(id_mon))
+                {
+                    check_id_mon.Add(id_mon);
+                }
+
                 m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
 
                 while (m.Read2Byte("MiniA.exe+7E1400") != 3)
@@ -1676,9 +1681,9 @@ namespace Kappa
                         await Task.Delay(10);
                         distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                         check_hp_mon = m.ReadInt($"{base_mon},A90");
-                        if (check_hp_mon <= 5 || distance_mon >= 100f)
+                        if (check_hp_mon <= 5 || distance_mon >= 150f)
                         {
-                            check_id_mon.Clear();
+                            check_id_mon.Remove(monsterId);
                             break;
                             
                         }
@@ -1686,17 +1691,22 @@ namespace Kappa
                     }
                     distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                     check_hp_mon = m.ReadInt($"{base_mon},A90");
-                    if (check_hp_mon <= 5 || distance_mon >= 100f)
+                    if (check_hp_mon <= 5 || distance_mon >= 150f)
                     {
-                        check_id_mon.Clear();
+                        check_id_mon.Remove(monsterId);
 
                         break;
+                    }
+                    await Task.Delay(100);
+                    if (!check_id_mon.Contains(id_mon))
+                    {
+                        check_id_mon.Add(id_mon);
                     }
 
                 }
                 distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                 check_hp_mon = m.ReadInt($"{base_mon},A90");
-                if (check_hp_mon <= 5 || distance_mon >= 100f)
+                if (check_hp_mon <= 5 || distance_mon >= 150f)
                 {
                     check_id_mon.Clear();
 
