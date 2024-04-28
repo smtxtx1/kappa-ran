@@ -61,10 +61,10 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00D31910";
+        public string NameAdr = "00FF38A0,50";
 
         public long AOB_MONVIEW;
-
+        public long AOB_LOCALPLAYER;
         public long AOB_AOE;
         public long AOB_PATH;
         public long AOB_BA;
@@ -79,7 +79,7 @@ namespace Kappa
         public long AOB_RUN;
         public long AOB_ITEMDROP;
         public string MONVIEW_ADR;
-
+        public string LOCALPLAYER_ADR_RESULT;
         public string RUN1_ADR_RESULT;
         public string RUN2_ADR_RESULT;
         public string RUN3_ADR_RESULT;
@@ -125,7 +125,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00D31B08";
+        public string IDadr = "00FF38A0,240";
 
         public float GetX1;
 
@@ -149,21 +149,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00D33AD8";
+        public string CurrentX = "00BE1310";
 
-        public string CurrentY = "00D33AD8+4";
+        public string CurrentY = "00BE1310+4";
 
-        public string CurrentZ = "00D33AD8+8";
+        public string CurrentZ = "00BE1310+8";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00D33B1C";
+        public string gotoX = "00BE1410";
 
-        public string gotoY = "00D33B1C+4";
+        public string gotoY = "00BE1410+4";
 
-        public string gotoZ = "00D33B1C+8";
+        public string gotoZ = "00BE1410+8";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -193,17 +193,17 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00D33C68";
+        public string prevskill1_adr = "00BE14A0";
 
-        public string prevskill2_adr = "00D33C6A";
+        public string prevskill2_adr = "00BE14A2";
 
-        public string Skilluse1_adr = "00D33C64";
+        public string Skilluse1_adr = "00BE149C";
 
-        public string Skilluse2_adr = "00D33C66";
+        public string Skilluse2_adr = "00BE149E";
 
-        public string forceattack_adr = "minia.exe+933CF8";
+        public string forceattack_adr = "MiniA.exe+7E1530";
 
-        public string actioncheck = "00D33D0C";
+        public string actioncheck = "00BE1544";
 
 
         /// <summary>
@@ -215,9 +215,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00D319F8";
+        public string HpFreeze_1 = "00FF38A0,130";
 
-        public string HpFreeze_2 = "00D319F8+2";
+        public string HpFreeze_2 = "00FF38A0,132";
 
         public string Antislide = "004324D8";
 
@@ -266,6 +266,7 @@ namespace Kappa
         private IntPtr allocate_adr_Path;
         private IntPtr allocate_adr_Monview;
         private IntPtr allocate_adr_BA;
+        private IntPtr allocate_adr_LOCALPLAYER;
         private void Form1_Load(object sender, EventArgs e)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -322,13 +323,6 @@ namespace Kappa
 
             MessageBox.Show("Scaning address..");
             m.OpenProcess(int.Parse(comboBox1.Text));
-            int num = 20;
-            byte[] array = m.ReadBytes(NameAdr, num);
-            if (array != null)
-            {
-                string @string = Encoding.GetEncoding(874).GetString(array);
-                label1.Text = @string + " " + comboBox1.Text;
-            }
             // Check for null before converting to string
 
 
@@ -345,16 +339,18 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 8E 8C 32 00 00 85 C9", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 86 7C 32 00 00 85 C0", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
+            var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 30 01 00 00 8B", false, true);
+
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             //  m.WriteMemory("004234FD", "bytes", "90 90");
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
             AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
             AOB_MONVIEW = AoB_Scan_Monview.FirstOrDefault();
-
+            AOB_LOCALPLAYER = AoB_Scan_LOCALPLAYER.FirstOrDefault();
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
@@ -367,13 +363,13 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
-
+            LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x63).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN - 0x6C).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xA75).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xA7E).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x76).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xB58).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xAEA).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
@@ -391,27 +387,36 @@ namespace Kappa
             MessageBox.Show("All Done");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
+            LOCALPLAYER_ALLOC();
+            int num = 20;
+
+            byte[] array = m.ReadBytes(NameAdr, num);
+            if (array != null)
+            {
+                string @string = Encoding.GetEncoding(874).GetString(array);
+                label1.Text = @string + " " + comboBox1.Text;
+            }
+
 
         }
         public void RunActive()
         {
-            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB 12");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "E9 0D 02 00 00 90");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB 0E");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "EB 69");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+         
 
         }
 
         public void RunDeActive()
         {
-            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 12");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 0C 02 00 00");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0E");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 69");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
         }
 
@@ -447,7 +452,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
-        string originalcode_BA = "83 7F 44 01 0F 85 64 01";
+        string originalcode_BA = "83 7F 44 01 0F 85 66 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -686,7 +691,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D32C44; j <= 0x00D33534; j += 0xB0)
+            for (int j = 0x00BE047C; j <= 0x00BE0D6C; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -702,7 +707,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D32044; k <= 0x00D32068; k += 0x4)
+            for (int k = 0x00BDF87C; k <= 0x00BDF8A0; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -720,7 +725,7 @@ namespace Kappa
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    if (m.ReadInt("MiniA.exe+933BC8") != 3)
+                    if (m.ReadInt("MiniA.exe+7E1400") != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
                         Thread.Sleep(300);
@@ -854,23 +859,23 @@ namespace Kappa
                 m.ReadFloat(CurrentZ);
                 int mainSK1 = mem.Read2Byte(prevskill1_adr);
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
-                int target = mem.ReadInt("MiniA.exe+934ABC");
+                int target = mem.ReadInt("MiniA.exe+7E22EC");
                 float previousX = float.MinValue;
                 float previousZ = float.MinValue;
                 float num = mem.ReadFloat(CurrentX);
                 float followY = mem.ReadFloat(CurrentY);
                 float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt("MiniA.exe+933BC8");
-                mem.ReadInt("MiniA.exe+933BC8");
-                int num3 = mem.ReadInt("MiniA.exe+933BC8");
+                m.ReadInt("MiniA.exe+7E1400");
+                mem.ReadInt("MiniA.exe+7E1400");
+                int num3 = mem.ReadInt("MiniA.exe+7E1400");
                 float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
                 float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
-                if (mem.Read2Byte("MiniA.exe+933BC8") == 1 && mem.Read2Byte("MiniA.exe+933BC8") != 3)
+                if (mem.Read2Byte("MiniA.exe+7E1400") == 1 && mem.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
 
-                        mem.ReadInt("MiniA.exe+933BC8");
+                        mem.ReadInt("MiniA.exe+7E1400");
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
@@ -889,24 +894,24 @@ namespace Kappa
                         }
                     }
                 }
-                else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+933BC8") != 1)
+                else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7E1400") != 1)
                 {
                     mainSK1 = mem.ReadByte(prevskill1_adr);
                     mainSK2 = mem.ReadByte(prevskill2_adr);
-                    target = mem.ReadInt("MiniA.exe+934ABC");
-                    if (mem.Read2Byte("MiniA.exe+933BC8") == 3)
+                    target = mem.ReadInt("MiniA.exe+7E22EC");
+                    if (mem.Read2Byte("MiniA.exe+7E1400") == 3)
                     {
                         if (mainSK2 == 9)
                         {
                             Thread.Sleep(1500);
 
                         }
-                        m.WriteMemory("MiniA.exe+933D10", "int", target.ToString());
-                        m.WriteMemory("minia.exe+933D0C", "int", "2");
+                        m.WriteMemory("MiniA.exe+7E1548", "int", target.ToString());
+                        m.WriteMemory("00BE1544", "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        m.WriteMemory("minia.exe+933D0C", "int", "0");
+                        m.WriteMemory("00BE1544", "int", "0");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
@@ -1143,7 +1148,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("MiniA.exe+933BC8") != 3)
+                    if (m.Read2Byte("MiniA.exe+7E1400") != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1599,7 +1604,7 @@ namespace Kappa
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(200);
-                if (m.Read2Byte("MiniA.exe+933BC8") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+933BC8") != 3)
+                if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
@@ -1623,7 +1628,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            if (check_id_mon.Count > 3)
+            if (check_id_mon.Count > 0)
             {
                 check_id_mon.Clear();
                 Console.WriteLine("Clear Monster List");
@@ -1641,7 +1646,7 @@ namespace Kappa
             int check_hp_mon = m.ReadInt($"{base_mon},A90");
 
             float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-            if (hp_mon > 5 && distance_mon <= 40f)
+            if (hp_mon > 5 && distance_mon <= 100f)
             {
                 if (!check_id_mon.Contains(id_mon))
                 {
@@ -1651,40 +1656,46 @@ namespace Kappa
 
             foreach (int monsterId in check_id_mon)
             {
-                m.WriteMemory("MiniA.exe+933D10", "int", monsterId.ToString());
+                m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
 
-                if (m.Read2Byte("MiniA.exe+933BC8") != 3)
+                while (m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
-                    for (int i = 0x00D31FCC; i <= 0x00D31FF0; i += 4)
+                    for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
                     {
                         int idskilltype1 = m.ReadByte(i.ToString("X"));
                         int num = i + 2;
                         int idskilltype2 = m.ReadByte(num.ToString("X"));
-                        m.WriteMemory("minia.exe+933D0C", "int", "2");
+                        m.WriteMemory(actioncheck, "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
                         await Task.Delay(10);
                         distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                         check_hp_mon = m.ReadInt($"{base_mon},A90");
-                        if (check_hp_mon <= 5 || distance_mon >= 40f)
+                        if (check_hp_mon <= 5 || distance_mon >= 100f)
                         {
+                            check_id_mon.Clear();
                             break;
+                            
                         }
                         await Task.Delay(10);
                     }
                     distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                     check_hp_mon = m.ReadInt($"{base_mon},A90");
-                    if (check_hp_mon <= 5 || distance_mon >= 40f)
+                    if (check_hp_mon <= 5 || distance_mon >= 100f)
                     {
+                        check_id_mon.Clear();
+
                         break;
                     }
 
                 }
                 distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                 check_hp_mon = m.ReadInt($"{base_mon},A90");
-                if (check_hp_mon <= 5 || distance_mon >= 40f)
+                if (check_hp_mon <= 5 || distance_mon >= 100f)
                 {
+                    check_id_mon.Clear();
+
                     break;
                 }
 
@@ -1695,6 +1706,54 @@ namespace Kappa
             await Task.Delay(1);
 
         }
+        public void LOCALPLAYER_ALLOC()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_LOCALPLAYER == IntPtr.Zero)
+                {
+                    allocate_adr_LOCALPLAYER = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x66 ,0x8B ,0x86 ,0x30 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0xA0 ,0x38 ,0xFF ,0x00,0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_LOCALPLAYER + 7 - ((int)allocate_adr_LOCALPLAYER + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_LOCALPLAYER.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x66,0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_LOCALPLAYER - ((int)AOB_LOCALPLAYER + jmpCode.Length - 2);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(LOCALPLAYER_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
+
         public void MonsterAlloc()
         {
             try
@@ -1839,7 +1898,7 @@ namespace Kappa
                 if (item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                 {
                     m.WriteMemory(actioncheck, "int", "3");
-                    m.WriteMemory("00D33D10", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                    m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                     m.WriteMemory(forceattack_adr, "int", "4");
                     await Task.Delay(10);
                     item.Remove();
@@ -1847,7 +1906,7 @@ namespace Kappa
                 if (item.SubItems[0].Text == "4")
                 {
                     m.WriteMemory(actioncheck, "int", "4");
-                    m.WriteMemory("00D33D10", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                    m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                     m.WriteMemory(forceattack_adr, "int", "4");
                     await Task.Delay(10);
 
@@ -1861,28 +1920,28 @@ namespace Kappa
             //if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
             //{
             //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
             //    m.WriteMemory(forceattack_adr, "int", "4");
             //    await Task.Delay(10);
             //}
             //if (stringFromBytes.Contains("พลอย"))
             //{
             //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
             //    m.WriteMemory(forceattack_adr, "int", "4");
             //    await Task.Delay(10);
             //}
             //if (stringFromBytes.Contains("แปรง"))
             //{
             //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
             //    m.WriteMemory(forceattack_adr, "int", "4");
             //    await Task.Delay(10);
             //}
             //if (stringFromBytes.Contains("ขัด"))
             //{
             //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
             //    m.WriteMemory(forceattack_adr, "int", "4");
             //    await Task.Delay(10);
             //}
@@ -1890,7 +1949,7 @@ namespace Kappa
             //if (ItemType == 4)
             //{
             //    m.WriteMemory(actioncheck, "int", "4");
-            //    m.WriteMemory("00D33D10", "int", ItemID.ToString());
+            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
             //    m.WriteMemory(forceattack_adr, "int", "4");
 
             //}
@@ -1972,7 +2031,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
