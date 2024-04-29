@@ -239,6 +239,8 @@ namespace Kappa
             InitializeComponent();
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker5.WorkerSupportsCancellation = true;
+            backgroundWorker6.WorkerSupportsCancellation = true;
+
         }
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -406,7 +408,7 @@ namespace Kappa
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-         
+
 
         }
 
@@ -1477,16 +1479,6 @@ namespace Kappa
                         int j;
                         if (int.TryParse(textBox1.Text, out var numberOfIterations))
                         {
-                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                            m.WriteMemory(LeftClick, "byte", "01");
-                            await Task.Delay(10);
-                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                            await Task.Delay(10);
-                            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                            await Task.Delay(10);
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
                             for (j = 0; j < numberOfIterations; j++)
@@ -1504,9 +1496,9 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                m.WriteMemory(Spacebar, "byte", "63");
+                                await ItemGet();
                                 await Task.Delay(50);
-                                m.WriteMemory(Spacebar, "byte", "01");
+                                await ItemGet();
                                 await Task.Delay(50);
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -1628,11 +1620,9 @@ namespace Kappa
             m.WriteMemory(RightClick, "byte", "01");
         }
         static List<int> check_id_mon = new List<int>();
-
-
-        private async Task AutoSkills2()
+        private async Task AddMonsterList()
         {
-            if (check_id_mon.Count > 0)
+            if (check_id_mon.Count > 3)
             {
                 check_id_mon.Clear();
                 Console.WriteLine("Clear Monster List");
@@ -1657,67 +1647,52 @@ namespace Kappa
                     check_id_mon.Add(id_mon);
                 }
             }
+        }
 
-            foreach (int monsterId in check_id_mon)
+        private async Task AutoSkills2()
+        {
+            if (check_id_mon.Count >= 1)
             {
-                if (!check_id_mon.Contains(id_mon))
+                for (int d = 0; d < check_id_mon.Count; d++)
                 {
-                    check_id_mon.Add(id_mon);
-                }
+                    int monsterId = check_id_mon[d];
+                    
+                    m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
 
-                m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
-
-                while (m.Read2Byte("MiniA.exe+7E1400") != 3)
-                {
-                    for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+                    while (m.Read2Byte("MiniA.exe+7E1400") != 3)
                     {
-                        int idskilltype1 = m.ReadByte(i.ToString("X"));
-                        int num = i + 2;
-                        int idskilltype2 = m.ReadByte(num.ToString("X"));
-                        m.WriteMemory(actioncheck, "int", "2");
-                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        await Task.Delay(10);
-                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                        check_hp_mon = m.ReadInt($"{base_mon},A90");
-                        if (check_hp_mon <= 5 || distance_mon >= 150f)
+                        for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
                         {
-                            check_id_mon.Remove(monsterId);
-                            break;
-                            
-                        }
-                        await Task.Delay(10);
-                    }
-                    distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                    check_hp_mon = m.ReadInt($"{base_mon},A90");
-                    if (check_hp_mon <= 5 || distance_mon >= 150f)
-                    {
-                        check_id_mon.Remove(monsterId);
+                            int idskilltype1 = m.ReadByte(i.ToString("X"));
+                            int num = i + 2;
+                            int idskilltype2 = m.ReadByte(num.ToString("X"));
+                            m.WriteMemory(actioncheck, "int", "2");
+                            m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                            m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                            m.WriteMemory(forceattack_adr, "int", "5");
+                            await Task.Delay(10);
+                            if(m.Read2Byte("MiniA.exe+7E1400") == 3)
+                            {
+                                await Task.Delay(100);
 
+                                check_id_mon.Remove(monsterId);
+                                if (check_id_mon.Count < 1)
+                                {
+                                    break;
+
+                                }
+
+                            }
+                        }
                         break;
                     }
-                    await Task.Delay(100);
-                    if (!check_id_mon.Contains(id_mon))
-                    {
-                        check_id_mon.Add(id_mon);
-                    }
+                    await Task.Delay(20);
 
                 }
-                distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                check_hp_mon = m.ReadInt($"{base_mon},A90");
-                if (check_hp_mon <= 5 || distance_mon >= 150f)
-                {
-                    check_id_mon.Clear();
-
-                    break;
-                }
+                await Task.Delay(20);
 
             }
-            
-            await Task.Delay(10);
 
-            await Task.Delay(1);
 
         }
         public void LOCALPLAYER_ALLOC()
@@ -1825,17 +1800,28 @@ namespace Kappa
         {
             m.WriteMemory("00435D3D", "bytes", "90 90");
             DisplayAlloc();
+            
+            if (checkBox13.Checked)
+            {
+                backgroundWorker6.RunWorkerAsync();
+            }
+            else
+            {
+                backgroundWorker6.CancelAsync();
+            }
+
             if (checkBox13.Checked && !backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
                 return;
             }
-            backgroundWorker1.CancelAsync();
-            m.UnfreezeValue(CurrentX);
-            m.UnfreezeValue(CurrentY);
-            m.UnfreezeValue(CurrentZ);
-            m.UnfreezeValue(LeftClick);
-            m.UnfreezeValue(AltButton);
+            else
+            {
+                backgroundWorker1.CancelAsync();
+
+                RunDeActive();
+
+            }
         }
         public void DisplayAlloc()
         {
@@ -1888,8 +1874,7 @@ namespace Kappa
 
 
         List<int> ItemID = new List<int>();
-
-        private async Task ItemGet()
+        private async Task AddItemToListView()
         {
             int num = 20;
             int ItemType = m.ReadInt("00FA7800,378");
@@ -1909,6 +1894,15 @@ namespace Kappa
                     listView11.Items.Add(listViewItem);
                 }
             }
+            if (listView11.Items.Count >= 8)
+            {
+                listView11.Items.Clear();
+            }
+
+
+        }
+        private async Task ItemGet()
+        {
             foreach (ListViewItem item in listView11.Items)
             {
                 if (item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
@@ -1927,10 +1921,6 @@ namespace Kappa
                     await Task.Delay(10);
 
                 }
-            }
-            if (listView11.Items.Count >= 8)
-            {
-                listView11.Items.Clear();
             }
 
             //if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
@@ -1970,7 +1960,7 @@ namespace Kappa
 
             //}
 
-            await Task.Delay(100);
+            await Task.Delay(20);
 
         }
 
@@ -2112,6 +2102,9 @@ namespace Kappa
 
         private void button6_Click(object sender, EventArgs e)
         {
+            button6.Enabled = false;
+            button7.Enabled = true;
+
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
@@ -2123,6 +2116,8 @@ namespace Kappa
 
         private void button7_Click(object sender, EventArgs e)
         {
+            button7.Enabled = false;
+            button6.Enabled = true;
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
             m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
@@ -2140,7 +2135,7 @@ namespace Kappa
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
-                
+
             }
         }
 
@@ -2285,6 +2280,16 @@ namespace Kappa
 
         }
 
+        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!backgroundWorker6.CancellationPending)
+            {
+                //   MessageBox.Show("RUNNING");
+               AddItemToListView();
+               AddMonsterList();
+                Thread.Sleep(10);
+            }
+        }
     }
 
 }

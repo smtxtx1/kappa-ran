@@ -153,6 +153,8 @@
             backgroundWorker3 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
+            backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -1082,6 +1084,10 @@
             // 
             backgroundWorker5.DoWork += backgroundWorker5_DoWork;
             // 
+            // backgroundWorker6
+            // 
+            backgroundWorker6.DoWork += backgroundWorker6_DoWork;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1246,5 +1252,7 @@
         private TextBox textBox8;
         private CheckBox checkBox25;
         private CheckBox checkBox26;
+        private System.ComponentModel.BackgroundWorker backgroundWorker6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker7;
     }
 }
