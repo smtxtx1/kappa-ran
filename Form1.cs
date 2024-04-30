@@ -386,12 +386,12 @@ namespace Kappa
             LR_ADR_RESULT = AOB_LR.ToString("x");
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
-            MessageBox.Show("All Done");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             LOCALPLAYER_ALLOC();
             int num = 20;
 
+            MessageBox.Show("All Done");
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -1654,11 +1654,12 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
+
             try
             {
 
                 if (check_id_mon.Count >= 1)
-            {
+                {
                     for (int d = 0; d < check_id_mon.Count; d++)
                     {
                         int monsterId = check_id_mon[d];
@@ -1681,32 +1682,29 @@ namespace Kappa
                                 {
                                     await Task.Delay(100);
 
-                                    check_id_mon.Remove(monsterId);
+                                    // You can remove the clearing of the list here
+                                    // check_id_mon.Clear();
+
                                     if (check_id_mon.Count < 1)
                                     {
                                         break;
-
                                     }
-
                                 }
                             }
                             break;
                         }
                         await Task.Delay(20);
-
                     }
-
+                    check_id_mon.Clear();
                 }
                 await Task.Delay(20);
-
             }
-
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                return;
             }
-
         }
+
         public void LOCALPLAYER_ALLOC()
         {
             try
