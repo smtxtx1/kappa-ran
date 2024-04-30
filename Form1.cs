@@ -592,58 +592,69 @@ namespace Kappa
             {
                 try
                 {
+                    RunActive();
                     await UpdateListViewItemsAsync(listView1);
+
                     if (listView2.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView2);
-                        RunDeActive();
                     }
                     if (listView3.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView3);
-                        RunDeActive();
 
                     }
                     if (listView4.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView4);
-                        RunDeActive();
 
                     }
                     if (listView5.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView5);
-                        RunDeActive();
 
                     }
                     if (listView6.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView6);
-                        RunDeActive();
 
                     }
                     if (listView7.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView7);
-                        RunDeActive();
 
                     }
                     if (listView8.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView8);
-                        RunDeActive();
 
                     }
                     if (listView9.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView9);
-                        RunDeActive();
 
                     }
                     if (listView10.Items.Count > 0)
                     {
+                        RunActive();
+
                         await UpdateListViewItemsAsync(listView10);
-                        RunDeActive();
 
                     }
 
@@ -1476,10 +1487,11 @@ namespace Kappa
                     }
                     if (checkBox14.Checked)
                     {
+                        m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+
                         int j;
                         if (int.TryParse(textBox1.Text, out var numberOfIterations))
                         {
-                            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
                             for (j = 0; j < numberOfIterations; j++)
                             {
@@ -1488,9 +1500,10 @@ namespace Kappa
                                 await Autobuff();
 
                             }
-                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
                         }
+                        m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+
                         if (checkBox15.Checked && int.TryParse(textBox4.Text, out j))
                         {
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
@@ -1506,16 +1519,6 @@ namespace Kappa
                             int j2;
                             if (int.TryParse(textBox1.Text, out var numberOfIterations2))
                             {
-                                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                                m.WriteMemory(LeftClick, "byte", "01");
-                                await Task.Delay(10);
-                                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                                await Task.Delay(10);
-                                m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-                                m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-                                await Task.Delay(10);
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
@@ -1651,48 +1654,57 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            if (check_id_mon.Count >= 1)
+            try
             {
-                for (int d = 0; d < check_id_mon.Count; d++)
-                {
-                    int monsterId = check_id_mon[d];
-                    
-                    m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
 
-                    while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                if (check_id_mon.Count >= 1)
+            {
+                    for (int d = 0; d < check_id_mon.Count; d++)
                     {
-                        for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
-                        {
-                            int idskilltype1 = m.ReadByte(i.ToString("X"));
-                            int num = i + 2;
-                            int idskilltype2 = m.ReadByte(num.ToString("X"));
-                            m.WriteMemory(actioncheck, "int", "2");
-                            m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                            m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                            m.WriteMemory(forceattack_adr, "int", "5");
-                            await Task.Delay(10);
-                            if(m.Read2Byte("MiniA.exe+7E1400") == 3)
-                            {
-                                await Task.Delay(100);
+                        int monsterId = check_id_mon[d];
 
-                                check_id_mon.Remove(monsterId);
-                                if (check_id_mon.Count < 1)
+                        m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
+
+                        while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                        {
+                            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+                            {
+                                int idskilltype1 = m.ReadByte(i.ToString("X"));
+                                int num = i + 2;
+                                int idskilltype2 = m.ReadByte(num.ToString("X"));
+                                m.WriteMemory(actioncheck, "int", "2");
+                                m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                                m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                                m.WriteMemory(forceattack_adr, "int", "5");
+                                await Task.Delay(10);
+                                if (m.Read2Byte("MiniA.exe+7E1400") == 3)
                                 {
-                                    break;
+                                    await Task.Delay(100);
+
+                                    check_id_mon.Remove(monsterId);
+                                    if (check_id_mon.Count < 1)
+                                    {
+                                        break;
+
+                                    }
 
                                 }
-
                             }
+                            break;
                         }
-                        break;
+                        await Task.Delay(20);
+
                     }
-                    await Task.Delay(20);
 
                 }
                 await Task.Delay(20);
 
             }
 
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
 
         }
         public void LOCALPLAYER_ALLOC()
