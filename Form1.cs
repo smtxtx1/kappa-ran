@@ -352,7 +352,7 @@ namespace Kappa
 
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
-            AOB_ANTIAFK = AoB_Scan_AntiSlide.FirstOrDefault();
+            AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
             AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
             AOB_MONVIEW = AoB_Scan_Monview.FirstOrDefault();
