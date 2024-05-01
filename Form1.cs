@@ -78,6 +78,9 @@ namespace Kappa
         public long AOB_ANTIAFK;
         public long AOB_RUN;
         public long AOB_ITEMDROP;
+        public long AOB_ANTISLIDE;
+
+        public string ANTISLIDE_ADR_RESULT;
         public string MONVIEW_ADR;
         public string LOCALPLAYER_ADR_RESULT;
         public string RUN1_ADR_RESULT;
@@ -345,10 +348,11 @@ namespace Kappa
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 30 01 00 00 8B", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 00 22 00 00 8D ?? 00 22 00 00 6A 01 8B CF FF 52 10 85 C0 75 ?? 8B 07", false, true);
 
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
-            //  m.WriteMemory("004234FD", "bytes", "90 90");
+            AOB_ANTIAFK = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
             AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
             AOB_MONVIEW = AoB_Scan_Monview.FirstOrDefault();
@@ -374,6 +378,7 @@ namespace Kappa
             RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
+            ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
@@ -1623,35 +1628,54 @@ namespace Kappa
             m.WriteMemory(RightClick, "byte", "01");
         }
         static List<int> check_id_mon = new List<int>();
+        string base_mon = "00000000";
+
         private async Task AddMonsterList()
         {
-            if (check_id_mon.Count > 3)
+            if (check_id_mon.Count > 2)
             {
                 check_id_mon.Clear();
                 Console.WriteLine("Clear Monster List");
             }
-
-            string base_mon = "00FF5000";
-            int id_mon = m.ReadInt($"{base_mon},C18");
-            int hp_mon = m.ReadInt($"{base_mon},A90");
-            float x_mon = m.ReadFloat($"{base_mon},AEC");
-            float y_mon = m.ReadFloat($"{base_mon},AF0");
-            float z_mon = m.ReadFloat($"{base_mon},AF4");
-            float myX = m.ReadFloat(CurrentX);
-            float myY = m.ReadFloat(CurrentY);
-            float myZ = m.ReadFloat(CurrentZ);
-            int check_hp_mon = m.ReadInt($"{base_mon},A90");
-
-            float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-            if (hp_mon > 5 && distance_mon <= 200f)
+            const int OffsetID = 0xC18;
+            const int OffsetX = 0xAEC;
+            const int OffsetY = 0xAF0;
+            const int OffsetZ = 0xAF4;
+            const int OffsetHp = 0xA90;
+            for (int i = 0; i < 3; i++)
             {
-                if (!check_id_mon.Contains(id_mon))
+                // Calculate offsets based on the iteration
+                int offsetIDmon = OffsetID + (i * 0xD08);
+                int offsetXmon = OffsetX + (i * 0xD08);
+                int offsetYmon = OffsetY + (i * 0xD08);
+                int offsetZmon = OffsetZ + (i * 0xD08);
+                int offsetHpmon = OffsetHp + (i * 0xD08);
+
+                // Read monster and player positions
+                int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
+                float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+                float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+                float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+                int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                float myX = m.ReadFloat(CurrentX);
+                float myY = m.ReadFloat(CurrentY);
+                float myZ = m.ReadFloat(CurrentZ);
+                int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+
+                float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                if (hp_mon > 5 && distance_mon <= 100f)
                 {
-                    check_id_mon.Add(id_mon);
+                    distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                    if (!check_id_mon.Contains(id_mon))
+                    {
+                        check_id_mon.Add(id_mon);
+                    }
+                    
                 }
+                
             }
         }
-
+        
         private async Task AutoSkills2()
         {
 
@@ -1674,9 +1698,14 @@ namespace Kappa
                                 int num = i + 2;
                                 int idskilltype2 = m.ReadByte(num.ToString("X"));
                                 m.WriteMemory(actioncheck, "int", "2");
-                                m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                                m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                                m.WriteMemory(forceattack_adr, "int", "5");
+                                if (idskilltype1 != 255 && idskilltype2 != 255)
+                                {
+                                    m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                                    m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                                    m.WriteMemory(forceattack_adr, "int", "5");
+
+
+                                }
                                 await Task.Delay(10);
                                 if (m.Read2Byte("MiniA.exe+7E1400") == 3)
                                 {
@@ -1695,7 +1724,6 @@ namespace Kappa
                         }
                         await Task.Delay(20);
                     }
-                    check_id_mon.Clear();
                 }
                 await Task.Delay(20);
             }
@@ -1983,11 +2011,11 @@ namespace Kappa
         {
             if (checkBox17.Checked)
             {
-                m.WriteMemory("0041FF88", "byte", "0");
+                m.WriteMemory(ANTISLIDE_ADR_RESULT, "byte", "0");
             }
             else
             {
-                m.WriteMemory("0041FF88", "byte", "5");
+                m.WriteMemory(ANTISLIDE_ADR_RESULT, "byte", "5");
 
             }
         }
