@@ -226,7 +226,7 @@ namespace Kappa
 
         public string Wallhack = "005E2FC1";
 
-        public string ASPD_adr = "MiniA.exe+53C524";
+        public string ASPD_adr = "MiniA.exe+54FB94";
 
         public bool autoskillsstand = true;
 
@@ -1630,106 +1630,100 @@ namespace Kappa
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
-        private async Task AddMonsterList()
+private async Task AddMonsterList()
+{
+    try
+    {
+        if (check_id_mon.Count > 2)
         {
-            if (check_id_mon.Count > 2)
-            {
-                check_id_mon.Clear();
-                Console.WriteLine("Clear Monster List");
-            }
-            const int OffsetID = 0xC18;
-            const int OffsetX = 0xAEC;
-            const int OffsetY = 0xAF0;
-            const int OffsetZ = 0xAF4;
-            const int OffsetHp = 0xA90;
-            for (int i = 0; i < 3; i++)
-            {
-                // Calculate offsets based on the iteration
-                int offsetIDmon = OffsetID + (i * 0xD08);
-                int offsetXmon = OffsetX + (i * 0xD08);
-                int offsetYmon = OffsetY + (i * 0xD08);
-                int offsetZmon = OffsetZ + (i * 0xD08);
-                int offsetHpmon = OffsetHp + (i * 0xD08);
+            check_id_mon.Clear();
+            Console.WriteLine("Clear Monster List");
+        }
+        const int OffsetID = 0xC18;
+        const int OffsetX = 0xAEC;
+        const int OffsetY = 0xAF0;
+        const int OffsetZ = 0xAF4;
+        const int OffsetHp = 0xA90;
+        for (int i = 0; i < 3; i++)
+        {
+            // Calculate offsets based on the iteration
+            int offsetIDmon = OffsetID + (i * 0xD08);
+            int offsetXmon = OffsetX + (i * 0xD08);
+            int offsetYmon = OffsetY + (i * 0xD08);
+            int offsetZmon = OffsetZ + (i * 0xD08);
+            int offsetHpmon = OffsetHp + (i * 0xD08);
 
-                // Read monster and player positions
-                int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
-                float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
-                float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
-                float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
-                int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                float myX = m.ReadFloat(CurrentX);
-                float myY = m.ReadFloat(CurrentY);
-                float myZ = m.ReadFloat(CurrentZ);
-                int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+            // Read monster and player positions
+            int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
+            float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+            float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+            float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+            int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+            float myX = m.ReadFloat(CurrentX);
+            float myY = m.ReadFloat(CurrentY);
+            float myZ = m.ReadFloat(CurrentZ);
+            int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
 
-                float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                if (hp_mon > 5 && distance_mon <= 100f)
+            float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+            if (hp_mon > 5 && distance_mon <= 100f)
+            {
+                distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                if (!check_id_mon.Contains(id_mon))
                 {
-                    distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                    if (!check_id_mon.Contains(id_mon))
-                    {
-                        check_id_mon.Add(id_mon);
-                    }
-                    
+                    check_id_mon.Add(id_mon);
                 }
-                
             }
         }
+    }
+    catch (Exception ex)
+    {
+        // Log the exception or handle it as needed
+        Console.WriteLine($"An error occurred: {ex.Message}");
+        // Continue the loop even if an error occurs
+        await Task.Delay(100); // Adjust delay as needed
+        await AddMonsterList(); // Recursively call the method
+    }
+}
         
         private async Task AutoSkills2()
         {
 
-            try
+            for (int d = 0; d < check_id_mon.Count; d++)
             {
+                int monsterId = check_id_mon[d];
 
-                if (check_id_mon.Count >= 1)
+                m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
+
+                while (m.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
-                    for (int d = 0; d < check_id_mon.Count; d++)
+                    for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
                     {
-                        int monsterId = check_id_mon[d];
-
-                        m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
-
-                        while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                        int idskilltype1 = m.ReadByte(i.ToString("X"));
+                        int num = i + 2;
+                        int idskilltype2 = m.ReadByte(num.ToString("X"));
+                        m.WriteMemory(actioncheck, "int", "2");
+                        if (idskilltype1 != 255 && idskilltype2 != 255)
                         {
-                            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
-                            {
-                                int idskilltype1 = m.ReadByte(i.ToString("X"));
-                                int num = i + 2;
-                                int idskilltype2 = m.ReadByte(num.ToString("X"));
-                                m.WriteMemory(actioncheck, "int", "2");
-                                if (idskilltype1 != 255 && idskilltype2 != 255)
-                                {
-                                    m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                                    m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                                    m.WriteMemory(forceattack_adr, "int", "5");
+                            m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                            m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                            m.WriteMemory(forceattack_adr, "int", "5");
 
 
-                                }
-                                await Task.Delay(10);
-                                if (m.Read2Byte("MiniA.exe+7E1400") == 3)
-                                {
-                                    await Task.Delay(100);
+                        }
+                        await Task.Delay(10);
+                        if (m.Read2Byte("MiniA.exe+7E1400") == 3)
+                        {
+                            await Task.Delay(100);
 
-                                    // You can remove the clearing of the list here
-                                    // check_id_mon.Clear();
+                            // You can remove the clearing of the list here
+                            // check_id_mon.Clear();
 
-                                    if (check_id_mon.Count < 1)
-                                    {
-                                        break;
-                                    }
-                                }
-                            }
                             break;
                         }
-                        await Task.Delay(20);
                     }
+                    break;
                 }
                 await Task.Delay(20);
-            }
-            catch (Exception e)
-            {
-                return;
             }
         }
 
@@ -2148,6 +2142,7 @@ namespace Kappa
             {
                 DisplayAlloc();
                 MonsterAlloc();
+                AddMonsterList();
                 backgroundWorker2.RunWorkerAsync();
             }
         }
