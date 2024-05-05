@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox9 = new GroupBox();
@@ -1097,10 +1098,11 @@
             Controls.Add(tabControl1);
             Controls.Add(groupBox3);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "Form1";
             ShowIcon = false;
-            Text = "เอ๋กวนอูนำทัพ";
+            Text = "smt-kappa";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);

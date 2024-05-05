@@ -167,6 +167,7 @@ public class Login : Form
 
     private void InitializeComponent()
     {
+        ComponentResourceManager resources = new ComponentResourceManager(typeof(Login));
         key = new TextBox();
         button1 = new Button();
         SuspendLayout();
@@ -199,6 +200,7 @@ public class Login : Form
         Controls.Add(button1);
         Controls.Add(key);
         FormBorderStyle = FormBorderStyle.FixedSingle;
+        Icon = (Icon)resources.GetObject("$this.Icon");
         Margin = new Padding(4, 3, 4, 3);
         MaximizeBox = false;
         Name = "Login";
