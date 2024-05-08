@@ -10,7 +10,12 @@
     <AssemblyName>kappa-run</AssemblyName>
     <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="among_us_player_red_icon_156942.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
