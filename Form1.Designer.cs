@@ -1101,7 +1101,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "Form1";
-            ShowIcon = false;
+            Opacity = 0.9D;
             Text = "smt-kappa";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;

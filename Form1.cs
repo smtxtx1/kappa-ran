@@ -749,14 +749,14 @@ namespace Kappa
                         Thread.Sleep(300);
 
                     }
-                    //if (frenzzy_tar != null)
-                    //{
+                    if (frenzzy_tar != -1)
+                    {
 
-                    //    m.WriteMemory("MiniA.exe+931CCC", "int", "0");
-                    //    m.WriteMemory("MiniA.exe+931CD0", "int", frenzzy_tar.ToString());
-                    //    m.WriteMemory("MiniA.exe+931CB8", "int", "5");
-                    Thread.Sleep(300);
-                    //}
+                        m.WriteMemory(actioncheck, "int", "0");
+                        m.WriteMemory("MiniA.exe+7E1548", "int", frenzzy_tar.ToString());
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(300);
+                    }
 
                 }
                 if (list.Contains(num7))
@@ -2145,6 +2145,7 @@ private async Task AddMonsterList()
         {
             button6.Enabled = false;
             button7.Enabled = true;
+            m.WriteMemory("00435D3D", "bytes", "90 90");
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
@@ -2173,6 +2174,8 @@ private async Task AddMonsterList()
         {
             while (autoskillsstand)
             {
+                await AddItemToListView();
+                await AddMonsterList();
                 await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
@@ -2261,7 +2264,8 @@ private async Task AddMonsterList()
 
         private void button14_Click(object sender, EventArgs e)
         {
-            frenzzy_tar = m.ReadInt("MiniA.exe+932A7C");
+            frenzzy_tar = m.ReadInt("MiniA.exe+7E22EC");
+            MessageBox.Show(frenzzy_tar.ToString());
         }
 
         private void checkBox24_CheckedChanged(object sender, EventArgs e)
