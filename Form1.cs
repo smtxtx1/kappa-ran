@@ -2126,7 +2126,7 @@ private async Task AddMonsterList()
                     if (currentSkill > 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "0");
-                        m.WriteMemory("00FF8000,46", "int", "1");
+                        m.WriteMemory("00FF8000,48", "int", "1");
 
                     }
                     await Task.Delay(100);
