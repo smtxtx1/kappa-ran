@@ -1998,7 +1998,7 @@ private async Task AddMonsterList()
         {
             try
             {
-                int num = 20;
+                int num = 30;
                 int ItemType = m.ReadInt("00FA7800,378");
                 int ItemID = m.ReadInt("00FA7800,37C");
                 byte[] array = m.ReadBytes("00FA7800,391", num);
