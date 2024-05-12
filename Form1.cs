@@ -1684,59 +1684,129 @@ private async Task AddMonsterList()
         await AddMonsterList(); // Recursively call the method
     }
 }
-        
+
         private async Task AutoSkills2()
         {
-            if (check_id_mon.Count > 0)
+            const int OffsetID = 0xC18;
+            const int OffsetX = 0xAEC;
+            const int OffsetY = 0xAF0;
+            const int OffsetZ = 0xAF4;
+            const int OffsetHp = 0xA90;
+            for (int i = 0; i < 3; i++)
             {
-                try
+                // Calculate offsets based on the iteration
+                int offsetIDmon = OffsetID + (i * 0xD08);
+                int offsetXmon = OffsetX + (i * 0xD08);
+                int offsetYmon = OffsetY + (i * 0xD08);
+                int offsetZmon = OffsetZ + (i * 0xD08);
+                int offsetHpmon = OffsetHp + (i * 0xD08);
+
+                // Read monster and player positions
+                int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
+                float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+                float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+                float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+                int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                float myX = m.ReadFloat(CurrentX);
+                float myY = m.ReadFloat(CurrentY);
+                float myZ = m.ReadFloat(CurrentZ);
+                int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+
+                float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                if (hp_mon > 5 && distance_mon <= 60f)
                 {
-                    for (int d = 0; d < check_id_mon.Count; d++)
+                    m.WriteMemory("MiniA.exe+7E1548", "int", id_mon.ToString());
+                    while (true)
                     {
-                        int monsterId = check_id_mon[d];
-
-                        m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
-
-                        while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                        for (int i2 = 0x00BDF804; i2 <= 0x00BDF828; i2 += 4)
                         {
-                            for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+                            int idskilltype1 = m.ReadByte(i2.ToString("X"));
+                            int num = i2 + 2;
+                            int idskilltype2 = m.ReadByte(num.ToString("X"));
+                            m.WriteMemory(actioncheck, "int", "2");
+                            if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
-                                int idskilltype1 = m.ReadByte(i.ToString("X"));
-                                int num = i + 2;
-                                int idskilltype2 = m.ReadByte(num.ToString("X"));
-                                m.WriteMemory(actioncheck, "int", "2");
-                                if (idskilltype1 != 255 && idskilltype2 != 255)
-                                {
-                                    m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                                    m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                                    m.WriteMemory(forceattack_adr, "int", "5");
-                                }
-                                await Task.Delay(10);
-                                if (m.Read2Byte("MiniA.exe+7E1400") == 3)
-                                {
-                                    await Task.Delay(100);
-
-                                    // You can remove the clearing of the list here
-                                    // check_id_mon.Clear();
-
-                                    break;
-                                }
+                                m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                                m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                                m.WriteMemory(forceattack_adr, "int", "5");
                             }
+                            await Task.Delay(10);
+                            check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+
+                            if (check_hp_mon < 5 || distance_mon > 60f)
+                            {
+                                break;
+                            }
+
+                        }
+
+                        check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                        await Task.Delay(5);
+                        if (check_hp_mon < 5 || distance_mon > 60f)
+                        {
                             break;
                         }
-                        await Task.Delay(20);
                     }
-
                 }
-                catch
-                {
-                    return;
-                }
-
             }
         }
 
-        public void LOCALPLAYER_ALLOC()
+
+
+
+
+
+
+                //if (check_id_mon.Count > 0)
+                //{
+                //    try
+                //    {
+                //        for (int d = 0; d < check_id_mon.Count; d++)
+                //        {
+                //            int monsterId = check_id_mon[d];
+
+                //            m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
+
+                //            while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                //            {
+                //                for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+                //                {
+                //                    int idskilltype1 = m.ReadByte(i.ToString("X"));
+                //                    int num = i + 2;
+                //                    int idskilltype2 = m.ReadByte(num.ToString("X"));
+                //                    m.WriteMemory(actioncheck, "int", "2");
+                //                    if (idskilltype1 != 255 && idskilltype2 != 255)
+                //                    {
+                //                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                //                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+                //                        m.WriteMemory(forceattack_adr, "int", "5");
+                //                    }
+                //                    await Task.Delay(10);
+                //                    if (m.Read2Byte("MiniA.exe+7E1400") == 3)
+                //                    {
+                //                        await Task.Delay(100);
+
+                //                        // You can remove the clearing of the list here
+                //                        // check_id_mon.Clear();
+
+                //                        break;
+                //                    }
+                //                }
+                //                break;
+                //            }
+                //            await Task.Delay(20);
+                //        }
+
+                //    }
+                //    catch
+                //    {
+                //        return;
+                //    }
+
+                //}
+            
+
+            public void LOCALPLAYER_ALLOC()
         {
             try
             {
