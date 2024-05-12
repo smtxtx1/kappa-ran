@@ -1716,6 +1716,7 @@ private async Task AddMonsterList()
                 if (hp_mon > 5 && distance_mon <= 60f)
                 {
                     m.WriteMemory("MiniA.exe+7E1548", "int", id_mon.ToString());
+                    m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
                     while (true)
                     {
                         for (int i2 = 0x00BDF804; i2 <= 0x00BDF828; i2 += 4)
@@ -1732,7 +1733,10 @@ private async Task AddMonsterList()
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-
+                            if(m.ReadInt("MiniA.exe+7E22EC") == -1)
+                            {
+                                break;
+                            }
                             if (check_hp_mon < 5 || distance_mon > 60f)
                             {
                                 break;
@@ -1746,6 +1750,11 @@ private async Task AddMonsterList()
                         {
                             break;
                         }
+                        if (m.ReadInt("MiniA.exe+7E22EC") == -1)
+                        {
+                            break;
+                        }
+
                     }
                 }
             }
@@ -1987,29 +1996,37 @@ private async Task AddMonsterList()
         List<int> ItemID = new List<int>();
         private async Task AddItemToListView()
         {
-            int num = 20;
-            int ItemType = m.ReadInt("00FA7800,378");
-            int ItemID = m.ReadInt("00FA7800,37C");
-            byte[] array = m.ReadBytes("00FA7800,391", num);
-            byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
-            string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
-            string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
-
-            if (ItemType != 0 && ItemType != 5 && ItemType != 2)
+            try
             {
-                // Check if the ItemID is not already in the listView11
-                if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
+                int num = 20;
+                int ItemType = m.ReadInt("00FA7800,378");
+                int ItemID = m.ReadInt("00FA7800,37C");
+                byte[] array = m.ReadBytes("00FA7800,391", num);
+                byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
+                string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+                string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
+
+                if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                 {
-                    string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
-                    var listViewItem = new ListViewItem(row);
-                    listView11.Items.Add(listViewItem);
+                    // Check if the ItemID is not already in the listView11
+                    if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
+                    {
+                        string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
+                        var listViewItem = new ListViewItem(row);
+                        listView11.Items.Add(listViewItem);
+                    }
                 }
-            }
-            if (listView11.Items.Count >= 8)
-            {
-                listView11.Items.Clear();
-            }
+                if (listView11.Items.Count >= 8)
+                {
+                    listView11.Items.Clear();
+                }
+               await  Task.Delay(10);
 
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
 
         }
         private async Task ItemGet()
