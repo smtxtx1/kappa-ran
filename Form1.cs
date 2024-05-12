@@ -1524,12 +1524,13 @@ namespace Kappa
                             int j2;
                             if (int.TryParse(textBox1.Text, out var numberOfIterations2))
                             {
+                                m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
                                     await Task.Delay(50);
                                 }
-                                m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
@@ -1692,6 +1693,7 @@ private async Task AddMonsterList()
             const int OffsetY = 0xAF0;
             const int OffsetZ = 0xAF4;
             const int OffsetHp = 0xA90;
+            float limitdistance = 80f;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
@@ -1713,7 +1715,7 @@ private async Task AddMonsterList()
                 int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
 
                 float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                if (hp_mon > 5 && distance_mon <= 60f)
+                if (hp_mon > 5 && distance_mon <= limitdistance)
                 {
                     m.WriteMemory("MiniA.exe+7E1548", "int", id_mon.ToString());
                     m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
@@ -1737,7 +1739,7 @@ private async Task AddMonsterList()
                             {
                                 break;
                             }
-                            if (check_hp_mon < 5 || distance_mon > 60f)
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 break;
                             }
@@ -1746,7 +1748,7 @@ private async Task AddMonsterList()
 
                         check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
                         await Task.Delay(5);
-                        if (check_hp_mon < 5 || distance_mon > 60f)
+                        if (check_hp_mon < 5 || distance_mon > 80f)
                         {
                             break;
                         }
@@ -2003,19 +2005,26 @@ private async Task AddMonsterList()
                 int ItemID = m.ReadInt("00FA7800,37C");
                 byte[] array = m.ReadBytes("00FA7800,391", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
-                string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
-                string expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
-
-                if (ItemType != 0 && ItemType != 5 && ItemType != 2)
+                string stringFromBytes;
+                string expectedString;
+                if (array != null)
                 {
-                    // Check if the ItemID is not already in the listView11
-                    if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
+                     stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
+                    if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                        string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
-                        var listViewItem = new ListViewItem(row);
-                        listView11.Items.Add(listViewItem);
+
+                        // Check if the ItemID is not already in the listView11
+                        if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
+                        {
+                            string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
+                            var listViewItem = new ListViewItem(row);
+                            listView11.Items.Add(listViewItem);
+                        }
                     }
+
                 }
+
                 if (listView11.Items.Count >= 8)
                 {
                     listView11.Items.Clear();
@@ -2025,30 +2034,39 @@ private async Task AddMonsterList()
             }
             catch (Exception ex)
             {
+
                 return;
             }
 
         }
         private async Task ItemGet()
         {
-            foreach (ListViewItem item in listView11.Items)
+            try
             {
-                if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                foreach (ListViewItem item in listView11.Items)
                 {
-                    m.WriteMemory(actioncheck, "int", "3");
-                    m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                    m.WriteMemory(forceattack_adr, "int", "4");
-                    await Task.Delay(10);
-                    item.Remove();
-                }
-                if (item.SubItems[0].Text == "4")
-                {
-                    m.WriteMemory(actioncheck, "int", "4");
-                    m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                    m.WriteMemory(forceattack_adr, "int", "4");
-                    await Task.Delay(10);
+                    if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                    {
+                        m.WriteMemory(actioncheck, "int", "3");
+                        m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                        m.WriteMemory(forceattack_adr, "int", "4");
+                        await Task.Delay(10);
+                        item.Remove();
+                    }
+                    if (item.SubItems[0].Text == "4")
+                    {
+                        m.WriteMemory(actioncheck, "int", "4");
+                        m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                        m.WriteMemory(forceattack_adr, "int", "4");
+                        await Task.Delay(10);
 
+                    }
                 }
+
+            }
+            catch(Exception ex)
+            {
+                return;
             }
 
             //if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
@@ -2413,14 +2431,21 @@ private async Task AddMonsterList()
 
         }
 
-        private void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
+        private async void backgroundWorker6_DoWork(object sender, DoWorkEventArgs e)
         {
             while (!backgroundWorker6.CancellationPending)
             {
-                //   MessageBox.Show("RUNNING");
-               AddItemToListView();
-               AddMonsterList();
-                Thread.Sleep(10);
+                try
+                {
+                    await AddItemToListView();
+                    //AddMonsterList();
+                    Thread.Sleep(10);
+
+                }
+                catch(Exception ex)
+                {
+                    return;
+                }
             }
         }
     }
