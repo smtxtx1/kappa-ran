@@ -2016,7 +2016,7 @@ private async Task AddMonsterList()
         {
             foreach (ListViewItem item in listView11.Items)
             {
-                if (item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                 {
                     m.WriteMemory(actioncheck, "int", "3");
                     m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
@@ -2224,7 +2224,6 @@ private async Task AddMonsterList()
             {
                 DisplayAlloc();
                 MonsterAlloc();
-                AddMonsterList();
                 backgroundWorker2.RunWorkerAsync();
             }
         }
@@ -2247,7 +2246,6 @@ private async Task AddMonsterList()
             while (autoskillsstand)
             {
                 await AddItemToListView();
-                await AddMonsterList();
                 await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
