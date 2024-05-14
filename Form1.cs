@@ -2014,16 +2014,16 @@ private async Task AddMonsterList()
                      expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
+                        saveID = m.ReadString(IDadr);
 
-                        // Check if the ItemID is not already in the listView11
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
                             string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
                             var listViewItem = new ListViewItem(row);
 
                             listView11.Items.Add(listViewItem);
-                            string contents = JsonConvert.SerializeObject(listViewItem);
-                            File.AppendAllText($"item_logs_{IDadr}.json", contents);
+                            string contents = JsonConvert.SerializeObject(row);
+                            File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
@@ -2046,6 +2046,7 @@ private async Task AddMonsterList()
         }
         private async Task ItemGet()
         {
+          string names =  m.ReadString(saveID);
             try
             {
                 foreach (ListViewItem item in listView11.Items)
@@ -2071,45 +2072,12 @@ private async Task AddMonsterList()
             }
             catch(Exception ex)
             {
+                File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
+                File.AppendAllText($"errorlogsMessage{names}", ex.Message);
                 return;
             }
 
-            //if (stringFromBytes.Contains("กล่อง") || stringFromBytes.Contains("น้ำยา") || stringFromBytes.Contains("ปืน") || stringFromBytes.Contains("แว่น") || stringFromBytes.Contains("ขัน") || stringFromBytes.Contains("ห่วง"))
-            //{
-            //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
-            //    m.WriteMemory(forceattack_adr, "int", "4");
-            //    await Task.Delay(10);
-            //}
-            //if (stringFromBytes.Contains("พลอย"))
-            //{
-            //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
-            //    m.WriteMemory(forceattack_adr, "int", "4");
-            //    await Task.Delay(10);
-            //}
-            //if (stringFromBytes.Contains("แปรง"))
-            //{
-            //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
-            //    m.WriteMemory(forceattack_adr, "int", "4");
-            //    await Task.Delay(10);
-            //}
-            //if (stringFromBytes.Contains("ขัด"))
-            //{
-            //    m.WriteMemory(actioncheck, "int", "3");
-            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
-            //    m.WriteMemory(forceattack_adr, "int", "4");
-            //    await Task.Delay(10);
-            //}
-
-            //if (ItemType == 4)
-            //{
-            //    m.WriteMemory(actioncheck, "int", "4");
-            //    m.WriteMemory("MiniA.exe+7E1548", "int", ItemID.ToString());
-            //    m.WriteMemory(forceattack_adr, "int", "4");
-
-            //}
+     
 
             await Task.Delay(20);
 
