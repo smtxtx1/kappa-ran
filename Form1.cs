@@ -15,6 +15,7 @@ using System.Numerics;
 using System.Text.Encodings;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace Kappa
 {
@@ -2019,13 +2020,17 @@ private async Task AddMonsterList()
                         {
                             string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
                             var listViewItem = new ListViewItem(row);
+
                             listView11.Items.Add(listViewItem);
+                            string contents = JsonConvert.SerializeObject(listViewItem);
+                            File.AppendAllText($"item_logs_{IDadr}.json", contents);
                         }
+
                     }
 
                 }
 
-                if (listView11.Items.Count >= 8)
+                if (listView11.Items.Count > 8)
                 {
                     listView11.Items.Clear();
                 }
@@ -2050,7 +2055,7 @@ private async Task AddMonsterList()
                         m.WriteMemory(actioncheck, "int", "3");
                         m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                         m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(10);
+                        await Task.Delay(100);
                         item.Remove();
                     }
                     if (item.SubItems[0].Text == "4")
@@ -2058,7 +2063,7 @@ private async Task AddMonsterList()
                         m.WriteMemory(actioncheck, "int", "4");
                         m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                         m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(10);
+                        await Task.Delay(100);
 
                     }
                 }
