@@ -1941,7 +1941,6 @@ private async Task AddMonsterList()
             else
             {
                 backgroundWorker1.CancelAsync();
-
                 RunDeActive();
 
             }
@@ -2056,7 +2055,7 @@ private async Task AddMonsterList()
                         m.WriteMemory(actioncheck, "int", "3");
                         m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                         m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(100);
+                        await Task.Delay(70);
                         item.Remove();
                     }
                     if (item.SubItems[0].Text == "4")
@@ -2064,7 +2063,7 @@ private async Task AddMonsterList()
                         m.WriteMemory(actioncheck, "int", "4");
                         m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                         m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(100);
+                        await Task.Delay(70);
 
                     }
                 }
@@ -2198,17 +2197,29 @@ private async Task AddMonsterList()
         {
             while (checkBox19.Checked)
             {
+                int currentSkill = m.ReadInt("00FF8000,44");
+
                 if (checkBox19.Checked)
                 {
-                    int currentSkill = m.ReadInt("00FF8000,44");
                     if (currentSkill > 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "0");
                         m.WriteMemory("00FF8000,48", "int", "1");
 
                     }
+                    
                     await Task.Delay(100);
 
+                }
+                if (checkBox27.Checked)
+                {
+                        m.WriteMemory("00FF8000,40", "int", "0");
+
+                }
+                else
+                {
+                    
+                        m.WriteMemory("00FF8000,40", "int", "1");
                 }
                 Thread.Sleep(100);
 

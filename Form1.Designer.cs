@@ -156,6 +156,7 @@
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
+            checkBox27 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -257,6 +258,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox27);
             groupBox4.Controls.Add(checkBox24);
             groupBox4.Controls.Add(textBox8);
             groupBox4.Controls.Add(checkBox19);
@@ -307,7 +309,7 @@
             // checkBox19
             // 
             checkBox19.AutoSize = true;
-            checkBox19.Location = new Point(93, 177);
+            checkBox19.Location = new Point(93, 174);
             checkBox19.Name = "checkBox19";
             checkBox19.Size = new Size(70, 19);
             checkBox19.TabIndex = 7;
@@ -1089,6 +1091,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox27
+            // 
+            checkBox27.AutoSize = true;
+            checkBox27.Location = new Point(93, 193);
+            checkBox27.Name = "checkBox27";
+            checkBox27.Size = new Size(60, 19);
+            checkBox27.TabIndex = 23;
+            checkBox27.Text = "Hitself";
+            checkBox27.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1256,5 +1268,6 @@
         private CheckBox checkBox26;
         private System.ComponentModel.BackgroundWorker backgroundWorker6;
         private System.ComponentModel.BackgroundWorker backgroundWorker7;
+        private CheckBox checkBox27;
     }
 }
