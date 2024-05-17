@@ -1719,7 +1719,7 @@ private async Task AddMonsterList()
                 int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
 
                 float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                if (hp_mon > 5 && distance_mon <= limitdistance)
+                if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
                     m.WriteMemory("MiniA.exe+7E1548", "int", id_mon.ToString());
                     m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
