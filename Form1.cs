@@ -2055,11 +2055,22 @@ private async Task AddMonsterList()
                 {
                     if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
-                        m.WriteMemory(actioncheck, "int", "3");
-                        m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                        m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(70);
-                        item.Remove();
+                        if(m.ReadInt("MiniA.exe+7E1400") != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "3");
+                            m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(forceattack_adr, "int", "4");
+                            await Task.Delay(70);
+                            while (m.ReadInt("MiniA.exe+7E1400") == 1)
+                            {
+                                await Task.Delay(10);
+                                if (m.ReadInt("MiniA.exe+7E1400") == 0)
+                                {
+                                    item.Remove();
+                                    break;
+                                }
+                            }
+                        }
                     }
                     if (item.SubItems[0].Text == "4")
                     {
