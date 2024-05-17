@@ -209,7 +209,7 @@ namespace Kappa
 
         public string actioncheck = "00BE1544";
 
-
+        public string PATH2_ADR_RESULT;
         /// <summary>
         /// Autoskill END ///////////////
         /// </summary>
@@ -346,6 +346,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 86 7C 32 00 00 85 C0", false, true);
+            
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 30 01 00 00 8B", false, true);
@@ -382,7 +383,7 @@ namespace Kappa
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
-            CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
+            CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x"); 
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
@@ -392,6 +393,7 @@ namespace Kappa
             LR_ADR_RESULT = AOB_LR.ToString("x");
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
+            PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             LOCALPLAYER_ALLOC();
@@ -414,6 +416,7 @@ namespace Kappa
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
 
         }
@@ -2142,7 +2145,6 @@ private async Task AddMonsterList()
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
-                getadr = allocate_adr_BA.ToString("x");
 
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
