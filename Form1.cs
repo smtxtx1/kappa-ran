@@ -2476,7 +2476,7 @@ namespace Kappa
             allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                textBox8.Enabled = false;
+                m.FreezeValue("00fd4567,114", "int", "0");
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
@@ -2498,7 +2498,7 @@ namespace Kappa
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
                     0x90,
-                    0x0F ,0x1F ,0x44 ,0x00 ,0x00
+                  
                 };
 
                 // Calculate the jump offset for the second jmp instruction
@@ -2523,12 +2523,13 @@ namespace Kappa
         }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
+            AllocNolimit();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                textBox8.Enabled = false;
+             //   
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
