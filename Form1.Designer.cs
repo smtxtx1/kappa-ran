@@ -39,6 +39,7 @@
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
+            checkBox27 = new CheckBox();
             checkBox24 = new CheckBox();
             textBox8 = new TextBox();
             checkBox19 = new CheckBox();
@@ -156,7 +157,7 @@
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
-            checkBox27 = new CheckBox();
+            checkBox28 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -258,6 +259,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox28);
             groupBox4.Controls.Add(checkBox27);
             groupBox4.Controls.Add(checkBox24);
             groupBox4.Controls.Add(textBox8);
@@ -285,6 +287,16 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox27
+            // 
+            checkBox27.AutoSize = true;
+            checkBox27.Location = new Point(93, 193);
+            checkBox27.Name = "checkBox27";
+            checkBox27.Size = new Size(60, 19);
+            checkBox27.TabIndex = 23;
+            checkBox27.Text = "Hitself";
+            checkBox27.UseVisualStyleBackColor = true;
             // 
             // checkBox24
             // 
@@ -1091,15 +1103,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // checkBox27
+            // checkBox28
             // 
-            checkBox27.AutoSize = true;
-            checkBox27.Location = new Point(93, 193);
-            checkBox27.Name = "checkBox27";
-            checkBox27.Size = new Size(60, 19);
-            checkBox27.TabIndex = 23;
-            checkBox27.Text = "Hitself";
-            checkBox27.UseVisualStyleBackColor = true;
+            checkBox28.AutoSize = true;
+            checkBox28.Location = new Point(93, 213);
+            checkBox28.Name = "checkBox28";
+            checkBox28.Size = new Size(69, 19);
+            checkBox28.TabIndex = 24;
+            checkBox28.Text = "No limit";
+            checkBox28.UseVisualStyleBackColor = true;
+            checkBox28.CheckedChanged += checkBox28_CheckedChanged;
             // 
             // Form1
             // 
@@ -1269,5 +1282,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker6;
         private System.ComponentModel.BackgroundWorker backgroundWorker7;
         private CheckBox checkBox27;
+        private CheckBox checkBox28;
     }
 }

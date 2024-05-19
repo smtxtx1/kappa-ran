@@ -80,10 +80,12 @@ namespace Kappa
         public long AOB_RUN;
         public long AOB_ITEMDROP;
         public long AOB_ANTISLIDE;
+        public long AOB_NOLIMIT;
 
         public string ANTISLIDE_ADR_RESULT;
         public string MONVIEW_ADR;
         public string LOCALPLAYER_ADR_RESULT;
+        public string NOLIMIT_ADR_RESULT;
         public string RUN1_ADR_RESULT;
         public string RUN2_ADR_RESULT;
         public string RUN3_ADR_RESULT;
@@ -273,6 +275,8 @@ namespace Kappa
         private IntPtr allocate_adr_Monview;
         private IntPtr allocate_adr_BA;
         private IntPtr allocate_adr_LOCALPLAYER;
+        private IntPtr allocate_adr_Nolimit;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -346,7 +350,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D 98 B1 93 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A4 2D 00 00 01 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 86 7C 32 00 00 85 C0", false, true);
-            
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 30 01 00 00 8B", false, true);
@@ -354,6 +358,7 @@ namespace Kappa
 
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
+            AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
             AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
             AOB_RUN = AoB_Scan_RUN.FirstOrDefault();
@@ -371,6 +376,8 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+
+            NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
@@ -383,7 +390,7 @@ namespace Kappa
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
-            CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x"); 
+            CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
@@ -1635,60 +1642,60 @@ namespace Kappa
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
-private async Task AddMonsterList()
-{
-    try
-    {
-        if (check_id_mon.Count > 2)
+        private async Task AddMonsterList()
         {
-            check_id_mon.Clear();
-            Console.WriteLine("Clear Monster List");
-        }
-        const int OffsetID = 0xC18;
-        const int OffsetX = 0xAEC;
-        const int OffsetY = 0xAF0;
-        const int OffsetZ = 0xAF4;
-        const int OffsetHp = 0xA90;
-        for (int i = 0; i < 3; i++)
-        {
-            // Calculate offsets based on the iteration
-            int offsetIDmon = OffsetID + (i * 0xD08);
-            int offsetXmon = OffsetX + (i * 0xD08);
-            int offsetYmon = OffsetY + (i * 0xD08);
-            int offsetZmon = OffsetZ + (i * 0xD08);
-            int offsetHpmon = OffsetHp + (i * 0xD08);
-
-            // Read monster and player positions
-            int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
-            float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
-            float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
-            float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
-            int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-            float myX = m.ReadFloat(CurrentX);
-            float myY = m.ReadFloat(CurrentY);
-            float myZ = m.ReadFloat(CurrentZ);
-            int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-
-            float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-            if (hp_mon > 5 && distance_mon <= 100f)
+            try
             {
-                distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                if (!check_id_mon.Contains(id_mon))
+                if (check_id_mon.Count > 2)
                 {
-                    check_id_mon.Add(id_mon);
+                    check_id_mon.Clear();
+                    Console.WriteLine("Clear Monster List");
+                }
+                const int OffsetID = 0xC18;
+                const int OffsetX = 0xAEC;
+                const int OffsetY = 0xAF0;
+                const int OffsetZ = 0xAF4;
+                const int OffsetHp = 0xA90;
+                for (int i = 0; i < 3; i++)
+                {
+                    // Calculate offsets based on the iteration
+                    int offsetIDmon = OffsetID + (i * 0xD08);
+                    int offsetXmon = OffsetX + (i * 0xD08);
+                    int offsetYmon = OffsetY + (i * 0xD08);
+                    int offsetZmon = OffsetZ + (i * 0xD08);
+                    int offsetHpmon = OffsetHp + (i * 0xD08);
+
+                    // Read monster and player positions
+                    int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
+                    float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+                    float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+                    float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+                    int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                    float myX = m.ReadFloat(CurrentX);
+                    float myY = m.ReadFloat(CurrentY);
+                    float myZ = m.ReadFloat(CurrentZ);
+                    int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+
+                    float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                    if (hp_mon > 5 && distance_mon <= 100f)
+                    {
+                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                        if (!check_id_mon.Contains(id_mon))
+                        {
+                            check_id_mon.Add(id_mon);
+                        }
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                // Continue the loop even if an error occurs
+                await Task.Delay(100); // Adjust delay as needed
+                await AddMonsterList(); // Recursively call the method
+            }
         }
-    }
-    catch (Exception ex)
-    {
-        // Log the exception or handle it as needed
-        Console.WriteLine($"An error occurred: {ex.Message}");
-        // Continue the loop even if an error occurs
-        await Task.Delay(100); // Adjust delay as needed
-        await AddMonsterList(); // Recursively call the method
-    }
-}
 
         private async Task AutoSkills2()
         {
@@ -1739,7 +1746,7 @@ private async Task AddMonsterList()
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                            if(m.ReadInt("MiniA.exe+7E22EC") == -1)
+                            if (m.ReadInt("MiniA.exe+7E22EC") == -1)
                             {
                                 break;
                             }
@@ -1772,56 +1779,56 @@ private async Task AddMonsterList()
 
 
 
-                //if (check_id_mon.Count > 0)
-                //{
-                //    try
-                //    {
-                //        for (int d = 0; d < check_id_mon.Count; d++)
-                //        {
-                //            int monsterId = check_id_mon[d];
+        //if (check_id_mon.Count > 0)
+        //{
+        //    try
+        //    {
+        //        for (int d = 0; d < check_id_mon.Count; d++)
+        //        {
+        //            int monsterId = check_id_mon[d];
 
-                //            m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
+        //            m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
 
-                //            while (m.Read2Byte("MiniA.exe+7E1400") != 3)
-                //            {
-                //                for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
-                //                {
-                //                    int idskilltype1 = m.ReadByte(i.ToString("X"));
-                //                    int num = i + 2;
-                //                    int idskilltype2 = m.ReadByte(num.ToString("X"));
-                //                    m.WriteMemory(actioncheck, "int", "2");
-                //                    if (idskilltype1 != 255 && idskilltype2 != 255)
-                //                    {
-                //                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                //                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                //                        m.WriteMemory(forceattack_adr, "int", "5");
-                //                    }
-                //                    await Task.Delay(10);
-                //                    if (m.Read2Byte("MiniA.exe+7E1400") == 3)
-                //                    {
-                //                        await Task.Delay(100);
+        //            while (m.Read2Byte("MiniA.exe+7E1400") != 3)
+        //            {
+        //                for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
+        //                {
+        //                    int idskilltype1 = m.ReadByte(i.ToString("X"));
+        //                    int num = i + 2;
+        //                    int idskilltype2 = m.ReadByte(num.ToString("X"));
+        //                    m.WriteMemory(actioncheck, "int", "2");
+        //                    if (idskilltype1 != 255 && idskilltype2 != 255)
+        //                    {
+        //                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+        //                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
+        //                        m.WriteMemory(forceattack_adr, "int", "5");
+        //                    }
+        //                    await Task.Delay(10);
+        //                    if (m.Read2Byte("MiniA.exe+7E1400") == 3)
+        //                    {
+        //                        await Task.Delay(100);
 
-                //                        // You can remove the clearing of the list here
-                //                        // check_id_mon.Clear();
+        //                        // You can remove the clearing of the list here
+        //                        // check_id_mon.Clear();
 
-                //                        break;
-                //                    }
-                //                }
-                //                break;
-                //            }
-                //            await Task.Delay(20);
-                //        }
+        //                        break;
+        //                    }
+        //                }
+        //                break;
+        //            }
+        //            await Task.Delay(20);
+        //        }
 
-                //    }
-                //    catch
-                //    {
-                //        return;
-                //    }
+        //    }
+        //    catch
+        //    {
+        //        return;
+        //    }
 
-                //}
-            
+        //}
 
-            public void LOCALPLAYER_ALLOC()
+
+        public void LOCALPLAYER_ALLOC()
         {
             try
             {
@@ -1926,7 +1933,7 @@ private async Task AddMonsterList()
         {
             m.WriteMemory("00435D3D", "bytes", "90 90");
             DisplayAlloc();
-            
+
             if (checkBox13.Checked)
             {
                 backgroundWorker6.RunWorkerAsync();
@@ -2012,8 +2019,8 @@ private async Task AddMonsterList()
                 string expectedString;
                 if (array != null)
                 {
-                     stringFromBytes = Encoding.GetEncoding(874).GetString(array);
-                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
+                    stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+                    expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
                         saveID = m.ReadString(IDadr);
@@ -2036,7 +2043,7 @@ private async Task AddMonsterList()
                 {
                     listView11.Items.Clear();
                 }
-               await  Task.Delay(10);
+                await Task.Delay(10);
 
             }
             catch (Exception ex)
@@ -2048,14 +2055,14 @@ private async Task AddMonsterList()
         }
         private async Task ItemGet()
         {
-          string names =  m.ReadString(saveID);
+            string names = m.ReadString(saveID);
             try
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
                     if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
-                        if(m.ReadInt("MiniA.exe+7E1400") != 1)
+                        if (m.ReadInt("MiniA.exe+7E1400") != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
@@ -2074,23 +2081,36 @@ private async Task AddMonsterList()
                     }
                     if (item.SubItems[0].Text == "4")
                     {
-                        m.WriteMemory(actioncheck, "int", "4");
                         m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                        m.WriteMemory(forceattack_adr, "int", "4");
-                        await Task.Delay(70);
+                        if (m.ReadInt("MiniA.exe+7E1400") != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "4");
+                            m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(forceattack_adr, "int", "4");
+                            await Task.Delay(70);
+                            while (m.ReadInt("MiniA.exe+7E1400") == 1)
+                            {
+                                await Task.Delay(10);
+                                if (m.ReadInt("MiniA.exe+7E1400") == 0)
+                                {
+                                    item.Remove();
+                                    break;
+                                }
+                            }
+                        }
 
                     }
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
                 File.AppendAllText($"errorlogsMessage{names}", ex.Message);
                 return;
             }
 
-     
+
 
             await Task.Delay(20);
 
@@ -2220,19 +2240,19 @@ private async Task AddMonsterList()
                         m.WriteMemory("00FF8000,48", "int", "1");
 
                     }
-                    
+
                     await Task.Delay(100);
 
                 }
                 if (checkBox27.Checked)
                 {
-                        m.WriteMemory("00FF8000,40", "int", "0");
+                    m.WriteMemory("00FF8000,40", "int", "0");
 
                 }
                 else
                 {
-                    
-                        m.WriteMemory("00FF8000,40", "int", "1");
+
+                    m.WriteMemory("00FF8000,40", "int", "1");
                 }
                 Thread.Sleep(100);
 
@@ -2439,11 +2459,70 @@ private async Task AddMonsterList()
                     Thread.Sleep(10);
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return;
                 }
             }
+        }
+
+        private void checkBox28_CheckedChanged(object sender, EventArgs e)
+        {
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+            if (textBox8.Text != null && checkBox24.Checked)
+            {
+                m.WriteMemory("00FF8800", "float", textBox8.Text);
+            }
+
+
+            if (checkBox24.Checked)
+            {
+                textBox8.Enabled = false;
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0xC7 ,0x81 ,0x80 ,0x01 ,0x00 ,0x00 ,0x20 ,0xBC ,0xBE ,0x4C,
+                    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+                //004DF357
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_CUTAM + 6 - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_Nolimit.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_CUTAM + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the specified address (004EBB27)
+                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            else
+            {
+                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", originalcode_cutam);
+                textBox8.Enabled = true;
+                if (allocate_adr_Nolimit != IntPtr.Zero)
+                {
+                    processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_Nolimit, 0, 0x8000);
+                    allocate_adr_Nolimit = IntPtr.Zero;
+                }
+            }
+
+            00797FF2 - 00797FE8
         }
     }
 
