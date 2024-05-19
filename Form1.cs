@@ -86,6 +86,7 @@ namespace Kappa
         public string MONVIEW_ADR;
         public string LOCALPLAYER_ADR_RESULT;
         public string NOLIMIT_ADR_RESULT;
+        public string NOLIMIT_ADR_RESULT2;
         public string RUN1_ADR_RESULT;
         public string RUN2_ADR_RESULT;
         public string RUN3_ADR_RESULT;
@@ -276,6 +277,7 @@ namespace Kappa
         private IntPtr allocate_adr_BA;
         private IntPtr allocate_adr_LOCALPLAYER;
         private IntPtr allocate_adr_Nolimit;
+        private IntPtr allocate_adr_Nolimit2;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -378,6 +380,7 @@ namespace Kappa
             //
 
             NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
+            NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x33).ToString("x");
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
@@ -2466,18 +2469,64 @@ namespace Kappa
             }
         }
 
+        public void AllocNolimit()
+        {
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+            if (checkBox28.Checked)
+            {
+                textBox8.Enabled = false;
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x8B ,0x86 ,0x14 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0x67 ,0x45 ,0xFD ,0x00,
+                    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+                //004DF357
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_NOLIMIT + 0x33 + 0x06 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_Nolimit2.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90,
+                    0x0F ,0x1F ,0x44 ,0x00 ,0x00
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_Nolimit2 - ((int)AOB_NOLIMIT + 0x33 + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the specified address (004EBB27)
+                m.WriteMemory(NOLIMIT_ADR_RESULT2, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            else
+            {
+                m.WriteMemory(NOLIMIT_ADR_RESULT2, "bytes", originalcode_cutam);
+                textBox8.Enabled = true;
+                if (allocate_adr_Nolimit2 != IntPtr.Zero)
+                {
+                    processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_Nolimit2, 0, 0x8000);
+                    allocate_adr_Nolimit2 = IntPtr.Zero;
+                }
+            }
+
+        }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
-            if (textBox8.Text != null && checkBox24.Checked)
-            {
-                m.WriteMemory("00FF8800", "float", textBox8.Text);
-            }
-
-
-            if (checkBox24.Checked)
+            if (checkBox28.Checked)
             {
                 textBox8.Enabled = false;
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
@@ -2490,7 +2539,7 @@ namespace Kappa
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_CUTAM + 6 - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0xA - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -2500,19 +2549,20 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90
+                    0x90,
+                    0x0F ,0x1F ,0x44 ,0x00 ,0x00
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_CUTAM + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
-                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+                m.WriteMemory(NOLIMIT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             else
             {
-                m.WriteMemory(CUTAM_ADR_RESULT, "bytes", originalcode_cutam);
+                m.WriteMemory(NOLIMIT_ADR_RESULT, "bytes", originalcode_cutam);
                 textBox8.Enabled = true;
                 if (allocate_adr_Nolimit != IntPtr.Zero)
                 {
@@ -2522,7 +2572,6 @@ namespace Kappa
                 }
             }
 
-            00797FF2 - 00797FE8
         }
     }
 
