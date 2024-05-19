@@ -56,7 +56,7 @@ namespace Kappa
         // public string Drone_adr = "MiniA.exe+2E49A60";
         public string ServerName = "Ran-Next";
 
-        public string FastZoom = "031F3E5C";
+        public string FastZoom = "0324BA7C";
 
         public string AOE_adr = "";
 
@@ -445,7 +445,7 @@ namespace Kappa
             if (checkBox1.Checked)
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
-                m.WriteMemory(FastZoom, "float", "200");
+                m.WriteMemory(FastZoom, "float", "150");
                 m.WriteMemory(DRONE_ADR_RESULT, "byte", "EB");
             }
             else
@@ -2118,11 +2118,11 @@ private async Task AddMonsterList()
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory("007FA900", "byte", "0");
+                m.WriteMemory("009964D4", "float", "-1");
             }
             else
             {
-                m.WriteMemory("007FA900", "byte", "1");
+                m.WriteMemory("009964D4", "float", "30");
             }
         }
 
