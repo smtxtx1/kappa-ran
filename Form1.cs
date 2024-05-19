@@ -2549,12 +2549,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90,
                     0x0F ,0x1F ,0x44 ,0x00 ,0x00
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 5);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
@@ -2562,8 +2561,7 @@ namespace Kappa
             }
             else
             {
-                m.WriteMemory(NOLIMIT_ADR_RESULT, "bytes", originalcode_cutam);
-                textBox8.Enabled = true;
+                m.WriteMemory(NOLIMIT_ADR_RESULT, "bytes", "C7 81 80 01 00 00 00 00 A0 40");
                 if (allocate_adr_Nolimit != IntPtr.Zero)
                 {
                     processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
