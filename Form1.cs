@@ -1790,59 +1790,6 @@ namespace Kappa
 
 
 
-
-
-
-
-        //if (check_id_mon.Count > 0)
-        //{
-        //    try
-        //    {
-        //        for (int d = 0; d < check_id_mon.Count; d++)
-        //        {
-        //            int monsterId = check_id_mon[d];
-
-        //            m.WriteMemory("MiniA.exe+7E1548", "int", monsterId.ToString());
-
-        //            while (m.Read2Byte("MiniA.exe+7E1400") != 3)
-        //            {
-        //                for (int i = 0x00BDF804; i <= 0x00BDF828; i += 4)
-        //                {
-        //                    int idskilltype1 = m.ReadByte(i.ToString("X"));
-        //                    int num = i + 2;
-        //                    int idskilltype2 = m.ReadByte(num.ToString("X"));
-        //                    m.WriteMemory(actioncheck, "int", "2");
-        //                    if (idskilltype1 != 255 && idskilltype2 != 255)
-        //                    {
-        //                        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-        //                        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-        //                        m.WriteMemory(forceattack_adr, "int", "5");
-        //                    }
-        //                    await Task.Delay(10);
-        //                    if (m.Read2Byte("MiniA.exe+7E1400") == 3)
-        //                    {
-        //                        await Task.Delay(100);
-
-        //                        // You can remove the clearing of the list here
-        //                        // check_id_mon.Clear();
-
-        //                        break;
-        //                    }
-        //                }
-        //                break;
-        //            }
-        //            await Task.Delay(20);
-        //        }
-
-        //    }
-        //    catch
-        //    {
-        //        return;
-        //    }
-
-        //}
-
-
         public void LOCALPLAYER_ALLOC()
         {
             try
