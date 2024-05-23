@@ -8,7 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
     <AssemblyName>kappa-run</AssemblyName>
-    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST</Configurations>
+    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
   </PropertyGroup>
