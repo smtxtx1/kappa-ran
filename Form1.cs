@@ -351,7 +351,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A? ??", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 86 7C 32 00 00 85 C0", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 04 85 FF 74 3C 33 C9", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
@@ -384,9 +384,9 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x76).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xB58).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xAEA).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN - 0x30).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xEC8).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN - 0xB3).ToString("x");
             RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
@@ -422,10 +422,10 @@ namespace Kappa
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
 
@@ -434,10 +434,10 @@ namespace Kappa
         public void RunDeActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 7D");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
         }
 
@@ -830,12 +830,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
-                0x39, 0x5C, 0x24, 0x28,
-                0x90, 0x90, 0x90, 0x90, 0x90, 0x90, // je 0x0000001D (to be replaced later)
-                0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
+                    0xC7,0x44,0x24,0x10,0x43,0x00,0xA3,0xC3,0xC7,0x44,0x24,0x14,0x79,0xD9,0xA4,0xC3,0xC7,0x44,0x24,0x18,0xD1,0xDD,0x87,0xC5,0x39,0x5C,0x24,0x28,0x90,0x90,
+                    0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
@@ -879,7 +875,7 @@ namespace Kappa
         {
             if (checkBox7.Checked)
             {
-                m.WriteMemory("0042396D", "bytes", "90 90");
+                m.WriteMemory("004348AD", "bytes", "90 90");
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
             }
@@ -895,7 +891,7 @@ namespace Kappa
         {
             Random rand = new Random();
 
-            m.WriteMemory("0042396D", "bytes", "90 90");
+            m.WriteMemory("004348AD", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 m.ReadFloat(CurrentX);
