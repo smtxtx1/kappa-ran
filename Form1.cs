@@ -200,17 +200,21 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00BE14A0";
+        /// 
 
-        public string prevskill2_adr = "00BE14A2";
+        public string Skilluse1_adr = "00B93000";
 
-        public string Skilluse1_adr = "00BE149C";
+        public string Skilluse2_adr = "00B93000+2";
 
-        public string Skilluse2_adr = "00BE149E";
+        public string prevskill1_adr = "00B93000+4";
 
-        public string forceattack_adr = "MiniA.exe+7E1530";
+        public string prevskill2_adr = "00B93000+6";
 
-        public string actioncheck = "00BE1544";
+        public string forceattack_adr = "00B930AC";
+
+        public string actioncheck = "00B930AC+14";
+
+        public string Target_skills = "00B930AC+18";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
@@ -1044,7 +1048,7 @@ namespace Kappa
         }
         private async Task Autosearchmonster()
         {
-            m.WriteMemory("00435D3D", "bytes", "90 90"); // bypass attacking
+            m.WriteMemory("004348AD", "bytes", "90 90"); // bypass attacking
 
             int[] valuesToWrite = { 7, 10, 8, 6 };
 
@@ -1743,7 +1747,7 @@ namespace Kappa
                     m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00BDF804; i2 <= 0x00BDF828; i2 += 4)
+                        for (int i2 = 0x00B90BAC; i2 <= 0x00B90BD0; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
@@ -1889,7 +1893,7 @@ namespace Kappa
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
-            m.WriteMemory("00435D3D", "bytes", "90 90");
+            m.WriteMemory("004348AD", "bytes", "90 90");
             DisplayAlloc();
 
             if (checkBox13.Checked)
@@ -2227,7 +2231,7 @@ namespace Kappa
         {
             button6.Enabled = false;
             button7.Enabled = true;
-            m.WriteMemory("00435D3D", "bytes", "90 90");
+            m.WriteMemory("004348AD", "bytes", "90 90");
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
