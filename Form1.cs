@@ -479,7 +479,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 08 14 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
-        string originalcode_BA = "83 7F 44 01 0F 85 66 01";
+        string originalcode_BA = "83 7F 44 01 0F 85 64 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
