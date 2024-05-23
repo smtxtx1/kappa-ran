@@ -1977,9 +1977,9 @@ namespace Kappa
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FA7800,378");
-                int ItemID = m.ReadInt("00FA7800,37C");
-                byte[] array = m.ReadBytes("00FA7800,391", num);
+                int ItemType = m.ReadInt("00FF4550,3b8");
+                int ItemID = m.ReadInt("00FF4550,3bc");
+                byte[] array = m.ReadBytes("00FF4550,3d1", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
                 string stringFromBytes;
                 string expectedString;
