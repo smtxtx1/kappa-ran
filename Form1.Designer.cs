@@ -39,6 +39,7 @@
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
+            checkBox28 = new CheckBox();
             checkBox27 = new CheckBox();
             checkBox24 = new CheckBox();
             textBox8 = new TextBox();
@@ -65,6 +66,7 @@
             label2 = new Label();
             comboBox2 = new ComboBox();
             groupBox1 = new GroupBox();
+            button15 = new Button();
             button1 = new Button();
             label1 = new Label();
             comboBox1 = new ComboBox();
@@ -157,7 +159,6 @@
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
-            checkBox28 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -287,6 +288,17 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox28
+            // 
+            checkBox28.AutoSize = true;
+            checkBox28.Location = new Point(93, 213);
+            checkBox28.Name = "checkBox28";
+            checkBox28.Size = new Size(69, 19);
+            checkBox28.TabIndex = 24;
+            checkBox28.Text = "No limit";
+            checkBox28.UseVisualStyleBackColor = true;
+            checkBox28.CheckedChanged += checkBox28_CheckedChanged;
             // 
             // checkBox27
             // 
@@ -554,6 +566,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button15);
             groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(label1);
             groupBox1.Controls.Add(comboBox1);
@@ -563,6 +576,16 @@
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Selection";
+            // 
+            // button15
+            // 
+            button15.Location = new Point(119, 25);
+            button15.Name = "button15";
+            button15.Size = new Size(59, 23);
+            button15.TabIndex = 4;
+            button15.Text = "Refresh";
+            button15.UseVisualStyleBackColor = true;
+            button15.Click += button15_Click;
             // 
             // button1
             // 
@@ -1103,17 +1126,6 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // checkBox28
-            // 
-            checkBox28.AutoSize = true;
-            checkBox28.Location = new Point(93, 213);
-            checkBox28.Name = "checkBox28";
-            checkBox28.Size = new Size(69, 19);
-            checkBox28.TabIndex = 24;
-            checkBox28.Text = "No limit";
-            checkBox28.UseVisualStyleBackColor = true;
-            checkBox28.CheckedChanged += checkBox28_CheckedChanged;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1283,5 +1295,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker7;
         private CheckBox checkBox27;
         private CheckBox checkBox28;
+        private Button button15;
     }
 }

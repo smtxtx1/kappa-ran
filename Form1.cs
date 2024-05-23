@@ -535,6 +535,18 @@ namespace Kappa
                 m.WriteMemory(AOE_ADR_RESULT, "bytes", originalcode_ALE);
             }
         }
+        private void button15_Click(object sender, EventArgs e)
+        {
+            int num = 20;
+
+            byte[] array = m.ReadBytes(NameAdr, num);
+            if (array != null)
+            {
+                string @string = Encoding.GetEncoding(874).GetString(array);
+                label1.Text = @string + " " + comboBox1.Text;
+            }
+
+        }
 
 
         private void textBox2_TextChanged(object sender, EventArgs e)
@@ -2498,7 +2510,7 @@ namespace Kappa
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
                     0x90,
-                  
+
                 };
 
                 // Calculate the jump offset for the second jmp instruction
@@ -2529,7 +2541,7 @@ namespace Kappa
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-             //   
+                //   
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
@@ -2572,6 +2584,7 @@ namespace Kappa
             }
 
         }
+
     }
 
 }
