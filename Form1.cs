@@ -1676,11 +1676,11 @@ namespace Kappa
                 for (int i = 0; i < 3; i++)
                 {
                     // Calculate offsets based on the iteration
-                    int offsetIDmon = OffsetID + (i * 0x2DB0);
-                    int offsetXmon = OffsetX + (i * 0x2DB0);
-                    int offsetYmon = OffsetY + (i * 0x2DB0);
-                    int offsetZmon = OffsetZ + (i * 0x2DB0);
-                    int offsetHpmon = OffsetHp + (i * 0x2DB0);
+                    int offsetIDmon = OffsetID + (i * 0x5420);
+                    int offsetXmon = OffsetX + (i * 0x5420);
+                    int offsetYmon = OffsetY + (i * 0x5420);
+                    int offsetZmon = OffsetZ + (i * 0x5420);
+                    int offsetHpmon = OffsetHp + (i * 0x5420);
 
                     // Read monster and player positions
                     int id_mon = m.ReadInt($"00FF5500,{offsetIDmon:X}");
@@ -1726,11 +1726,11 @@ namespace Kappa
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
-                int offsetIDmon = OffsetID + (i * 0x2DB0);
-                int offsetXmon = OffsetX + (i * 0x2DB0);
-                int offsetYmon = OffsetY + (i * 0x2DB0);
-                int offsetZmon = OffsetZ + (i * 0x2DB0);
-                int offsetHpmon = OffsetHp + (i * 0x2DB0);
+                int offsetIDmon = OffsetID + (i * 0x5420);
+                int offsetXmon = OffsetX + (i * 0x5420);
+                int offsetYmon = OffsetY + (i * 0x5420);
+                int offsetZmon = OffsetZ + (i * 0x5420);
+                int offsetHpmon = OffsetHp + (i * 0x5420);
 
                 // Read monster and player positions
                 int id_mon = m.ReadInt($"00FF5500,{offsetIDmon:X}");
