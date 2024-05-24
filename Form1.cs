@@ -358,7 +358,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A? ??", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 04 85 FF 74 3C 33 C9", false, true);
-            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 08 14 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
@@ -905,7 +905,7 @@ namespace Kappa
                 m.ReadFloat(CurrentZ);
                 int mainSK1 = mem.Read2Byte(prevskill1_adr);
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
-                int target = mem.ReadInt("MiniA.exe+7E22EC");
+                int target = mem.ReadInt("MiniA.exe+793E74");
                 float previousX = float.MinValue;
                 float previousZ = float.MinValue;
                 float num = mem.ReadFloat(CurrentX);
@@ -944,7 +944,7 @@ namespace Kappa
                 {
                     mainSK1 = mem.ReadByte(prevskill1_adr);
                     mainSK2 = mem.ReadByte(prevskill2_adr);
-                    target = mem.ReadInt("MiniA.exe+7E22EC");
+                    target = mem.ReadInt("MiniA.exe+793E74");
                     if (mem.Read2Byte("MiniA.exe+792F64") == 3)
                     {
                         if (mainSK2 == 9)
@@ -1529,7 +1529,7 @@ namespace Kappa
                             for (j = 0; j < numberOfIterations; j++)
                             {
                                 await AutoSkills2();
-                                await Task.Delay(50);
+                                await Task.Delay(5);
                                 await Autobuff();
 
                             }
@@ -1543,9 +1543,9 @@ namespace Kappa
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 await ItemGet();
-                                await Task.Delay(50);
+                                await Task.Delay(5);
                                 await ItemGet();
-                                await Task.Delay(50);
+                                await Task.Delay(5);
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -1557,15 +1557,15 @@ namespace Kappa
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
-                                    await Task.Delay(50);
+                                    await Task.Delay(5);
                                 }
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
                                     await ItemGet();
-                                    await Task.Delay(50);
+                                    await Task.Delay(5);
                                     await ItemGet();
-                                    await Task.Delay(50);
+                                    await Task.Delay(5);
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
@@ -1601,10 +1601,10 @@ namespace Kappa
                             int j = 0;
                             for (j = 0; j < numberOfIterations; j++)
                             {
-                                await Task.Delay(150);
+                              //  await Task.Delay(150);
 
                                 await Autobuff();
-                                await Task.Delay(150);
+                               // await Task.Delay(150);
 
                             }
                         }
@@ -1747,7 +1747,7 @@ namespace Kappa
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
                     m.WriteMemory(Target_skills, "int", id_mon.ToString());
-                    m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
+                    m.WriteMemory("MiniA.exe+793E74", "int", id_mon.ToString());
                     while (true)
                     {
                         for (int i2 = 0x00B90BAC; i2 <= 0x00B90BD0; i2 += 4)
@@ -1764,7 +1764,7 @@ namespace Kappa
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5500,{offsetHpmon:X}");
-                            if (m.ReadInt("MiniA.exe+7E22EC") == -1)
+                            if (m.ReadInt("MiniA.exe+793E74") == -1)
                             {
                                 break;
                             }
@@ -1781,7 +1781,7 @@ namespace Kappa
                         {
                             break;
                         }
-                        if (m.ReadInt("MiniA.exe+7E22EC") == -1)
+                        if (m.ReadInt("MiniA.exe+793E74") == -1)
                         {
                             break;
                         }
@@ -2353,7 +2353,7 @@ namespace Kappa
 
         private void button14_Click(object sender, EventArgs e)
         {
-            frenzzy_tar = m.ReadInt("MiniA.exe+7E22EC");
+            frenzzy_tar = m.ReadInt("MiniA.exe+793E74");
             MessageBox.Show(frenzzy_tar.ToString());
         }
 
@@ -2440,7 +2440,7 @@ namespace Kappa
             allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                m.FreezeValue("00fd4567,114", "int", "0");
+                m.FreezeValue("00fd4567,140", "int", "0");
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
@@ -2499,7 +2499,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7 ,0x81 ,0x80 ,0x01 ,0x00 ,0x00 ,0x20 ,0xBC ,0xBE ,0x4C,
+                    0xC7,0x81,0xC0,0x01,0x00,0x00,0x20,0xBC,0xBE,0x4C,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
