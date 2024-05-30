@@ -189,7 +189,7 @@ namespace Kappa
 
         public string AltButton = "031F3804";
 
-        public string Spacebar = "031F3804+1";
+        public string Spacebar = "0323AFED";
 
         public string RightArrow = "031F3899";
 
