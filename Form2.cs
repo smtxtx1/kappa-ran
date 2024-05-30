@@ -16,12 +16,12 @@ public class Login : Form
 {
 
     public static api KeyAuthApp = new api(
-        name: "smbotenglish",
-        ownerid: "zbtz7lqHV9",
-        secret: "bc923a5105f16fd9b12ae6a1ceee8660f1116f8af26061a1b75e9dae2c590e22",
-        version: "1.4.6" /*,
-    path: @"Your_Path_Here" */ // see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
-    );
+    name: "Autotracing", // Application Name
+    ownerid: "zbtz7lqHV9", // Owner ID
+    secret: "87e66ca811406726d54a7708245d5476f5a08178e3bb906d04080392928d71e3", // Application Secret
+    version: "1.0" // Application Version /*
+    //path: @"Your_Path_Here" // (OPTIONAL) see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
+);
 
     private IContainer components;
 

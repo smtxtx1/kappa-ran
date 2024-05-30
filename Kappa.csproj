@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
-    <AssemblyName>kappa-run</AssemblyName>
+    <AssemblyName>among-us-Inter</AssemblyName>
     <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-INTERz</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
