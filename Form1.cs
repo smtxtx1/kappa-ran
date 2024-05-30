@@ -1544,9 +1544,9 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                await ItemGet();
+                                m.WriteMemory("0323AFED", "byte", "63");
                                 await Task.Delay(50);
-                                await ItemGet();
+                                m.WriteMemory("0323AFED", "byte", "01");
                                 await Task.Delay(50);
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -1564,9 +1564,9 @@ namespace Kappa
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
-                                    await ItemGet();
+                                    m.WriteMemory("0323AFED", "byte", "63");
                                     await Task.Delay(50);
-                                    await ItemGet();
+                                    m.WriteMemory("0323AFED", "byte", "01");
                                     await Task.Delay(50);
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
