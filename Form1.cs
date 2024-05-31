@@ -404,12 +404,13 @@ namespace Kappa
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
-            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            m.WriteMemory("00FD0012", "float", "-1");
             LOCALPLAYER_ALLOC();
             int num = 20;
 
             MessageBox.Show("All Done");
+            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory("00FD0012", "float", "-1");
+
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
