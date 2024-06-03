@@ -841,10 +841,10 @@ namespace Kappa
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
-                int jumpOffset1 = (int)AOB_PATH + 0x21 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset1 = (int)AOB_PATH + 0x21 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
                 int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 4);
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
