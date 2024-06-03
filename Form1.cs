@@ -937,6 +937,15 @@ namespace Kappa
                             Thread.Sleep(10);
 
                         }
+                        if (mem.ReadByte(Spacebar) != 01)
+                        {
+                            m.WriteMemory(Spacebar, "byte", "63");
+                            Thread.Sleep(10);
+                            m.WriteMemory(Spacebar, "byte", "01");
+                            Thread.Sleep(10);
+
+                        }
+
                     }
                 }
                 else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7E1400") != 1)
@@ -1492,7 +1501,7 @@ namespace Kappa
                         currentZ = m.ReadFloat(CurrentZ);
                         await Task.Delay(10);
                     }
-                    if (currentX >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
+                    if (currentX    >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
                     {
                         m.WriteMemory(getadr + "+4", "float", newX.ToString());
                         m.WriteMemory(getadr + "+C", "float", newY.ToString());
@@ -1506,14 +1515,15 @@ namespace Kappa
                     RunDeActive();
                     if (checkBox25.Checked)
                     {
-                        m.WriteMemory("031F37EA", "byte", "63");
+                        m.WriteMemory("0324B3FA", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("031F37EA", "byte", "01");
+                        m.WriteMemory("0324B3FA", "byte", "01");
                         Thread.Sleep(2000);
 
-                        m.WriteMemory("031F37EB", "byte", "63");
+                        m.WriteMemory("0324B3FB", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("031F37EB", "byte", "01");
+                        m.WriteMemory("0324B3FB", "byte", "01");
+                        Thread.Sleep(2000);
 
 
                     }
