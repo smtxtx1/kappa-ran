@@ -344,7 +344,7 @@ namespace Kappa
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 ??", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("8B 54 01 60 8D 7C 01 60", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ?? 8D", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
@@ -387,9 +387,9 @@ namespace Kappa
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
             RUN2_ADR_RESULT = (AOB_RUN + 0x81).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xAEF).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xAF8).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xB66).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xAF).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xAEF).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xAF8).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
@@ -412,7 +412,6 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
-            MessageBox.Show($"{PATH2_ADR_RESULT}");
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -426,10 +425,10 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(PATH2_ADR_RESULT,"bytes", "eb");
+         //   m.WriteMemory(PATH2_ADR_RESULT,"bytes", "eb");
 
 
         }
@@ -438,10 +437,10 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 4F 02 00 00");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 77");
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 69");
+      //      m.WriteMemory(PATH2_ADR_RESULT, "bytes", "74");
 
         }
 
@@ -476,7 +475,7 @@ namespace Kappa
         string originalcode_LR = "D9 5C 24 38 FF 52 0C";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
-        string originalcode_Path = "39 5C 24 28 74 23";
+        string originalcode_Path = "39 5C 24 28 74 1B";
         string originalcode_BA = "83 7F 44 01 0F 85 66 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
@@ -838,14 +837,14 @@ namespace Kappa
                 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
                 0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
                 0x39, 0x5C, 0x24, 0x28,
-                0x90, 0x90, 0x90, 0x90, 0x90, 0x90, // je 0x0000001D (to be replaced later)
+                0xE9, 0x00, 0x00, 0x00, 0x00,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
-                // Calculate the jump offsets for the je and jmp instructions
+                int jumpOffset1 = (int)AOB_PATH + 0x21 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
                 int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
-                // Replace the jump offsets in the assembly code
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
@@ -2160,18 +2159,15 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x8B,0x54,0x08,0x60,0xA3,0x00,0x80,0xFF,0x00,0x8D,0x7C,0x08,0x60,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                int jumpOffset1 = (int)AOB_BA + 0x08 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
 
                 // Replace the jump offsets in the assembly code
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 0);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
@@ -2179,7 +2175,7 @@ namespace Kappa
                 jmpCodemy = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x0F, 0x1F, 0x44
+                    0x0F, 0x1F, 0x00
 
                 };
 
@@ -2451,13 +2447,13 @@ namespace Kappa
             allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                m.FreezeValue("00fd4567,114", "int", "0");
+                m.FreezeValue("00fd4567,140", "int", "0");
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B ,0x86 ,0x14 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0x67 ,0x45 ,0xFD ,0x00,
+                    0x8B ,0x86 ,0x40 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0x67 ,0x45 ,0xFD ,0x00,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
@@ -2510,7 +2506,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7 ,0x81 ,0x80 ,0x01 ,0x00 ,0x00 ,0x20 ,0xBC ,0xBE ,0x4C,
+                    0xC7 ,0x81 ,0xC0 ,0x01 ,0x00 ,0x00 ,0x20 ,0xBC ,0xBE ,0x4C,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
