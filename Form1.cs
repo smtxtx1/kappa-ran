@@ -882,20 +882,23 @@ namespace Kappa
             {
                 m.WriteMemory("0042396D", "bytes", "90 90");
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
+                Cardfollowlead = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
+                backgroundWorker7.RunWorkerAsync();
             }
             else
             {
+                backgroundWorker7.CancelAsync();
                 followLeaderCancellationTokenSource?.Cancel();
             }
 
         }
+        private CancellationTokenSource Cardfollowlead;
         private CancellationTokenSource followLeaderCancellationTokenSource;
         private CancellationTokenSource AutosearchCancellationTokenSource;
         private async Task FollowLeaderTask()
         {
             Random rand = new Random();
-            backgroundWorker7.RunWorkerAsync();
             m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -2528,28 +2531,27 @@ namespace Kappa
 
         private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
         {
-            while (true)
+            while (!backgroundWorker7.CancellationPending)
             {
-                int A_result = mem.ReadByte("0324B3FA");
-                int B_result = mem.ReadByte("0324B3FA");
-                MessageBox.Show($"{A_result.ToString("x")}{B_result.ToString("x")}");
-                if(A_result != 01)
+               int A_result =  mem.ReadByte("0324B3FA");
+               int B_result = mem.ReadByte("0324B3FB");
+                if(A_result != 1)
                 {
-                    m.WriteMemory("0324B3FA", "byte", "64");
+                    m.WriteMemory("0324B3FA", "byte", "63");
                     Thread.Sleep(50);
                     m.WriteMemory("0324B3FA", "byte", "01");
                     Thread.Sleep(50);
 
                 }
-                if (B_result != 01)
+                if (B_result != 1)
                 {
-                    m.WriteMemory("0324B3FB", "byte", "64");
+                    m.WriteMemory("0324B3FB", "byte", "63");
                     Thread.Sleep(50);
                     m.WriteMemory("0324B3FB", "byte", "01");
                     Thread.Sleep(50);
 
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(50);
             }
         }
     }
