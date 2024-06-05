@@ -1126,6 +1126,10 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // backgroundWorker7
+            // 
+            backgroundWorker7.DoWork += backgroundWorker7_DoWork;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);

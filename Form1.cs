@@ -895,7 +895,7 @@ namespace Kappa
         private async Task FollowLeaderTask()
         {
             Random rand = new Random();
-
+            backgroundWorker7.RunWorkerAsync();
             m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -929,23 +929,6 @@ namespace Kappa
                         previousZ = followZnew;
                         await Task.Delay(10);
                         RunDeActive();
-                        if (mem.ReadByte(Spacebar) != 01)
-                        {
-                            m.WriteMemory(Spacebar, "byte", "63");
-                            Thread.Sleep(10);
-                            m.WriteMemory(Spacebar, "byte", "01");
-                            Thread.Sleep(10);
-
-                        }
-                        if (mem.ReadByte(Spacebar) != 01)
-                        {
-                            m.WriteMemory(Spacebar, "byte", "63");
-                            Thread.Sleep(10);
-                            m.WriteMemory(Spacebar, "byte", "01");
-                            Thread.Sleep(10);
-
-                        }
-
                     }
                 }
                 else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7E1400") != 1)
@@ -1501,7 +1484,7 @@ namespace Kappa
                         currentZ = m.ReadFloat(CurrentZ);
                         await Task.Delay(10);
                     }
-                    if (currentX    >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
+                    if (currentX >= newX - 20f && currentX <= newX + 20f && currentY >= newY - 20f && currentY <= newY + 20f && currentZ >= newZ - 20f && currentZ <= newZ + 20f)
                     {
                         m.WriteMemory(getadr + "+4", "float", newX.ToString());
                         m.WriteMemory(getadr + "+C", "float", newY.ToString());
@@ -2543,6 +2526,32 @@ namespace Kappa
 
         }
 
+        private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                int A_result = mem.ReadByte("0324B3FA");
+                int B_result = mem.ReadByte("0324B3FA");
+                MessageBox.Show($"{A_result.ToString("x")}{B_result.ToString("x")}");
+                if(A_result != 01)
+                {
+                    m.WriteMemory("0324B3FA", "byte", "64");
+                    Thread.Sleep(50);
+                    m.WriteMemory("0324B3FA", "byte", "01");
+                    Thread.Sleep(50);
+
+                }
+                if (B_result != 01)
+                {
+                    m.WriteMemory("0324B3FB", "byte", "64");
+                    Thread.Sleep(50);
+                    m.WriteMemory("0324B3FB", "byte", "01");
+                    Thread.Sleep(50);
+
+                }
+                Thread.Sleep(10);
+            }
+        }
     }
 
 }
