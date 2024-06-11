@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="Memory">
-      <HintPath>bin\52HzKappa\net6.0-windows\Memory.dll</HintPath>
+      <HintPath>bin\Release\net6.0-windows\Memory.dll</HintPath>
     </Reference>
   </ItemGroup>
 
