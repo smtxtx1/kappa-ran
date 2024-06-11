@@ -930,7 +930,7 @@ namespace Kappa
                         RunActive();
                         previousX = followXnew;
                         previousZ = followZnew;
-                        await Task.Delay(10);
+                        await Task.Delay(5);
                         RunDeActive();
                     }
                 }
@@ -941,11 +941,11 @@ namespace Kappa
                     target = mem.ReadInt("MiniA.exe+7E22EC");
                     if (mem.Read2Byte("MiniA.exe+7E1400") == 3)
                     {
-                        if (mainSK2 == 9)
-                        {
-                            Thread.Sleep(1500);
+                        //if (mainSK2 == 9)
+                        //{
+                        //    Thread.Sleep(1500);
 
-                        }
+                        //}
                         m.WriteMemory("MiniA.exe+7E1548", "int", target.ToString());
                         m.WriteMemory("00BE1544", "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
