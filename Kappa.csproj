@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="Memory">
-      <HintPath>bin\Release\net6.0-windows\Memory.dll</HintPath>
+      <HintPath>bin\CAFE@2\Memory.dll</HintPath>
     </Reference>
   </ItemGroup>
 
