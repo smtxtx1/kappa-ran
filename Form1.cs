@@ -916,8 +916,8 @@ namespace Kappa
                 m.ReadInt("MiniA.exe+7E1400");
                 mem.ReadInt("MiniA.exe+7E1400");
                 int num3 = mem.ReadInt("MiniA.exe+7E1400");
-                float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
-                float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
+                float followXnew = num + ((float)rand.NextDouble() - 5.5f) * 15.0f * 0.1f;
+                float followZnew = num2 + ((float)rand.NextDouble() - 5.5f) * 15.0f * 0.1f;
                 if (mem.Read2Byte("MiniA.exe+7E1400") == 1 && mem.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
