@@ -247,6 +247,7 @@ namespace Kappa
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker5.WorkerSupportsCancellation = true;
             backgroundWorker6.WorkerSupportsCancellation = true;
+            backgroundWorker7.WorkerSupportsCancellation = true;
 
         }
         [DllImport("kernel32.dll")]
