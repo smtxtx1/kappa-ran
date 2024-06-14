@@ -930,7 +930,7 @@ namespace Kappa
                         RunActive();
                         previousX = followXnew;
                         previousZ = followZnew;
-                        await Task.Delay(5);
+                        await Task.Delay(10);
                         RunDeActive();
                     }
                 }
@@ -941,11 +941,11 @@ namespace Kappa
                     target = mem.ReadInt("MiniA.exe+7E22EC");
                     if (mem.Read2Byte("MiniA.exe+7E1400") == 3)
                     {
-                        //if (mainSK2 == 9)
-                        //{
-                        //    Thread.Sleep(1500);
+                        if (mainSK2 == 9)
+                        {
+                            Thread.Sleep(1500);
 
-                        //}
+                        }
                         m.WriteMemory("MiniA.exe+7E1548", "int", target.ToString());
                         m.WriteMemory("00BE1544", "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
@@ -2019,8 +2019,7 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    //item.SubItems[2].Text.Contains("ผงกระ") ||
-                    if ( item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                    if (item.SubItems[2].Text.Contains("ผงกระ") || item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
                         if (m.ReadInt("MiniA.exe+7E1400") != 1)
                         {
@@ -2065,7 +2064,6 @@ namespace Kappa
             }
             catch (Exception ex)
             {
-                
                 File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
                 File.AppendAllText($"errorlogsMessage{names}", ex.Message);
                 return;
