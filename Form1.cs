@@ -2065,6 +2065,7 @@ namespace Kappa
             }
             catch (Exception ex)
             {
+                
                 File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
                 File.AppendAllText($"errorlogsMessage{names}", ex.Message);
                 return;

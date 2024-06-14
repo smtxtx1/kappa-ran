@@ -386,7 +386,7 @@
             // checkBox18
             // 
             checkBox18.AutoSize = true;
-            checkBox18.Location = new Point(93, 138);
+            checkBox18.Location = new Point(93, 137);
             checkBox18.Name = "checkBox18";
             checkBox18.Size = new Size(66, 19);
             checkBox18.TabIndex = 16;
