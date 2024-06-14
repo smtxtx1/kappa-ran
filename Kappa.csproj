@@ -18,13 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Memory.dll.x64" Version="1.2.27" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Memory">
-      <HintPath>bin\52HzKappa\net6.0-windows\Memory.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
