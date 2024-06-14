@@ -247,7 +247,6 @@ namespace Kappa
             backgroundWorker1.WorkerSupportsCancellation = true;
             backgroundWorker5.WorkerSupportsCancellation = true;
             backgroundWorker6.WorkerSupportsCancellation = true;
-            backgroundWorker7.WorkerSupportsCancellation = true;
 
         }
         [DllImport("kernel32.dll")]
@@ -917,8 +916,8 @@ namespace Kappa
                 m.ReadInt("MiniA.exe+7E1400");
                 mem.ReadInt("MiniA.exe+7E1400");
                 int num3 = mem.ReadInt("MiniA.exe+7E1400");
-                float followXnew = num + ((float)rand.NextDouble() - 5.5f) * 15.0f * 0.1f;
-                float followZnew = num2 + ((float)rand.NextDouble() - 5.5f) * 15.0f * 0.1f;
+                float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
+                float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
                 if (mem.Read2Byte("MiniA.exe+7E1400") == 1 && mem.Read2Byte("MiniA.exe+7E1400") != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
@@ -2534,15 +2533,15 @@ namespace Kappa
         {
             while (!backgroundWorker7.CancellationPending)
             {
-               int A_result =  mem.ReadByte("0324B3FA");
-               int B_result = mem.ReadByte("0324B3FB");
-                if(A_result != 1)
+                int A_result = mem.ReadByte("0324B3FA");
+                int B_result = mem.ReadByte("0324B3FB");
+                if (A_result != 1)
                 {
                     m.WriteMemory("0324B3FA", "byte", "63");
                     Thread.Sleep(50);
                     m.WriteMemory("0324B3FA", "byte", "01");
                     Thread.Sleep(50);
-                     
+
                 }
                 if (B_result != 1)
                 {
