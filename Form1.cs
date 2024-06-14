@@ -2542,7 +2542,7 @@ namespace Kappa
                     Thread.Sleep(50);
                     m.WriteMemory("0324B3FA", "byte", "01");
                     Thread.Sleep(50);
-
+                     
                 }
                 if (B_result != 1)
                 {
