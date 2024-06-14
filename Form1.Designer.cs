@@ -1128,7 +1128,6 @@
             // 
             // backgroundWorker7
             // 
-            backgroundWorker7.DoWork += backgroundWorker7_DoWork;
             // 
             // Form1
             // 

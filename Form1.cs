@@ -882,23 +882,20 @@ namespace Kappa
             {
                 m.WriteMemory("0042396D", "bytes", "90 90");
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
-                Cardfollowlead = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
-                backgroundWorker7.RunWorkerAsync();
             }
             else
             {
-                backgroundWorker7.CancelAsync();
                 followLeaderCancellationTokenSource?.Cancel();
             }
 
         }
-        private CancellationTokenSource Cardfollowlead;
         private CancellationTokenSource followLeaderCancellationTokenSource;
         private CancellationTokenSource AutosearchCancellationTokenSource;
         private async Task FollowLeaderTask()
         {
             Random rand = new Random();
+
             m.WriteMemory("0042396D", "bytes", "90 90");
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
@@ -932,6 +929,14 @@ namespace Kappa
                         previousZ = followZnew;
                         await Task.Delay(10);
                         RunDeActive();
+                        if (mem.ReadByte(Spacebar) != 01)
+                        {
+                            m.WriteMemory(Spacebar, "byte", "63");
+                            Thread.Sleep(10);
+                            m.WriteMemory(Spacebar, "byte", "01");
+                            Thread.Sleep(10);
+
+                        }
                     }
                 }
                 else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7E1400") != 1)
@@ -1501,15 +1506,14 @@ namespace Kappa
                     RunDeActive();
                     if (checkBox25.Checked)
                     {
-                        m.WriteMemory("0324B3FA", "byte", "63");
+                        m.WriteMemory("031F37EA", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("0324B3FA", "byte", "01");
+                        m.WriteMemory("031F37EA", "byte", "01");
                         Thread.Sleep(2000);
 
-                        m.WriteMemory("0324B3FB", "byte", "63");
+                        m.WriteMemory("031F37EB", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("0324B3FB", "byte", "01");
-                        Thread.Sleep(2000);
+                        m.WriteMemory("031F37EB", "byte", "01");
 
 
                     }
@@ -2019,7 +2023,7 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    if (item.SubItems[2].Text.Contains("ผงกระ") || item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                    if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
                         if (m.ReadInt("MiniA.exe+7E1400") != 1)
                         {
@@ -2529,31 +2533,6 @@ namespace Kappa
 
         }
 
-        private void backgroundWorker7_DoWork(object sender, DoWorkEventArgs e)
-        {
-            while (!backgroundWorker7.CancellationPending)
-            {
-                int A_result = mem.ReadByte("0324B3FA");
-                int B_result = mem.ReadByte("0324B3FB");
-                if (A_result != 1)
-                {
-                    m.WriteMemory("0324B3FA", "byte", "63");
-                    Thread.Sleep(50);
-                    m.WriteMemory("0324B3FA", "byte", "01");
-                    Thread.Sleep(50);
-
-                }
-                if (B_result != 1)
-                {
-                    m.WriteMemory("0324B3FB", "byte", "63");
-                    Thread.Sleep(50);
-                    m.WriteMemory("0324B3FB", "byte", "01");
-                    Thread.Sleep(50);
-
-                }
-                Thread.Sleep(50);
-            }
-        }
     }
 
 }
