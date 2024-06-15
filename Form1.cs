@@ -16,6 +16,7 @@ using System.Text.Encodings;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Security.Policy;
 
 namespace Kappa
 {
@@ -209,9 +210,17 @@ namespace Kappa
 
         public string Skilluse2_adr = "00BE149E";
 
-        public string forceattack_adr = "MiniA.exe+7E1530";
+        public string forceattack_adr = "00FF38A0,2410";
 
-        public string actioncheck = "00BE1544";
+        public string MATION_CHECK = "00FF38A0,22E0";
+
+        public string actioncheck = "00FF38A0,14";
+
+        public string TARGET_SKILL = "00FF38A0,18";
+
+
+        public string TARGET_RING = "00FF38A0,31C4";
+
 
         public string PATH2_ADR_RESULT;
         /// <summary>
@@ -340,6 +349,8 @@ namespace Kappa
 
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
+            //74 82 8D BE 24 24 00 00 8B C7
+            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
@@ -358,7 +369,7 @@ namespace Kappa
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 00 22 00 00 8D ?? 00 22 00 00 6A 01 8B CF FF 52 10 85 C0 75 ?? 8B 07", false, true);
-
+            long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
             m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
@@ -379,6 +390,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
 
             NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
             NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x33).ToString("x");
@@ -411,7 +423,7 @@ namespace Kappa
             MessageBox.Show("All Done");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
-
+            m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -771,7 +783,7 @@ namespace Kappa
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    if (m.ReadInt("MiniA.exe+7E1400") != 3)
+                    if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
                         Thread.Sleep(300);
@@ -781,7 +793,7 @@ namespace Kappa
                     {
 
                         m.WriteMemory(actioncheck, "int", "0");
-                        m.WriteMemory("MiniA.exe+7E1548", "int", frenzzy_tar.ToString());
+                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                         m.WriteMemory(forceattack_adr, "int", "5");
                         Thread.Sleep(300);
                     }
@@ -905,23 +917,23 @@ namespace Kappa
                 m.ReadFloat(CurrentZ);
                 int mainSK1 = mem.Read2Byte(prevskill1_adr);
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
-                int target = mem.ReadInt("MiniA.exe+7E22EC");
+                int target = mem.ReadInt(TARGET_RING);
                 float previousX = float.MinValue;
                 float previousZ = float.MinValue;
                 float num = mem.ReadFloat(CurrentX);
                 float followY = mem.ReadFloat(CurrentY);
                 float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt("MiniA.exe+7E1400");
-                mem.ReadInt("MiniA.exe+7E1400");
-                int num3 = mem.ReadInt("MiniA.exe+7E1400");
+                m.ReadInt(MATION_CHECK);
+                mem.ReadInt(MATION_CHECK);
+                int num3 = mem.ReadInt(MATION_CHECK);
                 float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
                 float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
-                if (mem.Read2Byte("MiniA.exe+7E1400") == 1 && mem.Read2Byte("MiniA.exe+7E1400") != 3)
+                if (mem.Read2Byte(MATION_CHECK) == 1 && mem.Read2Byte(MATION_CHECK) != 3)
                 {
                     if (followXnew != previousX || followZnew != previousZ)
                     {
 
-                        mem.ReadInt("MiniA.exe+7E1400");
+                        mem.ReadInt(MATION_CHECK);
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", followY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
@@ -940,19 +952,19 @@ namespace Kappa
                         }
                     }
                 }
-                else if (checkBox8.Checked && mem.Read2Byte("MiniA.exe+7E1400") != 1)
+                else if (checkBox8.Checked && mem.Read2Byte(MATION_CHECK) != 1)
                 {
                     mainSK1 = mem.ReadByte(prevskill1_adr);
                     mainSK2 = mem.ReadByte(prevskill2_adr);
-                    target = mem.ReadInt("MiniA.exe+7E22EC");
-                    if (mem.Read2Byte("MiniA.exe+7E1400") == 3)
+                    target = mem.ReadInt(TARGET_RING);
+                    if (mem.Read2Byte(MATION_CHECK) == 3)
                     {
                         if (mainSK2 == 9)
                         {
                             Thread.Sleep(1500);
 
                         }
-                        m.WriteMemory("MiniA.exe+7E1548", "int", target.ToString());
+                        m.WriteMemory(TARGET_SKILL, "int", target.ToString());
                         m.WriteMemory("00BE1544", "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
@@ -1194,7 +1206,7 @@ namespace Kappa
                     int idskilltype2 = m.ReadByte(num.ToString("X"));
                     int prevskill2 = m.ReadByte(prevskill2_adr);
                     Thread.Sleep(200);
-                    if (m.Read2Byte("MiniA.exe+7E1400") != 3)
+                    if (m.Read2Byte(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
@@ -1637,7 +1649,7 @@ namespace Kappa
                 m.ReadByte(prevskill1_adr);
                 int prevskill2 = m.ReadByte(prevskill2_adr);
                 await Task.Delay(200);
-                if (m.Read2Byte("MiniA.exe+7E1400") == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte("MiniA.exe+7E1400") != 3)
+                if (m.Read2Byte(MATION_CHECK) == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte(MATION_CHECK) != 3)
                 {
                     m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
                     m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
@@ -1745,8 +1757,8 @@ namespace Kappa
                 float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
-                    m.WriteMemory("MiniA.exe+7E1548", "int", id_mon.ToString());
-                    m.WriteMemory("MiniA.exe+7E22EC", "int", id_mon.ToString());
+                    m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
+                    m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
                         for (int i2 = 0x00BDF804; i2 <= 0x00BDF828; i2 += 4)
@@ -1763,7 +1775,7 @@ namespace Kappa
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                            if (m.ReadInt("MiniA.exe+7E22EC") == -1)
+                            if (m.ReadInt(TARGET_RING) == -1)
                             {
                                 break;
                             }
@@ -1780,7 +1792,7 @@ namespace Kappa
                         {
                             break;
                         }
-                        if (m.ReadInt("MiniA.exe+7E22EC") == -1)
+                        if (m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
                         }
@@ -2026,16 +2038,16 @@ namespace Kappa
                 {
                     if (item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
-                        if (m.ReadInt("MiniA.exe+7E1400") != 1)
+                        if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(70);
-                            while (m.ReadInt("MiniA.exe+7E1400") == 1)
+                            while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 await Task.Delay(10);
-                                if (m.ReadInt("MiniA.exe+7E1400") == 0)
+                                if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     item.Remove();
                                     break;
@@ -2045,17 +2057,17 @@ namespace Kappa
                     }
                     if (item.SubItems[0].Text == "4")
                     {
-                        m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                        if (m.ReadInt("MiniA.exe+7E1400") != 1)
+                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                        if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "4");
-                            m.WriteMemory("MiniA.exe+7E1548", "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(70);
-                            while (m.ReadInt("MiniA.exe+7E1400") == 1)
+                            while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 await Task.Delay(10);
-                                if (m.ReadInt("MiniA.exe+7E1400") == 0)
+                                if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     item.Remove();
                                     break;
@@ -2350,7 +2362,7 @@ namespace Kappa
 
         private void button14_Click(object sender, EventArgs e)
         {
-            frenzzy_tar = m.ReadInt("MiniA.exe+7E22EC");
+            frenzzy_tar = m.ReadInt(TARGET_RING);
             MessageBox.Show(frenzzy_tar.ToString());
         }
 
