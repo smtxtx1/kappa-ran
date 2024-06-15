@@ -363,7 +363,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ?? 8B 8? ?? ?? 00 00 85 C? 75 08  85 C0", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 0E 8B ?? ?? ?? 00 00 85 C0 0F ?? ?? ?? 00 00 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
@@ -397,8 +397,8 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x76).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xB58).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x6C).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xB06).ToString("x");
             RUN4_ADR_RESULT = (AOB_RUN + 0xAEA).ToString("x");
             RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
@@ -424,6 +424,7 @@ namespace Kappa
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -438,9 +439,9 @@ namespace Kappa
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
+            //m.WriteMemory(RUN4_ADR_RESULT, "bytes", "EB");
+            //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            //m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
 
         }
@@ -449,7 +450,7 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 69");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
