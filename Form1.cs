@@ -384,7 +384,6 @@ namespace Kappa
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 00 22 00 00 8D ?? 00 22 00 00 6A 01 8B CF FF 52 10 85 C0 75 ?? 8B 07", false, true);
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
-            m.WriteMemory("005853E2", "bytes", "90 90 90 90 90 90"); //pet bypass
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
             AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
@@ -437,10 +436,10 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
-          //  m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
-           // m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-        //    m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -467,9 +466,6 @@ namespace Kappa
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 69");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
