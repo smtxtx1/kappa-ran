@@ -72,6 +72,7 @@ namespace Kappa
         public long AOB_BA;
         public long AOB_LR;
         public long AOB_Superpot;
+        public long AOB_Superpot2;
         public long AOB_WH;
         public long AOB_HT;
         public long AOB_DRONE;
@@ -105,6 +106,7 @@ namespace Kappa
         public string BA_ADR_RESULT;
         public string PATH_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT;
+        public string SUPERPOT_ADR_RESULT2;
         public string DRONE_ADR_RESULT;
 
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
@@ -357,6 +359,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
+            //
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
@@ -384,6 +388,8 @@ namespace Kappa
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
+            AOB_Superpot2 = AoB_Scan_Superpot2.FirstOrDefault();
+
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
             AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
@@ -411,6 +417,7 @@ namespace Kappa
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
+            SUPERPOT_ADR_RESULT2 = AOB_Superpot2.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
             AOE_ADR_RESULT = AOB_AOE.ToString("x");
             LR_ADR_RESULT = AOB_LR.ToString("x");
@@ -486,7 +493,7 @@ namespace Kappa
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
-        string originalcode_Monview = "8B 81 18 0C 00 00";
+        string originalcode_Monview = "8B 81 28 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 66 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -730,10 +737,14 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
+                m.WriteMemory(SUPERPOT_ADR_RESULT2, "byte", "0");
+
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
             }
             else
             {
+                m.WriteMemory(SUPERPOT_ADR_RESULT2, "byte", "1");
+
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
             }
         }
@@ -894,7 +905,7 @@ namespace Kappa
         {
             if (checkBox7.Checked)
             {
-                m.WriteMemory("0042396D", "bytes", "90 90");
+                 
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
             }
@@ -910,7 +921,7 @@ namespace Kappa
         {
             Random rand = new Random();
 
-            m.WriteMemory("0042396D", "bytes", "90 90");
+           
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 m.ReadFloat(CurrentX);
@@ -1063,7 +1074,7 @@ namespace Kappa
         }
         private async Task Autosearchmonster()
         {
-            m.WriteMemory("00435D3D", "bytes", "90 90"); // bypass attacking
+             // bypass attacking
 
             int[] valuesToWrite = { 7, 10, 8, 6 };
 
@@ -1681,11 +1692,11 @@ namespace Kappa
                     check_id_mon.Clear();
                     Console.WriteLine("Clear Monster List");
                 }
-                const int OffsetID = 0xC18;
-                const int OffsetX = 0xAEC;
-                const int OffsetY = 0xAF0;
-                const int OffsetZ = 0xAF4;
-                const int OffsetHp = 0xA90;
+                const int OffsetID = 0xC28;
+                const int OffsetX = 0xAFC;
+                const int OffsetY = 0xB00;
+                const int OffsetZ = 0xB04;
+                const int OffsetHp = 0xAA0;
                 for (int i = 0; i < 3; i++)
                 {
                     // Calculate offsets based on the iteration
@@ -1729,11 +1740,11 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xC18;
-            const int OffsetX = 0xAEC;
-            const int OffsetY = 0xAF0;
-            const int OffsetZ = 0xAF4;
-            const int OffsetHp = 0xA90;
+            const int OffsetID = 0xC28;
+            const int OffsetX = 0xAFC;
+            const int OffsetY = 0xB00;
+            const int OffsetZ = 0xB04;
+            const int OffsetHp = 0xAA0;
             float limitdistance = 80f;
             for (int i = 0; i < 3; i++)
             {
@@ -1762,7 +1773,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00BDF804; i2 <= 0x00BDF828; i2 += 4)
+                        for (int i2 = 0x00D9803C; i2 <= 0x00D98060; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
@@ -1773,6 +1784,11 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
+                            }
+                            else 
+                            {
+                                m.WriteMemory(forceattack_adr, "int", "0");
+
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
@@ -1870,7 +1886,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89,0x0D,0x00,0x50,0xFF,0x00,0x8B,0x81,0x18,0x0C,0x00,0x00,0xE9,
+                    0x89,0x0D,0x00,0x50,0xFF,0x00,0x8B,0x81,0x28,0x0C,0x00,0x00,0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
@@ -1908,7 +1924,6 @@ namespace Kappa
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
-            m.WriteMemory("00435D3D", "bytes", "90 90");
             DisplayAlloc();
 
             if (checkBox13.Checked)
@@ -2246,7 +2261,7 @@ namespace Kappa
         {
             button6.Enabled = false;
             button7.Enabled = true;
-            m.WriteMemory("00435D3D", "bytes", "90 90");
+            
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
