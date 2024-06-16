@@ -204,21 +204,30 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00BE14A0";
+        public string prevskill1_adr = "00FF38A0,2380";
 
-        public string prevskill2_adr = "00BE14A2";
+        public string prevskill2_adr = "00FF38A0,2382";
 
-        public string Skilluse1_adr = "00BE149C";
+        public string Skilluse1_adr = "00FF38A0,237C";
 
-        public string Skilluse2_adr = "00BE149E";
+        public string Skilluse2_adr = "00FF38A0,237E";
+        //public string prevskill1_adr = "00FF38A0,237C";
+
+        //public string prevskill2_adr = "00FF38A0,237E";
+
+        //public string Skilluse1_adr = "00FF38A0,2380";
+
+        //public string Skilluse2_adr = "00FF38A0,2382";
+
+
 
         public string forceattack_adr = "00FF38A0,2410";
 
         public string MATION_CHECK = "00FF38A0,22E0";
 
-        public string actioncheck = "00FF38A0,14";
+        public string actioncheck = "00FF38A0,2424";
 
-        public string TARGET_SKILL = "00FF38A0,18";
+        public string TARGET_SKILL = "00FF38A0,2428";
 
 
         public string TARGET_RING = "00FF38A0,31C4";
@@ -977,11 +986,11 @@ namespace Kappa
 
                         }
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString());
-                        m.WriteMemory("00BE1544", "int", "2");
+                        m.WriteMemory(actioncheck, "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        m.WriteMemory("00BE1544", "int", "0");
+                        m.WriteMemory(actioncheck, "int", "0");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
