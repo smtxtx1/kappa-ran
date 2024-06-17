@@ -1754,11 +1754,11 @@ namespace Kappa
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
-                int offsetIDmon = OffsetID + (i * 0xD08);
-                int offsetXmon = OffsetX + (i * 0xD08);
-                int offsetYmon = OffsetY + (i * 0xD08);
-                int offsetZmon = OffsetZ + (i * 0xD08);
-                int offsetHpmon = OffsetHp + (i * 0xD08);
+                int offsetIDmon = OffsetID + (i * 0x0);
+                int offsetXmon = OffsetX + (i * 0x0);
+                int offsetYmon = OffsetY + (i * 0x0);
+                int offsetZmon = OffsetZ + (i * 0x0);
+                int offsetHpmon = OffsetHp + (i * 0x0);
 
                 // Read monster and player positions
                 int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
@@ -1789,11 +1789,6 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                            }
-                            else 
-                            {
-                                m.WriteMemory(forceattack_adr, "int", "0");
-
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
