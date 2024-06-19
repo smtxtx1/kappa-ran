@@ -158,7 +158,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            backgroundWorker7 = new System.ComponentModel.BackgroundWorker();
+            checkBox29 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -260,6 +260,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox29);
             groupBox4.Controls.Add(checkBox28);
             groupBox4.Controls.Add(checkBox27);
             groupBox4.Controls.Add(checkBox24);
@@ -386,7 +387,7 @@
             // checkBox18
             // 
             checkBox18.AutoSize = true;
-            checkBox18.Location = new Point(93, 138);
+            checkBox18.Location = new Point(93, 137);
             checkBox18.Name = "checkBox18";
             checkBox18.Size = new Size(66, 19);
             checkBox18.TabIndex = 16;
@@ -428,7 +429,7 @@
             // checkBox12
             // 
             checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(6, 200);
+            checkBox12.Location = new Point(6, 198);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(79, 19);
             checkBox12.TabIndex = 12;
@@ -439,7 +440,7 @@
             // checkBox11
             // 
             checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(6, 181);
+            checkBox11.Location = new Point(6, 178);
             checkBox11.Name = "checkBox11";
             checkBox11.Size = new Size(61, 19);
             checkBox11.TabIndex = 11;
@@ -1126,6 +1127,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox29
+            // 
+            checkBox29.AutoSize = true;
+            checkBox29.Location = new Point(6, 218);
+            checkBox29.Name = "checkBox29";
+            checkBox29.Size = new Size(83, 19);
+            checkBox29.TabIndex = 25;
+            checkBox29.Text = "Unlock Pet";
+            checkBox29.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1292,9 +1303,9 @@
         private CheckBox checkBox25;
         private CheckBox checkBox26;
         private System.ComponentModel.BackgroundWorker backgroundWorker6;
-        private System.ComponentModel.BackgroundWorker backgroundWorker7;
         private CheckBox checkBox27;
         private CheckBox checkBox28;
         private Button button15;
+        private CheckBox checkBox29;
     }
 }
