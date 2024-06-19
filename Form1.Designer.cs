@@ -39,6 +39,7 @@
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
+            checkBox29 = new CheckBox();
             checkBox28 = new CheckBox();
             checkBox27 = new CheckBox();
             checkBox24 = new CheckBox();
@@ -158,7 +159,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox29 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -289,6 +289,17 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox29
+            // 
+            checkBox29.AutoSize = true;
+            checkBox29.Location = new Point(6, 218);
+            checkBox29.Name = "checkBox29";
+            checkBox29.Size = new Size(83, 19);
+            checkBox29.TabIndex = 25;
+            checkBox29.Text = "Unlock Pet";
+            checkBox29.UseVisualStyleBackColor = true;
+            checkBox29.CheckedChanged += checkBox29_CheckedChanged;
             // 
             // checkBox28
             // 
@@ -1126,16 +1137,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox29
-            // 
-            checkBox29.AutoSize = true;
-            checkBox29.Location = new Point(6, 218);
-            checkBox29.Name = "checkBox29";
-            checkBox29.Size = new Size(83, 19);
-            checkBox29.TabIndex = 25;
-            checkBox29.Text = "Unlock Pet";
-            checkBox29.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

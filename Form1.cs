@@ -768,7 +768,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00BE047C; j <= 0x00BE0D6C; j += 0xB0)
+            for (int j = 0x00D98CBC; j <= 0x00D995AC; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -784,7 +784,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00BDF87C; k <= 0x00BDF8A0; k += 0x4)
+            for (int k = 0x00D980B4; k <= 0x00D980D8; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -912,7 +912,7 @@ namespace Kappa
         {
             if (checkBox7.Checked)
             {
-                 
+
                 followLeaderCancellationTokenSource = new CancellationTokenSource();
                 Task.Run((Func<Task>)FollowLeaderTask);
             }
@@ -928,7 +928,7 @@ namespace Kappa
         {
             Random rand = new Random();
 
-           
+
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 m.ReadFloat(CurrentX);
@@ -1081,7 +1081,7 @@ namespace Kappa
         }
         private async Task Autosearchmonster()
         {
-             // bypass attacking
+            // bypass attacking
 
             int[] valuesToWrite = { 7, 10, 8, 6 };
 
@@ -2263,7 +2263,7 @@ namespace Kappa
         {
             button6.Enabled = false;
             button7.Enabled = true;
-            
+
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
@@ -2564,6 +2564,10 @@ namespace Kappa
 
         }
 
+        private void checkBox29_CheckedChanged(object sender, EventArgs e)
+        {
+            m.WriteMemory("0074D995", "byte", "eb");
+        }
     }
 
 }
