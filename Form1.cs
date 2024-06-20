@@ -83,7 +83,9 @@ namespace Kappa
         public long AOB_ITEMDROP;
         public long AOB_ANTISLIDE;
         public long AOB_NOLIMIT;
+        public long AOB_FASTLE;
 
+        public string FASTLE_ADR_RESULT;
         public string ANTISLIDE_ADR_RESULT;
         public string MONVIEW_ADR;
         public string LOCALPLAYER_ADR_RESULT;
@@ -382,8 +384,12 @@ namespace Kappa
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 00 22 00 00 8D ?? 00 22 00 00 6A 01 8B CF FF 52 10 85 C0 75 ?? 8B 07", false, true);
+            var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
+
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
-            //
+            //00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE
+
+            AOB_FASTLE = AoB_Scan_Fastle.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
             AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
@@ -398,6 +404,7 @@ namespace Kappa
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
             AOB_Superpot2 = AoB_Scan_Superpot2.FirstOrDefault();
 
+
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
             AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
@@ -406,6 +413,7 @@ namespace Kappa
             //
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
 
+            FASTLE_ADR_RESULT = AOB_FASTLE.ToString("x");
             NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
             NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x33).ToString("x");
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
@@ -2325,16 +2333,6 @@ namespace Kappa
 
         private void checkBox22_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox22.Checked)
-            {
-                m.FreezeValue("MiniA.exe+92F910", "int", textBox7.Text);
-            }
-            else
-            {
-                m.WriteMemory("MiniA.exe+92F910", "int", "0");
-
-                m.UnfreezeValue("MiniA.exe+92F910");
-            }
 
         }
 
@@ -2567,6 +2565,11 @@ namespace Kappa
         private void checkBox29_CheckedChanged(object sender, EventArgs e)
         {
             m.WriteMemory("0074D995", "byte", "eb");
+        }
+
+        private void checkBox22_CheckedChanged_1(object sender, EventArgs e)
+        {
+            m.WriteMemory(FASTLE_ADR_RESULT, "float", "-1");
         }
     }
 

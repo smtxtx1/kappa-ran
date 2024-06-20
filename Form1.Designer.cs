@@ -46,8 +46,6 @@
             textBox8 = new TextBox();
             checkBox19 = new CheckBox();
             checkBox23 = new CheckBox();
-            checkBox22 = new CheckBox();
-            textBox7 = new TextBox();
             checkBox21 = new CheckBox();
             checkBox18 = new CheckBox();
             checkBox17 = new CheckBox();
@@ -159,6 +157,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox22 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -260,6 +259,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox22);
             groupBox4.Controls.Add(checkBox29);
             groupBox4.Controls.Add(checkBox28);
             groupBox4.Controls.Add(checkBox27);
@@ -267,8 +267,6 @@
             groupBox4.Controls.Add(textBox8);
             groupBox4.Controls.Add(checkBox19);
             groupBox4.Controls.Add(checkBox23);
-            groupBox4.Controls.Add(checkBox22);
-            groupBox4.Controls.Add(textBox7);
             groupBox4.Controls.Add(checkBox21);
             groupBox4.Controls.Add(checkBox18);
             groupBox4.Controls.Add(checkBox17);
@@ -293,7 +291,7 @@
             // checkBox29
             // 
             checkBox29.AutoSize = true;
-            checkBox29.Location = new Point(6, 218);
+            checkBox29.Location = new Point(6, 194);
             checkBox29.Name = "checkBox29";
             checkBox29.Size = new Size(83, 19);
             checkBox29.TabIndex = 25;
@@ -304,7 +302,7 @@
             // checkBox28
             // 
             checkBox28.AutoSize = true;
-            checkBox28.Location = new Point(93, 213);
+            checkBox28.Location = new Point(93, 189);
             checkBox28.Name = "checkBox28";
             checkBox28.Size = new Size(69, 19);
             checkBox28.TabIndex = 24;
@@ -315,7 +313,7 @@
             // checkBox27
             // 
             checkBox27.AutoSize = true;
-            checkBox27.Location = new Point(93, 193);
+            checkBox27.Location = new Point(93, 169);
             checkBox27.Name = "checkBox27";
             checkBox27.Size = new Size(60, 19);
             checkBox27.TabIndex = 23;
@@ -345,7 +343,7 @@
             // checkBox19
             // 
             checkBox19.AutoSize = true;
-            checkBox19.Location = new Point(93, 174);
+            checkBox19.Location = new Point(93, 150);
             checkBox19.Name = "checkBox19";
             checkBox19.Size = new Size(70, 19);
             checkBox19.TabIndex = 7;
@@ -356,33 +354,13 @@
             // checkBox23
             // 
             checkBox23.AutoSize = true;
-            checkBox23.Location = new Point(93, 156);
+            checkBox23.Location = new Point(93, 132);
             checkBox23.Name = "checkBox23";
             checkBox23.Size = new Size(72, 19);
             checkBox23.TabIndex = 20;
             checkBox23.Text = "Auto Pet";
             checkBox23.UseVisualStyleBackColor = true;
             checkBox23.CheckedChanged += checkBox23_CheckedChanged;
-            // 
-            // checkBox22
-            // 
-            checkBox22.AutoSize = true;
-            checkBox22.Location = new Point(6, 97);
-            checkBox22.Name = "checkBox22";
-            checkBox22.Size = new Size(83, 19);
-            checkBox22.TabIndex = 18;
-            checkBox22.Text = "Bad/Bright";
-            checkBox22.UseVisualStyleBackColor = true;
-            checkBox22.CheckedChanged += checkBox22_CheckedChanged;
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new Point(105, 97);
-            textBox7.Multiline = true;
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(57, 19);
-            textBox7.TabIndex = 19;
-            textBox7.Text = "0";
             // 
             // checkBox21
             // 
@@ -398,7 +376,7 @@
             // checkBox18
             // 
             checkBox18.AutoSize = true;
-            checkBox18.Location = new Point(93, 137);
+            checkBox18.Location = new Point(93, 113);
             checkBox18.Name = "checkBox18";
             checkBox18.Size = new Size(66, 19);
             checkBox18.TabIndex = 16;
@@ -409,7 +387,7 @@
             // checkBox17
             // 
             checkBox17.AutoSize = true;
-            checkBox17.Location = new Point(93, 117);
+            checkBox17.Location = new Point(93, 93);
             checkBox17.Name = "checkBox17";
             checkBox17.Size = new Size(76, 19);
             checkBox17.TabIndex = 15;
@@ -440,7 +418,7 @@
             // checkBox12
             // 
             checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(6, 198);
+            checkBox12.Location = new Point(6, 174);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(79, 19);
             checkBox12.TabIndex = 12;
@@ -451,7 +429,7 @@
             // checkBox11
             // 
             checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(6, 178);
+            checkBox11.Location = new Point(6, 154);
             checkBox11.Name = "checkBox11";
             checkBox11.Size = new Size(61, 19);
             checkBox11.TabIndex = 11;
@@ -462,7 +440,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(6, 159);
+            checkBox1.Location = new Point(6, 135);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(58, 19);
             checkBox1.TabIndex = 3;
@@ -484,7 +462,7 @@
             // checkBox5
             // 
             checkBox5.AutoSize = true;
-            checkBox5.Location = new Point(6, 138);
+            checkBox5.Location = new Point(6, 114);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new Size(78, 19);
             checkBox5.TabIndex = 10;
@@ -506,7 +484,7 @@
             // checkBox4
             // 
             checkBox4.AutoSize = true;
-            checkBox4.Location = new Point(6, 117);
+            checkBox4.Location = new Point(6, 93);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new Size(77, 19);
             checkBox4.TabIndex = 9;
@@ -1138,6 +1116,17 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox22
+            // 
+            checkBox22.AutoSize = true;
+            checkBox22.Location = new Point(6, 213);
+            checkBox22.Name = "checkBox22";
+            checkBox22.Size = new Size(70, 19);
+            checkBox22.TabIndex = 26;
+            checkBox22.Text = "Fast Tele";
+            checkBox22.UseVisualStyleBackColor = true;
+            checkBox22.CheckedChanged += checkBox22_CheckedChanged_1;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1292,8 +1281,6 @@
         private GroupBox groupBox9;
         private Button button13;
         private ComboBox comboBox4;
-        private CheckBox checkBox22;
-        private TextBox textBox7;
         private CheckBox checkBox23;
         private System.ComponentModel.BackgroundWorker backgroundWorker3;
         private System.ComponentModel.BackgroundWorker backgroundWorker4;
@@ -1308,5 +1295,6 @@
         private CheckBox checkBox28;
         private Button button15;
         private CheckBox checkBox29;
+        private CheckBox checkBox22;
     }
 }
