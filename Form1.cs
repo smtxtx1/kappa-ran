@@ -2322,11 +2322,11 @@ namespace Kappa
 
         private void button13_Click(object sender, EventArgs e)
         {
-            m.FreezeValue("MiniA.exe+934BBC", "float", "500");
+            m.FreezeValue("00D9AC1C", "float", "500");
             comboBox4.Invoke((Action)delegate
             {
                 int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
-                m.FreezeValue("00D34B7E", "2bytes", num2.ToString());
+                m.FreezeValue("00D9ABE2", "2bytes", num2.ToString());
             });
 
         }
