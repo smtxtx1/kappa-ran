@@ -366,7 +366,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 50 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
@@ -506,7 +506,7 @@ namespace Kappa
 
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
-        string originalcode_LR = "D9 5C 24 38 FF 52 10";
+        string originalcode_LR = "D9 5C 24 50 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 28 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
@@ -610,7 +610,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x38, 0xFF, 0x52, 0x10,
+                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x50, 0xFF, 0x52, 0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
@@ -771,6 +771,7 @@ namespace Kappa
 
             await Task.Delay(1);
             List<int> list = new List<int>();
+            List<int> listREMAIN = new List<int>();
             if (list.Count == 5)
             {
                 list.Clear();
@@ -784,8 +785,14 @@ namespace Kappa
                 }
 
                 int num4 = j + 2;
+                int SkillRemain = j + 8;
                 int item = m.Read2Byte(j.ToString("x"));
                 int item2 = m.Read2Byte(num4.ToString("x"));
+                float item3 = m.ReadFloat(SkillRemain.ToString("x"));
+                if (item3 <= 30f && listREMAIN.Contains(item2))
+                {
+                    list.Add(item2);
+                }
                 if (!list.Contains(item2))
                 {
                     list.Add(item2);
@@ -803,6 +810,33 @@ namespace Kappa
                 int num6 = m.Read2Byte(k.ToString("x"));
                 int num7 = m.Read2Byte(num5.ToString("x"));
 
+                if (listREMAIN.Contains(num7))
+                {
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+                    m.Read2Byte(k.ToString("x"));
+                    m.Read2Byte(num5.ToString("x"));
+                    if (m.ReadInt(MATION_CHECK) != 3)
+                    {
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(800);
+
+                    }
+                    if (frenzzy_tar != -1)
+                    {
+
+                        m.WriteMemory(actioncheck, "int", "0");
+                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(800);
+                    }
+                    if (listREMAIN.Contains(num7))
+                    {
+                        listREMAIN.Remove(num7);
+
+                    }
+
+                }
                 if (!list.Contains(num7))
                 {
 
@@ -813,7 +847,7 @@ namespace Kappa
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(300);
+                        Thread.Sleep(800);
 
                     }
                     if (frenzzy_tar != -1)
@@ -822,7 +856,7 @@ namespace Kappa
                         m.WriteMemory(actioncheck, "int", "0");
                         m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(300);
+                        Thread.Sleep(800);
                     }
 
                 }
