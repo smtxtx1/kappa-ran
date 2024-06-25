@@ -137,7 +137,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,240";
+        public string IDadr = "00FF38A0,220";
 
         public float GetX1;
 
@@ -371,10 +371,9 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
-            //
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
-            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, false);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
@@ -789,9 +788,9 @@ namespace Kappa
                 int item = m.Read2Byte(j.ToString("x"));
                 int item2 = m.Read2Byte(num4.ToString("x"));
                 float item3 = m.ReadFloat(SkillRemain.ToString("x"));
-                if (item3 <= 30f && listREMAIN.Contains(item2))
+                if (item3 <= 30f && !listREMAIN.Contains(item2))
                 {
-                    list.Add(item2);
+                    listREMAIN.Add(item2);
                 }
                 if (!list.Contains(item2))
                 {
@@ -1793,16 +1792,16 @@ namespace Kappa
             const int OffsetX = 0xAFC;
             const int OffsetY = 0xB00;
             const int OffsetZ = 0xB04;
-            const int OffsetHp = 0xAA0;
+            const int OffsetHp = 0xA90;
             float limitdistance = 80f;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
-                int offsetIDmon = OffsetID + (i * 0x0);
-                int offsetXmon = OffsetX + (i * 0x0);
-                int offsetYmon = OffsetY + (i * 0x0);
-                int offsetZmon = OffsetZ + (i * 0x0);
-                int offsetHpmon = OffsetHp + (i * 0x0);
+                int offsetIDmon = OffsetID + (i * 0xD08);
+                int offsetXmon = OffsetX + (i * 0xD08);
+                int offsetYmon = OffsetY + (i * 0xD08);
+                int offsetZmon = OffsetZ + (i * 0xD08);
+                int offsetHpmon = OffsetHp + (i * 0xD08);
 
                 // Read monster and player positions
                 int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
@@ -1842,11 +1841,22 @@ namespace Kappa
                             }
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
+                                await Task.Delay(500);
+                                check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                                 x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+                                 Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+                                 z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+                                 hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                                 myX = m.ReadFloat(CurrentX);
+                                 myY = m.ReadFloat(CurrentY);
+                                 myZ = m.ReadFloat(CurrentZ);
+
+
                                 break;
                             }
 
                         }
-
+                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                         check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
                         await Task.Delay(5);
                         if (check_hp_mon < 5 || distance_mon > 80f)
@@ -2187,11 +2197,12 @@ namespace Kappa
 
             if (checkBox16.Checked)
             {
-                m.WriteMemory(ASPD_adr, "float", textBox6.Text);
+                MessageBox.Show(ASPD_ADR_RESULT);
+                m.WriteMemory(ASPD_ADR_RESULT, "float", textBox6.Text);
             }
             else
             {
-                m.WriteMemory(ASPD_adr, "float", "4800");
+                m.WriteMemory(ASPD_ADR_RESULT, "float", "4800");
             }
         }
 
