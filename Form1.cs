@@ -139,6 +139,8 @@ namespace Kappa
 
         public string IDadr = "00FF38A0,220";
 
+        public string Level_ADR = "00FF38A0,90";
+
         public float GetX1;
 
         public float GetY1;
