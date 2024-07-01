@@ -2354,7 +2354,7 @@ namespace Kappa
 
             }
         }
-
+            
         private void checkBox21_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox21.Checked)
