@@ -101,6 +101,8 @@ namespace Kappa
         public string CUTAM_ADR_RESULT;
         public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
+        public string ASPD_ADR_RESULT2;
+
         public string HT_ADR_RESULT;
         public string WH_ADR_RESULT;
         public string AOE_ADR_RESULT;
@@ -375,7 +377,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
-            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, false);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("D8 0D ?? ?? ?? 00 8D 46 10 52 8B 54 24 10 D8 00 52 50 D9 18 E8 C3 FC FF FF", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
@@ -430,7 +432,7 @@ namespace Kappa
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
-            ASPD_ADR_RESULT = AOB_ASPD.ToString("x");
+            ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
@@ -445,6 +447,8 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
+            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
+            m.WriteMemory("00ff95f0", "float", "4800");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
@@ -458,6 +462,8 @@ namespace Kappa
 
 
         }
+
+
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
@@ -486,7 +492,6 @@ namespace Kappa
             selectedProcessId2 = int.Parse(comboBox2.SelectedItem.ToString());
 
         }
-
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -2196,15 +2201,14 @@ namespace Kappa
 
         private void checkBox16_CheckedChanged(object sender, EventArgs e)
         {
-
             if (checkBox16.Checked)
             {
-                MessageBox.Show(ASPD_ADR_RESULT);
-                m.WriteMemory(ASPD_ADR_RESULT, "float", textBox6.Text);
+                m.WriteMemory("00ff95F0", "float", textBox6.Text);
             }
             else
             {
-                m.WriteMemory(ASPD_ADR_RESULT, "float", "4800");
+                m.WriteMemory("00ff95F0", "float", "4800");
+
             }
         }
 
