@@ -39,6 +39,7 @@
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
+            checkBox22 = new CheckBox();
             checkBox29 = new CheckBox();
             checkBox28 = new CheckBox();
             checkBox27 = new CheckBox();
@@ -157,7 +158,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox22 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -235,7 +235,7 @@
             listView11.GridLines = true;
             listView11.Location = new Point(6, 263);
             listView11.Name = "listView11";
-            listView11.Size = new Size(200, 124);
+            listView11.Size = new Size(385, 132);
             listView11.TabIndex = 15;
             listView11.UseCompatibleStateImageBehavior = false;
             listView11.View = View.Details;
@@ -255,7 +255,7 @@
             // 
             columnHeader43.Text = "ชื่อไอเท็ม";
             columnHeader43.TextAlign = HorizontalAlignment.Center;
-            columnHeader43.Width = 65;
+            columnHeader43.Width = 200;
             // 
             // groupBox4
             // 
@@ -287,6 +287,17 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox22
+            // 
+            checkBox22.AutoSize = true;
+            checkBox22.Location = new Point(6, 213);
+            checkBox22.Name = "checkBox22";
+            checkBox22.Size = new Size(70, 19);
+            checkBox22.TabIndex = 26;
+            checkBox22.Text = "Fast Tele";
+            checkBox22.UseVisualStyleBackColor = true;
+            checkBox22.CheckedChanged += checkBox22_CheckedChanged_1;
             // 
             // checkBox29
             // 
@@ -1115,17 +1126,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox22
-            // 
-            checkBox22.AutoSize = true;
-            checkBox22.Location = new Point(6, 213);
-            checkBox22.Name = "checkBox22";
-            checkBox22.Size = new Size(70, 19);
-            checkBox22.TabIndex = 26;
-            checkBox22.Text = "Fast Tele";
-            checkBox22.UseVisualStyleBackColor = true;
-            checkBox22.CheckedChanged += checkBox22_CheckedChanged_1;
             // 
             // Form1
             // 
