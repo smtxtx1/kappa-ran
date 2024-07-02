@@ -2367,6 +2367,29 @@ namespace Kappa
 
             }
         }
+        private async Task BestAim2()
+        {
+            while (checkBox19.Checked)
+            {
+                int currentSkill = m.ReadInt("00FF8000,44");
+
+                if (checkBox19.Checked)
+                {
+                    if (currentSkill > 0)
+                    {
+                        m.WriteMemory("00FF8000,44", "int", "3");
+                        m.WriteMemory("00FF8000,48", "int", "1");
+
+                    }
+
+                    await Task.Delay(100);
+
+                }
+                Thread.Sleep(100);
+
+            }
+        }
+
 
         private void checkBox20_CheckedChanged(object sender, EventArgs e)
         {
