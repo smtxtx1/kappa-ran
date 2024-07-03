@@ -2133,18 +2133,7 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
+                            await Task.Delay(50);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
@@ -2152,9 +2141,7 @@ namespace Kappa
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
+                                    await Task.Delay(50);
 
                                     item.Remove();
                                     break;
@@ -2170,37 +2157,17 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "4");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
-
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(70);
+                            await Task.Delay(50);
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
+                                m.WriteMemory(forceattack_adr, "int", "4");
+
                                 await Task.Delay(10);
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
-
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
-
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
-
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(70);
+                                    await Task.Delay(50);
 
                                     item.Remove();
                                     break;
