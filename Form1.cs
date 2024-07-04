@@ -86,7 +86,10 @@ namespace Kappa
         public long AOB_ANTISLIDE;
         public long AOB_NOLIMIT;
         public long AOB_FASTLE;
+        public long AOB_UNLOCK;
 
+
+        public string UNLOCK_ADR_RESULT;
         public string FASTLE_ADR_RESULT;
         public string ANTISLIDE_ADR_RESULT;
         public string MONVIEW_ADR;
@@ -372,7 +375,7 @@ namespace Kappa
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             //74 82 8D BE 24 24 00 00 8B C7
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
-
+            IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 50 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
@@ -396,6 +399,7 @@ namespace Kappa
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE
 
+            AOB_UNLOCK = AoB_Scan_UNLOCK.FirstOrDefault();
             AOB_FASTLE = AoB_Scan_Fastle.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
             AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
@@ -420,6 +424,8 @@ namespace Kappa
             //
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
 
+
+            UNLOCK_ADR_RESULT = (AOB_UNLOCK + 0x10).ToString("x");
             FASTLE_ADR_RESULT = AOB_FASTLE.ToString("x");
             NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
             NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x33).ToString("x");
@@ -2409,11 +2415,11 @@ namespace Kappa
         {
             if (checkBox21.Checked)
             {
-                m.WriteMemory("005E7EB1", "bytes", "31 d0");
+                m.WriteMemory(UNLOCK_ADR_RESULT, "bytes", "90 90");
             }
             else
             {
-                m.WriteMemory("005E7EB1", "bytes", "33 c0");
+                m.WriteMemory(UNLOCK_ADR_RESULT, "bytes", "76 28");
             }
         }
 
