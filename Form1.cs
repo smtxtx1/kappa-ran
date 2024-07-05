@@ -988,64 +988,65 @@ namespace Kappa
         private async Task FollowLeaderTask()
         {
             Random rand = new Random();
-
+            float previousX = float.MinValue;
+            float previousZ = float.MinValue;
 
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
-                m.ReadFloat(CurrentX);
-                m.ReadFloat(CurrentY);
-                m.ReadFloat(CurrentZ);
+                // Read current coordinates and other necessary values once at the start of the loop
+                float currentX = m.ReadFloat(CurrentX);
+                float currentY = m.ReadFloat(CurrentY);
+                float currentZ = m.ReadFloat(CurrentZ);
                 int mainSK1 = mem.Read2Byte(prevskill1_adr);
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
                 int target = mem.ReadInt(TARGET_RING);
-                float previousX = float.MinValue;
-                float previousZ = float.MinValue;
-                float num = mem.ReadFloat(CurrentX);
-                float followY = mem.ReadFloat(CurrentY);
-                float num2 = mem.ReadFloat(CurrentZ);
-                m.ReadInt(MATION_CHECK);
-                mem.ReadInt(MATION_CHECK);
-                int num3 = mem.ReadInt(MATION_CHECK);
-                float followXnew = num + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
-                float followZnew = num2 + ((float)rand.NextDouble() - 10.5f) * 2.0f * 0.1f;
-                if (mem.Read2Byte(MATION_CHECK) == 1 && mem.Read2Byte(MATION_CHECK) != 3)
+                int mationCheck = mem.ReadInt(MATION_CHECK);
+
+                // Calculate new follow positions
+                float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
+                float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
+
+                // Check conditions to follow
+                if (mationCheck == 1 && mationCheck != 3)
                 {
+                    // Only write memory if position has changed
                     if (followXnew != previousX || followZnew != previousZ)
                     {
-
-                        mem.ReadInt(MATION_CHECK);
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
-                        m.WriteMemory(getadr + "+C", "float", followY.ToString());
+                        m.WriteMemory(getadr + "+C", "float", currentY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
+
                         RunActive();
                         previousX = followXnew;
                         previousZ = followZnew;
-                        await Task.Delay(10);
+
+                        await Task.Delay(10); // Small delay for smoother movement
                         RunDeActive();
-                        if (mem.ReadByte(Spacebar) != 01)
+
+                        // Handle spacebar action
+                        if (mem.ReadByte(Spacebar) != 1)
                         {
                             m.WriteMemory(Spacebar, "byte", "63");
-                            Thread.Sleep(10);
+                            await Task.Delay(10);
                             m.WriteMemory(Spacebar, "byte", "01");
-                            Thread.Sleep(10);
-
                         }
                     }
-                    await Task.Delay(10);
 
+                    await Task.Delay(70); // Wait before the next iteration
                 }
-                else if (checkBox8.Checked && mem.Read2Byte(MATION_CHECK) != 1)
+                else if (checkBox8.Checked && mationCheck != 1)
                 {
                     mainSK1 = mem.ReadByte(prevskill1_adr);
                     mainSK2 = mem.ReadByte(prevskill2_adr);
                     target = mem.ReadInt(TARGET_RING);
-                    if (mem.Read2Byte(MATION_CHECK) == 3)
+
+                    if (mationCheck == 3)
                     {
                         if (mainSK2 == 9)
                         {
-                            Thread.Sleep(1500);
-
+                            await Task.Delay(1500); // Simulate delay for special condition
                         }
+
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString());
                         m.WriteMemory(actioncheck, "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
@@ -1055,22 +1056,18 @@ namespace Kappa
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
-
-
                     }
 
+                    await Task.Delay(70); // Wait before the next iteration
                 }
-                mainSK1 = mem.Read2Byte(prevskill1_adr);
-                mainSK2 = mem.Read2Byte(prevskill2_adr);
 
-                previousX = num;
-                previousZ = num2;
+                // Store current position for the next iteration
+                previousX = currentX;
+                previousZ = currentZ;
             }
-            Thread.Sleep(1);
 
-            Thread.Sleep(1);
-            m.FreezeValue(RightArrow, "byte", "01");
-            m.WriteMemory(LeftClick, "byte", "01");
+            // Perform any cleanup or final actions outside the loop
+            await Task.Delay(70);
         }
 
         private void button3_Click(object sender, EventArgs e)
