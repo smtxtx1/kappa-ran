@@ -39,6 +39,7 @@
             columnHeader42 = new ColumnHeader();
             columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
+            checkBox30 = new CheckBox();
             checkBox22 = new CheckBox();
             checkBox29 = new CheckBox();
             checkBox28 = new CheckBox();
@@ -158,7 +159,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox30 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -289,6 +289,17 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox30
+            // 
+            checkBox30.AutoSize = true;
+            checkBox30.Location = new Point(93, 169);
+            checkBox30.Name = "checkBox30";
+            checkBox30.Size = new Size(67, 19);
+            checkBox30.TabIndex = 27;
+            checkBox30.Text = "BestPae";
+            checkBox30.UseVisualStyleBackColor = true;
+            checkBox30.CheckedChanged += checkBox30_CheckedChanged;
             // 
             // checkBox22
             // 
@@ -1128,17 +1139,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox30
-            // 
-            checkBox30.AutoSize = true;
-            checkBox30.Location = new Point(93, 169);
-            checkBox30.Name = "checkBox30";
-            checkBox30.Size = new Size(70, 19);
-            checkBox30.TabIndex = 27;
-            checkBox30.Text = "BestAim";
-            checkBox30.UseVisualStyleBackColor = true;
-            checkBox30.CheckedChanged += checkBox30_CheckedChanged;
             // 
             // Form1
             // 
