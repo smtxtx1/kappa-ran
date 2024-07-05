@@ -1031,6 +1031,8 @@ namespace Kappa
 
                         }
                     }
+                    await Task.Delay(10);
+
                 }
                 else if (checkBox8.Checked && mem.Read2Byte(MATION_CHECK) != 1)
                 {
@@ -1869,13 +1871,13 @@ namespace Kappa
                             {
                                 await Task.Delay(500);
                                 check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                                 x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
-                                 Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
-                                 z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
-                                 hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                                 myX = m.ReadFloat(CurrentX);
-                                 myY = m.ReadFloat(CurrentY);
-                                 myZ = m.ReadFloat(CurrentZ);
+                                x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
+                                Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
+                                z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
+                                hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                                myX = m.ReadFloat(CurrentX);
+                                myY = m.ReadFloat(CurrentY);
+                                myZ = m.ReadFloat(CurrentZ);
 
 
                                 break;
@@ -2132,7 +2134,7 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    if (item.SubItems[2].Text.Contains("The B") || item.SubItems[2].Text.Contains("()") || item.SubItems[2].Text.Contains("มี") ||  item.SubItems[2].Text.Contains("Light") || item.SubItems[2].Text.Contains("ผงกระดูก") ||  item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                    if (item.SubItems[2].Text.Contains("The B") || item.SubItems[2].Text.Contains("()") || item.SubItems[2].Text.Contains("มี") || item.SubItems[2].Text.Contains("Light") || item.SubItems[2].Text.Contains("ผงกระดูก") || item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
                     {
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
@@ -2340,28 +2342,40 @@ namespace Kappa
 
             }
         }
+
         private async Task BestAim2()
         {
-            while (checkBox19.Checked)
+            while (checkBox30.Checked)
             {
                 int currentSkill = m.ReadInt("00FF8000,44");
 
-                if (checkBox19.Checked)
+                if (checkBox30.Checked)
                 {
                     if (currentSkill > 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "3");
-                        m.WriteMemory("00FF8000,48", "int", "1");
+                      //  m.WriteMemory("00FF8000,48", "int", "1");
 
                     }
 
                     await Task.Delay(100);
 
                 }
+                if (checkBox27.Checked)
+                {
+                    m.WriteMemory("00FF8000,40", "int", "0");
+
+                }
+                else
+                {
+
+                    m.WriteMemory("00FF8000,40", "int", "1");
+                }
                 Thread.Sleep(100);
 
             }
         }
+
 
 
         private void checkBox20_CheckedChanged(object sender, EventArgs e)
@@ -2410,7 +2424,7 @@ namespace Kappa
 
             }
         }
-            
+
         private void checkBox21_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox21.Checked)
@@ -2673,6 +2687,64 @@ namespace Kappa
         private void checkBox22_CheckedChanged_1(object sender, EventArgs e)
         {
             m.WriteMemory(FASTLE_ADR_RESULT, "float", "-1");
+        }
+
+        private void checkBox30_CheckedChanged(object sender, EventArgs e)
+        {
+            BestAim2();
+            if (checkBox30.Checked)
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
+                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
+                };
+
+                // Calculate the jump offsets for the je and jmp instructions
+                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+
+                // Replace the jump offsets in the assembly code
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                jmpCodemy = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x0F, 0x1F, 0x44
+
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)AOB_BA + jmpCodemy.Length - 3);
+                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+            }
+            else
+            {
+                if (allocate_adr_BA != IntPtr.Zero)
+                {
+                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                    allocate_adr_BA = IntPtr.Zero;
+                }
+
+                // Restore the original code
+                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+
+            }
         }
     }
 

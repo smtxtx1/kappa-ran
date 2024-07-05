@@ -158,6 +158,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox30 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -259,6 +260,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox30);
             groupBox4.Controls.Add(checkBox22);
             groupBox4.Controls.Add(checkBox29);
             groupBox4.Controls.Add(checkBox28);
@@ -313,7 +315,7 @@
             // checkBox28
             // 
             checkBox28.AutoSize = true;
-            checkBox28.Location = new Point(93, 189);
+            checkBox28.Location = new Point(93, 210);
             checkBox28.Name = "checkBox28";
             checkBox28.Size = new Size(69, 19);
             checkBox28.TabIndex = 24;
@@ -324,7 +326,7 @@
             // checkBox27
             // 
             checkBox27.AutoSize = true;
-            checkBox27.Location = new Point(93, 169);
+            checkBox27.Location = new Point(93, 190);
             checkBox27.Name = "checkBox27";
             checkBox27.Size = new Size(60, 19);
             checkBox27.TabIndex = 23;
@@ -1127,6 +1129,17 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox30
+            // 
+            checkBox30.AutoSize = true;
+            checkBox30.Location = new Point(93, 169);
+            checkBox30.Name = "checkBox30";
+            checkBox30.Size = new Size(70, 19);
+            checkBox30.TabIndex = 27;
+            checkBox30.Text = "BestAim";
+            checkBox30.UseVisualStyleBackColor = true;
+            checkBox30.CheckedChanged += checkBox30_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1296,5 +1309,6 @@
         private Button button15;
         private CheckBox checkBox29;
         private CheckBox checkBox22;
+        private CheckBox checkBox30;
     }
 }
