@@ -1634,6 +1634,54 @@ namespace Kappa
                         }
                         m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
+                        if (checkBox31.Checked && int.TryParse(textBox4.Text, out j))
+                        {
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+                            for (int u2 = 0; u2 < j; u2++)
+                            {
+                                await ItemGetAll();
+                                await Task.Delay(50);
+                                await ItemGetAll();
+                                await Task.Delay(50);
+                            }
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+
+                            int j2;
+                            if (int.TryParse(textBox1.Text, out var numberOfIterations2))
+                            {
+                                m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+
+                                for (j2 = 0; j2 < numberOfIterations2; j2++)
+                                {
+                                    await AutoSkills2();
+                                    await Task.Delay(50);
+                                }
+
+                                for (int u2 = 0; u2 < j; u2++)
+                                {
+                                    await ItemGetAll();
+                                    await Task.Delay(50);
+                                    await ItemGetAll();
+                                    await Task.Delay(50);
+                                }
+                                m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                                if (int.TryParse(textBox1.Text, out var numberOfIterations3))
+                                {
+                                    int j3;
+                                    for (j3 = 0; j3 < numberOfIterations3; j3++)
+                                    {
+                                        await Autobuff();
+                                        await Task.Delay(100);
+                                    }
+                                }
+
+                            }
+
+                            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                        }
+
+
+
                         if (checkBox15.Checked && int.TryParse(textBox4.Text, out j))
                         {
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
