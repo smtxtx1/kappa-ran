@@ -2124,6 +2124,82 @@ namespace Kappa
             }
 
         }
+
+        private async Task ItemGetAll()
+        {
+            string names = m.ReadString(saveID);
+            try
+            {
+                foreach (ListViewItem item in listView11.Items)
+                {
+                    if (item.SubItems[0].Text == "3")
+                    {
+                        if (m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "3");
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(forceattack_adr, "int", "4");
+                            await Task.Delay(50);
+
+                            while (m.ReadInt(MATION_CHECK) == 1)
+                            {
+                                await Task.Delay(10);
+                                if (m.ReadInt(MATION_CHECK) == 0)
+                                {
+                                    m.WriteMemory(forceattack_adr, "int", "4");
+                                    await Task.Delay(50);
+
+                                    item.Remove();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (item.SubItems[0].Text == "4")
+                    {
+                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                        if (m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "4");
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(forceattack_adr, "int", "4");
+                            await Task.Delay(50);
+                            while (m.ReadInt(MATION_CHECK) == 1)
+                            {
+                                m.WriteMemory(forceattack_adr, "int", "4");
+
+                                await Task.Delay(10);
+                                if (m.ReadInt(MATION_CHECK) == 0)
+                                {
+                                    m.WriteMemory(forceattack_adr, "int", "4");
+                                    m.WriteMemory(forceattack_adr, "int", "4");
+                                    await Task.Delay(50);
+
+                                    item.Remove();
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
+                File.AppendAllText($"errorlogsMessage{names}", ex.Message);
+                return;
+            }
+
+
+
+            await Task.Delay(20);
+
+        }
+
+
+
         private async Task ItemGet()
         {
             string names = m.ReadString(saveID);
