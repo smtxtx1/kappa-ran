@@ -796,7 +796,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D98CBC; j <= 0x00D995AC; j += 0xB0)
+            for (int j = 0x00D99CBC; j <= 0x00D9A5AC; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -818,7 +818,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D980B4; k <= 0x00D980D8; k += 0x4)
+            for (int k = 0x00D990B4; k <= 0x00D990D8; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -994,9 +994,9 @@ namespace Kappa
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
                 // Read current coordinates and other necessary values once at the start of the loop
-                float currentX = m.ReadFloat(CurrentX);
-                float currentY = m.ReadFloat(CurrentY);
-                float currentZ = m.ReadFloat(CurrentZ);
+                float currentX = mem.ReadFloat(CurrentX);
+                float currentY = mem.ReadFloat(CurrentY);
+                float currentZ = mem.ReadFloat(CurrentZ);
                 int mainSK1 = mem.Read2Byte(prevskill1_adr);
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
                 int target = mem.ReadInt(TARGET_RING);
@@ -1894,7 +1894,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D9803C; i2 <= 0x00D98060; i2 += 4)
+                        for (int i2 = 0x00D9903C; i2 <= 0x00D99060; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
@@ -2439,7 +2439,7 @@ namespace Kappa
 
                 if (checkBox19.Checked)
                 {
-                    if (currentSkill > 0)
+                    if (currentSkill >= 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "0");
                         m.WriteMemory("00FF8000,48", "int", "1");
@@ -2472,7 +2472,7 @@ namespace Kappa
 
                 if (checkBox30.Checked)
                 {
-                    if (currentSkill > 0)
+                    if (currentSkill >= 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "3");
                       //  m.WriteMemory("00FF8000,48", "int", "1");
