@@ -377,7 +377,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 50 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
@@ -525,7 +525,7 @@ namespace Kappa
 
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
-        string originalcode_LR = "D9 5C 24 50 FF 52 10";
+        string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 28 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
@@ -629,7 +629,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x50, 0xFF, 0x52, 0x10,
+                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x38, 0xFF, 0x52, 0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
