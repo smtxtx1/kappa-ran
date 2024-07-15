@@ -394,7 +394,7 @@ namespace Kappa
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
-            var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 E0", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("38 9E A4 21 00 00 74 4F 8B 96 68 21 00 00 8D BE 68 21 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
 
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
