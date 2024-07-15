@@ -256,9 +256,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00FF38A0,130";
+        public string HpFreeze_1 = "00FF38A0,140";
 
-        public string HpFreeze_2 = "00FF38A0,132";
+        public string HpFreeze_2 = "00FF38A0,142";
 
         public string Antislide = "004324D8";
 
@@ -390,7 +390,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 0E 8B ?? ?? ?? 00 00 85 C0 0F ?? ?? ?? 00 00 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
-            var AoB_Scan_Monview = await m.AoBScan("8B 81 28 0C 00 00", false, true);
+            var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 E0", false, true);
