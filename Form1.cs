@@ -217,13 +217,25 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00FF38A0,2304";
+        public string prevskill1_adr = "00FF38A0,2308";
 
-        public string prevskill2_adr = "00FF38A0,2306";
+        public string prevskill2_adr = "00FF38A0,230A";
 
-        public string Skilluse1_adr = "00FF38A0,2308";
+        public string Skilluse1_adr = "00FF38A0,2304";
 
-        public string Skilluse2_adr = "00FF38A0,230A";
+        public string Skilluse2_adr = "00FF38A0,2306";
+
+
+        //public string prevskill1_adr = "00FF38A0,2304";
+
+        //public string prevskill2_adr = "00FF38A0,2306";
+
+        //public string Skilluse1_adr = "00FF38A0,2308";
+
+        //public string Skilluse2_adr = "00FF38A0,230A";
+
+
+
         //public string prevskill1_adr = "00FF38A0,237C";
 
         //public string prevskill2_adr = "00FF38A0,237E";
