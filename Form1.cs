@@ -63,7 +63,7 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00FF38A0,56";
+        public string NameAdr = "00FF38A0,58";
 
         public long AOB_MONVIEW;
         public long AOB_LOCALPLAYER;
@@ -146,9 +146,9 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,220";
+        public string IDadr = "00FF38A0,250";
 
-        public string Level_ADR = "00FF38A0,90";
+        public string Level_ADR = "00FF38A0,98";
 
         public float GetX1;
 
@@ -217,13 +217,13 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00FF38A0,2380";
+        public string prevskill1_adr = "00FF38A0,2304";
 
-        public string prevskill2_adr = "00FF38A0,2382";
+        public string prevskill2_adr = "00FF38A0,2306";
 
-        public string Skilluse1_adr = "00FF38A0,237C";
+        public string Skilluse1_adr = "00FF38A0,2308";
 
-        public string Skilluse2_adr = "00FF38A0,237E";
+        public string Skilluse2_adr = "00FF38A0,230A";
         //public string prevskill1_adr = "00FF38A0,237C";
 
         //public string prevskill2_adr = "00FF38A0,237E";
@@ -234,16 +234,16 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2410";
+        public string forceattack_adr = "00FF38A0,2398";
 
-        public string MATION_CHECK = "00FF38A0,22E0";
+        public string MATION_CHECK = "00FF38A0,2268";
 
-        public string actioncheck = "00FF38A0,2424";
+        public string actioncheck = "00FF38A0,23AC";
 
-        public string TARGET_SKILL = "00FF38A0,2428";
+        public string TARGET_SKILL = "00FF38A0,23B0";
 
 
-        public string TARGET_RING = "00FF38A0,31C4";
+        public string TARGET_RING = "00FF38A0,315C";
 
 
         public string PATH2_ADR_RESULT;
@@ -374,7 +374,7 @@ namespace Kappa
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             //74 82 8D BE 24 24 00 00 8B C7
-            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
+            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D ?? ?? ?? 00 00 8B C7", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
@@ -528,7 +528,7 @@ namespace Kappa
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
-        string originalcode_Monview = "8B 81 28 0C 00 00";
+        string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -789,6 +789,8 @@ namespace Kappa
         private async Task Autobuff()
         {
 
+            // 66 81 7D F0 FF FF aob for buff 
+
             await Task.Delay(1);
             List<int> list = new List<int>();
             List<int> listREMAIN = new List<int>();
@@ -797,7 +799,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D99CBC; j <= 0x00D9A5AC; j += 0xB0)
+            for (int j = 0x00D39B44; j <= 0x00D3A434; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -819,7 +821,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D990B4; k <= 0x00D990D8; k += 0x4)
+            for (int k = 0x00D38FEC; k <= 0x00D39010; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -1898,7 +1900,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D9903C; i2 <= 0x00D99060; i2 += 4)
+                        for (int i2 = 0x00D38F74; i2 <= 0x00D38F98; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
