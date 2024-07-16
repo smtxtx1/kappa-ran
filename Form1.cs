@@ -173,21 +173,21 @@ namespace Kappa
         /// </summary>
 
 
-        public string CurrentX = "00FF38A0,21F0";
+        public string CurrentX = "00FF38A0,2178";
 
-        public string CurrentY = "00FF38A0,21F4";
+        public string CurrentY = "00FF38A0,217C";
 
-        public string CurrentZ = "00FF38A0,21F8";
+        public string CurrentZ = "00FF38A0,2180";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,22F0";
+        public string gotoX = "00FF38A0,21BC";
 
-        public string gotoY = "00FF38A0,22F4";
+        public string gotoY = "00FF38A0,21C0";
 
-        public string gotoZ = "00FF38A0,22F8";
+        public string gotoZ = "00FF38A0,21C4";
         /// <summary>
         /// POSITION END
         /// </summary>
