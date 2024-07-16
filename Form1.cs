@@ -446,9 +446,9 @@ namespace Kappa
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
             RUN2_ADR_RESULT = (AOB_RUN + 0x6C).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xB06).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xAFD).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xAEA).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xB58).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
@@ -494,9 +494,9 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
             //m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
 
@@ -506,9 +506,9 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74 69");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            //
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 77");
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
