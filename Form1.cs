@@ -802,7 +802,7 @@ namespace Kappa
         {
 
             // 66 81 7D F0 FF FF aob for buff 
-
+            // 8B BC B8 6C 09 00 00
             await Task.Delay(1);
             List<int> list = new List<int>();
             List<int> listREMAIN = new List<int>();
