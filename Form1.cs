@@ -1409,7 +1409,7 @@ namespace Kappa
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "90 90 90 90");
             //    m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 CA 00 00 00 90");
-                m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
+                m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 F1 02 00 00 90");
                 //0F 84 ED 02 00 00
             }
             else
