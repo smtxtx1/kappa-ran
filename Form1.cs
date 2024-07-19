@@ -1408,15 +1408,15 @@ namespace Kappa
             if (checkBox11.Checked)
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "90 90 90 90");
-                m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 CA 00 00 00 90");
+            //    m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 CA 00 00 00 90");
                 m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
                 //0F 84 ED 02 00 00
             }
             else
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "D9 44 24 44");
-                m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 C9 00 00 00");
-                m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 ED 02 00 00");
+            //    m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 C9 00 00 00");
+                m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 F0 02 00 00");
 
             }
         }
