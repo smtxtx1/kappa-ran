@@ -811,7 +811,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D39B44; j <= 0x00D3A434; j += 0xB0)
+            for (int j = 0x00D37B44; j <= 0x00D38434; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -833,7 +833,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D38FEC; k <= 0x00D39010; k += 0x4)
+            for (int k = 0x00D36FEC; k <= 0x00D37010; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -1912,7 +1912,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D38F74; i2 <= 0x00D38F98; i2 += 4)
+                        for (int i2 = 0x00D36F74; i2 <= 0x00D36F98; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
