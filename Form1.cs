@@ -542,7 +542,7 @@ namespace Kappa
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
-        string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
+        string originalcode_BA = "83 7F 44 01 0F 85 5C 01 00 00 83 7F";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -1983,7 +1983,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x66 ,0x8B ,0x86 ,0x40 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0xA0 ,0x38 ,0xFF ,0x00,0xE9,
+                    0x66 ,0x8B ,0x86 ,0x38 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0xA0 ,0x38 ,0xFF ,0x00,0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
@@ -2406,7 +2406,7 @@ namespace Kappa
                 byte[] assemblyCode = new byte[]
                 {
                 0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x0F, 0x85, 0x5C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
