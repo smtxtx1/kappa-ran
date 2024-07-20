@@ -390,7 +390,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 ?? 01 00 00 83 7F", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
@@ -406,7 +406,7 @@ namespace Kappa
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
-            var AoB_Scan_AntiSlide = await m.AoBScan("38 9E A4 21 00 00 74 4F 8B 96 68 21 00 00 8D BE 68 21 00 00", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("38 9E 54 75 00 00 74 4F 8B ?? ?? 75 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
 
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
