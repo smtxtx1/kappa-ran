@@ -146,7 +146,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,250";
+        public string IDadr = "00FF38A0,260";
 
         public string Level_ADR = "00FF38A0,98";
 
@@ -173,21 +173,21 @@ namespace Kappa
         /// </summary>
 
 
-        public string CurrentX = "00FF38A0,2178";
+        public string CurrentX = "00FF38A0,7528";
 
-        public string CurrentY = "00FF38A0,217C";
+        public string CurrentY = "00FF38A0,752C";
 
-        public string CurrentZ = "00FF38A0,2180";
+        public string CurrentZ = "00FF38A0,7530";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,21BC";
+        public string gotoX = "00FF38A0,756C";
 
-        public string gotoY = "00FF38A0,21C0";
+        public string gotoY = "00FF38A0,7570";
 
-        public string gotoZ = "00FF38A0,21C4";
+        public string gotoZ = "00FF38A0,7574";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -217,13 +217,13 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00FF38A0,2308";
+        public string prevskill1_adr = "00FF38A0,76B8";
 
-        public string prevskill2_adr = "00FF38A0,230A";
+        public string prevskill2_adr = "00FF38A0,76BA";
 
-        public string Skilluse1_adr = "00FF38A0,2304";
+        public string Skilluse1_adr = "00FF38A0,76B4";
 
-        public string Skilluse2_adr = "00FF38A0,2306";
+        public string Skilluse2_adr = "00FF38A0,76B6";
 
 
         //public string prevskill1_adr = "00FF38A0,2304";
@@ -246,16 +246,16 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2398";
+        public string forceattack_adr = "00FF38A0,7760";
 
-        public string MATION_CHECK = "00FF38A0,2268";
+        public string MATION_CHECK = "00FF38A0,7618";
 
-        public string actioncheck = "00FF38A0,23AC";
+        public string actioncheck = "00FF38A0,7774";
 
-        public string TARGET_SKILL = "00FF38A0,23B0";
+        public string TARGET_SKILL = "00FF38A0,7778";
 
 
-        public string TARGET_RING = "00FF38A0,315C";
+        public string TARGET_RING = "00FF38A0,851C";
 
 
         public string PATH2_ADR_RESULT;
@@ -268,9 +268,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00FF38A0,140";
+        public string HpFreeze_1 = "00FF38A0,138";
 
-        public string HpFreeze_2 = "00FF38A0,142";
+        public string HpFreeze_2 = "00FF38A0,13C";
 
         public string Antislide = "004324D8";
 
@@ -400,7 +400,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 0E 8B ?? ?? ?? 00 00 85 C0 0F ?? ?? ?? 00 00 E8 ?? ?? ?? 00", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 07 8B CE E8 ?? ?? ?? 00 E8 5A", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Anticb = await m.AoBScan("A1 A4 1D 98 00 8D 8E F4 03 00 00", false, true); //A1 A4 1D 98 00 8D 8E F4 03 00 00
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00", false, true);
@@ -445,11 +445,11 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x6C).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xAEA).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xB58).ToString("x");
-            RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x16).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0x9D).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xB93).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xB9C).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN + 0xC0A).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
@@ -494,9 +494,10 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
             //m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
 
@@ -504,11 +505,13 @@ namespace Kappa
 
         public void RunDeActive()
         {
-            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
+            //m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -811,7 +814,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00D37B44; j <= 0x00D38434; j += 0xB0)
+            for (int j = 0x00BEAE9C; j <= 0x00BEB78C; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -833,7 +836,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00D36FEC; k <= 0x00D37010; k += 0x4)
+            for (int k = 0x00BEA514; k <= 0x00BEA538; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
@@ -1912,7 +1915,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D36F74; i2 <= 0x00D36F98; i2 += 4)
+                        for (int i2 = 0x00BEA4C4; i2 <= 0x00BEA4E8; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
