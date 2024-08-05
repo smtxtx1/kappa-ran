@@ -234,7 +234,7 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2410";
+        public string forceattack_adr = "00FF38A0,2838";
 
         public string MATION_CHECK = "00FF38A0,22E0";
 
@@ -392,7 +392,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 44 0C 00 00 C3", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
-            var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
+            var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 89 8E 30 01 00 00 66 3B C8", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 E0", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
 
