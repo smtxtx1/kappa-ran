@@ -376,7 +376,7 @@ namespace Kappa
             //74 82 8D BE 24 24 00 00 8B C7
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
-            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D9 5C 24 10 D9 44 24 10 D9 44 24 18 DE D9 DF E0 F6 C4 41 75 09", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 3C 8D 8D", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
@@ -526,7 +526,7 @@ namespace Kappa
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 50 FF 52 10";
-        string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
+        string originalcode_ALE = "DD 12 00 D9 5C 24 10 D9 44 24 10";
         string originalcode_Monview = "8B 81 28 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
@@ -552,12 +552,12 @@ namespace Kappa
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8,0x25,0x00,0x60,0xFF,0x00,0xD8,0x5C,0x24,0x0C,0xDF,0xE0,// fnstsw ax
+                    0xD8 ,0x25 ,0x00 ,0x60 ,0xFF ,0x00 ,0xD9 ,0x5C ,0x24 ,0x10 ,0xD9 ,0x44 ,0x24 ,0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
                 };
 
                 // Calculate the jump offset
-                int jumpOffset = (int)AOB_AOE + 6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_AOE + 8 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the assembly code to the allocated address
@@ -567,11 +567,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90
+                    0x0F, 0x1F ,0x00
                 };
 
                 // Calculate the jump offset
-                int jmpOffset2 = (int)allocate_adr_aoe - ((int)AOB_AOE + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_aoe - ((int)AOB_AOE + jmpCode.Length - 3);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);
 
                 // Write the second jmp instruction to the specified address
