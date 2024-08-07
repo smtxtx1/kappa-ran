@@ -785,13 +785,13 @@ namespace Kappa
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
 
-            //    m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
+                //    m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
             }
             else
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
 
-          //      m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
+                //      m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
             }
         }
 
@@ -961,7 +961,7 @@ namespace Kappa
                 jmpCodemy = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00
-                    
+
                 };
 
                 // Calculate the jump offset for the second jmp instruction
@@ -1923,6 +1923,7 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
+                                await Task.Delay(500);
                                 m.WriteMemory(forceattack_adr, "int", "9");
 
                             }
@@ -2497,7 +2498,7 @@ namespace Kappa
                     if (currentSkill >= 0)
                     {
                         m.WriteMemory("00FF8000,44", "int", "3");
-                      //  m.WriteMemory("00FF8000,48", "int", "1");
+                        //  m.WriteMemory("00FF8000,48", "int", "1");
 
                     }
 

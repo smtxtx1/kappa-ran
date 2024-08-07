@@ -130,6 +130,7 @@
             button9 = new Button();
             button8 = new Button();
             groupBox7 = new GroupBox();
+            checkBox31 = new CheckBox();
             checkBox26 = new CheckBox();
             checkBox25 = new CheckBox();
             textBox4 = new TextBox();
@@ -159,7 +160,10 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox31 = new CheckBox();
+            tabControl2 = new TabControl();
+            tabPage3 = new TabPage();
+            tabPage4 = new TabPage();
+            button16 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -172,6 +176,8 @@
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox3.SuspendLayout();
+            tabControl2.SuspendLayout();
+            tabPage3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -187,8 +193,8 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(tabControl2);
             tabPage1.Controls.Add(groupBox9);
-            tabPage1.Controls.Add(listView11);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox2);
             tabPage1.Controls.Add(groupBox1);
@@ -235,9 +241,9 @@
             listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
             listView11.ForeColor = SystemColors.Info;
             listView11.GridLines = true;
-            listView11.Location = new Point(6, 263);
+            listView11.Location = new Point(3, 3);
             listView11.Name = "listView11";
-            listView11.Size = new Size(385, 132);
+            listView11.Size = new Size(254, 94);
             listView11.TabIndex = 15;
             listView11.UseCompatibleStateImageBehavior = false;
             listView11.View = View.Details;
@@ -245,19 +251,19 @@
             // columnHeader41
             // 
             columnHeader41.Text = "ITEM TYPE";
-            columnHeader41.Width = 65;
+            columnHeader41.Width = 50;
             // 
             // columnHeader42
             // 
             columnHeader42.Text = "ID ITEM";
             columnHeader42.TextAlign = HorizontalAlignment.Center;
-            columnHeader42.Width = 65;
+            columnHeader42.Width = 50;
             // 
             // columnHeader43
             // 
             columnHeader43.Text = "ชื่อไอเท็ม";
             columnHeader43.TextAlign = HorizontalAlignment.Center;
-            columnHeader43.Width = 200;
+            columnHeader43.Width = 150;
             // 
             // groupBox4
             // 
@@ -888,6 +894,16 @@
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
             // 
+            // checkBox31
+            // 
+            checkBox31.AutoSize = true;
+            checkBox31.Location = new Point(6, 85);
+            checkBox31.Name = "checkBox31";
+            checkBox31.Size = new Size(67, 19);
+            checkBox31.TabIndex = 14;
+            checkBox31.Text = "Loot All";
+            checkBox31.UseVisualStyleBackColor = true;
+            // 
             // checkBox26
             // 
             checkBox26.AutoSize = true;
@@ -1142,15 +1158,46 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // checkBox31
+            // tabControl2
             // 
-            checkBox31.AutoSize = true;
-            checkBox31.Location = new Point(6, 85);
-            checkBox31.Name = "checkBox31";
-            checkBox31.Size = new Size(67, 19);
-            checkBox31.TabIndex = 14;
-            checkBox31.Text = "Loot All";
-            checkBox31.UseVisualStyleBackColor = true;
+            tabControl2.Controls.Add(tabPage3);
+            tabControl2.Controls.Add(tabPage4);
+            tabControl2.Location = new Point(6, 263);
+            tabControl2.Name = "tabControl2";
+            tabControl2.SelectedIndex = 0;
+            tabControl2.Size = new Size(381, 131);
+            tabControl2.TabIndex = 16;
+            // 
+            // tabPage3
+            // 
+            tabPage3.Controls.Add(button16);
+            tabPage3.Controls.Add(listView11);
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(373, 103);
+            tabPage3.TabIndex = 0;
+            tabPage3.Text = "tabPage3";
+            tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            tabPage4.Location = new Point(4, 24);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new Padding(3);
+            tabPage4.Size = new Size(192, 72);
+            tabPage4.TabIndex = 1;
+            tabPage4.Text = "tabPage4";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button16
+            // 
+            button16.Location = new Point(263, 6);
+            button16.Name = "button16";
+            button16.Size = new Size(75, 23);
+            button16.TabIndex = 16;
+            button16.Text = "button16";
+            button16.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1187,6 +1234,8 @@
             groupBox5.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            tabControl2.ResumeLayout(false);
+            tabPage3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1323,5 +1372,9 @@
         private CheckBox checkBox22;
         private CheckBox checkBox30;
         private CheckBox checkBox31;
+        private TabControl tabControl2;
+        private TabPage tabPage3;
+        private Button button16;
+        private TabPage tabPage4;
     }
 }
