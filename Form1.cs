@@ -173,21 +173,21 @@ namespace Kappa
         /// </summary>
 
 
-        public string CurrentX = "00FF38A0,21F0";
+        public string CurrentX = "00FF38A0,25F8";
 
-        public string CurrentY = "00FF38A0,21F4";
+        public string CurrentY = "00FF38A0,25FC";
 
-        public string CurrentZ = "00FF38A0,21F8";
+        public string CurrentZ = "00FF38A0,2600";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,22F0";
+        public string gotoX = "00FF38A0,263C";
 
-        public string gotoY = "00FF38A0,22F4";
+        public string gotoY = "00FF38A0,2640";
 
-        public string gotoZ = "00FF38A0,22F8";
+        public string gotoZ = "00FF38A0,2644";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -217,13 +217,15 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00FF38A0,2380";
+        /// 
+        public string Skilluse1_adr = "00FF38A0,27A4";
 
-        public string prevskill2_adr = "00FF38A0,2382";
+        public string Skilluse2_adr = "00FF38A0,27A6";
 
-        public string Skilluse1_adr = "00FF38A0,237C";
+        public string prevskill1_adr = "00FF38A0,27A8";
 
-        public string Skilluse2_adr = "00FF38A0,237E";
+        public string prevskill2_adr = "00FF38A0,27AA";
+
         //public string prevskill1_adr = "00FF38A0,237C";
 
         //public string prevskill2_adr = "00FF38A0,237E";
@@ -236,14 +238,14 @@ namespace Kappa
 
         public string forceattack_adr = "00FF38A0,2838";
 
-        public string MATION_CHECK = "00FF38A0,22E0";
+        public string MATION_CHECK = "00FF38A0,2700";
 
-        public string actioncheck = "00FF38A0,2424";
+        public string actioncheck = "00FF38A0,284C";
 
-        public string TARGET_SKILL = "00FF38A0,2428";
+        public string TARGET_SKILL = "00FF38A0,2850";
 
 
-        public string TARGET_RING = "00FF38A0,31C4";
+        public string TARGET_RING = "00FF38A0,3874";
 
 
         public string PATH2_ADR_RESULT;
@@ -377,14 +379,14 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 24 24 00 00 8B C7", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D9 5C 24 10 D9 44 24 10 D9 44 24 18 DE D9 DF E0 F6 C4 41 75 09", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 3C 8D 8D", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 D9 44 24 14 E8 ?? ?? ?? 00 D9 5C 24 14 8B 95 E8 25 00 00 D9 44 24 14 8B 42 10 D9 5C 24 3C 8D 8D E8 25 00 00", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
-            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("02 51 83 CE FF E8 28 1C", false, true);
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
-            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("D8 0D ?? ?? ?? 00 8D 46 10 52 8B 54 24 10 D8 00 52 50 D9 18 E8 C3 FC FF FF", false, true);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("DC 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
@@ -393,7 +395,7 @@ namespace Kappa
             var AoB_Scan_Monview = await m.AoBScan("8B 81 44 0C 00 00 C3", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 89 8E 30 01 00 00 66 3B C8", false, true);
-            var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 E0", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
 
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
@@ -438,11 +440,13 @@ namespace Kappa
             RUN5_ADR_RESULT = (AOB_RUN + 0xAE1).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
 
-            ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
+            ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x28).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
+            ASPD_ADR_RESULT2 = (AOB_ASPD).ToString("x");
+
             DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             HT2_ADR_RESULT = (AOB_HT - 0x22).ToString("x");
@@ -460,6 +464,7 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
+            m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             m.WriteMemory("00ff95f0", "float", "4800");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
@@ -525,8 +530,8 @@ namespace Kappa
 
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
-        string originalcode_LR = "D9 5C 24 50 FF 52 10";
-        string originalcode_ALE = "DD 12 00 D9 5C 24 10 D9 44 24 10";
+        string originalcode_LR = "D9 5C 24 14 D9 44 24 14 E8";
+        string originalcode_ALE = "D9 5C 24 10 D9 44 24 10 D9 44 24 18";
         string originalcode_Monview = "8B 81 28 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
@@ -629,12 +634,12 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x50, 0xFF, 0x52, 0x10,
+                    0xD8 ,0x25 ,0x00 ,0x10 ,0xFF ,0x00 ,0xD9 ,0x5C ,0x24 ,0x14 ,0xD9 ,0x44 ,0x24 ,0x14,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_LR + 7 - ((int)allocate_adr + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_LR + 8 - ((int)allocate_adr + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -644,11 +649,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x66, 0x90
+                    0x0F ,0x1F ,0x00
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr - ((int)AOB_LR + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr - ((int)AOB_LR + jmpCode.Length - 3);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
@@ -771,15 +776,15 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT2, "byte", "0");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
 
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
+            //    m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
             }
             else
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT2, "byte", "1");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
 
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
+          //      m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
             }
         }
 
