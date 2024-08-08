@@ -88,8 +88,9 @@ namespace Kappa
         public long AOB_FASTLE;
         public long AOB_UNLOCK;
         public long AOB_ANTICB;
+        public long AOB_ANTICHAT;
 
-
+        public string ANTICHAT_ADR_RESULT;
         public string ANTICB_ADR_RESULT;
         public string UNLOCK_ADR_RESULT;
         public string FASTLE_ADR_RESULT;
@@ -400,10 +401,10 @@ namespace Kappa
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 C0 06 00 00 6A 45 56", false, true);
-
+            var AoB_Scan_ANTICHAT = await m.AoBScan("0F 84 D4 00 00 00 D9 44 24 08", false, true);
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
-
+            AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             AOB_UNLOCK = AoB_Scan_UNLOCK.FirstOrDefault();
             AOB_FASTLE = AoB_Scan_Fastle.FirstOrDefault();
@@ -429,7 +430,7 @@ namespace Kappa
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
-
+            ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
             UNLOCK_ADR_RESULT = (AOB_UNLOCK + 0x10).ToString("x");
             FASTLE_ADR_RESULT = AOB_FASTLE.ToString("x");
