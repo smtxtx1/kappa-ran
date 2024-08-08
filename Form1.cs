@@ -401,7 +401,7 @@ namespace Kappa
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 C0 06 00 00 6A 45 56", false, true);
-            var AoB_Scan_ANTICHAT = await m.AoBScan("0F 84 D4 00 00 00 D9 44 24 08", false, true);
+            var AoB_Scan_ANTICHAT = await m.AoBScan("0F ?? D4 00 00 00 D9 44 24 08", false, true);
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
@@ -2775,7 +2775,7 @@ namespace Kappa
         }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
-//            AllocNolimit();
+            //            AllocNolimit();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
@@ -2910,6 +2910,19 @@ namespace Kappa
             else
             {
                 MessageBox.Show("Please select an item in listView11 to copy.", "No item selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void checkBox32_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox32.Checked)
+            {
+                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "E9 D5 00 00 00 90");
+            }
+            else
+            {
+                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "0F 8B D4 00 00 00");
+
             }
         }
     }

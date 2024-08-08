@@ -168,6 +168,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox32 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -242,6 +243,7 @@
             // 
             // groupBox4
             // 
+            groupBox4.Controls.Add(checkBox32);
             groupBox4.Controls.Add(checkBox30);
             groupBox4.Controls.Add(checkBox22);
             groupBox4.Controls.Add(checkBox29);
@@ -267,7 +269,7 @@
             groupBox4.Controls.Add(textBox3);
             groupBox4.Location = new Point(212, 6);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(176, 251);
+            groupBox4.Size = new Size(176, 261);
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
@@ -275,7 +277,7 @@
             // checkBox30
             // 
             checkBox30.AutoSize = true;
-            checkBox30.Location = new Point(93, 169);
+            checkBox30.Location = new Point(93, 187);
             checkBox30.Name = "checkBox30";
             checkBox30.Size = new Size(67, 19);
             checkBox30.TabIndex = 27;
@@ -308,7 +310,7 @@
             // checkBox28
             // 
             checkBox28.AutoSize = true;
-            checkBox28.Location = new Point(93, 210);
+            checkBox28.Location = new Point(93, 228);
             checkBox28.Name = "checkBox28";
             checkBox28.Size = new Size(69, 19);
             checkBox28.TabIndex = 24;
@@ -319,7 +321,7 @@
             // checkBox27
             // 
             checkBox27.AutoSize = true;
-            checkBox27.Location = new Point(93, 190);
+            checkBox27.Location = new Point(93, 208);
             checkBox27.Name = "checkBox27";
             checkBox27.Size = new Size(60, 19);
             checkBox27.TabIndex = 23;
@@ -349,7 +351,7 @@
             // checkBox19
             // 
             checkBox19.AutoSize = true;
-            checkBox19.Location = new Point(93, 150);
+            checkBox19.Location = new Point(93, 168);
             checkBox19.Name = "checkBox19";
             checkBox19.Size = new Size(70, 19);
             checkBox19.TabIndex = 7;
@@ -360,7 +362,7 @@
             // checkBox23
             // 
             checkBox23.AutoSize = true;
-            checkBox23.Location = new Point(93, 132);
+            checkBox23.Location = new Point(93, 150);
             checkBox23.Name = "checkBox23";
             checkBox23.Size = new Size(72, 19);
             checkBox23.TabIndex = 20;
@@ -1241,6 +1243,17 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox32
+            // 
+            checkBox32.AutoSize = true;
+            checkBox32.Location = new Point(93, 132);
+            checkBox32.Name = "checkBox32";
+            checkBox32.Size = new Size(81, 19);
+            checkBox32.TabIndex = 28;
+            checkBox32.Text = "Anti CHAT";
+            checkBox32.UseVisualStyleBackColor = true;
+            checkBox32.CheckedChanged += checkBox32_CheckedChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1423,5 +1436,6 @@
         private ColumnHeader columnHeader44;
         private ColumnHeader columnHeader45;
         private ColumnHeader columnHeader46;
+        private CheckBox checkBox32;
     }
 }
