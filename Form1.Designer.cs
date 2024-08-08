@@ -34,10 +34,6 @@
             groupBox9 = new GroupBox();
             button13 = new Button();
             comboBox4 = new ComboBox();
-            listView11 = new ListView();
-            columnHeader41 = new ColumnHeader();
-            columnHeader42 = new ColumnHeader();
-            columnHeader43 = new ColumnHeader();
             groupBox4 = new GroupBox();
             checkBox30 = new CheckBox();
             checkBox22 = new CheckBox();
@@ -147,6 +143,18 @@
             button6 = new Button();
             button3 = new Button();
             checkBox6 = new CheckBox();
+            tabPage5 = new TabPage();
+            groupBox11 = new GroupBox();
+            listView12 = new ListView();
+            columnHeader44 = new ColumnHeader();
+            columnHeader45 = new ColumnHeader();
+            columnHeader46 = new ColumnHeader();
+            button16 = new Button();
+            groupBox10 = new GroupBox();
+            listView11 = new ListView();
+            columnHeader41 = new ColumnHeader();
+            columnHeader42 = new ColumnHeader();
+            columnHeader43 = new ColumnHeader();
             groupBox3 = new GroupBox();
             textBox5 = new TextBox();
             button5 = new Button();
@@ -160,10 +168,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            tabControl2 = new TabControl();
-            tabPage3 = new TabPage();
-            tabPage4 = new TabPage();
-            button16 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -175,25 +179,26 @@
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox5.SuspendLayout();
+            tabPage5.SuspendLayout();
+            groupBox11.SuspendLayout();
+            groupBox10.SuspendLayout();
             groupBox3.SuspendLayout();
-            tabControl2.SuspendLayout();
-            tabPage3.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage5);
             tabControl1.Location = new Point(2, 6);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(402, 429);
+            tabControl1.Size = new Size(402, 425);
             tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
-            tabPage1.Controls.Add(tabControl2);
             tabPage1.Controls.Add(groupBox9);
             tabPage1.Controls.Add(groupBox4);
             tabPage1.Controls.Add(groupBox2);
@@ -201,7 +206,7 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(394, 401);
+            tabPage1.Size = new Size(394, 397);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
             // 
@@ -234,36 +239,6 @@
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(107, 23);
             comboBox4.TabIndex = 1;
-            // 
-            // listView11
-            // 
-            listView11.BackColor = SystemColors.InactiveCaptionText;
-            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
-            listView11.ForeColor = SystemColors.Info;
-            listView11.GridLines = true;
-            listView11.Location = new Point(3, 3);
-            listView11.Name = "listView11";
-            listView11.Size = new Size(254, 94);
-            listView11.TabIndex = 15;
-            listView11.UseCompatibleStateImageBehavior = false;
-            listView11.View = View.Details;
-            // 
-            // columnHeader41
-            // 
-            columnHeader41.Text = "ITEM TYPE";
-            columnHeader41.Width = 50;
-            // 
-            // columnHeader42
-            // 
-            columnHeader42.Text = "ID ITEM";
-            columnHeader42.TextAlign = HorizontalAlignment.Center;
-            columnHeader42.Width = 50;
-            // 
-            // columnHeader43
-            // 
-            columnHeader43.Text = "ชื่อไอเท็ม";
-            columnHeader43.TextAlign = HorizontalAlignment.Center;
-            columnHeader43.Width = 150;
             // 
             // groupBox4
             // 
@@ -658,7 +633,7 @@
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(394, 401);
+            tabPage2.Size = new Size(394, 397);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Settings";
             // 
@@ -1068,6 +1043,114 @@
             checkBox6.UseVisualStyleBackColor = true;
             checkBox6.CheckedChanged += checkBox6_CheckedChanged;
             // 
+            // tabPage5
+            // 
+            tabPage5.BackColor = Color.DimGray;
+            tabPage5.Controls.Add(groupBox11);
+            tabPage5.Controls.Add(button16);
+            tabPage5.Controls.Add(groupBox10);
+            tabPage5.Location = new Point(4, 24);
+            tabPage5.Name = "tabPage5";
+            tabPage5.Padding = new Padding(3);
+            tabPage5.Size = new Size(394, 397);
+            tabPage5.TabIndex = 2;
+            tabPage5.Text = "tabPage5";
+            // 
+            // groupBox11
+            // 
+            groupBox11.Controls.Add(listView12);
+            groupBox11.Location = new Point(6, 196);
+            groupBox11.Name = "groupBox11";
+            groupBox11.Size = new Size(366, 155);
+            groupBox11.TabIndex = 19;
+            groupBox11.TabStop = false;
+            groupBox11.Text = "ไอเท็มที่จะเก็บ";
+            // 
+            // listView12
+            // 
+            listView12.BackColor = SystemColors.InactiveCaptionText;
+            listView12.Columns.AddRange(new ColumnHeader[] { columnHeader44, columnHeader45, columnHeader46 });
+            listView12.Dock = DockStyle.Fill;
+            listView12.ForeColor = SystemColors.Info;
+            listView12.FullRowSelect = true;
+            listView12.GridLines = true;
+            listView12.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView12.Location = new Point(3, 19);
+            listView12.Name = "listView12";
+            listView12.Size = new Size(360, 133);
+            listView12.TabIndex = 15;
+            listView12.UseCompatibleStateImageBehavior = false;
+            listView12.View = View.Details;
+            // 
+            // columnHeader44
+            // 
+            columnHeader44.Text = "ITEM TYPE";
+            columnHeader44.Width = 75;
+            // 
+            // columnHeader45
+            // 
+            columnHeader45.Text = "ID ITEM";
+            columnHeader45.TextAlign = HorizontalAlignment.Center;
+            columnHeader45.Width = 0;
+            // 
+            // columnHeader46
+            // 
+            columnHeader46.Text = "ชื่อไอเท็ม";
+            columnHeader46.TextAlign = HorizontalAlignment.Center;
+            columnHeader46.Width = 280;
+            // 
+            // button16
+            // 
+            button16.Location = new Point(9, 164);
+            button16.Name = "button16";
+            button16.Size = new Size(75, 26);
+            button16.TabIndex = 16;
+            button16.Text = "เพิ่มไอเท็ม";
+            button16.UseVisualStyleBackColor = true;
+            button16.Click += button16_Click;
+            // 
+            // groupBox10
+            // 
+            groupBox10.Controls.Add(listView11);
+            groupBox10.Location = new Point(6, 6);
+            groupBox10.Name = "groupBox10";
+            groupBox10.Size = new Size(366, 155);
+            groupBox10.TabIndex = 18;
+            groupBox10.TabStop = false;
+            groupBox10.Text = "ไอเท็มที่เจอ";
+            // 
+            // listView11
+            // 
+            listView11.BackColor = SystemColors.InactiveCaptionText;
+            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
+            listView11.Dock = DockStyle.Fill;
+            listView11.ForeColor = SystemColors.Info;
+            listView11.GridLines = true;
+            listView11.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView11.Location = new Point(3, 19);
+            listView11.Name = "listView11";
+            listView11.Size = new Size(360, 133);
+            listView11.TabIndex = 15;
+            listView11.UseCompatibleStateImageBehavior = false;
+            listView11.View = View.Details;
+            // 
+            // columnHeader41
+            // 
+            columnHeader41.Text = "ITEM TYPE";
+            columnHeader41.Width = 70;
+            // 
+            // columnHeader42
+            // 
+            columnHeader42.Text = "ID ITEM";
+            columnHeader42.TextAlign = HorizontalAlignment.Center;
+            columnHeader42.Width = 0;
+            // 
+            // columnHeader43
+            // 
+            columnHeader43.Text = "ชื่อไอเท็ม";
+            columnHeader43.TextAlign = HorizontalAlignment.Center;
+            columnHeader43.Width = 285;
+            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(textBox5);
@@ -1158,52 +1241,11 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // tabControl2
-            // 
-            tabControl2.Controls.Add(tabPage3);
-            tabControl2.Controls.Add(tabPage4);
-            tabControl2.Location = new Point(6, 263);
-            tabControl2.Name = "tabControl2";
-            tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new Size(381, 131);
-            tabControl2.TabIndex = 16;
-            // 
-            // tabPage3
-            // 
-            tabPage3.Controls.Add(button16);
-            tabPage3.Controls.Add(listView11);
-            tabPage3.Location = new Point(4, 24);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(373, 103);
-            tabPage3.TabIndex = 0;
-            tabPage3.Text = "tabPage3";
-            tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            tabPage4.Location = new Point(4, 24);
-            tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(192, 72);
-            tabPage4.TabIndex = 1;
-            tabPage4.Text = "tabPage4";
-            tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // button16
-            // 
-            button16.Location = new Point(263, 6);
-            button16.Name = "button16";
-            button16.Size = new Size(75, 23);
-            button16.TabIndex = 16;
-            button16.Text = "button16";
-            button16.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 436);
+            ClientSize = new Size(405, 432);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             Controls.Add(groupBox3);
@@ -1232,10 +1274,11 @@
             groupBox6.PerformLayout();
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
+            tabPage5.ResumeLayout(false);
+            groupBox11.ResumeLayout(false);
+            groupBox10.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
-            tabControl2.ResumeLayout(false);
-            tabPage3.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1372,9 +1415,13 @@
         private CheckBox checkBox22;
         private CheckBox checkBox30;
         private CheckBox checkBox31;
-        private TabControl tabControl2;
-        private TabPage tabPage3;
         private Button button16;
-        private TabPage tabPage4;
+        private TabPage tabPage5;
+        private GroupBox groupBox10;
+        private GroupBox groupBox11;
+        private ListView listView12;
+        private ColumnHeader columnHeader44;
+        private ColumnHeader columnHeader45;
+        private ColumnHeader columnHeader46;
     }
 }

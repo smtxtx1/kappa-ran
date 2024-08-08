@@ -393,9 +393,9 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("DC 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2A 55 E8 BA 17 19 00", false, true);
-            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 44 0C 00 00", false, true);
-            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00 83 C1 FE", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 95 D8 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 89 8E 30 01 00 00 66 3B C8", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
@@ -1118,7 +1118,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89,0x0D,0x00,0x50,0xFF,0x00,0x8B,0x81,0x18,0x0C,0x00,0x00,0xE9,
+                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x95 ,0xD8 ,0x03 ,0x00 ,0x00,
+                    0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
@@ -2036,7 +2037,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x0D ,0x00 ,0x50 ,0xFF ,0x00 ,0x8B ,0x81 ,0x44 ,0x0C ,0x00 ,0x00 ,
+                    0x89 ,0x0D ,0x00 ,0x50 ,0xFF ,0x00 ,0x8B ,0x81 ,0x44 ,0x0C ,0x00 ,0x00,
                     0xE9 ,0x00 ,0x00 ,0x00 ,0x00
                 };
 
@@ -2114,7 +2115,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B,0x96,0x78,0x03,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
+                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x95 ,0xD8 ,0x03 ,0x00 ,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2153,9 +2154,9 @@ namespace Kappa
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FA7800,378");
-                int ItemID = m.ReadInt("00FA7800,37C");
-                byte[] array = m.ReadBytes("00FA7800,391", num);
+                int ItemType = m.ReadInt("00FA7800,3D8");
+                int ItemID = m.ReadInt("00FA7800,3DC");
+                byte[] array = m.ReadBytes("00FA7800,3F1", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
                 string stringFromBytes;
                 string expectedString;
@@ -2549,7 +2550,7 @@ namespace Kappa
             button6.Enabled = true;
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
-            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 95 D8 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.CancelAsync();
@@ -2773,7 +2774,7 @@ namespace Kappa
         }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
-            AllocNolimit();
+//            AllocNolimit();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
@@ -2785,12 +2786,12 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7 ,0x81 ,0x80 ,0x01 ,0x00 ,0x00 ,0x20 ,0xBC ,0xBE ,0x4C,
+                    0xB8 ,0x00 ,0x00 ,0x00 ,0x00 ,0x89 ,0x86 ,0x30 ,0x01 ,0x00 ,0x00,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_NOLIMIT + 0xA - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0x06 - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -2800,7 +2801,7 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x0F ,0x1F ,0x44 ,0x00 ,0x00
+                    0x90
                 };
 
                 // Calculate the jump offset for the second jmp instruction
@@ -2888,6 +2889,26 @@ namespace Kappa
                 // Restore the original code
                 m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
 
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            // Ensure there is a selected item
+            if (listView11.SelectedItems.Count > 0)
+            {
+                foreach (ListViewItem item in listView11.SelectedItems)
+                {
+                    // Create a new ListViewItem with the same text and subitems
+                    ListViewItem newItem = (ListViewItem)item.Clone();
+
+                    // Add the new item to listView12
+                    listView12.Items.Add(newItem);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item in listView11 to copy.", "No item selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
