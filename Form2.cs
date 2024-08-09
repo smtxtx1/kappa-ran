@@ -16,6 +16,8 @@ namespace LOGIN
 {
     public class Login : Form
     {
+        Form1 form = new Form1();
+
 
         public static api KeyAuthApp = new api(
             name: "smbotenglish",
@@ -32,29 +34,27 @@ namespace LOGIN
         private Button button1;
         public Login()
         {
-            InitializeComponent();
+           InitializeComponent();
         }
         private void button1_Click(object sender, EventArgs e)
+        {
+            Loginfunc();
+        }
+
+        private void Loginfunc()
         {
             KeyAuthApp.license(key.Text);
             if (KeyAuthApp.response.success)
             {
                 SaveKeyToFile(key.Text);
-                Form1 form = new Form1();
-                Hide();
-                form.Show();
-                foreach (Control control in base.Controls)
-                {
-                    control.Enabled = true;
-                }
-                //    MessageBox.Show("Date Expire: " + UnixTimeToDateTime(long.Parse(KeyAuthApp.user_data.subscriptions[0].expiry)).ToString());
+                this.DialogResult = DialogResult.OK;  // Set DialogResult to OK on successful login
+                this.Close();  // Close the Login form
             }
             else
             {
                 MessageBox.Show("Invalid Key!!");
             }
         }
-
         private void SaveKeyToFile(string key)
         {
             string path = "key.txt";
@@ -217,16 +217,18 @@ namespace LOGIN
 
         }
 
-        private void Login_Load_1(object sender, EventArgs e)
+        private async void Login_Load_1(object sender, EventArgs e)
         {
-            KeyAuthApp.init();
+            KeyAuthApp.init();  // Initialize the KeyAuth API
 
+            // Read the key from the file
             string value = ReadKeyFromFile();
+
+            // Check if the key is not null or empty
             if (!string.IsNullOrEmpty(value))
             {
-                key.Text = value;
-                // button1_Click(button1, EventArgs.Empty);
-
+                key.Text = value;  // Set the key in the TextBox
+                Loginfunc();  // Attempt to log in
             }
         }
     }
