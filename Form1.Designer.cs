@@ -35,6 +35,7 @@
             button13 = new Button();
             comboBox4 = new ComboBox();
             groupBox4 = new GroupBox();
+            checkBox32 = new CheckBox();
             checkBox30 = new CheckBox();
             checkBox22 = new CheckBox();
             checkBox29 = new CheckBox();
@@ -168,7 +169,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox32 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -274,6 +274,18 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
             // 
+            // checkBox32
+            // 
+            checkBox32.AutoSize = true;
+            checkBox32.Location = new Point(93, 132);
+            checkBox32.Name = "checkBox32";
+            checkBox32.Size = new Size(81, 19);
+            checkBox32.TabIndex = 28;
+            checkBox32.Text = "Anti CHAT";
+            checkBox32.UseVisualStyleBackColor = true;
+            checkBox32.Visible = false;
+            checkBox32.CheckedChanged += checkBox32_CheckedChanged;
+            // 
             // checkBox30
             // 
             checkBox30.AutoSize = true;
@@ -283,6 +295,7 @@
             checkBox30.TabIndex = 27;
             checkBox30.Text = "BestPae";
             checkBox30.UseVisualStyleBackColor = true;
+            checkBox30.Visible = false;
             checkBox30.CheckedChanged += checkBox30_CheckedChanged;
             // 
             // checkBox22
@@ -294,6 +307,7 @@
             checkBox22.TabIndex = 26;
             checkBox22.Text = "Fast Tele";
             checkBox22.UseVisualStyleBackColor = true;
+            checkBox22.Visible = false;
             checkBox22.CheckedChanged += checkBox22_CheckedChanged_1;
             // 
             // checkBox29
@@ -305,6 +319,7 @@
             checkBox29.TabIndex = 25;
             checkBox29.Text = "Unlock Pet";
             checkBox29.UseVisualStyleBackColor = true;
+            checkBox29.Visible = false;
             checkBox29.CheckedChanged += checkBox29_CheckedChanged;
             // 
             // checkBox28
@@ -316,6 +331,7 @@
             checkBox28.TabIndex = 24;
             checkBox28.Text = "No limit";
             checkBox28.UseVisualStyleBackColor = true;
+            checkBox28.Visible = false;
             checkBox28.CheckedChanged += checkBox28_CheckedChanged;
             // 
             // checkBox27
@@ -327,6 +343,7 @@
             checkBox27.TabIndex = 23;
             checkBox27.Text = "Hitself";
             checkBox27.UseVisualStyleBackColor = true;
+            checkBox27.Visible = false;
             // 
             // checkBox24
             // 
@@ -337,6 +354,7 @@
             checkBox24.TabIndex = 21;
             checkBox24.Text = "Cut Skill";
             checkBox24.UseVisualStyleBackColor = true;
+            checkBox24.Visible = false;
             checkBox24.CheckedChanged += checkBox24_CheckedChanged;
             // 
             // textBox8
@@ -347,6 +365,7 @@
             textBox8.Size = new Size(57, 19);
             textBox8.TabIndex = 22;
             textBox8.Text = "-0.4";
+            textBox8.Visible = false;
             // 
             // checkBox19
             // 
@@ -357,6 +376,7 @@
             checkBox19.TabIndex = 7;
             checkBox19.Text = "BestAim";
             checkBox19.UseVisualStyleBackColor = true;
+            checkBox19.Visible = false;
             checkBox19.CheckedChanged += checkBox19_CheckedChanged;
             // 
             // checkBox23
@@ -368,6 +388,7 @@
             checkBox23.TabIndex = 20;
             checkBox23.Text = "Auto Pet";
             checkBox23.UseVisualStyleBackColor = true;
+            checkBox23.Visible = false;
             checkBox23.CheckedChanged += checkBox23_CheckedChanged;
             // 
             // checkBox21
@@ -390,6 +411,7 @@
             checkBox18.TabIndex = 16;
             checkBox18.Text = "Anti CB";
             checkBox18.UseVisualStyleBackColor = true;
+            checkBox18.Visible = false;
             checkBox18.CheckedChanged += checkBox18_CheckedChanged;
             // 
             // checkBox17
@@ -443,6 +465,7 @@
             checkBox11.TabIndex = 11;
             checkBox11.Text = "Hit Tru";
             checkBox11.UseVisualStyleBackColor = true;
+            checkBox11.Visible = false;
             checkBox11.CheckedChanged += checkBox11_CheckedChanged;
             // 
             // checkBox1
@@ -476,6 +499,7 @@
             checkBox5.TabIndex = 10;
             checkBox5.Text = "Hp Freeze";
             checkBox5.UseVisualStyleBackColor = true;
+            checkBox5.Visible = false;
             checkBox5.CheckedChanged += checkBox5_CheckedChanged;
             // 
             // checkBox3
@@ -498,6 +522,7 @@
             checkBox4.TabIndex = 9;
             checkBox4.Text = "Super pot";
             checkBox4.UseVisualStyleBackColor = true;
+            checkBox4.Visible = false;
             checkBox4.CheckedChanged += checkBox4_CheckedChanged;
             // 
             // textBox2
@@ -1242,17 +1267,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox32
-            // 
-            checkBox32.AutoSize = true;
-            checkBox32.Location = new Point(93, 132);
-            checkBox32.Name = "checkBox32";
-            checkBox32.Size = new Size(81, 19);
-            checkBox32.TabIndex = 28;
-            checkBox32.Text = "Anti CHAT";
-            checkBox32.UseVisualStyleBackColor = true;
-            checkBox32.CheckedChanged += checkBox32_CheckedChanged;
             // 
             // Form1
             // 
