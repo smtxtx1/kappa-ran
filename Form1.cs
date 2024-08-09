@@ -17,12 +17,20 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Security.Policy;
+using LOGIN;
+using KeyAuth;
 
 namespace Kappa
 {
 
     public partial class Form1 : Form
     {
+
+        public class ITEM_COLLECT
+        {
+            public string SubItem2 { get; set; } // Represents SubItems[2]
+        }
+
         public class LocationData
         {
             public string Position { get; set; }
@@ -149,7 +157,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,220";
+        public string IDadr = "00FF38A0,240";
 
         public string Level_ADR = "00FF38A0,90";
 
@@ -318,8 +326,20 @@ namespace Kappa
         private IntPtr allocate_adr_Nolimit;
         private IntPtr allocate_adr_Nolimit2;
 
+        public string Expirydaysleft()
+        {
+            Login.KeyAuthApp.check();
+            System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Local);
+            dtDateTime = dtDateTime.AddSeconds(long.Parse(Login.KeyAuthApp.user_data.subscriptions[0].expiry)).ToLocalTime();
+            TimeSpan difference = dtDateTime - DateTime.Now;
+            return Convert.ToString(difference.Days + " Days " + difference.Hours + " Hours Left");
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            label4.Text = Expirydaysleft().ToString();
+            LoadListView12FromJSON(listView12, "ITEM_COLLECT.json");
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var enc1252 = Encoding.GetEncoding(874);
             comboBox3.Items.Add("listView1");
@@ -387,7 +407,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("83 7C 24 1C 00 ?? ?? ?? ?? ?? ?? 0F B7 0D ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("?? 51 83 CE FF E8", false, true);
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
-            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
+            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 ?? ?? ?? 30 51", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("7A 09 D9 47 20 D9 9F C4", false, true);
@@ -1429,11 +1449,11 @@ namespace Kappa
         {
             if (checkBox12.Checked)
             {
-                m.WriteMemory(WH_ADR_RESULT, "bytes", "EB 23 8B 4C 24 34");
+                m.WriteMemory(WH_ADR_RESULT, "bytes", "EB");
             }
             else
             {
-                m.WriteMemory(WH_ADR_RESULT, "bytes", "74 23 8B 4C 24 34");
+                m.WriteMemory(WH_ADR_RESULT, "bytes", "74 23 8B 4C 24 30 51");
             }
         }
 
@@ -1501,6 +1521,23 @@ namespace Kappa
             File.WriteAllText(fileName, contents);
         }
 
+
+        private void SaveListView12ToJSON(ListView listView12, string fileName)
+        {
+            List<ITEM_COLLECT> list = new List<ITEM_COLLECT>();
+            foreach (ListViewItem item in listView12.Items)
+            {
+                ITEM_COLLECT dataItem = new ITEM_COLLECT
+                {
+                    SubItem2 = item.SubItems[2].Text // Save only SubItems[2]
+                };
+                list.Add(dataItem);
+            }
+            string contents = JsonConvert.SerializeObject(list, Formatting.Indented);
+            File.WriteAllText(fileName, contents);
+        }
+
+
         private void LoadListViewFromJSON(ListView listView, string fileName)
         {
             if (!File.Exists(fileName))
@@ -1516,6 +1553,10 @@ namespace Kappa
                 listView.Items.Add(listViewItem);
             }
         }
+
+
+
+
         private void button10_Click(object sender, EventArgs e)
         {
             if (comboBox3.SelectedItem != null)
@@ -2280,12 +2321,23 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    if (item.SubItems[2].Text.Contains("The B") || item.SubItems[2].Text.Contains("()") || item.SubItems[2].Text.Contains("มี") || item.SubItems[2].Text.Contains("Light") || item.SubItems[2].Text.Contains("ผงกระดูก") || item.SubItems[2].Text.Contains("มีการ") || item.SubItems[2].Text.Contains("ธาตุ") || item.SubItems[2].Text.Contains("ขวดเปล่า") || item.SubItems[2].Text.Contains("กล่อง") || item.SubItems[2].Text.Contains("พลอย") || item.SubItems[2].Text.Contains("แปรง") || item.SubItems[2].Text.Contains("น้ำยา") || item.SubItems[2].Text.Contains("เสื้อ") || item.SubItems[2].Text.Contains("กางเกง") || item.SubItems[2].Text.Contains("ถุงมือ") || item.SubItems[2].Text.Contains("รองเท้า") || item.SubItems[2].Text.Contains("Potion"))
+                    bool found = false;
+
+                    foreach (ListViewItem item12 in listView12.Items)
+                    {
+                        if (item.SubItems[2].Text.Contains(item12.SubItems[2].Text))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found)
                     {
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(50);
 
@@ -2303,13 +2355,14 @@ namespace Kappa
                             }
                         }
                     }
+
                     if (item.SubItems[0].Text == "4")
                     {
-                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "4");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(50);
                             while (m.ReadInt(MATION_CHECK) == 1)
@@ -2328,7 +2381,6 @@ namespace Kappa
                                 }
                             }
                         }
-
                     }
                 }
 
@@ -2893,6 +2945,28 @@ namespace Kappa
             }
         }
 
+        private void LoadListView12FromJSON(ListView listView12, string fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                return;
+            }
+
+            List<ITEM_COLLECT> list = JsonConvert.DeserializeObject<List<ITEM_COLLECT>>(File.ReadAllText(fileName));
+
+            listView12.Items.Clear(); // Optional: Clear existing items if needed
+
+            foreach (ITEM_COLLECT dataItem in list)
+            {
+                ListViewItem listViewItem = new ListViewItem(); // Create a new ListViewItem
+                listViewItem.SubItems.Add(""); // Add empty subitems for columns that are not used
+                listViewItem.SubItems.Add(dataItem.SubItem2); // Set SubItems[2]
+                listViewItem.SubItems.Add(""); // Add an empty subitem for SubItems[3] if applicable
+                listView12.Items.Add(listViewItem);
+            }
+        }
+
+
         private void button16_Click(object sender, EventArgs e)
         {
             // Ensure there is a selected item
@@ -2905,6 +2979,8 @@ namespace Kappa
 
                     // Add the new item to listView12
                     listView12.Items.Add(newItem);
+                    SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
+
                 }
             }
             else
@@ -2923,6 +2999,66 @@ namespace Kappa
             {
                 m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "0F 8B D4 00 00 00");
 
+            }
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(textBox7.Text))  // Check if the textbox is not empty
+            {
+                ListViewItem item = new ListViewItem(); // Create a new ListViewItem
+
+                // Ensure that SubItems[2] exists by adding SubItems as necessary
+                item.SubItems.Add(""); // SubItem[1]
+                item.SubItems.Add(textBox7.Text); // SubItem[2] is where you add the text from textBox7
+
+                listView12.Items.Add(item); // Add the item to listView12
+                SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
+            }
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            // Check if any items are selected
+            if (listView12.SelectedItems.Count > 0)
+            {
+                // Loop through the selected items and remove them
+                foreach (ListViewItem item in listView12.SelectedItems)
+                {
+                    listView12.Items.Remove(item);
+                    SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to remove."); // Optional: Notify the user if no item is selected
+            }
+        }
+
+        private void listView12_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listView12_ControlAdded(object sender, ControlEventArgs e)
+        {
+            SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
+        }
+
+
+        private void listView12_AfterLabelEdit_1(object sender, LabelEditEventArgs e)
+        {
+            // Check if the item is being edited (e.Item is not null)
+            if (e.Item >= 0 && e.Label != null)
+            {
+                // Get the edited ListViewItem
+                ListViewItem item = listView12.Items[e.Item];
+
+                // Update the subitem text based on the edited label
+                item.SubItems[2].Text = e.Label;
+
+                // Save the updated listView12 to a JSON file
+                SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
             }
         }
     }
