@@ -385,7 +385,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 D9 44 24 14 E8 ?? ?? ?? 00 D9 5C 24 14 8B 95 E8 25 00 00 D9 44 24 14 8B 42 10 D9 5C 24 3C 8D 8D E8 25 00 00", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("83 7C 24 1C 00 ?? ?? ?? ?? ?? ?? 0F B7 0D ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("02 51 83 CE FF E8 28 1C", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("?? 51 83 CE FF E8", false, true);
             IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);

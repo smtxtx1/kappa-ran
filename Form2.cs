@@ -45,7 +45,7 @@ public class Login : Form
             {
                 control.Enabled = true;
             }
-            MessageBox.Show("Date Expire: " + UnixTimeToDateTime(long.Parse(KeyAuthApp.user_data.subscriptions[0].expiry)).ToString());
+        //    MessageBox.Show("Date Expire: " + UnixTimeToDateTime(long.Parse(KeyAuthApp.user_data.subscriptions[0].expiry)).ToString());
         }
         else
         {
@@ -223,8 +223,8 @@ public class Login : Form
         if (!string.IsNullOrEmpty(value))
         {
             key.Text = value;
+            button1_Click(button1, EventArgs.Empty);
+
         }
-
-
     }
 }
