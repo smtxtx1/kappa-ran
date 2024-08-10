@@ -2858,7 +2858,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 5);
+                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
