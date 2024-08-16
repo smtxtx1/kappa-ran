@@ -406,7 +406,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("83 7C 24 1C 00 ?? ?? ?? ?? ?? ?? 0F B7 0D ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("?? 51 83 CE FF E8", false, true);
-            IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("01 00 00 00 89 9D BC 23", false, true);
+            IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("DC 1D ?? ?? ?? 00 DF E0 F6 C4 41 7B CF", false, true);
+
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 ?? ?? ?? 30 51", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
@@ -806,13 +807,14 @@ namespace Kappa
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
 
-                //    m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
+                m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "D8 1D 00 25 FA 00 DF E0 F6 C4 41 7B CF");
+                m.WriteMemory("00FA2500", "float", "-1");
             }
             else
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
 
-                //      m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
+                m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
             }
         }
 
