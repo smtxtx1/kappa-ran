@@ -1072,7 +1072,7 @@ namespace Kappa
                         }
                     }
 
-                    await Task.Delay(70); // Wait before the next iteration
+                    await Task.Delay(10); // Wait before the next iteration
                 }
                 else if (checkBox8.Checked && mationCheck != 1)
                 {
@@ -1098,7 +1098,7 @@ namespace Kappa
                         m.WriteMemory(forceattack_adr, "int", "5");
                     }
 
-                    await Task.Delay(70); // Wait before the next iteration
+                    await Task.Delay(10); // Wait before the next iteration
                 }
 
                 // Store current position for the next iteration
@@ -1107,7 +1107,7 @@ namespace Kappa
             }
 
             // Perform any cleanup or final actions outside the loop
-            await Task.Delay(70);
+            await Task.Delay(10);
         }
 
         private void button3_Click(object sender, EventArgs e)
