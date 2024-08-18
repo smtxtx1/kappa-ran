@@ -1923,10 +1923,13 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xC28;
-            const int OffsetX = 0xAFC;
-            const int OffsetY = 0xB00;
-            const int OffsetZ = 0xB04;
+
+
+
+            const int OffsetID = 0xC18;
+            const int OffsetX = 0xAEC;
+            const int OffsetY = 0xAF0;
+            const int OffsetZ = 0xAF4;
             const int OffsetHp = 0xA90;
             float limitdistance = 80f;
             for (int i = 0; i < 3; i++)
@@ -1956,7 +1959,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D9903C; i2 <= 0x00D99060; i2 += 4)
+                        for (int i2 = 0x00D36F74; i2 <= 0x00D36F98; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
