@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
-    <AssemblyName>Ran-Noah.SMT</AssemblyName>
+    <AssemblyName>Ran-Libberty.SMT</AssemblyName>
     <Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-NOAH;NOAH2;RAN-LIBERTY</Configurations>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
@@ -18,8 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Memory.dll.x86" Version="1.2.27" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Memory">
+      <HintPath>..\..\Memory.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
