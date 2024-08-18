@@ -586,12 +586,12 @@ namespace Kappa
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8 ,0x25 ,0x00 ,0x60 ,0xFF ,0x00 ,0xD8 ,0x5C ,0x24 ,0x0C ,0xD9 ,0x44 ,0x24 ,0x10,
+                    0xD8 ,0x25 ,0x00 ,0x60 ,0xFF ,0x00 ,0xD8 ,0x5C ,0x24 ,0x0C ,0xDF ,0xE0,// fnstsw ax
                     0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
                 };
 
                 // Calculate the jump offset
-                int jumpOffset = (int)AOB_AOE + 8 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_AOE + 6 - ((int)allocate_adr_aoe + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the assembly code to the allocated address
@@ -601,11 +601,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x0F, 0x1F ,0x00
+                    0x90
                 };
 
                 // Calculate the jump offset
-                int jmpOffset2 = (int)allocate_adr_aoe - ((int)AOB_AOE + jmpCode.Length - 3);
+                int jmpOffset2 = (int)allocate_adr_aoe - ((int)AOB_AOE + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);
 
                 // Write the second jmp instruction to the specified address
