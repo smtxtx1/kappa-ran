@@ -831,7 +831,7 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00C87F04; j <= 0x00C887F4; j += 0xB0)
+            for (int j = 0x00BF068C; j <= 0x00BF0F7C; j += 0xB0)
             {
                 if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
@@ -853,7 +853,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00C86F74; k <= 0x00C86F98; k += 0x4)
+            for (int k = 0x00BEFA8C; k <= 0x00BEFAB0; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
