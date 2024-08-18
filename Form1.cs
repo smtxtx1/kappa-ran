@@ -416,7 +416,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("DC 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2A 55 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
-            var AoB_Scan_Monview = await m.AoBScan("8B 81 44 0C 00 00", false, true);
+            var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 95 D8 03 00 00 83 C1 FE", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
@@ -561,7 +561,7 @@ namespace Kappa
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 14 D9 44 24 14 E8";
         string originalcode_ALE = "D9 5C 24 10 D9 44 24 10 D9 44 24 18";
-        string originalcode_Monview = "8B 81 44 0C 00 00 C3";
+        string originalcode_Monview = "8B 81 18 0C 00 00 C3";
         string originalcode_Path = "83 7C 24 1C 00 0F 84 74 FF FF FF";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -1137,11 +1137,11 @@ namespace Kappa
             if (checkBox10.Checked)
             {
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-
+                
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x95 ,0xD8 ,0x03 ,0x00 ,0x00,
+                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x81 ,0x18 ,0x0C ,0x00 ,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2075,10 +2075,10 @@ namespace Kappa
 
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
-                // Assembly code for fstp dword ptr [esp+38]
+                // Assembly code for fstp dword ptr [esp+38] 8B 81 18 0C 00 00 C3 CC
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x0D ,0x00 ,0x50 ,0xFF ,0x00 ,0x8B ,0x81 ,0x44 ,0x0C ,0x00 ,0x00,
+                    0x89 ,0x0D ,0x00 ,0x50 ,0xFF ,0x00 ,0x8B ,0x81 ,0x18 ,0x0C ,0x00 ,0x00,
                     0xE9 ,0x00 ,0x00 ,0x00 ,0x00
                 };
 
