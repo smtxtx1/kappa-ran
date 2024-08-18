@@ -560,7 +560,7 @@ namespace Kappa
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 14 D9 44 24 14 E8";
-        string originalcode_ALE = "D9 5C 24 10 D9 44 24 10 D9 44 24 18";
+        string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8 01";
         string originalcode_Monview = "8B 81 18 0C 00 00 C3";
         string originalcode_Path = "83 7C 24 1C 00 0F 84 74 FF FF FF";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
@@ -586,7 +586,7 @@ namespace Kappa
                 // Assembly code for injecting
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8 ,0x25 ,0x00 ,0x60 ,0xFF ,0x00 ,0xD9 ,0x5C ,0x24 ,0x10 ,0xD9 ,0x44 ,0x24 ,0x10,
+                    0xD8 ,0x25 ,0x00 ,0x60 ,0xFF ,0x00 ,0xD8 ,0x5C ,0x24 ,0x0C ,0xD9 ,0x44 ,0x24 ,0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00 // jmp return (to be replaced later)
                 };
 
