@@ -273,6 +273,7 @@ namespace Kappa
 
         public string HpFreeze_2 = "00FF38A0,132";
 
+
         public string Antislide = "004324D8";
 
         public string Wallhack = "005E2FC1";
