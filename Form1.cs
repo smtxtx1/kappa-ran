@@ -247,16 +247,16 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2838";
+        public string forceattack_adr = "00FF38A0,2410";
 
-        public string MATION_CHECK = "00FF38A0,2700";
+        public string MATION_CHECK = "00FF38A0,22E0";
 
-        public string actioncheck = "00FF38A0,284C";
+        public string actioncheck = "00FF38A0,2424";
 
-        public string TARGET_SKILL = "00FF38A0,2850";
+        public string TARGET_SKILL = "00FF38A0,2428";
 
 
-        public string TARGET_RING = "00FF38A0,3874";
+        public string TARGET_RING = "00FF38A0,31C4";
 
 
         public string PATH2_ADR_RESULT;
