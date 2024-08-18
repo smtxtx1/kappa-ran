@@ -157,7 +157,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,220";
+        public string IDadr = "00FF38A0,240";
 
         public string Level_ADR = "00FF38A0,90";
 
