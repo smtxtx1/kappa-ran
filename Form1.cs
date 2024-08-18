@@ -1923,12 +1923,12 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xC44;
-            const int OffsetX = 0xC30;
-            const int OffsetY = 0xC34;
-            const int OffsetZ = 0xC38;
+            const int OffsetID = 0xC28;
+            const int OffsetX = 0xAFC;
+            const int OffsetY = 0xB00;
+            const int OffsetZ = 0xB04;
             const int OffsetHp = 0xA90;
-            float limitdistance = 70f;
+            float limitdistance = 80f;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
@@ -1956,8 +1956,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                        for (int i2 = 0x00C86EFC; i2 <= 0x00C86F20; i2 += 4)
+                        for (int i2 = 0x00D9903C; i2 <= 0x00D99060; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
@@ -1968,18 +1967,13 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                await Task.Delay(500);
-                                m.WriteMemory(forceattack_adr, "int", "9");
-
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                            distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                             if (m.ReadInt(TARGET_RING) == -1)
                             {
                                 break;
                             }
-                            distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 await Task.Delay(500);
