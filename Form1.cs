@@ -184,21 +184,21 @@ namespace Kappa
         /// </summary>
 
 
-        public string CurrentX = "00FF38A0,21F0";
+        public string CurrentX = "00FF38A0,2210";
 
-        public string CurrentY = "00FF38A0,21F4";
+        public string CurrentY = "00FF38A0,2214";
 
-        public string CurrentZ = "00FF38A0,21F8";
+        public string CurrentZ = "00FF38A0,2218";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,22F0";
+        public string gotoX = "00FF38A0,2254";
 
-        public string gotoY = "00FF38A0,22F4";
+        public string gotoY = "00FF38A0,2258";
 
-        public string gotoZ = "00FF38A0,22F8";
+        public string gotoZ = "00FF38A0,225C";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -966,14 +966,16 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7 ,0x44 ,0x24 ,0x0C ,0x00 ,0x00 ,0xDE ,0xC2 ,
-                    0xC7 ,0x44 ,0x24 ,0x10 ,0x00 ,0x00 ,0xDE ,0xC2 ,
-                    0xC7 ,0x44 ,0x24 ,0x14 ,0x00 ,0x00 ,0xDE ,0xC2 ,0x83 ,0x7C ,0x24 ,0x1C ,0x00,
-                    0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
+                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
+                0x39, 0x5C, 0x24, 0x28,
+                0x90, 0x90, // je 0x0000001D (to be replaced later)
+                0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset2 = (int)AOB_PATH + 0x05 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
@@ -983,12 +985,12 @@ namespace Kappa
                 // Assembly code for jmp to allocate_adr with nop 2
                 jmpCodemy = new byte[]
                 {
-                    0xE9, 0x00, 0x00, 0x00, 0x00
-
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Path - ((int)AOB_PATH + jmpCodemy.Length - 0);
+                int jmpOffset2 = (int)allocate_adr_Path - ((int)AOB_PATH + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
