@@ -422,7 +422,7 @@ namespace Kappa
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 C0 06 00 00 6A 45 56", false, true);
-            var AoB_Scan_ANTICHAT = await m.AoBScan("0F ?? D4 00 00 00 D9 44 24 08", false, true);
+            var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
@@ -2992,11 +2992,11 @@ namespace Kappa
         {
             if (checkBox32.Checked)
             {
-                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "E9 D5 00 00 00 90");
+                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "C7 86 94 01 00 00 00 00 80 BF");
             }
             else
             {
-                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "0F 8B D4 00 00 00");
+                m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "C7 86 94 01 00 00 00 00 00 41");
 
             }
         }
