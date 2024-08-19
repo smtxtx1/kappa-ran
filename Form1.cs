@@ -559,11 +559,11 @@ namespace Kappa
 
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
-        string originalcode_LR = "D9 5C 24 14 D9 44 24 14 E8";
+        string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8 01";
         string originalcode_Monview = "8B 81 18 0C 00 00 C3";
         string originalcode_Path = "83 7C 24 1C 00 0F 84 74 FF FF FF";
-        string originalcode_BA = "83 7F 44 01 0F 85 64 01 00 00";
+        string originalcode_BA = "83 7F 44 01 0F 85 66 01 00 00";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (textBox2.Text != null && checkBox2.Checked)
@@ -966,16 +966,14 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
-                0x39, 0x5C, 0x24, 0x28,
-                0x90, 0x90, // je 0x0000001D (to be replaced later)
+                0xC7 ,0x44 ,0x24 ,0x1C ,0x00 ,0x00 ,0x30 ,0xC1 
+                ,0xC7 ,0x44 ,0x24 ,0x20 ,0x00 ,0x00 ,0x30 ,0xC1 
+                ,0xC7 ,0x44 ,0x24 ,0x24 ,0x00 ,0x00 ,0x30 ,0xC1 ,0x39 ,0x5C ,0x24 ,0x28 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
