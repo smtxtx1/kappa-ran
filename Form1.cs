@@ -417,7 +417,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2F 6A 00 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
-            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 95 D8 03 00 00 83 C1 FE", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
@@ -2159,7 +2159,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x95 ,0xD8 ,0x03 ,0x00 ,0x00,
+                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x96 ,0xB8 ,0x03 ,0x00 ,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2198,9 +2198,9 @@ namespace Kappa
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FA7800,3D8");
-                int ItemID = m.ReadInt("00FA7800,3DC");
-                byte[] array = m.ReadBytes("00FA7800,3F1", num);
+                int ItemType = m.ReadInt("00FA7800,3B8");
+                int ItemID = m.ReadInt("00FA7800,3BC");
+                byte[] array = m.ReadBytes("00FA7800,3D1", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
                 string stringFromBytes;
                 string expectedString;
@@ -2605,7 +2605,7 @@ namespace Kappa
             button6.Enabled = true;
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
-            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 95 D8 03 00 00 83 C1 FE");
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 B8 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.CancelAsync();
