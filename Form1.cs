@@ -476,7 +476,7 @@ namespace Kappa
             DRONE_ADR_RESULT = (AOB_DRONE - 0x0B).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             HT2_ADR_RESULT = (AOB_HT - 0x113).ToString("x");
-        //    HT3_ADR_RESULT = (AOB_HT + 0x11C).ToString("x");
+            //    HT3_ADR_RESULT = (AOB_HT + 0x11C).ToString("x");
 
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT2 = AOB_Superpot2.ToString("x");
@@ -497,8 +497,8 @@ namespace Kappa
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-      ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
-         //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
+            ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
+            //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -810,14 +810,14 @@ namespace Kappa
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
 
-               // m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "D8 1D 00 25 FA 00 DF E0 F6 C4 41 7B CF");
+                // m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "D8 1D 00 25 FA 00 DF E0 F6 C4 41 7B CF");
                 m.WriteMemory("00FA2500", "float", "-1");
             }
             else
             {
                 m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
 
-              //  m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
+                //  m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
             }
         }
 
@@ -969,8 +969,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7 ,0x44 ,0x24 ,0x1C ,0x00 ,0x00 ,0x30 ,0xC1 
-                ,0xC7 ,0x44 ,0x24 ,0x20 ,0x00 ,0x00 ,0x30 ,0xC1 
+                0xC7 ,0x44 ,0x24 ,0x1C ,0x00 ,0x00 ,0x30 ,0xC1
+                ,0xC7 ,0x44 ,0x24 ,0x20 ,0x00 ,0x00 ,0x30 ,0xC1
                 ,0xC7 ,0x44 ,0x24 ,0x24 ,0x00 ,0x00 ,0x30 ,0xC1 ,0x39 ,0x5C ,0x24 ,0x28 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
@@ -1140,7 +1140,7 @@ namespace Kappa
             if (checkBox10.Checked)
             {
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-                
+
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
@@ -1438,14 +1438,14 @@ namespace Kappa
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "90 90 90 90");
                 m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 FA 02 00 00 90");
-             //   m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
+                //   m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
                 //0F 84 ED 02 00 00
             }
             else
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "D9 44 24 44");
                 m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 F9 02 00 00");
-         //       m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 ED 02 00 00");
+                //       m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 ED 02 00 00");
 
             }
         }
@@ -2466,7 +2466,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01, 
+                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
                 0x0F, 0x85, 0x66, 0x01, 0x00, 0x00, // je 0x0000001D (to be replaced later) 83 7F 44 01 0F 85 6? 01 00 00
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
