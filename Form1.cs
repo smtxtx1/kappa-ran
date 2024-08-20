@@ -421,7 +421,7 @@ namespace Kappa
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 9E 3C 22 00 00 74 4F", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
-            var AoB_Scan_ANTICB = await m.AoBScan("0F 84 C0 06 00 00 6A 45 56", false, true);
+            var AoB_Scan_ANTICB = await m.AoBScan("0F 84 ?? ?? 00 00 6A 45", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
@@ -2159,7 +2159,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x2D ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x96 ,0xB8 ,0x03 ,0x00 ,0x00,
+                    0x89 ,0x35 ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x96 ,0xB8 ,0x03 ,0x00 ,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2226,7 +2226,7 @@ namespace Kappa
 
                 }
 
-                if (listView11.Items.Count > 8)
+                if (listView11.Items.Count > 15)
                 {
                     listView11.Items.Clear();
                 }
@@ -2422,11 +2422,11 @@ namespace Kappa
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "E9 C1 06 00 00 90");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "E9 01 07 00 00 90");
             }
             else
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "0F 84 C0 06 00 00");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "0F 84 00 07 00 00");
             }
         }
 
