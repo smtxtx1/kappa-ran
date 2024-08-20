@@ -229,13 +229,13 @@ namespace Kappa
         /// Autoskill START ///////////////
         /// </summary>
         /// 
-        public string Skilluse1_adr = "00FF38A0,27A4";
+        public string Skilluse1_adr = "00FF38A0,239C";
 
-        public string Skilluse2_adr = "00FF38A0,27A6";
+        public string Skilluse2_adr = "00FF38A0,239E";
 
-        public string prevskill1_adr = "00FF38A0,27A8";
+        public string prevskill1_adr = "00FF38A0,23A0";
 
-        public string prevskill2_adr = "00FF38A0,27AA";
+        public string prevskill2_adr = "00FF38A0,23A2";
 
         //public string prevskill1_adr = "00FF38A0,237C";
 
@@ -247,16 +247,16 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2410";
+        public string forceattack_adr = "00FF38A0,2430";
 
-        public string MATION_CHECK = "00FF38A0,22E0";
+        public string MATION_CHECK = "00FF38A0,2300";
 
-        public string actioncheck = "00FF38A0,2424";
+        public string actioncheck = "00FF38A0,2444";
 
-        public string TARGET_SKILL = "00FF38A0,2428";
+        public string TARGET_SKILL = "00FF38A0,2448";
 
 
-        public string TARGET_RING = "00FF38A0,31C4";
+        public string TARGET_RING = "00FF38A0,31EC";
 
 
         public string PATH2_ADR_RESULT;
@@ -414,7 +414,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("?? 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2A 55 E8 ?? ?? ?? 00", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2F 6A 00 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 95 D8 03 00 00 83 C1 FE", false, true);
@@ -460,11 +460,11 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x8B).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xC59).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xC62).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xC8B).ToString("x");
-            RUN6_ADR_RESULT = (AOB_RUN + 0xAEC).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x4A).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0x8D).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xB02).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xB0B).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN + 0xB79).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x28).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
@@ -485,7 +485,7 @@ namespace Kappa
             LR_ADR_RESULT = AOB_LR.ToString("x");
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
-            PATH2_ADR_RESULT = (AOB_PATH + 0x05).ToString("x");
+            PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             string PATH3_ADR_RESULT = (AOB_PATH + 0x2A).ToString("x");
             LOCALPLAYER_ALLOC();
             int num = 20;
@@ -514,10 +514,12 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
+
+            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb"); //Bypass Run1
 
 
         }
@@ -525,10 +527,11 @@ namespace Kappa
         public void RunDeActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 AC 00 00 00");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74 24");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 84 7F 00 00 00");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
 
         }
 
@@ -562,7 +565,7 @@ namespace Kappa
         string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8 01";
         string originalcode_Monview = "8B 81 18 0C 00 00 C3";
-        string originalcode_Path = "83 7C 24 1C 00 0F 84 74 FF FF FF";
+        string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 66 01 00 00";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
@@ -1959,7 +1962,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        for (int i2 = 0x00D36F74; i2 <= 0x00D36F98; i2 += 4)
+                        for (int i2 = 0x00BEFA14; i2 <= 0x00BEFA38; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
