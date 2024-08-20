@@ -419,7 +419,7 @@ namespace Kappa
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
-            var AoB_Scan_AntiSlide = await m.AoBScan("80 BE 24 26 00 00 00 74 ?? 8B 86 ?? ?? 00 00", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("38 9E 3C 22 00 00 74 4F", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 C0 06 00 00 6A 45 56", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
@@ -466,7 +466,7 @@ namespace Kappa
             RUN5_ADR_RESULT = (AOB_RUN + 0xB0B).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xB79).ToString("x");
 
-            ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x28).ToString("x");
+            ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
@@ -2466,13 +2466,13 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01, 
+                0x0F, 0x85, 0x66, 0x01, 0x00, 0x00, // je 0x0000001D (to be replaced later) 83 7F 44 01 0F 85 6? 01 00 00
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
@@ -2904,12 +2904,12 @@ namespace Kappa
                 byte[] assemblyCode = new byte[]
                 {
                 0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
+                0x0F, 0x85, 0x66, 0x01, 0x00, 0x00, // je 0x0000001D (to be replaced later) 83 7F 44 01 0F 85 6? 01 00 00
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
