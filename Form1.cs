@@ -519,7 +519,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-
+            
 
         }
 
@@ -2292,6 +2292,7 @@ namespace Kappa
         {
             try
             {
+                
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 if (allocate_adr_BUFF == IntPtr.Zero)
@@ -2329,7 +2330,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_BUFF - ((int)AOB_GETSKILL_LIST + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_BUFF - ((int)AOB_GETBUFF + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the allocated address
@@ -2788,7 +2789,7 @@ namespace Kappa
         {
             button6.Enabled = false;
             button7.Enabled = true;
-
+            
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
