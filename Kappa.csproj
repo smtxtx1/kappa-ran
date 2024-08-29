@@ -7,10 +7,18 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <Platforms>AnyCPU;x86</Platforms>
+    <AssemblyName>$(MSBuildProjectName)321</AssemblyName>
+    <Configurations>Debug;Release;52HzKappa;KAPPA-UPD</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Memory.dll.x64" Version="1.2.24" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Memory">
+      <HintPath>bin\52HzKappa\net6.0-windows\Memory.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
