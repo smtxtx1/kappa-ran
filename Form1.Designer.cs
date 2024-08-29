@@ -174,6 +174,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            button19 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -205,6 +206,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(button19);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(label3);
             tabPage1.Controls.Add(groupBox9);
@@ -1324,6 +1326,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // button19
+            // 
+            button19.Location = new Point(290, 273);
+            button19.Name = "button19";
+            button19.Size = new Size(75, 23);
+            button19.TabIndex = 18;
+            button19.Text = "button19";
+            button19.UseVisualStyleBackColor = true;
+            button19.Click += button19_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1514,5 +1526,6 @@
         private Button button18;
         private Label label4;
         private Label label3;
+        private Button button19;
     }
 }

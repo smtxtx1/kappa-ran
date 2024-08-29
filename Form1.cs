@@ -425,7 +425,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2F 6A 00 E8 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
-            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 9E 3C 22 00 00 74 4F", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
@@ -463,6 +463,8 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
+            GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
@@ -504,7 +506,7 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
-           
+
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             m.WriteMemory("00ff95f0", "float", "4800");
@@ -519,7 +521,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-            
+
 
         }
 
@@ -2002,19 +2004,20 @@ namespace Kappa
                                 i3 = 0x964;
                             }
                             string OffsetSKill = i3.ToString("x");
-                        //    
-                            
+                            //    
+
                             int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
                             int num_test = i3 + 0x02;
                             int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
-                            Console.WriteLine("Offset2:" + num_test);
+                           // Console.WriteLine("Offset2:" + num_test);
                             if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                             {
-                                
+
                                 m.WriteMemory(actioncheck, "int", "2");
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
+                                Console.WriteLine("Attacking");
 
                             }
                             await Task.Delay(10);
@@ -2256,7 +2259,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x35 ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x96 ,0xB8 ,0x03 ,0x00 ,0x00,
+                    0x89 ,0x35 ,0x00 ,0x78 ,0xFA ,0x00 ,0x8B ,0x96 ,0x78 ,0x03 ,0x00 ,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2306,8 +2309,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA, 
-                0x0F, 0x84, 0xF3, 0x35, 0x84, 0xF5, 
+                0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA,
+                0x0F, 0x84, 0xF3, 0x35, 0x84, 0xF5,
                 0xE9, 0xA4, 0x35, 0x84, 0xF5
 
                 };
@@ -2366,7 +2369,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_GETSKILL_LIST + 6 - ((int)allocate_adr_SKILL_LIST + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_GETSKILL_LIST + 7 - ((int)allocate_adr_SKILL_LIST + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -2376,11 +2379,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90
+                    0x66, 0x90 
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_SKILL_LIST - ((int)AOB_GETSKILL_LIST + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_SKILL_LIST - ((int)AOB_GETSKILL_LIST + jmpCode.Length - 2);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the allocated address
@@ -2399,9 +2402,9 @@ namespace Kappa
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FA7800,3B8");
-                int ItemID = m.ReadInt("00FA7800,3BC");
-                byte[] array = m.ReadBytes("00FA7800,3D1", num);
+                int ItemType = m.ReadInt("00FA7800,378");
+                int ItemID = m.ReadInt("00FA7800,37C");
+                byte[] array = m.ReadBytes("00FA7800,391", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
                 string stringFromBytes;
                 string expectedString;
@@ -2411,7 +2414,7 @@ namespace Kappa
                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                        saveID = m.ReadString(IDadr);
+                       // saveID = m.ReadString(IDadr);
 
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
@@ -2420,7 +2423,7 @@ namespace Kappa
 
                             listView11.Items.Add(listViewItem);
                             string contents = JsonConvert.SerializeObject(row);
-                            File.AppendAllText($"item_logs_{saveID}.json", contents);
+                          //  File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
@@ -2519,7 +2522,7 @@ namespace Kappa
 
         private async Task ItemGet()
         {
-            string names = m.ReadString(saveID);
+            string names = m.ReadString(IDadr);
             try
             {
                 foreach (ListViewItem item in listView11.Items)
@@ -2546,6 +2549,8 @@ namespace Kappa
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
+                                m.WriteMemory(forceattack_adr, "int", "4");
+
                                 await Task.Delay(10);
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
@@ -2789,7 +2794,7 @@ namespace Kappa
         {
             button6.Enabled = false;
             button7.Enabled = true;
-            
+
 
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
@@ -2806,7 +2811,7 @@ namespace Kappa
             button6.Enabled = true;
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
-            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 B8 03 00 00 83 C1 FE");
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.CancelAsync();
@@ -2817,8 +2822,8 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-            //    await AddItemToListView();
-            //    await ItemGet();
+                    await AddItemToListView();
+                    await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
@@ -3263,6 +3268,12 @@ namespace Kappa
                 // Save the updated listView12 to a JSON file
                 SaveListView12ToJSON(listView12, "ITEM_COLLECT.json");
             }
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            f_GET_Buff();
+            f_GET_SKILL_LIST();
         }
     }
 
