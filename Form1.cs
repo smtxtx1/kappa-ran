@@ -854,18 +854,31 @@ namespace Kappa
                 list.Clear();
             }
 
-            for (int j = 0x00BF068C; j <= 0x00BF0F7C; j += 0xB0)
+            //string OffsetSKill = i3.ToString("x");
+            ////    
+
+            //int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
+            //int num_test = i3 + 0x02;
+            //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
+            //Console.WriteLine("Offset2:" + num_test);
+
+            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
             {
-                if (m.Read2Byte(j.ToString("x")) == 65535)
+                if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
                     continue;
                 }
-
-                int num4 = j + 2;
-                int SkillRemain = j + 8;
-                int item = m.Read2Byte(j.ToString("x"));
-                int item2 = m.Read2Byte(num4.ToString("x"));
-                float item3 = m.ReadFloat(SkillRemain.ToString("x"));
+                if (j == 0x0)
+                {
+                    j = 0x8F0;
+                }
+                string OffsetBuff = j.ToString("x");
+                int num4 = j + 0x02;
+                int SkillRemain = j + 0x8;
+                int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
+                int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
+                float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
+                Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
                 if (item3 <= 30f && !listREMAIN.Contains(item2))
                 {
                     listREMAIN.Add(item2);
@@ -876,23 +889,24 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00BEFA8C; k <= 0x00BEFAB0; k += 0x4)
+            for (int k = 0x9DC; k <= 0xA00; k += 0x04)
             {
-                if (m.Read2Byte(k.ToString("x")) == 65535)
+                if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
                     continue;
                 }
 
-                int num5 = k + 2;
-                int num6 = m.Read2Byte(k.ToString("x"));
-                int num7 = m.Read2Byte(num5.ToString("x"));
+                int num5 = k + 0x02;
+                int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
+                Console.WriteLine($"F4 Skills: {num6},{num7}");
 
                 if (listREMAIN.Contains(num7))
                 {
                     m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                    m.Read2Byte(k.ToString("x"));
-                    m.Read2Byte(num5.ToString("x"));
+                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
@@ -1946,9 +1960,6 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-
-
-
             const int OffsetID = 0xC18;
             const int OffsetX = 0xAEC;
             const int OffsetY = 0xAF0;
@@ -1978,6 +1989,7 @@ namespace Kappa
                 float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
+                    Console.WriteLine("Distance is: " + distance_mon);
                     m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
@@ -1985,15 +1997,21 @@ namespace Kappa
 
                         for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
                         {
+                            if (i3 == 0x988)
+                            {
+                                i3 = 0x964;
+                            }
                             string OffsetSKill = i3.ToString("x");
-                            Console.WriteLine("Offset:" + OffsetSKill);
+                        //    
                             
                             int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
-                            int num_test = i3 + 2;
-                            int idskilltype_test2 = m.ReadByte(num_test.ToString("x"));
+                            int num_test = i3 + 0x02;
+                            int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
+                            Console.WriteLine("Offset2:" + num_test);
                             if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                             {
-                                Console.WriteLine($"TYPE 1: {idskilltype_test1}\nTYPE 2: {idskilltype_test2}" );
+                                
+                                m.WriteMemory(actioncheck, "int", "2");
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
@@ -2794,8 +2812,8 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-                await AddItemToListView();
-                await ItemGet();
+            //    await AddItemToListView();
+            //    await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
