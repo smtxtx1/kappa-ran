@@ -431,7 +431,7 @@ namespace Kappa
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 ?? ?? 00 00 6A 45", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
-            var AoB_Scan_GETBUFF = await m.AoBScan("66 81 7D ?? FF FF 75", false, true);
+            var AoB_Scan_GETBUFF = await m.AoBScan("8B 16 3B D5 74 4A", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
 
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
@@ -2305,16 +2305,20 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x66, 0x81, 0x7D, 0xF0, 0xFF, 0xFF, 0x89, 0x2D, 0x00, 0x10, 0xFF, 0x00,
-                    0xE9,
-                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA, 
+                0x0F, 0x84, 0xF3, 0x35, 0x84, 0xF5, 
+                0xE9, 0xA4, 0x35, 0x84, 0xF5
+
                 };
 
-                // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_GETBUFF + 6 - ((int)allocate_adr_BUFF + assemblyCode.Length + 0);
-                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
-                // Write the initial assembly code to the allocated address
+                int jumpOffset1 = (int)AOB_GETBUFF + 0x50 - ((int)allocate_adr_BUFF + assemblyCode.Length - 5);
+                int jumpOffset2 = (int)AOB_GETBUFF + 0x06 - ((int)allocate_adr_BUFF + assemblyCode.Length + 0);
+
+                // Replace the jump offsets in the assembly code
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
                 m.WriteMemory(allocate_adr_BUFF.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
                 // Assembly code for jmp to allocate_   adr with nop 2
