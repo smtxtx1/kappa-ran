@@ -63,7 +63,7 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Ran Future";
+        public string ServerName = "Ran Fortune";
 
         public string FastZoom = "03376E4C";
 
@@ -163,7 +163,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,240";
+        public string IDadr = "00FF38A0,248";
 
         public string Level_ADR = "00FF38A0,90";
 
