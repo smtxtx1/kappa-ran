@@ -63,7 +63,7 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Ran-Next";
+        public string ServerName = "Ran Future";
 
         public string FastZoom = "03376E4C";
 
@@ -400,7 +400,7 @@ namespace Kappa
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             //74 82 8D BE 24 24 00 00 8B C7
-            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 44 24 00 00", false, true);
+            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8 01", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
@@ -1945,15 +1945,15 @@ namespace Kappa
                 int offsetHpmon = OffsetHp + (i * 0xD08);
 
                 // Read monster and player positions
-                int id_mon = m.ReadInt($"00FF5000,{offsetIDmon:X}");
-                float x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
-                float Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
-                float z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
-                int hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                int id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
+                float x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                float Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                float z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+                int hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                 float myX = m.ReadFloat(CurrentX);
                 float myY = m.ReadFloat(CurrentY);
                 float myZ = m.ReadFloat(CurrentZ);
-                int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                int check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
 
                 float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
@@ -1975,7 +1975,7 @@ namespace Kappa
                                 m.WriteMemory(forceattack_adr, "int", "5");
                             }
                             await Task.Delay(10);
-                            check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             if (m.ReadInt(TARGET_RING) == -1)
                             {
                                 break;
@@ -1983,11 +1983,11 @@ namespace Kappa
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 await Task.Delay(500);
-                                check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
-                                x_mon = m.ReadFloat($"00FF5000,{offsetXmon:X}");
-                                Ymon = m.ReadFloat($"00FF5000,{offsetYmon:X}");
-                                z_mon = m.ReadFloat($"00FF5000,{offsetZmon:X}");
-                                hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                                check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                                Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                                z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+                                hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 myX = m.ReadFloat(CurrentX);
                                 myY = m.ReadFloat(CurrentY);
                                 myZ = m.ReadFloat(CurrentZ);
@@ -1998,7 +1998,7 @@ namespace Kappa
 
                         }
                         distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
-                        check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
+                        check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                         await Task.Delay(5);
                         if (check_hp_mon < 5 || distance_mon > 80f)
                         {
