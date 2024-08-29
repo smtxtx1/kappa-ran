@@ -1922,10 +1922,10 @@ namespace Kappa
                     float myZ = m.ReadFloat(CurrentZ);
                     int check_hp_mon = m.ReadInt($"00FF5000,{offsetHpmon:X}");
 
-                    float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                    float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                     if (hp_mon > 5 && distance_mon <= 100f)
                     {
-                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                        distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         if (!check_id_mon.Contains(id_mon))
                         {
                             check_id_mon.Add(id_mon);
@@ -1974,7 +1974,7 @@ namespace Kappa
                 float myZ = m.ReadFloat(CurrentZ);
                 int check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
 
-                float distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
                     m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
@@ -1999,6 +1999,8 @@ namespace Kappa
                             {
                                 break;
                             }
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 await Task.Delay(500);
@@ -2016,7 +2018,7 @@ namespace Kappa
                             }
 
                         }
-                        distance_mon = (float)Math.Round(Math.Sqrt(Math.Pow(x_mon - myX, 2) + Math.Pow(z_mon - myZ, 2)), 2);
+                        distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                         await Task.Delay(5);
                         if (check_hp_mon < 5 || distance_mon > 80f)
