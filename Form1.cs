@@ -423,7 +423,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("?? 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2F 6A 00 E8 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("8B 86 30 01 00 00 33 DB 3B C3", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
@@ -2009,7 +2009,7 @@ namespace Kappa
                             int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
                             int num_test = i3 + 0x02;
                             int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
-                           // Console.WriteLine("Offset2:" + num_test);
+                            // Console.WriteLine("Offset2:" + num_test);
                             if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                             {
 
@@ -2295,7 +2295,7 @@ namespace Kappa
         {
             try
             {
-                
+
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 if (allocate_adr_BUFF == IntPtr.Zero)
@@ -2379,7 +2379,7 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x66, 0x90 
+                    0x66, 0x90
                 };
 
                 // Calculate the jump offset for the second jmp instruction
@@ -2414,7 +2414,7 @@ namespace Kappa
                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                       // saveID = m.ReadString(IDadr);
+                        // saveID = m.ReadString(IDadr);
 
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
@@ -2423,7 +2423,7 @@ namespace Kappa
 
                             listView11.Items.Add(listViewItem);
                             string contents = JsonConvert.SerializeObject(row);
-                          //  File.AppendAllText($"item_logs_{saveID}.json", contents);
+                            //  File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
@@ -2822,8 +2822,8 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-                    await AddItemToListView();
-                    await ItemGet();
+                await AddItemToListView();
+                await ItemGet();
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
@@ -3047,12 +3047,12 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xB8 ,0x00 ,0x00 ,0x00 ,0x00 ,0x89 ,0x86 ,0x30 ,0x01 ,0x00 ,0x00,
+                    0xC7, 0x81, 0x80, 0x01, 0x00, 0x00, 0x00, 0x00, 0x80, 0xBF,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_NOLIMIT + 0x06 - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0x0A - ((int)allocate_adr_Nolimit + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
