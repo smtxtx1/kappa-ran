@@ -84,6 +84,9 @@ namespace Kappa
         public long AOB_WH;
         public long AOB_HT;
         public long AOB_HT2;
+        public long AOB_GETBUFF;
+        public long AOB_GETSKILL_LIST;
+
 
         public long AOB_DRONE;
         public long AOB_ASPD;
@@ -98,6 +101,9 @@ namespace Kappa
         public long AOB_ANTICB;
         public long AOB_ANTICHAT;
 
+
+        public string GETBUFF_ADR_RESULT;
+        public string GETSKILL_LIST_ADR_RESULT;
         public string ANTICHAT_ADR_RESULT;
         public string ANTICB_ADR_RESULT;
         public string UNLOCK_ADR_RESULT;
@@ -184,21 +190,21 @@ namespace Kappa
         /// </summary>
 
 
-        public string CurrentX = "00FF38A0,2210";
+        public string CurrentX = "00FF38A0,2230";
 
-        public string CurrentY = "00FF38A0,2214";
+        public string CurrentY = "00FF38A0,2234";
 
-        public string CurrentZ = "00FF38A0,2218";
+        public string CurrentZ = "00FF38A0,2238";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,2254";
+        public string gotoX = "00FF38A0,2274";
 
-        public string gotoY = "00FF38A0,2258";
+        public string gotoY = "00FF38A0,2278";
 
-        public string gotoZ = "00FF38A0,225C";
+        public string gotoZ = "00FF38A0,227C";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -229,13 +235,13 @@ namespace Kappa
         /// Autoskill START ///////////////
         /// </summary>
         /// 
-        public string Skilluse1_adr = "00FF38A0,239C";
+        public string Skilluse1_adr = "00FF38A0,23BC";
 
-        public string Skilluse2_adr = "00FF38A0,239E";
+        public string Skilluse2_adr = "00FF38A0,23BE";
 
-        public string prevskill1_adr = "00FF38A0,23A0";
+        public string prevskill1_adr = "00FF38A0,23C0";
 
-        public string prevskill2_adr = "00FF38A0,23A2";
+        public string prevskill2_adr = "00FF38A0,23C2";
 
         //public string prevskill1_adr = "00FF38A0,237C";
 
@@ -247,16 +253,16 @@ namespace Kappa
 
 
 
-        public string forceattack_adr = "00FF38A0,2430";
+        public string forceattack_adr = "00FF38A0,2468";
 
-        public string MATION_CHECK = "00FF38A0,2300";
+        public string MATION_CHECK = "00FF38A0,2320";
 
-        public string actioncheck = "00FF38A0,2444";
+        public string actioncheck = "00FF38A0,247C";
 
-        public string TARGET_SKILL = "00FF38A0,2448";
+        public string TARGET_SKILL = "00FF38A0,2480";
 
 
-        public string TARGET_RING = "00FF38A0,31EC";
+        public string TARGET_RING = "00FF38A0,322C";
 
 
         public string PATH2_ADR_RESULT;
@@ -326,6 +332,8 @@ namespace Kappa
         private IntPtr allocate_adr_LOCALPLAYER;
         private IntPtr allocate_adr_Nolimit;
         private IntPtr allocate_adr_Nolimit2;
+        private IntPtr allocate_adr_SKILL_LIST;
+        private IntPtr allocate_adr_BUFF;
 
         public string Expirydaysleft()
         {
@@ -423,8 +431,13 @@ namespace Kappa
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("0F 84 ?? ?? 00 00 6A 45", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
+            var AoB_Scan_GETBUFF = await m.AoBScan("66 81 7D ?? FF FF 75", false, true);
+            var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
+
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             //
+            AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
+            AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             AOB_UNLOCK = AoB_Scan_UNLOCK.FirstOrDefault();
@@ -820,7 +833,6 @@ namespace Kappa
                 //  m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
             }
         }
-
 
 
 
@@ -2191,6 +2203,105 @@ namespace Kappa
 
                 // Write the second jmp instruction to the allocated address
                 m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
+
+        public void f_GET_Buff()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_BUFF == IntPtr.Zero)
+                {
+                    allocate_adr_BUFF = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x66, 0x81, 0x7D, 0xF0, 0xFF, 0xFF, 0x89, 0x2D, 0x00, 0x10, 0xFF, 0x00,
+                    0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_GETBUFF + 6 - ((int)allocate_adr_BUFF + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_BUFF.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_BUFF - ((int)AOB_GETSKILL_LIST + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(GETBUFF_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while finding monster: {ex.Message}");
+            }
+        }
+
+
+        public void f_GET_SKILL_LIST()
+        {
+            try
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (allocate_adr_SKILL_LIST == IntPtr.Zero)
+                {
+                    allocate_adr_SKILL_LIST = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+
+                }
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0x64, 0x09, 0x00, 0x00,
+                    0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
+                };
+
+                // Calculate the jump offset for the first jmp instruction
+                int jumpOffset = (int)AOB_GETSKILL_LIST + 6 - ((int)allocate_adr_SKILL_LIST + assemblyCode.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_SKILL_LIST.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+                // Assembly code for jmp to allocate_   adr with nop 2
+                byte[] jmpCode = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset2 = (int)allocate_adr_SKILL_LIST - ((int)AOB_GETSKILL_LIST + jmpCode.Length - 1);
+                BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                // Write the second jmp instruction to the allocated address
+                m.WriteMemory(GETSKILL_LIST_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
             }
             catch (Exception ex)
             {
