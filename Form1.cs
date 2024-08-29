@@ -1981,6 +1981,7 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
+                        
                         for (int i2 = 0x00BEFA14; i2 <= 0x00BEFA38; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
