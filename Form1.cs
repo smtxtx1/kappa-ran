@@ -1727,7 +1727,7 @@ namespace Kappa
                             for (j = 0; j < numberOfIterations; j++)
                             {
                                 await AutoSkills2();
-                                await Task.Delay(50);
+                                await Task.Delay(10);
                                 await Autobuff();
 
                             }
@@ -1741,9 +1741,9 @@ namespace Kappa
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 await ItemGetAll();
-                                await Task.Delay(50);
+                                await Task.Delay(10);
                                 await ItemGetAll();
-                                await Task.Delay(50);
+                                await Task.Delay(10);
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -1755,15 +1755,15 @@ namespace Kappa
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                 }
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
                                     await ItemGetAll();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                     await ItemGetAll();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
@@ -1772,7 +1772,7 @@ namespace Kappa
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
                                         await Autobuff();
-                                        await Task.Delay(100);
+                                        await Task.Delay(20);
                                     }
                                 }
 
@@ -1789,9 +1789,9 @@ namespace Kappa
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 await ItemGet();
-                                await Task.Delay(50);
+                                await Task.Delay(10);
                                 await ItemGet();
-                                await Task.Delay(50);
+                                await Task.Delay(10);
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -1803,15 +1803,15 @@ namespace Kappa
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                 }
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
                                     await ItemGet();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                     await ItemGet();
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
@@ -1820,7 +1820,7 @@ namespace Kappa
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
                                         await Autobuff();
-                                        await Task.Delay(100);
+                                        await Task.Delay(20);
                                     }
                                 }
 
@@ -2459,7 +2459,7 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(50);
+                            await Task.Delay(10);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
@@ -2467,7 +2467,7 @@ namespace Kappa
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
 
                                     item.Remove();
                                     break;
@@ -2483,7 +2483,7 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "4");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(50);
+                            await Task.Delay(10);
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 m.WriteMemory(forceattack_adr, "int", "4");
@@ -2493,7 +2493,7 @@ namespace Kappa
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(50);
+                                    await Task.Delay(10);
 
                                     item.Remove();
                                     break;
