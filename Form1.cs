@@ -2430,11 +2430,6 @@ namespace Kappa
 
                 }
 
-                if (listView11.Items.Count > 15)
-                {
-                    listView11.Items.Clear();
-                }
-                await Task.Delay(10);
 
             }
             catch (Exception ex)
