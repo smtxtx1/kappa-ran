@@ -2994,12 +2994,12 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B ,0x86 ,0x14 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0x67 ,0x45 ,0xFD ,0x00,
+                    0x89, 0x35, 0x67, 0x45, 0xFD, 0x00, 0x8B, 0x86, 0x14, 0x01, 0x00, 0x00,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_NOLIMIT + 0x33 + 0x06 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0x39 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -3035,7 +3035,7 @@ namespace Kappa
         }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
-            //            AllocNolimit();
+                        AllocNolimit();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
@@ -3047,7 +3047,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7, 0x81, 0x80, 0x01, 0x00, 0x00, 0x00, 0x00, 0x80, 0xBF,
+                    //20 BC BE 4C
+                    0xC7, 0x81, 0x80, 0x01, 0x00, 0x00, 0x20, 0xBC, 0xBE, 0x4C,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
@@ -3062,11 +3063,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90
+                    0x0F, 0x1F, 0x44, 0x00, 0x00
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Nolimit - ((int)AOB_NOLIMIT + jmpCode.Length - 5);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
