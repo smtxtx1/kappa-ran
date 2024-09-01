@@ -2429,7 +2429,11 @@ namespace Kappa
                     }
 
                 }
+                if (listView11.Items.Count >= 10) ;
+                {
+                    listView11.Items.Clear();
 
+                }
 
             }
             catch (Exception ex)
@@ -2454,15 +2458,17 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(50);
+                            await Task.Delay(20);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
-                                await Task.Delay(50);
+                                await Task.Delay(20);
+                                item.Remove();
+
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(50);
+                                    await Task.Delay(20);
 
                                     item.Remove();
                                     break;
@@ -2484,6 +2490,8 @@ namespace Kappa
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
+                                item.Remove();
+
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
@@ -2540,13 +2548,16 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
                             m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(50);
+                            await Task.Delay(10);
+                            item.Remove();
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
+                                item.Remove();
+
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
@@ -2568,11 +2579,15 @@ namespace Kappa
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(50);
+                            item.Remove();
+
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
+                                item.Remove();
+
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
                                     m.WriteMemory(forceattack_adr, "int", "4");
