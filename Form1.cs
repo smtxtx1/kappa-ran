@@ -582,13 +582,13 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "150");
-                m.WriteMemory(DRONE_ADR_RESULT, "byte", "90 90 90 90 90 90");
+                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(FastZoom, "float", "80");
-                m.WriteMemory(DRONE_ADR_RESULT, "byte", "D9 05 08 DD 11 03");
+                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 08 DD 11 03");
 
             }
 
