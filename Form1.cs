@@ -529,13 +529,11 @@ namespace Kappa
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
-
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb"); //Bypass Run1
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
+            //   m.WriteMemory(PATH2_ADR_RESULT,"bytes", "eb");
 
 
         }
@@ -543,11 +541,11 @@ namespace Kappa
         public void RunDeActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 4F 02 00 00");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 69");
+            //      m.WriteMemory(PATH2_ADR_RESULT, "bytes", "74");
 
         }
 
