@@ -2830,8 +2830,8 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-                await AddItemToListView();
-                await ItemGet();
+                
+               
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);
