@@ -1956,7 +1956,7 @@ namespace Kappa
             const int OffsetY = 0xAF0;
             const int OffsetZ = 0xAF4;
             const int OffsetHp = 0xA90;
-            float limitdistance = 4f;
+            float limitdistance = 6f;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
@@ -2032,7 +2032,16 @@ namespace Kappa
 
                                 if (check_hp_mon < 5 || distance_mon > limitdistance)
                                 {
-                                    Console.WriteLine($"break1");
+                                    if(check_hp_mon < 5)
+                                    {
+                                        Console.WriteLine($"break HP");
+
+                                    }
+                                    if (distance_mon > limitdistance)
+                                    {
+                                        Console.WriteLine($"break Distance {distance_mon} > {limitdistance}");
+                                        break;
+                                    }
 
                                     break;
                                 }
