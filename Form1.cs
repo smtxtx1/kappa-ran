@@ -1109,47 +1109,6 @@ namespace Kappa
             }
 
         }
-        private async Task Autosearchmonster()
-        {
-            // bypass attacking
-
-            int[] valuesToWrite = { 7, 10, 8, 6 };
-
-            while (checkBox9.Checked)
-            {
-                try
-                {
-                    m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
-
-                    List<int> check_id_mon = new List<int>();
-                    listView11.Items.Clear();
-
-                    while (checkBox9.Checked)
-                    {
-                        string base_mon = "00FF5000";
-                        int id_mon = m.ReadInt($"{base_mon},C18");
-                        int hp_mon = m.ReadInt($"{base_mon},A90");
-                        float x_mon = m.ReadFloat($"{base_mon},AEC");
-                        float y_mon = m.ReadFloat($"{base_mon},AF0");
-                        float z_mon = m.ReadFloat($"{base_mon},AF4");
-
-                        if (hp_mon >= 2)
-                        {
-                            UpdateListView(check_id_mon, id_mon, hp_mon, x_mon, y_mon, z_mon);
-                            SearchAndPrintTargets(id_mon, hp_mon, x_mon, y_mon, z_mon, valuesToWrite);
-                        }
-
-                        await Task.Delay(10);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Handle exceptions appropriately
-                    MessageBox.Show($"An error occurred: {ex.Message}");
-                }
-            }
-
-        }
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
 
 
