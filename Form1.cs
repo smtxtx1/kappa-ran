@@ -1944,11 +1944,12 @@ namespace Kappa
 
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
-                // Assembly code for fstp dword ptr [esp+38] 8B 81 18 0C 00 00 C3 CC
+                // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89 ,0x0D ,0x00 ,0x50 ,0xFF ,0x00 ,0x8B ,0x81 ,0x18 ,0x0C ,0x00 ,0x00,
-                    0xE9 ,0x00 ,0x00 ,0x00 ,0x00
+                    0x89,0x0D,0x00,0x55,0xFF,0x00,0x8B,0x81,0xA4,0x17,0x00,0x00,
+                    0xE9,
+                    0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
                 // Calculate the jump offset for the first jmp instruction
