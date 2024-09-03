@@ -2542,7 +2542,6 @@ namespace Kappa
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
-                                item.Remove();
 
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
@@ -2572,7 +2571,6 @@ namespace Kappa
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
-                                item.Remove();
 
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
