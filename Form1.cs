@@ -1754,7 +1754,7 @@ namespace Kappa
                             {
                                 await AutoSkills2();
                                 await Task.Delay(10);
-                                await Autobuff();
+                             //   await Autobuff();
 
                             }
 
