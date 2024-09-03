@@ -408,13 +408,13 @@ namespace Kappa
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
             //"74 82 8D BE F8 21 00 00
-           IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 ??", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("8B 54 01 60 8D 7C 01 60", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ?? 8D", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
-         //        IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("1", false, true);
+            //        IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("1", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
@@ -451,10 +451,10 @@ namespace Kappa
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
             AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
-          //  AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
+            //  AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
-    //        AOB_Superpot2 = AoB_Scan_Superpot2.FirstOrDefault();
+            //        AOB_Superpot2 = AoB_Scan_Superpot2.FirstOrDefault();
 
 
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
@@ -3043,7 +3043,7 @@ namespace Kappa
         }
         private void checkBox28_CheckedChanged(object sender, EventArgs e)
         {
-                        AllocNolimit();
+            AllocNolimit();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Nolimit = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
