@@ -234,36 +234,24 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        /// 
-        public string Skilluse1_adr = "00FF38A0,23BC";
+        public string prevskill1_adr = "00FF38A0,2108";
 
-        public string Skilluse2_adr = "00FF38A0,23BE";
+        public string prevskill2_adr = "00FF38A0,210A";
 
-        public string prevskill1_adr = "00FF38A0,23C0";
+        public string Skilluse1_adr = "00FF38A0,2104";
 
-        public string prevskill2_adr = "00FF38A0,23C2";
+        public string Skilluse2_adr = "00FF38A0,2106";
 
-        //public string prevskill1_adr = "00FF38A0,237C";
+        public string forceattack_adr = "00FF38A0,21E4";
 
-        //public string prevskill2_adr = "00FF38A0,237E";
+        public string actioncheck = "00FF38A0,21F8";
 
-        //public string Skilluse1_adr = "00FF38A0,2380";
-
-        //public string Skilluse2_adr = "00FF38A0,2382";
+        public string MATION_CHECK = "00FF38A0,2068";
 
 
+        public string TARGET_SKILL = "00FF38A0,21FC";
 
-        public string forceattack_adr = "00FF38A0,2468";
-
-        public string MATION_CHECK = "00FF38A0,2320";
-
-        public string actioncheck = "00FF38A0,247C";
-
-        public string TARGET_SKILL = "00FF38A0,2480";
-
-
-        public string TARGET_RING = "00FF38A0,322C";
-
+        public string TARGET_RING = "00FF38A0,32F0";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
