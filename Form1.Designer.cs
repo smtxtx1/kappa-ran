@@ -1333,7 +1333,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(491, 461);
+            ClientSize = new Size(404, 430);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             Controls.Add(groupBox3);
