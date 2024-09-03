@@ -424,6 +424,9 @@ namespace Kappa
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
             var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4E 1E 33 D2 66 8B 56 1C 51 8B C8", false, true);
+            var AoB_Scan_BypassPET = await m.AoBScan("0F 84 ?? ?? ?? 00 E8 ?? ?? ?? ?? 33 C9 66 8B 4F 1E", false, true);
+
+            long AOB_PETBP = AoB_Scan_BypassPET.FirstOrDefault();
 
 
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
