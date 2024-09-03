@@ -841,6 +841,10 @@ namespace Kappa
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
                         Thread.Sleep(300);
+                        while (m.ReadInt(MATION_CHECK) == 1)
+                        {
+                            Thread.Sleep(500);
+                        }
 
                     }
                     if (frenzzy_tar != -1)
@@ -1756,6 +1760,14 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
+                                while(m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Thread.Sleep(200);
+                                    if (m.ReadInt(MATION_CHECK) != 3)
+                                    {
+                                        break;
+                                    }
+                                }
 
                             }
                             await Task.Delay(10);
