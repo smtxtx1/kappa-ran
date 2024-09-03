@@ -266,9 +266,9 @@ namespace Kappa
 
         public bool _INJECT_PET = false;
 
-        public string HpFreeze_1 = "00FF38A0,130";
+        public string HpFreeze_1 = "00FF38A0,138";
 
-        public string HpFreeze_2 = "00FF38A0,132";
+        public string HpFreeze_2 = "00FF38A0,13A";
 
 
         public string Antislide = "004324D8";
