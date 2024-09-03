@@ -2257,14 +2257,13 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA,
-                0x0F, 0x84, 0xF3, 0x35, 0x84, 0xF5,
-                0xE9, 0xA4, 0x35, 0x84, 0xF5
-
+                    0x89, 0x15, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA,
+                    0x0F, 0x84, 0x83, 0xEC, 0xB2, 0xF5,
+                    0xE9, 0x37, 0xEC, 0xB2, 0xF5
                 };
 
 
-                int jumpOffset1 = (int)AOB_GETBUFF + 0x50 - ((int)allocate_adr_BUFF + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_GETBUFF + 0x4D - ((int)allocate_adr_BUFF + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_GETBUFF + 0x06 - ((int)allocate_adr_BUFF + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
