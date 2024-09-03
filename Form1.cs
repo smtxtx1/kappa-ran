@@ -1934,149 +1934,105 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xC18;
-            const int OffsetX = 0xAEC;
-            const int OffsetY = 0xAF0;
-            const int OffsetZ = 0xAF4;
-            const int OffsetHp = 0xA90;
             float limitdistance = 8f;
+            const int OffsetID = 0x17A4;
+            const int OffsetX = 0x1678;
+            const int OffsetY = 0x167C;
+            const int OffsetZ = 0x1680;
+            const int OffsetHp = 0x1618;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
-                int offsetIDmon = OffsetID + (i * 0xD08);
-                int offsetXmon = OffsetX + (i * 0xD08);
-                int offsetYmon = OffsetY + (i * 0xD08);
-                int offsetZmon = OffsetZ + (i * 0xD08);
-                int offsetHpmon = OffsetHp + (i * 0xD08);
+                int offsetIDmon = OffsetID + (i * 0x1908);
+                int offsetXmon = OffsetX + (i * 0x1908);
+                int offsetYmon = OffsetY + (i * 0x1908);
+                int offsetZmon = OffsetZ + (i * 0x1908);
+                int offsetHpmon = OffsetHp + (i * 0x1908);
+
 
                 // Read monster and player positions
-                int id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
-                float x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                float Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                float z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
-                int hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                int id_mon = m.ReadInt($"00FF5500,{OffsetID:X}");
+                float x_mon = m.ReadFloat($"00FF5500,{OffsetX:X}");
+                float Ymon = m.ReadFloat($"00FF5500,{OffsetY:X}");
+                float z_mon = m.ReadFloat($"00FF5500,{OffsetZ:X}");
+                int hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                 float myX = m.ReadFloat(CurrentX);
                 float myY = m.ReadFloat(CurrentY);
                 float myZ = m.ReadFloat(CurrentZ);
-                int check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                int check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp}");
 
                 float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
-                    Console.WriteLine("Distance is: " + distance_mon);
-                    m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
-                    m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
+                    m.WriteMemory(Target_skills, "int", id_mon.ToString());
+                    m.WriteMemory(Target_Ring, "int", id_mon.ToString());
                     while (true)
                     {
-
-                        for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
+                        distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                        for (int i2 = 0x00B95B3C; i2 <= 0x00B95B60; i2 += 4)
                         {
-                            if (i3 == 0x988)
+                            int idskilltype1 = m.ReadByte(i2.ToString("X"));
+                            int num = i2 + 2;
+                            int idskilltype2 = m.ReadByte(num.ToString("X"));
+                            m.WriteMemory(actioncheck, "int", "2");
+                            if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
-                                i3 = 0x964;
-                            }
-                            string OffsetSKill = i3.ToString("x");
-                            //    
-
-                            int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
-                            int num_test = i3 + 0x02;
-                            int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
-                            // Console.WriteLine("Offset2:" + num_test);
-                            if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
-                            {
-
-                                m.WriteMemory(actioncheck, "int", "2");
-                                m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
-                                m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
+                                m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
+                                m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                Console.WriteLine("Attacking");
 
                             }
                             await Task.Delay(10);
-                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            if (m.ReadInt(TARGET_RING) == -1)
+                            check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            if (m.ReadInt(Target_Ring) == -1)
                             {
                                 break;
                             }
-                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            x_mon = m.ReadFloat($"00FF5500,{OffsetX:X}");
+                            Ymon = m.ReadFloat($"00FF5500,{OffsetY:X}");
+                            z_mon = m.ReadFloat($"00FF5500,{OffsetZ:X}");
+                            hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
+                            myX = m.ReadFloat(CurrentX);
+                            myY = m.ReadFloat(CurrentY);
+                            myZ = m.ReadFloat(CurrentZ);
+                            check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
 
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
-                                await Task.Delay(500);
-                                check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                                x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                                Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                                z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
-                                hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                if (distance_mon > limitdistance)
+                                {
+                                    Console.WriteLine("Distance Out Of Limit");
+                                }
+                                if (check_hp_mon < 5)
+                                {
+                                    Console.WriteLine($"hp: {hp_mon}\n {m.ReadLong($"00FF5500,{OffsetHp:X}").ToString("x")}");
+                                    Console.WriteLine($"Monster Is Dead {check_hp_mon}");
+                                }
+                                await Task.Delay(100);
+                                check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
+                                x_mon = m.ReadFloat($"00FF5500,{OffsetX:X}");
+                                Ymon = m.ReadFloat($"00FF5500,{OffsetY:X}");
+                                z_mon = m.ReadFloat($"00FF5500,{OffsetZ:X}");
+                                hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                                 myX = m.ReadFloat(CurrentX);
                                 myY = m.ReadFloat(CurrentY);
                                 myZ = m.ReadFloat(CurrentZ);
+                                Console.WriteLine($"Distance is: {distance_mon}");
 
-
-                                break;
-
-                            }
-
-
-
-                            //    for (int i2 = 0x00BEFA14; i2 <= 0x00BEFA38; i2 += 4)
-                            //{
-                            //    int idskilltype1 = m.ReadByte(i2.ToString("X"));
-                            //    int num = i2 + 2;
-                            //    int idskilltype2 = m.ReadByte(num.ToString("X"));
-                            //    m.WriteMemory(actioncheck, "int", "2");
-                            //    if (idskilltype1 != 255 && idskilltype2 != 255)
-                            //    {
-                            //        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                            //        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                            //        m.WriteMemory(forceattack_adr, "int", "5");
-                            //    }
-                            //    await Task.Delay(10);
-                            //    check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //    if (m.ReadInt(TARGET_RING) == -1)
-                            //    {
-                            //        break;
-                            //    }
-                            //    distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-
-                            //    if (check_hp_mon < 5 || distance_mon > limitdistance)
-                            //    {
-                            //        await Task.Delay(500);
-                            //        check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //        x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                            //        Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                            //        z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
-                            //        hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //        myX = m.ReadFloat(CurrentX);
-                            //        myY = m.ReadFloat(CurrentY);
-                            //        myZ = m.ReadFloat(CurrentZ);
-
-
-                            //        break;
-                            //    }
-
-                            //}
-                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            await Task.Delay(5);
-                            if (check_hp_mon < 5 || distance_mon > 80f)
-                            {
-                                break;
-                            }
-                            if (m.ReadInt(TARGET_RING) == -1)
-                            {
                                 break;
                             }
 
                         }
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                        check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                        check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                         await Task.Delay(5);
-                        if (check_hp_mon < 5 || distance_mon > 80f)
+                        if (check_hp_mon < 5 || distance_mon > limitdistance)
                         {
                             break;
                         }
-                        if (m.ReadInt(TARGET_RING) == -1)
+                        if (m.ReadInt(Target_Ring) == -1)
                         {
                             break;
                         }
