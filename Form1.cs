@@ -1850,43 +1850,6 @@ namespace Kappa
                 Console.WriteLine("Exception in UpdateListViewItemsAsync: " + ex.Message);
             }
         }
-        private async Task AutoSkills()
-        {
-            m.FreezeValue(RightArrow, "byte", "3F");
-            m.FreezeValue(RightClick, "byte", "63");
-            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-            await Task.Delay(100);
-            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-            await Task.Delay(100);
-            for (int i = 0x00D31FCC; i <= 0x00D31FF0; i += 4)
-            {
-                int idskilltype1 = m.ReadByte(i.ToString("X"));
-                int num = i + 2;
-                int idskilltype2 = m.ReadByte(num.ToString("X"));
-                m.ReadByte(prevskill1_adr);
-                int prevskill2 = m.ReadByte(prevskill2_adr);
-                await Task.Delay(200);
-                if (m.Read2Byte(MATION_CHECK) == 0 && idskilltype1 != 255 && idskilltype2 != 255 && m.Read2Byte(MATION_CHECK) != 3)
-                {
-                    m.WriteMemory(Skilluse1_adr, "byte", idskilltype1.ToString("x"));
-                    m.WriteMemory(Skilluse2_adr, "byte", idskilltype2.ToString("x"));
-                    await Task.Delay(200);
-                }
-            }
-            await Task.Delay(100);
-            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-            await Task.Delay(10);
-            m.WriteMemory(AngleAdr, "float", currentrange.ToString());
-            m.WriteMemory(ZoomAdr, "float", currentrange2.ToString());
-            await Task.Delay(10);
-            m.UnfreezeValue(RightClick);
-            m.UnfreezeValue(RightArrow);
-            m.WriteMemory(RightArrow, "byte", "01");
-            m.WriteMemory(RightClick, "byte", "01");
-        }
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
