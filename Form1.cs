@@ -189,22 +189,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
+        public string CurrentX = "00FF38A0,2FE8";
 
-        public string CurrentX = "00FF38A0,2230";
+        public string CurrentY = "00FF38A0,2FEC";
 
-        public string CurrentY = "00FF38A0,2234";
+        public string CurrentZ = "00FF38A0,2FF0";
 
-        public string CurrentZ = "00FF38A0,2238";
+        public string ZoomAdr = "";
 
-        public string ZoomAdr = "031F3EF4";
+        public string AngleAdr = "";
 
-        public string AngleAdr = "031F3ED4";
+        public string gotoX = "00FF38A0,302C";
 
-        public string gotoX = "00FF38A0,2274";
+        public string gotoY = "00FF38A0,3030";
 
-        public string gotoY = "00FF38A0,2278";
-
-        public string gotoZ = "00FF38A0,227C";
+        public string gotoZ = "00FF38A0,3034";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -235,35 +234,24 @@ namespace Kappa
         /// Autoskill START ///////////////
         /// </summary>
         /// 
-        public string Skilluse1_adr = "00FF38A0,23BC";
 
-        public string Skilluse2_adr = "00FF38A0,23BE";
+        public string Skilluse1_adr = "00FF38A0,3198";
 
-        public string prevskill1_adr = "00FF38A0,23C0";
+        public string Skilluse2_adr = "00FF38A0,319A";
 
-        public string prevskill2_adr = "00FF38A0,23C2";
+        public string prevskill1_adr = "00FF38A0,319C";
 
-        //public string prevskill1_adr = "00FF38A0,237C";
+        public string prevskill2_adr = "00FF38A0,319E";
 
-        //public string prevskill2_adr = "00FF38A0,237E";
+        public string forceattack_adr = "00FF38A0,3244";
 
-        //public string Skilluse1_adr = "00FF38A0,2380";
+        public string actioncheck = "00FF38A0,3258";
 
-        //public string Skilluse2_adr = "00FF38A0,2382";
+        public string TARGET_SKILL = "00FF38A0,325C"; //MiniA.exe+793E74
 
+        public string TARGET_RING = "00FF38A0,400C"; //
 
-
-        public string forceattack_adr = "00FF38A0,2468";
-
-        public string MATION_CHECK = "00FF38A0,2320";
-
-        public string actioncheck = "00FF38A0,247C";
-
-        public string TARGET_SKILL = "00FF38A0,2480";
-
-
-        public string TARGET_RING = "00FF38A0,322C";
-
+        public string MATION_CHECK = "00FF38A0,30FC";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
@@ -275,16 +263,15 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00FF38A0,130";
+        public string HpFreeze_1 = "00FF38A0,390";
 
-        public string HpFreeze_2 = "00FF38A0,132";
-
+        public string HpFreeze_2 = "00FF38A0,394";
 
         public string Antislide = "004324D8";
 
         public string Wallhack = "005E2FC1";
 
-        public string ASPD_adr = "MiniA.exe+54FB94";
+        public string ASPD_adr = "MiniA.exe+5694D8";
 
         public bool autoskillsstand = true;
 
@@ -1964,8 +1951,8 @@ namespace Kappa
                 float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
-                    m.WriteMemory(Target_skills, "int", id_mon.ToString());
-                    m.WriteMemory(Target_Ring, "int", id_mon.ToString());
+                    m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
+                    m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
@@ -1985,7 +1972,7 @@ namespace Kappa
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            if (m.ReadInt(Target_Ring) == -1)
+                            if (m.ReadInt(TARGET_RING) == -1)
                             {
                                 break;
                             }
@@ -2032,7 +2019,7 @@ namespace Kappa
                         {
                             break;
                         }
-                        if (m.ReadInt(Target_Ring) == -1)
+                        if (m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
                         }
