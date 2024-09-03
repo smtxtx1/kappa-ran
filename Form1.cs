@@ -458,6 +458,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            string PETBP_ADR_RESULT = AOB_PETBP.ToString("x");
 
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
 
