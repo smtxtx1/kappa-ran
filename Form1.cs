@@ -492,7 +492,7 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
-
+            m.WriteMemory("004F090A", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             m.WriteMemory("00ff95f0", "float", "4800");
@@ -3229,7 +3229,7 @@ namespace Kappa
         private bool Get = false;
         private void button19_Click(object sender, EventArgs e)
         {
-            if(Get == false && selectedProcessId != null)
+            if (Get == false && selectedProcessId != null)
             {
                 button6.Enabled = true;
                 checkBox13.Enabled = true;

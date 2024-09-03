@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            button19 = new Button();
             label4 = new Label();
             label3 = new Label();
             groupBox9 = new GroupBox();
@@ -143,6 +142,7 @@
             checkBox8 = new CheckBox();
             checkBox7 = new CheckBox();
             groupBox5 = new GroupBox();
+            button19 = new Button();
             button7 = new Button();
             button6 = new Button();
             checkBox6 = new CheckBox();
@@ -217,16 +217,6 @@
             tabPage1.Size = new Size(394, 397);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
-            // 
-            // button19
-            // 
-            button19.Location = new Point(80, 23);
-            button19.Name = "button19";
-            button19.Size = new Size(59, 23);
-            button19.TabIndex = 18;
-            button19.Text = "Click";
-            button19.UseVisualStyleBackColor = true;
-            button19.Click += button19_Click;
             // 
             // label4
             // 
@@ -514,7 +504,6 @@
             checkBox1.TabIndex = 3;
             checkBox1.Text = "Drone";
             checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.Visible = false;
             checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // checkBox2
@@ -1065,6 +1054,16 @@
             groupBox5.TabIndex = 7;
             groupBox5.TabStop = false;
             groupBox5.Text = "Misc";
+            // 
+            // button19
+            // 
+            button19.Location = new Point(80, 23);
+            button19.Name = "button19";
+            button19.Size = new Size(59, 23);
+            button19.TabIndex = 18;
+            button19.Text = "Click";
+            button19.UseVisualStyleBackColor = true;
+            button19.Click += button19_Click;
             // 
             // button7
             // 
