@@ -2589,7 +2589,7 @@ namespace Kappa
             button6.Enabled = true;
             autoskillsstand = false;
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
-            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
+            m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 B8 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
             {
                 backgroundWorker2.CancelAsync();
