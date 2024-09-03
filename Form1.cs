@@ -864,7 +864,7 @@ namespace Kappa
                 int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
                 int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
                 float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
-              //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
+                //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
                 if (item3 <= 30f && !listREMAIN.Contains(item2))
                 {
                     listREMAIN.Add(item2);
@@ -885,7 +885,7 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-              //  Console.WriteLine($"F4 Skills: {num6},{num7}");
+                //  Console.WriteLine($"F4 Skills: {num6},{num7}");
 
                 if (listREMAIN.Contains(num7))
                 {
@@ -989,8 +989,8 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1, 
-                0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1, 
+                0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1,
                 0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1, 0x39, 0x5C, 0x24, 0x28,
                 0xE9, 0x00, 0x00, 0x00, 0x00,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
@@ -1960,11 +1960,11 @@ namespace Kappa
                             if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                             {
 
-                                m.WriteMemory(actioncheck, "int", "2"); 
+                                m.WriteMemory(actioncheck, "int", "2");
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                          //      Console.WriteLine("Attacking");
+                                //      Console.WriteLine("Attacking");
 
                             }
                             await Task.Delay(10);
@@ -2360,7 +2360,7 @@ namespace Kappa
                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                     //   saveID = m.ReadString(IDadr);
+                        //   saveID = m.ReadString(IDadr);
 
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
@@ -2369,7 +2369,7 @@ namespace Kappa
 
                             listView11.Items.Add(listViewItem);
                             string contents = JsonConvert.SerializeObject(row);
-                         //   File.AppendAllText($"item_logs_{saveID}.json", contents);
+                            //   File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
