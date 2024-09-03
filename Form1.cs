@@ -263,6 +263,7 @@ namespace Kappa
         public string Superpot2 = "007757D6";
         public string Superpot3 = "007757F4";
 
+        public bool _INJECT_PET = false;
 
         public string HpFreeze_1 = "00FF38A0,130";
 
