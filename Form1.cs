@@ -403,7 +403,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             //        IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("1", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
-            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("d9 05 ? ? ? ? c3 cc cc cc cc cc cc cc cc cc 8b 44 24 ? a3", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? e8 ? ? ? ? c6 40", false, true);
@@ -474,7 +474,7 @@ namespace Kappa
             ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
             ASPD_ADR_RESULT2 = (AOB_ASPD).ToString("x");
 
-            DRONE_ADR_RESULT = (AOB_DRONE - 0x0B).ToString("x");
+            DRONE_ADR_RESULT = AOB_DRONE.ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             HT2_ADR_RESULT = (AOB_HT - 0x113).ToString("x");
             //    HT3_ADR_RESULT = (AOB_HT + 0x11C).ToString("x");
@@ -549,13 +549,13 @@ namespace Kappa
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
                 m.WriteMemory(FastZoom, "float", "150");
-                m.WriteMemory(DRONE_ADR_RESULT, "byte", "EB");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "90 90 90 90 90 90");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(FastZoom, "float", "80");
-                m.WriteMemory(DRONE_ADR_RESULT, "byte", "75");
+                m.WriteMemory(DRONE_ADR_RESULT, "byte", "D9 05 08 DD 11 03");
 
             }
 
@@ -808,14 +808,14 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01");
 
                 // m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "D8 1D 00 25 FA 00 DF E0 F6 C4 41 7B CF");
                 m.WriteMemory("00FA2500", "float", "-1");
             }
             else
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02");
 
                 //  m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
             }
