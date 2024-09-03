@@ -406,7 +406,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? ?? 6A 00 E8 ?? ?? ?? 00 8B C8 E8 ?? ?? ?? 00 E8 ?? ?? ?? 00", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? e8 ? ? ? ? c6 40", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
 
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
@@ -989,10 +989,9 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
-                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
-                0x39, 0x5C, 0x24, 0x28,
+                0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1, 
+                0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1, 
+                0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1, 0x39, 0x5C, 0x24, 0x28,
                 0xE9, 0x00, 0x00, 0x00, 0x00,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
