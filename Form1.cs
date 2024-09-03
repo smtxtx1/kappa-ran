@@ -2016,7 +2016,7 @@ namespace Kappa
                                 m.WriteMemory(forceattack_adr, "int", "5");
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 await Task.Delay(5);
-                                await Task.Delay(500);
+                                await Task.Delay(100);
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
                                 Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
@@ -2064,7 +2064,7 @@ namespace Kappa
 
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
-                                await Task.Delay(500);
+                                await Task.Delay(100);
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
                                 Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
