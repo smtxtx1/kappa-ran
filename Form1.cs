@@ -520,6 +520,7 @@ namespace Kappa
 
         }
 
+        public int SKILLPET_ADR_RESULT2 = 0;
 
         public void INJECT_PET()
         {
