@@ -461,10 +461,10 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x4A).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0x8D).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xB02).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xB0B).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x84).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xd0).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xCAA).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xCB3).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xB79).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
@@ -516,7 +516,7 @@ namespace Kappa
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
             //   m.WriteMemory(PATH2_ADR_RESULT,"bytes", "eb");
@@ -527,10 +527,10 @@ namespace Kappa
         public void RunDeActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 4F 02 00 00");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 69");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 52 02 00 00");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0D");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 6f");
             //      m.WriteMemory(PATH2_ADR_RESULT, "bytes", "74");
 
         }
