@@ -2387,9 +2387,9 @@ namespace Kappa
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FA7800,378");
-                int ItemID = m.ReadInt("00FA7800,37C");
-                byte[] array = m.ReadBytes("00FA7800,391", num);
+                int ItemType = m.ReadInt("00FA7800,2D8");
+                int ItemID = m.ReadInt("00FA7800,2DC");
+                byte[] array = m.ReadBytes("00FA7800,2F1", num);
                 byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
                 string stringFromBytes;
                 string expectedString;
@@ -2399,7 +2399,7 @@ namespace Kappa
                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                        // saveID = m.ReadString(IDadr);
+                        saveID = m.ReadString(IDadr);
 
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
@@ -2408,17 +2408,18 @@ namespace Kappa
 
                             listView11.Items.Add(listViewItem);
                             string contents = JsonConvert.SerializeObject(row);
-                            //  File.AppendAllText($"item_logs_{saveID}.json", contents);
+                            File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
 
                 }
-                if (listView11.Items.Count >= 10) ;
+
+                if (listView11.Items.Count > 8)
                 {
                     listView11.Items.Clear();
-
                 }
+                await Task.Delay(10);
 
             }
             catch (Exception ex)
@@ -2428,7 +2429,6 @@ namespace Kappa
             }
 
         }
-
         private async Task ItemGetAll()
         {
             string names = m.ReadString(saveID);
