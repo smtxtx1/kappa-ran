@@ -411,6 +411,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? e8 ? ? ? ? c6 40", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
+            //
 
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
@@ -425,6 +426,8 @@ namespace Kappa
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
             var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4E 1E 33 D2 66 8B 56 1C 51 8B C8", false, true);
             var AoB_Scan_BypassPET = await m.AoBScan("0F 84 ?? ?? ?? 00 E8 ?? ?? ?? ?? 33 C9 66 8B 4F 1E", false, true);
+            var AoB_Scan_AntiFOX = await m.AoBScan("c7 46 ? ? ? ? ? eb ? c7 46 ? ? ? ? ? 8b 46 ? 89 46", false, true);
+
 
             long AOB_PETBP = AoB_Scan_BypassPET.FirstOrDefault();
 
@@ -505,6 +508,7 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
+            INJECT_PET();
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory("004F090A", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
