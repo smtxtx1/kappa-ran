@@ -2406,11 +2406,11 @@ namespace Kappa
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "E9 01 07 00 00 90");
+                m.WriteMemory(ANTICB_ADR_RESULT, "byte", "eb");
             }
             else
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "0F 84 00 07 00 00");
+                m.WriteMemory(ANTICB_ADR_RESULT, "byte", "74");
             }
         }
 
