@@ -241,16 +241,15 @@ namespace Kappa
 
         public string Skilluse2_adr = "00FF38A0,2106";
 
-        public string forceattack_adr = "00FF38A0,21E4";
+        public string forceattack_adr = "00FF38A0,2454";
 
         public string actioncheck = "00FF38A0,21F8";
 
-        public string MATION_CHECK = "00FF38A0,2068";
+        public string MATION_CHECK = "00FF38A0,2468";
 
+        public string TARGET_SKILL = "00FF38A0,246C";
 
-        public string TARGET_SKILL = "00FF38A0,21FC";
-
-        public string TARGET_RING = "00FF38A0,32F0";
+        public string TARGET_RING = "00FF38A0,3560";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
