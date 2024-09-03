@@ -145,7 +145,6 @@
             groupBox5 = new GroupBox();
             button7 = new Button();
             button6 = new Button();
-            button3 = new Button();
             checkBox6 = new CheckBox();
             tabPage5 = new TabPage();
             button18 = new Button();
@@ -206,7 +205,6 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
-            tabPage1.Controls.Add(button19);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(label3);
             tabPage1.Controls.Add(groupBox9);
@@ -222,11 +220,11 @@
             // 
             // button19
             // 
-            button19.Location = new Point(12, 316);
+            button19.Location = new Point(80, 23);
             button19.Name = "button19";
-            button19.Size = new Size(75, 23);
+            button19.Size = new Size(59, 23);
             button19.TabIndex = 18;
-            button19.Text = "Get Skills";
+            button19.Text = "Click";
             button19.UseVisualStyleBackColor = true;
             button19.Click += button19_Click;
             // 
@@ -993,6 +991,7 @@
             // checkBox13
             // 
             checkBox13.AutoSize = true;
+            checkBox13.Enabled = false;
             checkBox13.Location = new Point(6, 22);
             checkBox13.Name = "checkBox13";
             checkBox13.Size = new Size(59, 19);
@@ -1056,9 +1055,9 @@
             // 
             // groupBox5
             // 
+            groupBox5.Controls.Add(button19);
             groupBox5.Controls.Add(button7);
             groupBox5.Controls.Add(button6);
-            groupBox5.Controls.Add(button3);
             groupBox5.Controls.Add(checkBox6);
             groupBox5.Location = new Point(238, 6);
             groupBox5.Name = "groupBox5";
@@ -1069,6 +1068,7 @@
             // 
             // button7
             // 
+            button7.Enabled = false;
             button7.Location = new Point(80, 51);
             button7.Name = "button7";
             button7.Size = new Size(59, 23);
@@ -1079,6 +1079,7 @@
             // 
             // button6
             // 
+            button6.Enabled = false;
             button6.Location = new Point(6, 51);
             button6.Name = "button6";
             button6.Size = new Size(59, 23);
@@ -1086,16 +1087,6 @@
             button6.Text = "Start";
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(80, 22);
-            button3.Name = "button3";
-            button3.Size = new Size(59, 23);
-            button3.TabIndex = 4;
-            button3.Text = "Angle";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
             // 
             // checkBox6
             // 
@@ -1342,7 +1333,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(405, 432);
+            ClientSize = new Size(491, 461);
             Controls.Add(checkBox20);
             Controls.Add(tabControl1);
             Controls.Add(groupBox3);
@@ -1404,7 +1395,6 @@
         private Label label2;
         private ComboBox comboBox2;
         private CheckBox checkBox7;
-        private Button button3;
         private CheckBox checkBox8;
         private GroupBox groupBox3;
         private CheckBox checkBox10;
