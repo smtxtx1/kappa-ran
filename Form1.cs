@@ -63,15 +63,16 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Ran Fortune";
+        public string ServerName = "Ran Cafe";
 
-        public string FastZoom = "03376E4C";
+        public string FastZoom = "0324BA7C";
 
         public string AOE_adr = "";
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00FF38A0,50";
+        public string NameAdr = "00FF38A0,2B0";
+
 
         public long AOB_MONVIEW;
         public long AOB_LOCALPLAYER;
