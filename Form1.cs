@@ -885,7 +885,7 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                Console.WriteLine($"F4 Skills: {num6},{num7}");
+              //  Console.WriteLine($"F4 Skills: {num6},{num7}");
 
                 if (listREMAIN.Contains(num7))
                 {
@@ -1964,7 +1964,7 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                Console.WriteLine("Attacking");
+                          //      Console.WriteLine("Attacking");
 
                             }
                             await Task.Delay(10);
