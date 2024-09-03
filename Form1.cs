@@ -1898,12 +1898,13 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x66 ,0x8B ,0x86 ,0x30 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0xA0 ,0x38 ,0xFF ,0x00,0xE9,
+                    0x8B ,0x86 ,0x90 ,0x03 ,0x00 ,0x00 ,0x89 ,0x35 ,0xA0 ,0x38 ,0xFF ,0x00,
+                    0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
 
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_LOCALPLAYER + 7 - ((int)allocate_adr_LOCALPLAYER + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_LOCALPLAYER + 6 - ((int)allocate_adr_LOCALPLAYER + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -1913,11 +1914,11 @@ namespace Kappa
                 byte[] jmpCode = new byte[]
                 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x66,0x90
+                    0x90
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_LOCALPLAYER - ((int)AOB_LOCALPLAYER + jmpCode.Length - 2);
+                int jmpOffset2 = (int)allocate_adr_LOCALPLAYER - ((int)AOB_LOCALPLAYER + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the allocated address
