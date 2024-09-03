@@ -488,28 +488,25 @@ namespace Kappa
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
-
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb"); //Bypass Run1
-
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
         }
 
         public void RunDeActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 77");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 7d");
+
+            //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
         }
-
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             mem.OpenProcess(int.Parse(comboBox2.Text));
