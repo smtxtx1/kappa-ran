@@ -505,6 +505,7 @@ namespace Kappa
             int num = 20;
 
             MessageBox.Show("All Done");
+            m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory("004F090A", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
