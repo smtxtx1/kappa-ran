@@ -989,16 +989,18 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0xC7 ,0x44 ,0x24 ,0x1C ,0x00 ,0x00 ,0x30 ,0xC1
-                ,0xC7 ,0x44 ,0x24 ,0x20 ,0x00 ,0x00 ,0x30 ,0xC1
-                ,0xC7 ,0x44 ,0x24 ,0x24 ,0x00 ,0x00 ,0x30 ,0xC1 ,0x39 ,0x5C ,0x24 ,0x28 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90 ,0x90,
+                0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1,
+                0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1,
+                0x39, 0x5C, 0x24, 0x28,
+                0xE9, 0x00, 0x00, 0x00, 0x00,
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
-                // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset1 = (int)AOB_PATH + 0x30 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
-                // Replace the jump offsets in the assembly code
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
