@@ -407,41 +407,31 @@ namespace Kappa
 
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
-            //74 82 8D BE 24 24 00 00 8B C7
-            IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
-            IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
-            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8 01", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 10", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
-            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 23", false, true);
-            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("02 52 83 CE FF E8 CB AD F0 FF", false, true);
-            IEnumerable<long> AoB_Scan_Superpot2 = await m.AoBScan("DC 1D ?? ?? ?? 00 DF E0 F6 C4 41 7B CF", false, true);
-            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 ?? 51 8D 4C", false, true);
-            IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
-            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
-            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 C4 00 00 00 89 96 C8 00 00 00", false, true);
-            IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
-            IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("?? 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("?? 2F 6A 00 E8 ?? ?? ?? 00", false, true);
-            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 80 01 00 00 00 00 A0 40", false, true);
-            var AoB_Scan_Monview = await m.AoBScan("8B 81 18 0C 00 00 C3 CC", false, true);
-            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 78 03 00 00", false, true);
-            var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
-            var AoB_Scan_AntiSlide = await m.AoBScan("38 9E 3C 22 00 00 74 4F", false, true);
-            var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
-            var AoB_Scan_ANTICB = await m.AoBScan("0F 84 ?? ?? 00 00 6A 45", false, true);
-            var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
-            var AoB_Scan_GETBUFF = await m.AoBScan("8B 16 3B D5 74 4A", false, true);
-            var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
 
-            long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
-            //
-            AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
-            AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
+            IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("D8 0D ?? ?? ?? ?? 8D 46 10 52 8B 54 24 10 D8 00 52 50", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
+            IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? ?? C7 81 A? ??", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
+            var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
+            var AoB_Scan_LOCALPLAYER = await m.AoBScan("8B 86 90 03 00 00 81 C6 58 02 00 00", false, true);
+            var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 ??", false, true);
+            var AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 00 30 00 00", false, true);
+            var AoB_Scan_ANTICB = await m.AoBScan("74 58 55 55", false, true);
+            var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
+            //C7 86 94 01 00 00 00 00 00 41
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
-            AOB_UNLOCK = AoB_Scan_UNLOCK.FirstOrDefault();
-            AOB_FASTLE = AoB_Scan_Fastle.FirstOrDefault();
+            long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
             AOB_ANTISLIDE = AoB_Scan_AntiSlide.FirstOrDefault();
             AOB_ITEMDROP = AoB_Scan_ITEMDROP.FirstOrDefault();
@@ -454,67 +444,51 @@ namespace Kappa
             AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
-            AOB_Superpot2 = AoB_Scan_Superpot2.FirstOrDefault();
-
-
             AOB_AOE = AoB_Scan_AOE.FirstOrDefault();
             AOB_PATH = AoB_Scan_PATH.FirstOrDefault();
             AOB_LR = AoB_Scan_LR.FirstOrDefault();
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
-            GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
-            GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
-            string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
-            UNLOCK_ADR_RESULT = (AOB_UNLOCK + 0x10).ToString("x");
-            FASTLE_ADR_RESULT = AOB_FASTLE.ToString("x");
+            string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
             NOLIMIT_ADR_RESULT = AOB_NOLIMIT.ToString("x");
-            NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x33).ToString("x");
+            NOLIMIT_ADR_RESULT2 = (AOB_NOLIMIT + 0x34).ToString("x");
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x4A).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0x8D).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xB02).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xB0B).ToString("x");
-            RUN6_ADR_RESULT = (AOB_RUN + 0xB79).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xEFE).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0xF07).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xF7B).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
 
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
-            ASPD_ADR_RESULT2 = (AOB_ASPD).ToString("x");
-
-            DRONE_ADR_RESULT = (AOB_DRONE - 0x0B).ToString("x");
+            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
-            HT2_ADR_RESULT = (AOB_HT - 0x113).ToString("x");
-            //    HT3_ADR_RESULT = (AOB_HT + 0x11C).ToString("x");
-
             WH_ADR_RESULT = AOB_WH.ToString("x");
-            SUPERPOT_ADR_RESULT2 = AOB_Superpot2.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
             AOE_ADR_RESULT = AOB_AOE.ToString("x");
             LR_ADR_RESULT = AOB_LR.ToString("x");
             BA_ADR_RESULT = AOB_BA.ToString("x");
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
-            string PATH3_ADR_RESULT = (AOB_PATH + 0x2A).ToString("x");
-            LOCALPLAYER_ALLOC();
-            int num = 20;
-
             MessageBox.Show("All Done");
-
-            m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
-            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
-            m.WriteMemory("00ff95f0", "float", "4800");
+            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00FD0012", "float", "-1");
+            m.WriteMemory("00FAA000", "float", "4800");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-            ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
-            //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
+            LOCALPLAYER_ALLOC();
+
+
+            int num = 20;
+
             byte[] array = m.ReadBytes(NameAdr, num);
             if (array != null)
             {
@@ -524,8 +498,6 @@ namespace Kappa
 
 
         }
-
-
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
