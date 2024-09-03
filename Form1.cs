@@ -125,6 +125,7 @@ namespace Kappa
         public string ASPD_ADR_RESULT;
         public string ASPD_ADR_RESULT2;
 
+        public string SKILLPET_ADR_RESULT;
         public string HT_ADR_RESULT;
         public string HT2_ADR_RESULT;
         public string HT3_ADR_RESULT;
@@ -452,6 +453,9 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+
+            SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
+
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
