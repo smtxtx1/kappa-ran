@@ -2399,7 +2399,7 @@ namespace Kappa
                     expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
                     if (ItemType != 0 && ItemType != 5 && ItemType != 2)
                     {
-                        saveID = m.ReadString(IDadr);
+                     //   saveID = m.ReadString(IDadr);
 
                         if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
                         {
@@ -2408,7 +2408,7 @@ namespace Kappa
 
                             listView11.Items.Add(listViewItem);
                             string contents = JsonConvert.SerializeObject(row);
-                            File.AppendAllText($"item_logs_{saveID}.json", contents);
+                         //   File.AppendAllText($"item_logs_{saveID}.json", contents);
                         }
 
                     }
