@@ -2470,12 +2470,13 @@ namespace Kappa
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(10);
+                            item.Remove();
+
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 m.WriteMemory(forceattack_adr, "int", "4");
 
                                 await Task.Delay(10);
-                                item.Remove();
 
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
