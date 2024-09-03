@@ -803,96 +803,40 @@ namespace Kappa
         private async Task Autobuff()
         {
 
-            // 66 81 7D F0 FF FF aob for buff 
-            // 8B BC B8 6C 09 00 00
-
-
             await Task.Delay(1);
             List<int> list = new List<int>();
-            List<int> listREMAIN = new List<int>();
             if (list.Count == 5)
             {
                 list.Clear();
             }
 
-            //string OffsetSKill = i3.ToString("x");
-            ////    
-
-            //int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
-            //int num_test = i3 + 0x02;
-            //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
-            //Console.WriteLine("Offset2:" + num_test);
-
-            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
+            for (int j = 0x00B966E4; j <= 0x00B971E4; j += 0xB0)
             {
-                if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
+                if (m.Read2Byte(j.ToString("x")) == 65535)
                 {
                     continue;
                 }
-                if (j == 0x0)
-                {
-                    j = 0x8F0;
-                }
-                string OffsetBuff = j.ToString("x");
-                int num4 = j + 0x02;
-                int SkillRemain = j + 0x8;
-                int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
-                int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
-                float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
-                Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
-                if (item3 <= 30f && !listREMAIN.Contains(item2))
-                {
-                    listREMAIN.Add(item2);
-                }
+
+                int num4 = j + 2;
+                int item = m.Read2Byte(j.ToString("x"));
+                int item2 = m.Read2Byte(num4.ToString("x"));
                 if (!list.Contains(item2))
                 {
                     list.Add(item2);
                 }
             }
 
-            for (int k = 0x9DC; k <= 0xA00; k += 0x04)
+            for (int k = 0x00B95BB4; k <= 0x00B95BD8; k += 0x4)
             {
-                if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
+                if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
                     continue;
                 }
 
-                int num5 = k + 0x02;
-                int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
-                int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                Console.WriteLine($"F4 Skills: {num6},{num7}");
+                int num5 = k + 2;
+                int num6 = m.Read2Byte(k.ToString("x"));
+                int num7 = m.Read2Byte(num5.ToString("x"));
 
-                if (listREMAIN.Contains(num7))
-                {
-                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
-                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
-                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                    if (m.ReadInt(MATION_CHECK) != 3)
-                    {
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(800);
-                        m.WriteMemory(forceattack_adr, "int", "9");
-
-
-                    }
-                    if (frenzzy_tar != -1)
-                    {
-
-                        m.WriteMemory(actioncheck, "int", "0");
-                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(800);
-                        m.WriteMemory(forceattack_adr, "int", "9");
-
-                    }
-                    if (listREMAIN.Contains(num7))
-                    {
-                        listREMAIN.Remove(num7);
-
-                    }
-
-                }
                 if (!list.Contains(num7))
                 {
 
@@ -903,8 +847,7 @@ namespace Kappa
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(800);
-                        m.WriteMemory(forceattack_adr, "int", "9");
+                        Thread.Sleep(300);
 
                     }
                     if (frenzzy_tar != -1)
@@ -913,9 +856,7 @@ namespace Kappa
                         m.WriteMemory(actioncheck, "int", "0");
                         m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(800);
-                        m.WriteMemory(forceattack_adr, "int", "9");
-
+                        Thread.Sleep(300);
                     }
 
                 }
