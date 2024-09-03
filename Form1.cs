@@ -864,7 +864,7 @@ namespace Kappa
                 int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
                 int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
                 float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
-                Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
+              //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
                 if (item3 <= 30f && !listREMAIN.Contains(item2))
                 {
                     listREMAIN.Add(item2);
