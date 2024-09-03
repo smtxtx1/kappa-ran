@@ -125,7 +125,8 @@ namespace Kappa
         public string ANTIAFK_ADR_RESULT;
         public string ASPD_ADR_RESULT;
         public string ASPD_ADR_RESULT2;
-
+        public string ANTIFOG_ADR_RESULT;
+        public string ANTIFOG_ADR_RESULT2;
         public string SKILLPET_ADR_RESULT;
         public string HT_ADR_RESULT;
         public string HT2_ADR_RESULT;
@@ -426,12 +427,12 @@ namespace Kappa
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
             var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4E 1E 33 D2 66 8B 56 1C 51 8B C8", false, true);
             var AoB_Scan_BypassPET = await m.AoBScan("0F 84 ?? ?? ?? 00 E8 ?? ?? ?? ?? 33 C9 66 8B 4F 1E", false, true);
-            var AoB_Scan_AntiFOX = await m.AoBScan("c7 46 ? ? ? ? ? eb ? c7 46 ? ? ? ? ? 8b 46 ? 89 46", false, true);
+            var AoB_Scan_AntiFOG = await m.AoBScan("c7 46 ? ? ? ? ? eb ? c7 46 ? ? ? ? ? 8b 46 ? 89 46", false, true);
 
 
             long AOB_PETBP = AoB_Scan_BypassPET.FirstOrDefault();
 
-
+            long AOB_ANTIFOG = AoB_Scan_AntiFOG.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
@@ -464,7 +465,8 @@ namespace Kappa
             string PETBP_ADR_RESULT = AOB_PETBP.ToString("x");
 
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
-
+            ANTIFOG_ADR_RESULT = AOB_ANTIFOG.ToString("x");
+            ANTIFOG_ADR_RESULT2 = (AOB_ANTIFOG + 0x09).ToString("x");
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
@@ -585,13 +587,13 @@ namespace Kappa
             if (checkBox1.Checked)
             {
                 //m.WriteMemory(Drone_adr, "float", "8000");
-                m.WriteMemory(FastZoom, "float", "150");
+                m.WriteMemory(ANTIFOG_ADR_RESULT, "bytes", "C7 46 58 7F 96 18 4B");
                 m.WriteMemory(DRONE_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
-                m.WriteMemory(FastZoom, "float", "80");
+                m.WriteMemory(ANTIFOG_ADR_RESULT, "bytes", "C7 46 58 00 80 09 45");
                 m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 08 DD 11 03");
 
             }
