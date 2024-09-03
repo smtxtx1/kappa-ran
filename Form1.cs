@@ -1713,7 +1713,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            float limitdistance = 8f;
+            float limitdistance = 4f;
             const int OffsetID = 0x17A4;
             const int OffsetX = 0x1678;
             const int OffsetY = 0x167C;
@@ -2164,7 +2164,7 @@ namespace Kappa
 
         private async Task ItemGetAll()
         {
-            string names = m.ReadString(saveID);
+            string names = m.ReadString(IDadr);
             try
             {
                 foreach (ListViewItem item in listView11.Items)
