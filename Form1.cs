@@ -2431,7 +2431,7 @@ namespace Kappa
         }
         private async Task ItemGetAll()
         {
-            string names = m.ReadString(saveID);
+            string names = m.ReadString(IDadr);
             try
             {
                 foreach (ListViewItem item in listView11.Items)
@@ -2444,11 +2444,11 @@ namespace Kappa
                             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
                             m.WriteMemory(forceattack_adr, "int", "4");
                             await Task.Delay(20);
+                            item.Remove();
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
                                 await Task.Delay(20);
-                                item.Remove();
 
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
