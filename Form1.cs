@@ -1956,7 +1956,7 @@ namespace Kappa
             const int OffsetY = 0xAF0;
             const int OffsetZ = 0xAF4;
             const int OffsetHp = 0xA90;
-            float limitdistance = 6f;
+            float limitdistance = 4f;
             for (int i = 0; i < 3; i++)
             {
                 // Calculate offsets based on the iteration
@@ -1980,7 +1980,7 @@ namespace Kappa
                 float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
-                    Console.WriteLine("Distance is: " + distance_mon);
+                   // Console.WriteLine("Distance is: " + distance_mon);
                     m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
@@ -1988,6 +1988,14 @@ namespace Kappa
 
                         for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
                         {
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            await Task.Delay(5);
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            {
+                                break;
+                            }
+
                             if (i3 == 0x988)
                             {
                                 i3 = 0x964;
@@ -2006,12 +2014,26 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                //      Console.WriteLine("Attacking");
+                                distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                                check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                await Task.Delay(5);
+                                if (check_hp_mon < 5 || distance_mon > limitdistance)
+                                {
+                                    Console.WriteLine($"Distance: {distance_mon}");
+                                    break;
+                                }
+
+                                
 
                             }
                             await Task.Delay(10);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             if (m.ReadInt(TARGET_RING) == -1)
+                            {
+                                break;
+                            }
+
+                            if(distance_mon > limitdistance)
                             {
                                 break;
                             }
@@ -2034,45 +2056,6 @@ namespace Kappa
 
                             }
 
-
-
-                            //    for (int i2 = 0x00BEFA14; i2 <= 0x00BEFA38; i2 += 4)
-                            //{
-                            //    int idskilltype1 = m.ReadByte(i2.ToString("X"));
-                            //    int num = i2 + 2;
-                            //    int idskilltype2 = m.ReadByte(num.ToString("X"));
-                            //    m.WriteMemory(actioncheck, "int", "2");
-                            //    if (idskilltype1 != 255 && idskilltype2 != 255)
-                            //    {
-                            //        m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                            //        m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                            //        m.WriteMemory(forceattack_adr, "int", "5");
-                            //    }
-                            //    await Task.Delay(10);
-                            //    check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //    if (m.ReadInt(TARGET_RING) == -1)
-                            //    {
-                            //        break;
-                            //    }
-                            //    distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-
-                            //    if (check_hp_mon < 5 || distance_mon > limitdistance)
-                            //    {
-                            //        await Task.Delay(500);
-                            //        check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //        x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                            //        Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                            //        z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
-                            //        hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            //        myX = m.ReadFloat(CurrentX);
-                            //        myY = m.ReadFloat(CurrentY);
-                            //        myZ = m.ReadFloat(CurrentZ);
-
-
-                            //        break;
-                            //    }
-
-                            //}
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
@@ -2093,6 +2076,11 @@ namespace Kappa
                         {
                             break;
                         }
+                        if (check_hp_mon < 5 || distance_mon > limitdistance)
+                        {
+                            break;
+                        }
+
                         if (m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
