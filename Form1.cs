@@ -420,6 +420,7 @@ namespace Kappa
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
+            var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4E 1E 33 D2 66 8B 56 1C 51 8B C8", false, true);
 
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
