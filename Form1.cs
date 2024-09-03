@@ -189,22 +189,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
+        public string CurrentX = "00FF38A0,1F78";
 
-        public string CurrentX = "00FF38A0,2230";
+        public string CurrentY = "00FF38A0,1F7C";
 
-        public string CurrentY = "00FF38A0,2234";
-
-        public string CurrentZ = "00FF38A0,2238";
+        public string CurrentZ = "00FF38A0,1F80";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,2274";
+        public string gotoX = "00FF38A0,2078";
 
-        public string gotoY = "00FF38A0,2278";
+        public string gotoY = "00FF38A0,207C";
 
-        public string gotoZ = "00FF38A0,227C";
+        public string gotoZ = "00FF38A0,2080";
         /// <summary>
         /// POSITION END
         /// </summary>
