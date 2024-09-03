@@ -840,7 +840,6 @@ namespace Kappa
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(300);
                         while (m.ReadInt(MATION_CHECK) == 1)
                         {
                             Thread.Sleep(500);
