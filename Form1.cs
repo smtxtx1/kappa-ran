@@ -2717,18 +2717,18 @@ namespace Kappa
             allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                m.FreezeValue("00fd4567,114", "int", "0");
+                m.FreezeValue("00fd4567,140", "int", "0");
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x89, 0x35, 0x67, 0x45, 0xFD, 0x00, 0x8B, 0x86, 0x14, 0x01, 0x00, 0x00,
+                    0x8B ,0x86 ,0x14 ,0x01 ,0x00 ,0x00 ,0x89 ,0x35 ,0x67 ,0x45 ,0xFD ,0x00,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_NOLIMIT + 0x39 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0x33 + 0x06 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
@@ -2743,7 +2743,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset2 = (int)allocate_adr_Nolimit2 - ((int)AOB_NOLIMIT + 0x33 + jmpCode.Length - 1);
+                int jmpOffset2 = (int)allocate_adr_Nolimit2 - ((int)AOB_NOLIMIT + 0x34 + jmpCode.Length - 1);
                 BitConverter.GetBytes(jmpOffset2).CopyTo(jmpCode, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 // Write the second jmp instruction to the specified address (004EBB27)
