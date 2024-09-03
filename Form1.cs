@@ -781,16 +781,11 @@ namespace Kappa
         {
             if (checkBox4.Checked)
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "1");
-
-                // m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "D8 1D 00 25 FA 00 DF E0 F6 C4 41 7B CF");
-                m.WriteMemory("00FA2500", "float", "-1");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 01 52 83 CE FF");
             }
             else
             {
-                m.WriteMemory(SUPERPOT_ADR_RESULT, "byte", "2");
-
-                //  m.WriteMemory(SUPERPOT_ADR_RESULT2, "bytes", "DC 1D 10 20 95 00 DF E0 F6 C4 41 7B CF");
+                m.WriteMemory(SUPERPOT_ADR_RESULT, "bytes", "6A 02 52 83 CE FF");
             }
         }
 
