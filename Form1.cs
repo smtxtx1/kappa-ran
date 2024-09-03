@@ -71,7 +71,7 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00FF38A0,50";
+        public string NameAdr = "00FF38A0,58";
 
         public long AOB_MONVIEW;
         public long AOB_LOCALPLAYER;
