@@ -2162,6 +2162,28 @@ namespace Kappa
 
         }
 
+        private async Task ProcessItem(ListViewItem item, int actionCheckValue, int delay)
+        {
+            m.WriteMemory(actioncheck, "int", actionCheckValue.ToString());
+            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
+            m.WriteMemory(forceattack_adr, "int", "4");
+            await Task.Delay(delay);
+            item.Remove();
+
+            while (m.ReadInt(MATION_CHECK) == 1)
+            {
+                m.WriteMemory(forceattack_adr, "int", "4");
+                await Task.Delay(delay);
+
+                if (m.ReadInt(MATION_CHECK) == 0)
+                {
+                    m.WriteMemory(forceattack_adr, "int", "4");
+                    await Task.Delay(delay);
+                    break;
+                }
+            }
+        }
+
         private async Task ItemGetAll()
         {
             string names = m.ReadString(IDadr);
@@ -2169,78 +2191,24 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    if (item.SubItems[0].Text == "3")
+                    if (item.SubItems[0].Text == "3" && m.ReadInt(MATION_CHECK) != 1)
                     {
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(20);
-                            item.Remove();
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                await Task.Delay(20);
-
-                                if (m.ReadInt(MATION_CHECK) == 0)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(20);
-
-                                    item.Remove();
-                                    break;
-                                }
-                            }
-                        }
+                        await ProcessItem(item, 3, 20);
                     }
-                    if (item.SubItems[0].Text == "4")
+                    else if (item.SubItems[0].Text == "4")
                     {
-                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "4");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text); // Assuming "ItemID" is the column header
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(10);
-                            item.Remove();
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                m.WriteMemory(forceattack_adr, "int", "4");
-
-                                await Task.Delay(10);
-
-                                if (m.ReadInt(MATION_CHECK) == 0)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(10);
-
-                                    item.Remove();
-                                    break;
-                                }
-                            }
-                        }
-
+                        await ProcessItem(item, 4, 10);
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
                 File.AppendAllText($"errorlogsMessage{names}", ex.Message);
-                return;
             }
 
-
-
             await Task.Delay(20);
-
         }
-
-
 
         private async Task ItemGet()
         {
@@ -2249,90 +2217,25 @@ namespace Kappa
             {
                 foreach (ListViewItem item in listView11.Items)
                 {
-                    bool found = false;
+                    bool found = listView12.Items.Cast<ListViewItem>().Any(item12 => item.SubItems[2].Text.Contains(item12.SubItems[2].Text));
 
-                    foreach (ListViewItem item12 in listView12.Items)
+                    if (found && m.ReadInt(MATION_CHECK) != 1)
                     {
-                        if (item.SubItems[2].Text.Contains(item12.SubItems[2].Text))
-                        {
-                            found = true;
-                            break;
-                        }
+                        await ProcessItem(item, 3, 10);
                     }
-
-                    if (found)
+                    else if (item.SubItems[0].Text == "4")
                     {
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(10);
-                            item.Remove();
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                m.WriteMemory(forceattack_adr, "int", "4");
-
-                                await Task.Delay(10);
-                                item.Remove();
-
-                                if (m.ReadInt(MATION_CHECK) == 0)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(50);
-
-                                    item.Remove();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    if (item.SubItems[0].Text == "4")
-                    {
-                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "4");
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                            m.WriteMemory(forceattack_adr, "int", "4");
-                            await Task.Delay(50);
-                            item.Remove();
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                m.WriteMemory(forceattack_adr, "int", "4");
-
-                                await Task.Delay(10);
-                                item.Remove();
-
-                                if (m.ReadInt(MATION_CHECK) == 0)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-                                    await Task.Delay(50);
-
-                                    item.Remove();
-                                    break;
-                                }
-                            }
-                        }
+                        await ProcessItem(item, 4, 50);
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
                 File.AppendAllText($"errorlogsMessage{names}", ex.Message);
-                return;
             }
 
-
-
             await Task.Delay(20);
-
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
