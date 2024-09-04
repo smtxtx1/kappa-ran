@@ -1766,10 +1766,27 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                await ItemGetAll();
+                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+
+                                m.WriteMemory("0323B0DD", "byte", "63");
                                 await Task.Delay(10);
-                                await ItemGetAll();
+                                m.WriteMemory("0323B0DD", "byte", "01");
                                 await Task.Delay(10);
+                                m.WriteMemory("0323B0DD", "byte", "63");
+                                await Task.Delay(10);
+                                m.WriteMemory("0323B0DD", "byte", "01");
+                                await Task.Delay(10);
+                                m.WriteMemory("0323B0DD", "byte", "63");
+                                await Task.Delay(10);
+                                m.WriteMemory("0323B0DD", "byte", "01");
+                                await Task.Delay(10);
+                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 52 02 00 00");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0D");
+
+
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -1786,10 +1803,26 @@ namespace Kappa
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
-                                    await ItemGetAll();
+                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+
+                                    m.WriteMemory("0323B0DD", "byte", "63");
                                     await Task.Delay(10);
-                                    await ItemGetAll();
+                                    m.WriteMemory("0323B0DD", "byte", "01");
                                     await Task.Delay(10);
+                                    m.WriteMemory("0323B0DD", "byte", "63");
+                                    await Task.Delay(10);
+                                    m.WriteMemory("0323B0DD", "byte", "01");
+                                    await Task.Delay(10);
+                                    m.WriteMemory("0323B0DD", "byte", "63");
+                                    await Task.Delay(10);
+                                    m.WriteMemory("0323B0DD", "byte", "01");
+                                    await Task.Delay(10);
+                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 52 02 00 00");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0D");
+
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
