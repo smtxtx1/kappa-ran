@@ -529,7 +529,8 @@ namespace Kappa
           //  MessageBox.Show(last8Characters); // Show the last 8 characters in the message box
 
             m.WriteMemory(last8Characters, "float", "-1");
-
+            m.ReadFloat(last8Characters);
+            MessageBox.Show(m.ReadFloat(last8Characters).ToString());
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
             //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
