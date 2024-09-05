@@ -1995,7 +1995,7 @@ namespace Kappa
                                     if (check_hp_mon < 5)
                                     {
                                         Console.WriteLine($"break HP");
-
+                                        break;
                                     }
                                     if (distance_mon > limitdistance)
                                     {
@@ -2031,6 +2031,33 @@ namespace Kappa
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
 
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                            Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                            z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+                            hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            myX = m.ReadFloat(CurrentX);
+                            myY = m.ReadFloat(CurrentY);
+                            myZ = m.ReadFloat(CurrentZ);
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+
+
+                            Console.WriteLine($"Distance: {distance_mon}");
+
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            {
+                                if (check_hp_mon < 5)
+                                {
+                                    Console.WriteLine($"break HP");
+                                    break;
+                                }
+                                if (distance_mon > limitdistance)
+                                {
+                                    Console.WriteLine($"break Distance {distance_mon} > {limitdistance}");
+                                    break;
+                                }
+                            }
+
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 if (distance_mon > limitdistance)
