@@ -929,9 +929,10 @@ namespace Kappa
 
                         m.WriteMemory(forceattack_adr, "int", "5");
 
-                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
 
                         Thread.Sleep(300);
+                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
+
                     }
 
                 }
