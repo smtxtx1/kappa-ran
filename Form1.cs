@@ -2206,7 +2206,7 @@ namespace Kappa
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
-            DisplayAlloc();
+            //DisplayAlloc();
 
             if (checkBox13.Checked)
             {
@@ -2794,7 +2794,7 @@ namespace Kappa
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
-                DisplayAlloc();
+                //DisplayAlloc();
                 MonsterAlloc();
                 backgroundWorker2.RunWorkerAsync();
             }
