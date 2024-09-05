@@ -2908,7 +2908,7 @@ namespace Kappa
             {
                 try
                 {
-                    await AddItemToListView();
+                  //  await AddItemToListView();
                     //AddMonsterList();
                     Thread.Sleep(10);
 
