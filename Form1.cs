@@ -517,7 +517,7 @@ namespace Kappa
             //m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
            // m.WriteMemory("00ff95f0", "float", "4800");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            m.WriteMemory("00FD0012", "float", "-1");
+            m.WriteMemory("00960558", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
             //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
