@@ -139,7 +139,6 @@ namespace Kappa
         public string SUPERPOT_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT2;
         public string DRONE_ADR_RESULT;
-        public string ATKBP_ADR_RESULT;
 
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
     {
@@ -470,7 +469,7 @@ namespace Kappa
             ANTIFOG_ADR_RESULT2 = (AOB_ANTIFOG + 0x09).ToString("x");
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
-            ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
+            string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
             UNLOCK_ADR_RESULT = (AOB_UNLOCK + 0x10).ToString("x");
@@ -513,12 +512,12 @@ namespace Kappa
             MessageBox.Show("All Done");
             INJECT_PET();
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-       //     m.WriteMemory("004F090A", "bytes", "E9 0B 05 00 00 90");
-          //  m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
-            //m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
+            m.WriteMemory("004F090A", "bytes", "E9 0B 05 00 00 90");
+            m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
+            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             m.WriteMemory("00ff95f0", "float", "4800");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            m.WriteMemory("00960558", "float", "-1");
+            m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
             //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
@@ -871,40 +870,96 @@ namespace Kappa
         private async Task Autobuff()
         {
 
+            // 66 81 7D F0 FF FF aob for buff 
+            // 8B BC B8 6C 09 00 00
+
+
             await Task.Delay(1);
             List<int> list = new List<int>();
+            List<int> listREMAIN = new List<int>();
             if (list.Count == 5)
             {
                 list.Clear();
             }
 
-            for (int j = 0x00BC3D84; j <= 0x00BC4674; j += 0xB0)
+            //string OffsetSKill = i3.ToString("x");
+            ////    
+
+            //int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
+            //int num_test = i3 + 0x02;
+            //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
+            //Console.WriteLine("Offset2:" + num_test);
+
+            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
             {
-                if (m.Read2Byte(j.ToString("x")) == 65535)
+                if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
                     continue;
                 }
-
-                int num4 = j + 2;
-                int item = m.Read2Byte(j.ToString("x"));
-                int item2 = m.Read2Byte(num4.ToString("x"));
+                if (j == 0x0)
+                {
+                    j = 0x8F0;
+                }
+                string OffsetBuff = j.ToString("x");
+                int num4 = j + 0x02;
+                int SkillRemain = j + 0x8;
+                int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
+                int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
+                float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
+                //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
+                if (item3 <= 30f && !listREMAIN.Contains(item2))
+                {
+                    listREMAIN.Add(item2);
+                }
                 if (!list.Contains(item2))
                 {
                     list.Add(item2);
                 }
             }
 
-            for (int k = 0x00BC341C; k <= 0x00BC3440; k += 0x4)
+            for (int k = 0x9DC; k <= 0xA00; k += 0x04)
             {
-                if (m.Read2Byte(k.ToString("x")) == 65535)
+                if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
                     continue;
                 }
 
-                int num5 = k + 2;
-                int num6 = m.Read2Byte(k.ToString("x"));
-                int num7 = m.Read2Byte(num5.ToString("x"));
+                int num5 = k + 0x02;
+                int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
+                //  Console.WriteLine($"F4 Skills: {num6},{num7}");
 
+                if (listREMAIN.Contains(num7))
+                {
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
+                    if (m.ReadInt(MATION_CHECK) != 3)
+                    {
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(800);
+                        m.WriteMemory(forceattack_adr, "int", "9");
+
+
+                    }
+                    if (frenzzy_tar != -1)
+                    {
+
+                        m.WriteMemory(actioncheck, "int", "0");
+                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(800);
+                        m.WriteMemory(forceattack_adr, "int", "9");
+
+                    }
+                    if (listREMAIN.Contains(num7))
+                    {
+                        listREMAIN.Remove(num7);
+
+                    }
+
+                }
                 if (!list.Contains(num7))
                 {
 
@@ -915,10 +970,8 @@ namespace Kappa
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        while (m.ReadInt(MATION_CHECK) == 1)
-                        {
-                            Thread.Sleep(500);
-                        }
+                        Thread.Sleep(800);
+                        m.WriteMemory(forceattack_adr, "int", "9");
 
                     }
                     if (frenzzy_tar != -1)
@@ -927,7 +980,9 @@ namespace Kappa
                         m.WriteMemory(actioncheck, "int", "0");
                         m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(300);
+                        Thread.Sleep(800);
+                        m.WriteMemory(forceattack_adr, "int", "9");
+
                     }
 
                 }
@@ -1958,60 +2013,42 @@ namespace Kappa
                 float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                 if (hp_mon > 70 && distance_mon <= limitdistance)
                 {
+                    // Console.WriteLine("Distance is: " + distance_mon);
                     m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
-                        distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                        for (int i2 = 0x00BC33A4; i2 <= 0x00BC33C8; i2 += 4)
-                        {
-                            int idskilltype1 = m.ReadByte(i2.ToString("X"));
-                            int num = i2 + 2;
-                            int idskilltype2 = m.ReadByte(num.ToString("X"));
-                            m.WriteMemory(actioncheck, "int", "2");
-                            if (idskilltype1 != 255 && idskilltype2 != 255)
-                            {
-                                m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                                m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                                m.WriteMemory(forceattack_adr, "int", "5");
-                                while (m.ReadInt(MATION_CHECK) == 3)
-                                {
-                                    Thread.Sleep(200);
-                                    if (m.ReadInt(MATION_CHECK) != 3)
-                                    {
-                                        break;
-                                    }
-                                }
 
-                            }
-                            await Task.Delay(10);
-                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                        for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
+                        {
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            if (m.ReadInt(TARGET_RING) == -1)
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            await Task.Delay(5);
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
                             {
                                 break;
                             }
-                            x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                            Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                            z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
-                            hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
-                            myX = m.ReadFloat(CurrentX);
-                            myY = m.ReadFloat(CurrentY);
-                            myZ = m.ReadFloat(CurrentZ);
-                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
 
-                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            if (i3 == 0x988)
                             {
-                                if (distance_mon > limitdistance)
-                                {
-                                    Console.WriteLine("Distance Out Of Limit");
-                                }
-                                if (check_hp_mon < 5)
-                                {
-                                    Console.WriteLine($"hp: {hp_mon}\n {m.ReadLong($"00FF5000,{OffsetHp:X}").ToString("x")}");
-                                    Console.WriteLine($"Monster Is Dead {check_hp_mon}");
-                                }
+                                i3 = 0x964;
+                            }
+                            string OffsetSKill = i3.ToString("x");
+                            //    
+
+                            int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
+                            int num_test = i3 + 0x02;
+                            int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
+                            // Console.WriteLine("Offset2:" + num_test);
+                            if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                            {
+
+                                m.WriteMemory(actioncheck, "int", "2");
+                                m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
+                                m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
+                                m.WriteMemory(forceattack_adr, "int", "5");
+                                check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                await Task.Delay(5);
                                 await Task.Delay(100);
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
@@ -2021,8 +2058,69 @@ namespace Kappa
                                 myX = m.ReadFloat(CurrentX);
                                 myY = m.ReadFloat(CurrentY);
                                 myZ = m.ReadFloat(CurrentZ);
-                                Console.WriteLine($"Distance is: {distance_mon}");
+                                distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
 
+
+                                Console.WriteLine($"Distance: {distance_mon}");
+
+                                if (check_hp_mon < 5 || distance_mon > limitdistance)
+                                {
+                                    if (check_hp_mon < 5)
+                                    {
+                                        Console.WriteLine($"break HP");
+
+                                    }
+                                    if (distance_mon > limitdistance)
+                                    {
+                                        Console.WriteLine($"break Distance {distance_mon} > {limitdistance}");
+                                        break;
+                                    }
+
+                                    break;
+                                }
+
+
+
+                            }
+                            await Task.Delay(10);
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            if (m.ReadInt(TARGET_RING) == -1)
+                            {
+                                break;
+                            }
+
+                            if (distance_mon > limitdistance)
+                            {
+                                break;
+                            }
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            {
+                                await Task.Delay(100);
+                                check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                                Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                                z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+                                hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                                myX = m.ReadFloat(CurrentX);
+                                myY = m.ReadFloat(CurrentY);
+                                myZ = m.ReadFloat(CurrentZ);
+
+
+                                break;
+
+                            }
+
+                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
+                            await Task.Delay(5);
+                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            {
+                                break;
+                            }
+                            if (m.ReadInt(TARGET_RING) == -1)
+                            {
                                 break;
                             }
 
@@ -2034,6 +2132,11 @@ namespace Kappa
                         {
                             break;
                         }
+                        if (check_hp_mon < 5 || distance_mon > limitdistance)
+                        {
+                            break;
+                        }
+
                         if (m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
@@ -2149,7 +2252,7 @@ namespace Kappa
 
         private void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
-            //DisplayAlloc();
+            DisplayAlloc();
 
             if (checkBox13.Checked)
             {
@@ -2189,7 +2292,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B,0x96,0xD8,0x02,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
+                    0x8B,0x96,0x78,0x03,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
@@ -2239,7 +2342,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B ,0x16 ,0x89 ,0x35 ,0x00 ,0x30 ,0xFE ,0x00 ,0x39 ,0xEA,
+                    0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA,
                     0x0F, 0x84, 0x83, 0xEC, 0xB2, 0xF5,
                     0xE9, 0x37, 0xEC, 0xB2, 0xF5
                 };
@@ -2763,10 +2866,8 @@ namespace Kappa
 
 
                 await Autobuff();
-                await Task.Delay(100);
-
-                //await AutoSkills2();
-                await Task.Delay(100);
+                await AutoSkills2();
+                await Task.Delay(10);
 
             }
         }
@@ -2909,7 +3010,7 @@ namespace Kappa
             {
                 try
                 {
-                  //  await AddItemToListView();
+                    await AddItemToListView();
                     //AddMonsterList();
                     Thread.Sleep(10);
 
@@ -3219,7 +3320,6 @@ namespace Kappa
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
                 f_GET_Buff();
-                Thread.Sleep(100);
                 f_GET_SKILL_LIST();
                 Get = true;
             }
