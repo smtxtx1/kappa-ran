@@ -541,7 +541,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-            m.WriteMemory(last8Characters, "float", "-1");
+          
 
         }
 
