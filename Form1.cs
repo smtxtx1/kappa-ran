@@ -421,7 +421,7 @@ namespace Kappa
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 9E ?? ?? 00 00 74 4F", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
-            var AoB_Scan_ANTICB = await m.AoBScan("0F 84 ?? ?? 00 00 6A 45", false, true);
+            var AoB_Scan_ANTICB = await m.AoBScan("74 ? 55 55 55", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
@@ -2669,11 +2669,11 @@ namespace Kappa
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "E9 01 07 00 00 90");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "eb");
             }
             else
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "0F 84 00 07 00 00");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "74");
             }
         }
 
