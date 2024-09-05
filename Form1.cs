@@ -2794,7 +2794,7 @@ namespace Kappa
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
-                //DisplayAlloc();
+                DisplayAlloc();
                 MonsterAlloc();
                 backgroundWorker2.RunWorkerAsync();
             }
