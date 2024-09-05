@@ -1970,9 +1970,12 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "2");
                             if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
+                                m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
+                                m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
+
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Thread.Sleep(200);
