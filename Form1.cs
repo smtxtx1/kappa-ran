@@ -2027,7 +2027,7 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "2");
                             if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
-                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                                distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
@@ -2035,15 +2035,16 @@ namespace Kappa
                                 break;
                             }
 
-                                //    
+                            //    
 
-                                // Console.WriteLine("Offset2:" + num_test);
-                                if (idskilltype1 != 255 && idskilltype2 != 255)
-                                {
-                                    m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
-                                    m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
-                                    m.WriteMemory(forceattack_adr, "int", "5");
-                                }
+                            // Console.WriteLine("Offset2:" + num_test);
+                            if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                            {
+
+                                m.WriteMemory(actioncheck, "int", "2");
+                                m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
+                                m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
+                                m.WriteMemory(forceattack_adr, "int", "5");
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                                 await Task.Delay(5);
                                 await Task.Delay(100);
