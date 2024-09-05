@@ -2004,7 +2004,7 @@ namespace Kappa
                                     }
                                 }
 
-                                    while (m.ReadInt(MATION_CHECK) == 3)
+                                while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Thread.Sleep(200);
                                     if (m.ReadInt(MATION_CHECK) != 3)
@@ -2246,7 +2246,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x8B,0x96,0x78,0x03,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
+                    0x8B,0x96,0xD8,0x02,0x00,0x00,0x89,0x35,0x00,0x78,0xFA,0x00,
                     0xE9,
                     0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
