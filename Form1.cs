@@ -507,6 +507,14 @@ namespace Kappa
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             string PATH3_ADR_RESULT = (AOB_PATH + 0x2A).ToString("x");
             LOCALPLAYER_ALLOC();
+            int num = 20;
+            long readValue = m.ReadLong(ANTIAFK_ADR_RESULT); // Read the long value
+            string hexValue = readValue.ToString("x"); // Convert the long value to a hexadecimal string
+
+            // Ensure the hex string is at least 8 characters long and get the last 8 characters
+            string last8Characters = hexValue.Length > 8 ? hexValue.Substring(hexValue.Length - 8) : hexValue.PadLeft(8, '0');
+
+            MessageBox.Show(last8Characters); // Show the last 8 characters in the message box
 
          
 
@@ -518,21 +526,10 @@ namespace Kappa
             //m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             // m.WriteMemory("00ff95f0", "float", "4800");
     //        MessageBox.Show(m.ReadLong(ANTIAFK_ADR_RESULT).ToString("x"));
-           
+            m.WriteMemory(m.ReadLong(ANTIAFK_ADR_RESULT).ToString("x"), "float", "-1");
             // m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            int num = 20;
-            long readValue = m.ReadLong(ANTIAFK_ADR_RESULT); // Read the long value
-            string hexValue = readValue.ToString("x"); // Convert the long value to a hexadecimal string
-            // Ensure the hex string is at least 8 characters long and get the last 8 characters
-            string last8Characters = hexValue.Length > 8 ? hexValue.Substring(hexValue.Length - 8) : hexValue.PadLeft(8, '0');
-
-          //  MessageBox.Show(last8Characters); // Show the last 8 characters in the message box
-
-            
-            m.ReadFloat(last8Characters);
-            MessageBox.Show(m.ReadFloat(last8Characters).ToString());
+           // m.WriteMemory("00960558", "float", "-1");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-
             ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
             //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
             byte[] array = m.ReadBytes(NameAdr, num);
@@ -541,7 +538,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-          
+
 
         }
 
