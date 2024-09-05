@@ -1962,7 +1962,7 @@ namespace Kappa
                     while (true)
                     {
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                        for (int i2 = 0x00B95B3C; i2 <= 0x00B95B60; i2 += 4)
+                        for (int i2 = 0x00BC33A4; i2 <= 0x00BC33C8; i2 += 4)
                         {
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
