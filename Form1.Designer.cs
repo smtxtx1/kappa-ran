@@ -980,6 +980,7 @@
             // checkBox13
             // 
             checkBox13.AutoSize = true;
+            checkBox13.Enabled = false;
             checkBox13.Location = new Point(6, 22);
             checkBox13.Name = "checkBox13";
             checkBox13.Size = new Size(59, 19);
@@ -1056,7 +1057,6 @@
             // 
             // button19
             // 
-            button19.Enabled = false;
             button19.Location = new Point(80, 23);
             button19.Name = "button19";
             button19.Size = new Size(59, 23);
@@ -1078,6 +1078,7 @@
             // 
             // button6
             // 
+            button6.Enabled = false;
             button6.Location = new Point(6, 51);
             button6.Name = "button6";
             button6.Size = new Size(59, 23);
