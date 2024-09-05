@@ -3320,6 +3320,7 @@ namespace Kappa
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
                 f_GET_Buff();
+                Thread.Sleep(100);
                 f_GET_SKILL_LIST();
                 Get = true;
             }
