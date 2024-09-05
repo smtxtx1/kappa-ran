@@ -913,7 +913,12 @@ namespace Kappa
                     m.Read2Byte(num5.ToString("x"));
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
+                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+
                         m.WriteMemory(forceattack_adr, "int", "5");
+
+                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
+
                         while (m.ReadInt(MATION_CHECK) == 1)
                         {
                             Thread.Sleep(500);
