@@ -2019,9 +2019,15 @@ namespace Kappa
                     while (true)
                     {
 
-                        for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
+                        for (int i2 = 0x00D36F74; i2 <= 0x00D36F98; i2 += 4)
                         {
-                            distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
+                            int idskilltype1 = m.ReadByte(i2.ToString("X"));
+                            int num = i2 + 2;
+                            int idskilltype2 = m.ReadByte(num.ToString("X"));
+                            m.WriteMemory(actioncheck, "int", "2");
+                            if (idskilltype1 != 255 && idskilltype2 != 255)
+                            {
+                                distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
                             if (check_hp_mon < 5 || distance_mon > limitdistance)
@@ -2029,16 +2035,8 @@ namespace Kappa
                                 break;
                             }
 
-                            if (i3 == 0x988)
-                            {
-                                i3 = 0x964;
-                            }
-                            string OffsetSKill = i3.ToString("x");
                             //    
 
-                            int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
-                            int num_test = i3 + 0x02;
-                            int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
                             // Console.WriteLine("Offset2:" + num_test);
                             if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                             {
