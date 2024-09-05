@@ -519,6 +519,7 @@ namespace Kappa
            // m.WriteMemory("00ff95f0", "float", "4800");
             //m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory("00960558", "float", "-1");
+            m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             ////     m.WriteMemory(PATH2_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run1
             //   m.WriteMemory(PATH3_ADR_RESULT, "bytes", "90 90 90 90 90 90"); //Bypass Run2
             byte[] array = m.ReadBytes(NameAdr, num);
@@ -913,14 +914,7 @@ namespace Kappa
                     m.Read2Byte(num5.ToString("x"));
                     if (m.ReadInt(MATION_CHECK) != 3)
                     {
-                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-
                         m.WriteMemory(forceattack_adr, "int", "5");
-
-                        Thread.Sleep(300);
-
-                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
-
                         while (m.ReadInt(MATION_CHECK) == 1)
                         {
                             Thread.Sleep(500);
@@ -933,10 +927,7 @@ namespace Kappa
                         m.WriteMemory(actioncheck, "int", "0");
                         m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                         m.WriteMemory(forceattack_adr, "int", "5");
-
                         Thread.Sleep(300);
-                        m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
-
                     }
 
                 }
@@ -1980,14 +1971,9 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "2");
                             if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
-                                m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                Thread.Sleep(200);
-
-                                m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "74 82");
-
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Thread.Sleep(200);
