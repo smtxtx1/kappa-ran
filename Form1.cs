@@ -961,14 +961,19 @@ namespace Kappa
                         {
                             int frenzzy_tar = frenzzy_tarList[i];
 
-                            Console.WriteLine($"Buffing To {frenzzy_tar}");
+                            Console.WriteLine($"Buffering To {frenzzy_tar}");
 
                             if (frenzzy_tar != -1)
                             {
                                 m.WriteMemory(actioncheck, "int", "0");
                                 m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                Thread.Sleep(1300);
+                                while (m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Console.WriteLine("Buffering");
+                                    await Task.Delay(1000);
+                                }
+
                                 m.WriteMemory(forceattack_adr, "int", "9");
                             }
                         }
@@ -1001,15 +1006,19 @@ namespace Kappa
                         {
                             int frenzzy_tar = frenzzy_tarList[i];
 
-                            Console.WriteLine($"Buffing To {frenzzy_tar}");
+                            Console.WriteLine($"Buffering To {frenzzy_tar}");
 
                             if (frenzzy_tar != -1)
                             {
                                 m.WriteMemory(actioncheck, "int", "0");
                                 m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                Thread.Sleep(1300);
-                                m.WriteMemory(forceattack_adr, "int", "9");
+                                while (m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Console.WriteLine("Buffering");
+                                    await Task.Delay(1000);
+                                }
+                                    m.WriteMemory(forceattack_adr, "int", "9");
                             }
                         }
                     }
