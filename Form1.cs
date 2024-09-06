@@ -403,7 +403,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 ??", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("8B 54 01 60 8D 7C 01 60", false, true);
-            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ?? 8D", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5c 24 ? 74 ? 33 c9", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             //        IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("1", false, true);
