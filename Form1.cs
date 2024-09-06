@@ -611,7 +611,7 @@ namespace Kappa
 
         }
         string originalcode_cutam = "D8 4C 24 10 8B CE";
-        string originalcode_LR = "D9 5C 24 38 FF 52 0C";
+        string originalcode_LR = "D9 5C 24 38 FF 52 38";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 18 0C 00 00";
         string originalcode_Path = "39 5C 24 28 74 1B";
