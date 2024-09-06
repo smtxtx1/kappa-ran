@@ -691,6 +691,7 @@ namespace Kappa
                 this.Text = selectedProcessId.ToString() + " " + @string;
 
             }
+            YourCallingMethod();
 
         }
 
