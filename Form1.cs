@@ -2348,7 +2348,7 @@ namespace Kappa
                 };
 
 
-                int jumpOffset1 = (int)AOB_GETBUFF + 0x4D - ((int)allocate_adr_BUFF + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_GETBUFF + 0x50 - ((int)allocate_adr_BUFF + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_GETBUFF + 0x06 - ((int)allocate_adr_BUFF + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
