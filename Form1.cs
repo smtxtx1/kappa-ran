@@ -516,6 +516,7 @@ namespace Kappa
 
             MessageBox.Show("All Done");
             INJECT_PET();
+            
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             //   m.WriteMemory("004F08E7", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
@@ -531,8 +532,9 @@ namespace Kappa
             {
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
-            }
+                this.Text = selectedProcessId.ToString() + @string;
 
+            }
 
         }
 
