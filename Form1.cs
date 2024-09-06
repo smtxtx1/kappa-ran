@@ -197,7 +197,7 @@ namespace Kappa
 
         public string CurrentY = "00FF38A0,238C";
 
-        public string CurrentZ = "00FF38A0,2394";
+        public string CurrentZ = "00FF38A0,2390";
 
         public string ZoomAdr = "031F3EF4";
 
