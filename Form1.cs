@@ -2026,7 +2026,7 @@ namespace Kappa
                     while (true)
                     {
 
-                        for (int i3 = 0x964; i3 <= 0x988; i3 += 4)
+                        for (int i3 = 0x96C; i3 <= 0x990; i3 += 4)
                         {
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
@@ -2036,9 +2036,9 @@ namespace Kappa
                                 break;
                             }
 
-                            if (i3 == 0x988)
+                            if (i3 == 0x990)
                             {
-                                i3 = 0x964;
+                                i3 = 0x96C;
                             }
                             string OffsetSKill = i3.ToString("x");
                             //    
