@@ -2871,6 +2871,25 @@ namespace Kappa
             }
         }
 
+        public string ReadKeyFromFile()
+        {
+            string path = "key.txt";
+            if (File.Exists(path))
+            {
+                try
+                {
+                    return File.ReadAllText(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error reading the key: " + ex.Message);
+                }
+            }
+            return null;
+        }
+
+
+
         public string webhookUrl = "https://discord.com/api/webhooks/1275688413370257429/JfSQdqdgukeXY1s-K9RhvyaRdal-HT9B2My8ZoXCqNAf6K2D5oBSKPNEpPyQh-grTGeg";
 
         private async void YourCallingMethod()
