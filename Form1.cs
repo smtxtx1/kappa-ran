@@ -1778,8 +1778,8 @@ namespace Kappa
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "eb");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                                 m.WriteMemory("031FD84D", "byte", "63");
                                 await Task.Delay(10);
@@ -1794,8 +1794,8 @@ namespace Kappa
                                 m.WriteMemory("031FD84D", "byte", "01");
                                 await Task.Delay(10);
                                 m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 52 02 00 00");
-                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0D");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
 
                             }
@@ -1815,8 +1815,8 @@ namespace Kappa
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
                                     m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "eb");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                                     m.WriteMemory("031FD84D", "byte", "63");
                                     await Task.Delay(10);
@@ -1831,8 +1831,8 @@ namespace Kappa
                                     m.WriteMemory("031FD84D", "byte", "01");
                                     await Task.Delay(10);
                                     m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 52 02 00 00");
-                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "75 0D");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
