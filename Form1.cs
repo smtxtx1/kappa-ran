@@ -2028,6 +2028,11 @@ namespace Kappa
 
                         for (int i3 = 0x96C; i3 <= 0x990; i3 += 4)
                         {
+                             id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
+                             x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                             Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                             z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
@@ -2132,6 +2137,10 @@ namespace Kappa
                             }
 
                         }
+                        id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
+                        x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                        Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                        z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                         await Task.Delay(5);
