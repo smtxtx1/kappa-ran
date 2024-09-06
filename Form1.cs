@@ -402,7 +402,7 @@ namespace Kappa
             //"74 82 8D BE F8 21 00 00
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 38 FF 52 ??", false, true);
-            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7f ? ? 0f 85 ? ? ? ? 83 7f", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5c 24 ? 74 ? 33 c9", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
@@ -616,7 +616,7 @@ namespace Kappa
         string originalcode_LR = "D9 5C 24 38 FF 52 38";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 28 0E 00 00";
-        string originalcode_Path = "39 5C 24 28 74 1B";
+        string originalcode_Path = "39 5C 24 28 74 23";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
