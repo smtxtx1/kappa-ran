@@ -897,7 +897,7 @@ namespace Kappa
             //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
             //Console.WriteLine("Offset2:" + num_test);
 
-            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
+            for (int j = -0xB00; j <= 0x0; j += 0xB0)
             {
                 if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
@@ -905,7 +905,7 @@ namespace Kappa
                 }
                 if (j == 0x0)
                 {
-                    j = 0x8F0;
+                    j = 0xB00;
                 }
                 string OffsetBuff = j.ToString("x");
                 int num4 = j + 0x02;
