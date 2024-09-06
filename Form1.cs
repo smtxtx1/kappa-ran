@@ -535,7 +535,7 @@ namespace Kappa
                 this.Text = selectedProcessId.ToString() + " " + @string;
 
             }
-
+            YourCallingMethod();
         }
 
         public int SKILLPET_ADR_RESULT2 = 0;
