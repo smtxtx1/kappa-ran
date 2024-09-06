@@ -688,6 +688,8 @@ namespace Kappa
             {
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
+                this.Text = selectedProcessId.ToString() + " " + @string;
+
             }
 
         }
