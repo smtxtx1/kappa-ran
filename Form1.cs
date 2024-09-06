@@ -166,7 +166,7 @@ namespace Kappa
 
         public string DroneBypass = "005B72F8";
 
-        public string IDadr = "00FF38A0,248";
+        public string IDadr = "00FF38A0,250";
 
         public string Level_ADR = "00FF38A0,90";
 
@@ -192,21 +192,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00FF38A0,1F78";
+        public string CurrentX = "00FF38A0,2388";
 
-        public string CurrentY = "00FF38A0,1F7C";
+        public string CurrentY = "00FF38A0,238C";
 
-        public string CurrentZ = "00FF38A0,1F80";
+        public string CurrentZ = "00FF38A0,2394";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,2078";
+        public string gotoX = "00FF38A0,23CC";
 
-        public string gotoY = "00FF38A0,207C";
+        public string gotoY = "00FF38A0,23D0";
 
-        public string gotoZ = "00FF38A0,2080";
+        public string gotoZ = "00FF38A0,23D4";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -266,9 +266,9 @@ namespace Kappa
 
         public bool _INJECT_PET = false;
 
-        public string HpFreeze_1 = "00FF38A0,138";
+        public string HpFreeze_1 = "00FF38A0,140";
 
-        public string HpFreeze_2 = "00FF38A0,13A";
+        public string HpFreeze_2 = "00FF38A0,142";
 
 
         public string Antislide = "004324D8";
