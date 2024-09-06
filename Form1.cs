@@ -517,7 +517,7 @@ namespace Kappa
             MessageBox.Show("All Done");
             INJECT_PET();
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-         //   m.WriteMemory("004F08E7", "bytes", "E9 0B 05 00 00 90");
+            //   m.WriteMemory("004F08E7", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "F0 95 FF 00");
             m.WriteMemory("00ff95f0", "float", "4800");
@@ -562,7 +562,7 @@ namespace Kappa
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "eb");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90");
-        //    m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
+            //    m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
             //   m.WriteMemory(PATH2_ADR_RESULT,"bytes", "eb");
 
 
@@ -1038,11 +1038,11 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1, 
-                    0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1, 
-                    0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1, 0x39, 0x5C, 0x24, 0x28, 
-                    0x0F, 0x84, 0xFC, 0x34, 0x3C, 0xF3, 
-                    0xE9, 0xC5, 0x34, 0x3C, 0xF3                
+                    0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1,
+                    0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1,
+                    0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1, 0x39, 0x5C, 0x24, 0x28,
+                    0x0F, 0x84, 0xFC, 0x34, 0x3C, 0xF3,
+                    0xE9, 0xC5, 0x34, 0x3C, 0xF3
                 };
 
                 int jumpOffset1 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
@@ -2028,10 +2028,10 @@ namespace Kappa
 
                         for (int i3 = 0x96C; i3 <= 0x990; i3 += 4)
                         {
-                             id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
-                             x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
-                             Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
-                             z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
+                            id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
+                            x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
+                            Ymon = m.ReadFloat($"00FF5000,{OffsetY:X}");
+                            z_mon = m.ReadFloat($"00FF5000,{OffsetZ:X}");
 
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
