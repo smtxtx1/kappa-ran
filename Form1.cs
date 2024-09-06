@@ -420,7 +420,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8b 81 ? ? ? ? c3 cc cc cc cc cc cc cc cc cc 8b 49 ? e9 ? ? ? ? cc cc cc cc cc cc cc cc 8b 41", false, true);
-            var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 D8 02 00 00 83 C1 FE", false, true);
+            var AoB_Scan_ITEMDROP = await m.AoBScan("8b 96 ? ? ? ? 83 c1 ? 33 c0", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 9e ? ? ? ? 74 ? 8b 96", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
