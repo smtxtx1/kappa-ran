@@ -956,11 +956,12 @@ namespace Kappa
                     }
                     if (frenzzy_tarList.Count > 0)
                     {
-                        int frenzzy_tar = frenzzy_tarList[i];
 
                         // Loop through each frenzzy_tar stored in the list
                         for (int i = 1; i < frenzzy_tarList.Count; i++)
                         {
+                            int frenzzy_tar = frenzzy_tarList[i];
+
                             Console.WriteLine($"Buffing To {frenzzy_tar}");
 
                             if (frenzzy_tar != -1)
