@@ -964,7 +964,7 @@ namespace Kappa
                             if (frenzzy_tar != -1)
                             {
                                 m.WriteMemory(actioncheck, "int", "0");
-                                m.WriteMemory(TARGET_SKILL, "int", (frenzzy_tar - 8).ToString());
+                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
                                 Thread.Sleep(1300);
                                 m.WriteMemory(forceattack_adr, "int", "9");
