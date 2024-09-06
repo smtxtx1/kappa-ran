@@ -994,15 +994,24 @@ namespace Kappa
                         m.WriteMemory(forceattack_adr, "int", "9");
 
                     }
-                    if (frenzzy_tar != -1)
+                    if (frenzzy_tarList.Count > 0)
                     {
 
-                        m.WriteMemory(actioncheck, "int", "0");
-                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(800);
-                        m.WriteMemory(forceattack_adr, "int", "9");
+                        for (int i = 0; i < frenzzy_tarList.Count; i++)
+                        {
+                            int frenzzy_tar = frenzzy_tarList[i];
 
+                            Console.WriteLine($"Buffing To {frenzzy_tar}");
+
+                            if (frenzzy_tar != -1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "0");
+                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                                m.WriteMemory(forceattack_adr, "int", "5");
+                                Thread.Sleep(1300);
+                                m.WriteMemory(forceattack_adr, "int", "9");
+                            }
+                        }
                     }
 
                 }
