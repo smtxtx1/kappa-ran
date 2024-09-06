@@ -1991,11 +1991,11 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xC18;
-            const int OffsetX = 0xAEC;
-            const int OffsetY = 0xAF0;
-            const int OffsetZ = 0xAF4;
-            const int OffsetHp = 0xA90;
+            const int OffsetID = 0xE28;
+            const int OffsetX = 0xDD0;
+            const int OffsetY = 0xDD4;
+            const int OffsetZ = 0xDD8;
+            const int OffsetHp = 0xCA0;
             float limitdistance = 6f;
             for (int i = 0; i < 3; i++)
             {
