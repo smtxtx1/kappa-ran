@@ -139,7 +139,7 @@ namespace Kappa
         public string SUPERPOT_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT2;
         public string DRONE_ADR_RESULT;
-
+        public string DRONE_ADR_RESULT2;
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
     {
         { "1", "Hp+Sp+MP" },
@@ -408,6 +408,8 @@ namespace Kappa
             //        IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("1", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("00 00 96 45 49", false, true);
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("d9 05 ?? ?? ?? ?? c3 cc cc cc cc cc cc cc cc cc 8b 44 24 ?? a3", false, true);
+            IEnumerable<long> AoB_Scan_Drone2 = await m.AoBScan("75 ? 8b 4e ? 89 8e", false, true);
+
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? e8 ? ? ? ? c6 40", false, true);
@@ -435,6 +437,7 @@ namespace Kappa
             long AOB_ANTIFOG = AoB_Scan_AntiFOG.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
+            long AOB_DRONE2 = AoB_Scan_Drone2.FirstOrDefault();
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
@@ -491,6 +494,7 @@ namespace Kappa
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
             ASPD_ADR_RESULT2 = (AOB_ASPD).ToString("x");
+            DRONE_ADR_RESULT2 = AOB_DRONE.ToString("x");
 
             DRONE_ADR_RESULT = AOB_DRONE.ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
@@ -591,13 +595,16 @@ namespace Kappa
                 m.WriteMemory(ANTIFOG_ADR_RESULT2, "bytes", "C7 46 58 7F 96 18 4B");
 
                 m.WriteMemory(DRONE_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                m.WriteMemory(DRONE_ADR_RESULT2, "bytes", "EB");
+
             }
             else
             {
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(ANTIFOG_ADR_RESULT, "bytes", "C7 46 58 00 80 09 45");
                 m.WriteMemory(ANTIFOG_ADR_RESULT2, "bytes", "C7 46 58 00 80 89 44");
-                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 08 DD 11 03");
+                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 38 08 0E 03");
+                m.WriteMemory(DRONE_ADR_RESULT2, "bytes", "75");
 
             }
 
