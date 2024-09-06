@@ -957,8 +957,7 @@ namespace Kappa
                     if (frenzzy_tarList.Count > 0)
                     {
 
-                        // Loop through each frenzzy_tar stored in the list
-                        for (int i = 1; i < frenzzy_tarList.Count; i++)
+                        for (int i = 0; i < frenzzy_tarList.Count; i++)
                         {
                             int frenzzy_tar = frenzzy_tarList[i];
 
