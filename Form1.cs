@@ -2723,6 +2723,7 @@ namespace Kappa
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                getadr = allocate_adr_BA.ToString("x");
 
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
@@ -2730,12 +2731,12 @@ namespace Kappa
                 byte[] assemblyCode = new byte[]
                 {
                 0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x66, 0x01, 0x00, 0x00, // je 0x0000001D (to be replaced later) 83 7F 44 01 0F 85 6? 01 00 00
+                0x0F, 0x85, 0x1C, 0x00, 0x00, 0x00, // je 0x0000001D (to be replaced later)
                 0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
+                int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
 
                 // Replace the jump offsets in the assembly code
