@@ -2198,7 +2198,6 @@ namespace Kappa
             m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
             m.WriteMemory(forceattack_adr, "int", "4");
             await Task.Delay(delay);
-            item.Remove();
 
             while (m.ReadInt(MATION_CHECK) == 1)
             {
@@ -2209,6 +2208,8 @@ namespace Kappa
                 {
                     m.WriteMemory(forceattack_adr, "int", "4");
                     await Task.Delay(delay);
+                    item.Remove();
+
                     break;
                 }
             }
