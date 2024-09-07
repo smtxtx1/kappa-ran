@@ -1078,7 +1078,7 @@ namespace Kappa
                 };
 
                 int jumpOffset1 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
-                int jumpOffset2 = (int)AOB_PATH + 0x06 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
