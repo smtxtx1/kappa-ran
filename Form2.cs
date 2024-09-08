@@ -20,13 +20,12 @@ namespace LOGIN
 
 
         public static api KeyAuthApp = new api(
-        name: "Autotracing", // Application Name
-        ownerid: "zbtz7lqHV9", // Owner ID
-        secret: "87e66ca811406726d54a7708245d5476f5a08178e3bb906d04080392928d71e3", // Application Secret
-        version: "1.0" // Application Version /*
-                       //path: @"Your_Path_Here" // (OPTIONAL) see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
-            );
-
+            name: "TeenoiRan", // Application Name
+            ownerid: "zbtz7lqHV9", // Owner ID
+            secret: "273796b5f50e982938b7938a7c20fa9f8ed2a96ab65a2a492d01875232ecdded", // Application Secret
+            version: "1.0" // Application Version /*
+                           //path: @"Your_Path_Here" // (OPTIONAL) see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
+        );
         private IContainer components;
 
         private TextBox key;
