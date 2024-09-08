@@ -516,7 +516,7 @@ namespace Kappa
 
             MessageBox.Show("All Done");
             INJECT_PET();
-            
+
             m.WriteMemory(PETBP_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             //   m.WriteMemory("004F08E7", "bytes", "E9 0B 05 00 00 90");
             m.WriteMemory(ASPD_ADR_RESULT2, "byte", "D8");
@@ -1019,7 +1019,7 @@ namespace Kappa
                                     Console.WriteLine("Buffering");
                                     await Task.Delay(1000);
                                 }
-                                    m.WriteMemory(forceattack_adr, "int", "9");
+                                m.WriteMemory(forceattack_adr, "int", "9");
                             }
                         }
                     }
