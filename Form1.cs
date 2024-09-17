@@ -280,7 +280,10 @@ namespace Kappa
 
         public string ASPD_adr = "MiniA.exe+54FB94";
 
-        public bool autoskillsstand = true;
+        public bool autoskillsstand = false;
+
+        public bool normalatk = false;
+
 
         private int selectedProcessId = -1;
 
@@ -2060,11 +2063,12 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            const int OffsetID = 0xE28;
-            const int OffsetX = 0xDD0;
-            const int OffsetY = 0xDD4;
-            const int OffsetZ = 0xDD8;
-            const int OffsetHp = 0xCA0;
+
+            const int OffsetID = 0xC18;
+            const int OffsetX = 0xAEC;
+            const int OffsetY = 0xAF0;
+            const int OffsetZ = 0xAF4;
+            const int OffsetHp = 0xA90;
             float limitdistance = 6f;
             for (int i = 0; i < 3; i++)
             {
@@ -2969,14 +2973,29 @@ namespace Kappa
             button6.Enabled = false;
             button7.Enabled = true;
 
-
-            autoskillsstand = true;
-            if (!backgroundWorker2.IsBusy)
+            if (checkBox34.Checked && !checkBox33.Checked)
             {
-                DisplayAlloc();
-                MonsterAlloc();
-                backgroundWorker2.RunWorkerAsync();
+                autoskillsstand = true;
+                if (!backgroundWorker2.IsBusy)
+                {
+                    DisplayAlloc();
+                    MonsterAlloc();
+                    backgroundWorker2.RunWorkerAsync();
+                }
+
             }
+            if (checkBox33.Checked && !checkBox34.Checked)
+            {
+                normalatk = true;
+                if (!backgroundWorker2.IsBusy)
+                {
+                    DisplayAlloc();
+                    MonsterAlloc();
+                    backgroundWorker2.RunWorkerAsync();
+                }
+
+            }
+
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -2996,8 +3015,6 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-
-
                 await Autobuff();
                 await AutoSkills2();
                 await Task.Delay(10);

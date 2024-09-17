@@ -174,6 +174,8 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox33 = new CheckBox();
+            checkBox34 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -1044,6 +1046,8 @@
             // 
             // groupBox5
             // 
+            groupBox5.Controls.Add(checkBox34);
+            groupBox5.Controls.Add(checkBox33);
             groupBox5.Controls.Add(button19);
             groupBox5.Controls.Add(button7);
             groupBox5.Controls.Add(button6);
@@ -1328,6 +1332,26 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox33
+            // 
+            checkBox33.AutoSize = true;
+            checkBox33.Location = new Point(6, 79);
+            checkBox33.Name = "checkBox33";
+            checkBox33.Size = new Size(66, 19);
+            checkBox33.TabIndex = 19;
+            checkBox33.Text = "Normal";
+            checkBox33.UseVisualStyleBackColor = true;
+            // 
+            // checkBox34
+            // 
+            checkBox34.AutoSize = true;
+            checkBox34.Location = new Point(73, 79);
+            checkBox34.Name = "checkBox34";
+            checkBox34.Size = new Size(52, 19);
+            checkBox34.TabIndex = 20;
+            checkBox34.Text = "Skills";
+            checkBox34.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1518,5 +1542,7 @@
         private Label label4;
         private Label label3;
         private Button button19;
+        private CheckBox checkBox34;
+        private CheckBox checkBox33;
     }
 }
