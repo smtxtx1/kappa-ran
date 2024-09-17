@@ -193,21 +193,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00FF38A0,2388";
+        public string CurrentX = "00FF38A0,22d0";
 
-        public string CurrentY = "00FF38A0,238C";
+        public string CurrentY = "00FF38A0,22d4";
 
-        public string CurrentZ = "00FF38A0,2390";
+        public string CurrentZ = "00FF38A0,22d8";
 
         public string ZoomAdr = "031F3EF4";
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,23CC";
+        public string gotoX = "00FF38A0,231C";
 
-        public string gotoY = "00FF38A0,23D0";
+        public string gotoY = "00FF38A0,2320";
 
-        public string gotoZ = "00FF38A0,23D4";
+        public string gotoZ = "00FF38A0,2324";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -237,22 +237,22 @@ namespace Kappa
         /// <summary>
         /// Autoskill START ///////////////
         /// </summary>
-        public string prevskill1_adr = "00FF38A0,2518";
+        public string prevskill1_adr = "00FF38A0,2460";
 
-        public string prevskill2_adr = "00FF38A0,251A";
+        public string prevskill2_adr = "00FF38A0,2462";
 
-        public string Skilluse1_adr = "00FF38A0,2514";
+        public string Skilluse1_adr = "00FF38A0,245C";
 
-        public string Skilluse2_adr = "00FF38A0,2516";
+        public string Skilluse2_adr = "00FF38A0,245E";
 
-        public string forceattack_adr = "00FF38A0,25A8";
+        public string forceattack_adr = "00FF38A0,2540";
 
-        public string actioncheck = "00FF38A0,25BC";
+        public string actioncheck = "00FF38A0,2554";
 
-        public string MATION_CHECK = "00FF38A0,2478";
+        public string MATION_CHECK = "00FF38A0,23C0";
 
 
-        public string TARGET_SKILL = "00FF38A0,25C0";
+        public string TARGET_SKILL = "00FF38A0,2558";
 
         public string TARGET_RING = "00FF38A0,336C";
 
