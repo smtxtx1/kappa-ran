@@ -1120,7 +1120,7 @@ namespace Kappa
                 int jumpOffset1 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
                 int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 10);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
