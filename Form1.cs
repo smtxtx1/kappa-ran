@@ -423,7 +423,7 @@ namespace Kappa
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 8B 86 ?? ?? 00 00 8B CF", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 9e ? ? ? ? 74 ? 8b 96", false, true);
             var AoB_Scan_Fastle = await m.AoBScan("00 00 20 41 6A 02 ?? ?? ?? ?? ?? 8B CE", false, true);
-            var AoB_Scan_ANTICB = await m.AoBScan("74 ? 55 55 55", false, true);
+            var AoB_Scan_ANTICB = await m.AoBScan("0f 84 ? ? ? ? 6a ? 6a ? 8d 8c 24 ? ? ? ? ff 15 ? ? ? ? 8b f8", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
