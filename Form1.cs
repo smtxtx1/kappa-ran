@@ -414,7 +414,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("D8 1D ?? ?? ?? 00 DF E0 F6 C4 05 7A ?? 68 ?? ?? ?? 00", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? e8 ? ? ? ? c6 40", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("c7 81 ? ? ? ? ? ? ? ? 89 44 24", false, true);
-            //
+            //00477AE0
 
             IEnumerable<long> AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE ?? ?? 00 00", false, true);
             IEnumerable<long> AoB_Scan_UNLOCK = await m.AoBScan("66 83 FF 18 73 34 66 8B 8E FC 22 00 00 66 3B E9 76 28 66 8B 58 04 0F B7 C9 8D 8C 8E 0C 23 00 00 66 89 19 66 8B 58 08 66 89 59 02 66 FF 86 FC 22 00 00 83 C0 18 47 3B C2 75 C6", false, true);
@@ -452,7 +452,7 @@ namespace Kappa
             AOB_LOCALPLAYER = AoB_Scan_LOCALPLAYER.FirstOrDefault();
             AOB_CUTAM = AoB_Scan_CutAnimate.FirstOrDefault();
             AOB_ASPD = Aob_Scan_ASPD.FirstOrDefault();
-            AOB_DRONE = AoB_Scan_Drone.FirstOrDefault();
+            AOB_DRONE = AoB_Scan_Drone2.FirstOrDefault();
             //  AOB_HT = AoB_Scan_HitTru.FirstOrDefault();
             AOB_WH = AoB_Scan_WallHack.FirstOrDefault();
             AOB_Superpot = AoB_Scan_Superpot.FirstOrDefault();
@@ -630,7 +630,7 @@ namespace Kappa
                 m.WriteMemory(ANTIFOG_ADR_RESULT, "bytes", "C7 46 58 7F 96 18 4B");
                 m.WriteMemory(ANTIFOG_ADR_RESULT2, "bytes", "C7 46 58 7F 96 18 4B");
 
-                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            //    m.WriteMemory(DRONE_ADR_RESULT, "bytes", "90 90 90 90 90 90");
                 m.WriteMemory(DRONE_ADR_RESULT2, "bytes", "EB");
 
             }
@@ -639,7 +639,7 @@ namespace Kappa
                 //  m.WriteMemory(Drone_adr, "float", "205");
                 m.WriteMemory(ANTIFOG_ADR_RESULT, "bytes", "C7 46 58 00 80 09 45");
                 m.WriteMemory(ANTIFOG_ADR_RESULT2, "bytes", "C7 46 58 00 80 89 44");
-                m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 38 08 0E 03");
+             //   m.WriteMemory(DRONE_ADR_RESULT, "bytes", "D9 05 38 08 0E 03");
                 m.WriteMemory(DRONE_ADR_RESULT2, "bytes", "75");
 
             }
