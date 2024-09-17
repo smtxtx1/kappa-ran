@@ -266,6 +266,8 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
         public bool _INJECT_PET = false;
+        public bool _INJECT_GET_SKILL = false;
+        public bool _INJECT_GET_BUFF = false;
 
         public string HpFreeze_1 = "00FF38A0,140";
 
@@ -428,7 +430,7 @@ namespace Kappa
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 ?? ?? ?? ?? FF 15 ?? ?? ?? 00 8B 44", false, true);
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true);
-            var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4E 1E 33 D2 66 8B 56 1C 51 8B C8", false, true);
+            var AoB_Scan_SKILLPET = await m.AoBScan("66 8b 4e ? 33 d2 66 8b 56 ? 51 8b c8 52 e8 ? ? ? ? 85 c0 74 ? 8b 40 ? 83 c0 ? 83 f8 ? 77 ? ff 24 85 ? ? ? ? 8b ce e8 ? ? ? ? c6 86 ? ? ? ? ? 5e c3 8b ce e8 ? ? ? ? c6 86 ? ? ? ? ? 5e c3 8b ce e8 ? ? ? ? c6 86 ? ? ? ? ? 5e c3 8b ce e8 ? ? ? ? c6 86 ? ? ? ? ? 5e c3 8b ce e8 ? ? ? ? c6 86 ? ? ? ? ? 5e c3 90 83 c7", false, true);
             var AoB_Scan_BypassPET = await m.AoBScan("0F 84 ?? ?? ?? 00 E8 ?? ?? ?? ?? 33 C9 66 8B 4F 1E", false, true);
             var AoB_Scan_AntiFOG = await m.AoBScan("c7 46 ? ? ? ? ? eb ? c7 46 ? ? ? ? ? 8b 46 ? 89 46", false, true);
 
@@ -539,12 +541,14 @@ namespace Kappa
         }
 
         public int SKILLPET_ADR_RESULT2 = 0;
+        public int SKILLPET_ADR_GET_SKILL = 0;
+        public int SKILLPET_ADR_GET_BUFF = 0;
 
         public void INJECT_PET()
         {
             if (!_INJECT_PET)
             {
-                byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x00, 0xFA, 0xFA, 0x00, 0x66, 0x89, 0x4E, 0x1E, 0x31, 0xD2 };
+                byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x00, 0xFA, 0xFA, 0x00, 0x66, 0x8B, 0x4E, 0x1E, 0x33, 0xD2 };
                 SKILLPET_ADR_RESULT2 = CodeCave.CreateCodeCave(freezebytesX, SKILLPET_ADR_RESULT, SKILLPET_ADR_RESULT2, 6, 100, m);//Input address to create codecave
                 _INJECT_PET = true;
                 MessageBox.Show(SKILLPET_ADR_RESULT2.ToString("x"));
@@ -556,6 +560,23 @@ namespace Kappa
 
             }
         }
+        public void INJECT_GET_SKILL()
+        {
+            if (!_INJECT_GET_SKILL)
+            {
+                byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x00, 0xFA, 0xFA, 0x00, 0x66, 0x89, 0x4E, 0x1E, 0x31, 0xD2 };
+                SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 6, 100, m);//Input address to create codecave
+                _INJECT_GET_SKILL = true;
+                MessageBox.Show(SKILLPET_ADR_GET_SKILL.ToString("x"));
+
+            }
+            else
+            {
+                _INJECT_GET_SKILL = false;
+
+            }
+        }
+
 
 
         public void RunActive()
