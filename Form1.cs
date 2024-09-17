@@ -549,7 +549,7 @@ namespace Kappa
             if (!_INJECT_PET)
             {
                 byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x00, 0x20, 0xFE, 0x00, 0x66, 0x8B, 0x4E, 0x1E, 0x33, 0xD2 };
-                SKILLPET_ADR_RESULT2 = CodeCave.CreateCodeCave(freezebytesX, SKILLPET_ADR_RESULT, SKILLPET_ADR_RESULT2, 0, 100, m);//Input address to create codecave
+                SKILLPET_ADR_RESULT2 = CodeCave.CreateCodeCave(freezebytesX, SKILLPET_ADR_RESULT, SKILLPET_ADR_RESULT2, 6, 100, m);//Input address to create codecave
                 _INJECT_PET = true;
                 MessageBox.Show(SKILLPET_ADR_RESULT2.ToString("x"));
 
@@ -565,7 +565,7 @@ namespace Kappa
             if (!_INJECT_GET_SKILL)
             {
                 byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0x74, 0x0A, 0x00, 0x00 };
-                SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 0, 100, m);//Input address to create codecave
+                SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 8, 50, m);//Input address to create codecave
                 _INJECT_GET_SKILL = true;
                 MessageBox.Show(SKILLPET_ADR_GET_SKILL.ToString("x"));
 
@@ -581,7 +581,7 @@ namespace Kappa
             if (!_INJECT_GET_BUFF)
             {
                 byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA };
-                SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 10, 100, m);//Input address to create codecave
+                SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 7, 100, m);//Input address to create codecave
                 _INJECT_GET_BUFF = true;
                 MessageBox.Show(SKILLPET_ADR_GET_BUFF.ToString("x"));
 
