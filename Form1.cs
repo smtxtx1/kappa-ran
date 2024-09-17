@@ -580,7 +580,7 @@ namespace Kappa
         {
             if (!_INJECT_GET_BUFF)
             {
-                byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x00, 0xFA, 0xFA, 0x00, 0x66, 0x89, 0x4E, 0x1E, 0x31, 0xD2 };
+                byte[] freezebytesX = { 0x66, 0x8B, 0x0D, 0x03, 0xFE, 0x00, 0x00, 0x66, 0x89, 0x4E, 0x1E, 0x31, 0xD2 };
                 SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 6, 100, m);//Input address to create codecave
                 _INJECT_GET_BUFF = true;
                 MessageBox.Show(SKILLPET_ADR_GET_BUFF.ToString("x"));
@@ -946,7 +946,7 @@ namespace Kappa
                     continue;
                 }
                 if (j == 0x0)
-                {
+                {  //supaporn stream artnarong
                     j = 0xB00;
                 }
                 string OffsetBuff = j.ToString("x");
