@@ -3135,12 +3135,24 @@ namespace Kappa
 
         private async void backgroundWorker2_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            while (autoskillsstand)
+            while (true) // Infinite loop that breaks based on conditions
             {
-                await Autobuff();
-                await AutoSkills2();
-                await Task.Delay(10);
-
+                if (autoskillsstand)
+                {
+                    await Autobuff();
+                    await AutoSkills2();
+                    await Task.Delay(10);
+                }
+                else if (!autoskillsstand && normalatk)
+                {
+                    await NormalATK();
+                    await Task.Delay(10);
+                }
+                else
+                {
+                    // Handle other cases or break the loop
+                    break;
+                }
             }
         }
 
