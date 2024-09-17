@@ -942,7 +942,7 @@ namespace Kappa
             //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
             //Console.WriteLine("Offset2:" + num_test);
 
-            for (int j = -0xB00; j <= 0x0; j += 0xB0)
+            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
             {
                 if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
@@ -969,7 +969,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x9E4; k <= 0xA08; k += 0x04)
+            for (int k = 0xAEC; k <= 0xB10; k += 0x04)
             {
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
@@ -2282,7 +2282,7 @@ namespace Kappa
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
-                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            if (check_hp_mon < 5)
                             {
                                 break;
                             }
@@ -2297,13 +2297,9 @@ namespace Kappa
                                 break;
                             }
 
-                            if (distance_mon > limitdistance)
-                            {
-                                break;
-                            }
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
 
-                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            if (check_hp_mon < 5 )
                             {
                                 await Task.Delay(100);
                                 check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
@@ -2323,7 +2319,7 @@ namespace Kappa
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                             check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                             await Task.Delay(5);
-                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            if (check_hp_mon < 5 )
                             {
                                 break;
                             }
@@ -2340,11 +2336,11 @@ namespace Kappa
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         check_hp_mon = m.ReadInt($"00FF5000,{OffsetHp:X}");
                         await Task.Delay(5);
-                        if (check_hp_mon < 5 || distance_mon > limitdistance)
+                        if (check_hp_mon < 5 )
                         {
                             break;
                         }
-                        if (check_hp_mon < 5 || distance_mon > limitdistance)
+                        if (check_hp_mon < 5 )
                         {
                             break;
                         }
@@ -3125,6 +3121,8 @@ namespace Kappa
             button7.Enabled = false;
             button6.Enabled = true;
             autoskillsstand = false;
+            normalatk = false;
+
             m.WriteMemory(MONVIEW_ADR, "bytes", originalcode_Monview);
             m.WriteMemory(ITEMDROP_ADR_RESULT, "bytes", "8B 96 78 03 00 00 83 C1 FE");
             if (backgroundWorker2.IsBusy)
