@@ -3466,8 +3466,8 @@ namespace Kappa
             {
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
-                f_GET_Buff();
-                f_GET_SKILL_LIST();
+                INJECT_GET_SKILL();
+                INJECT_GET_BUFF();
                 Get = true;
             }
             else
