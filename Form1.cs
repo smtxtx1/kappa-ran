@@ -203,11 +203,11 @@ namespace Kappa
 
         public string AngleAdr = "031F3ED4";
 
-        public string gotoX = "00FF38A0,231C";
+        public string gotoX = "00FF38A0,2314";
 
-        public string gotoY = "00FF38A0,2320";
+        public string gotoY = "00FF38A0,2318";
 
-        public string gotoZ = "00FF38A0,2324";
+        public string gotoZ = "00FF38A0,231C";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -656,7 +656,7 @@ namespace Kappa
         string originalcode_LR = "D9 5C 24 38 FF 52 38";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
         string originalcode_Monview = "8B 81 28 0E 00 00";
-        string originalcode_Path = "39 5C 24 28 74 23";
+        string originalcode_Path = "39 5C 24 28 74 1B";
         string originalcode_BA = "83 7F 44 01 0F 85 64 01";
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
@@ -1110,17 +1110,18 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xC7, 0x44, 0x24, 0x10, 0x00, 0x00, 0x30, 0xC1,
-                    0xC7, 0x44, 0x24, 0x14, 0x00, 0x00, 0x30, 0xC1,
-                    0xC7, 0x44, 0x24, 0x18, 0x00, 0x00, 0x30, 0xC1, 0x39, 0x5C, 0x24, 0x28,
-                    0xE9, 0x84, 0xFC, 0x34, 0x3C, 0xF3,
-                    0xE9, 0xC5, 0x34, 0x3C, 0xF3
+                 0xC7, 0x44, 0x24, 0x1C, 0x00, 0x00, 0x30, 0xC1, 
+                 0xC7, 0x44, 0x24, 0x20, 0x00, 0x00, 0x30, 0xC1, 
+                 0xC7, 0x44, 0x24, 0x24, 0x00, 0x00, 0x30, 0xC1, 
+                 0x39, 0x5C, 0x24, 0x28,
+                 0xE9, 0x84, 0xFC, 0x34, 0x3C,
+                 0xE9, 0xC5, 0x34, 0x3C, 0xF3
                 };
 
-                int jumpOffset1 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
-                int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset1 = (int)AOB_PATH + 0x30 - ((int)allocate_adr_Path + assemblyCode.Length - 5); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x30 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 10);
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_Path.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
