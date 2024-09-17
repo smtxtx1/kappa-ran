@@ -2871,11 +2871,11 @@ namespace Kappa
         {
             if (checkBox18.Checked)
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "eb");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "E9 03 07 00 00 90");
             }
             else
             {
-                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "74");
+                m.WriteMemory(ANTICB_ADR_RESULT, "bytes", "0F 84 02 07 00 00");
             }
         }
 
