@@ -143,17 +143,11 @@ namespace Kappa
         public string DRONE_ADR_RESULT2;
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
     {
-        { "1", "Hp+Sp+MP" },
-        { "2", "Power" },
-        { "3", "Defender" },
-        { "4", "Auto Pot" },
-        { "5", "Protect Item" },
-        { "6", "Collect All" },
-        { "7", "Collect Rare" },
-        { "8", "Collect Potion" },
-        { "9", "Collect Gold" },
-        { "10", "Collect Ore" },
-        { "11", "Collect Box" }
+        { "6", "สกิลเก็บกวาด" },
+        { "7", "สกิลเพรียกหา" },
+        { "8", "สกิลเรียกน้ำยา" },
+        { "9", "สกิลร่ำรวย" },
+        { "10","สกิลขุดแร่" },
     };
 
 
