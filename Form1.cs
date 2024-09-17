@@ -254,7 +254,7 @@ namespace Kappa
 
         public string TARGET_SKILL = "00FF38A0,2558";
 
-        public string TARGET_RING = "00FF38A0,336C";
+        public string TARGET_RING = "00FF38A0,3384";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
