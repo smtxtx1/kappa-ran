@@ -65,7 +65,7 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Ran Teenoi";
+        public string ServerName = "Ran ASUS";
 
         public string FastZoom = "03376E4C";
 
