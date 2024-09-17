@@ -2099,7 +2099,7 @@ namespace Kappa
                     while (true)
                     {
 
-                        for (int i3 = 0x96C; i3 <= 0x990; i3 += 4)
+                        for (int i3 = 0xA74; i3 <= 0xA98; i3 += 4)
                         {
                             id_mon = m.ReadInt($"00FF5000,{OffsetID:X}");
                             x_mon = m.ReadFloat($"00FF5000,{OffsetX:X}");
@@ -2114,9 +2114,9 @@ namespace Kappa
                                 break;
                             }
 
-                            if (i3 == 0x990)
+                            if (i3 == 0xA98)
                             {
-                                i3 = 0x96C;
+                                i3 = 0xA74;
                             }
                             string OffsetSKill = i3.ToString("x");
                             //    
