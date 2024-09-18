@@ -2220,16 +2220,20 @@ namespace Kappa
             string names = m.ReadString(IDadr);
             try
             {
-                foreach (ListViewItem item in listView11.Items)
+                if (listView11 != null)
                 {
-                    if (item.SubItems[0].Text == "3" && m.ReadInt(MATION_CHECK) != 1)
+                    foreach (ListViewItem item in listView11.Items)
                     {
-                        await ProcessItem(item, 3, 20);
+                        if (item.SubItems[0].Text == "3" && m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            await ProcessItem(item, 3, 20);
+                        }
+                        else if (item.SubItems[0].Text == "4")
+                        {
+                            await ProcessItem(item, 4, 10);
+                        }
                     }
-                    else if (item.SubItems[0].Text == "4")
-                    {
-                        await ProcessItem(item, 4, 10);
-                    }
+
                 }
             }
             catch (Exception ex)
@@ -2246,18 +2250,22 @@ namespace Kappa
             string names = m.ReadString(IDadr);
             try
             {
-                foreach (ListViewItem item in listView11.Items)
+                if (listView11 != null)
                 {
-                    bool found = listView12.Items.Cast<ListViewItem>().Any(item12 => item.SubItems[2].Text.Contains(item12.SubItems[2].Text));
+                    foreach (ListViewItem item in listView11.Items)
+                    {
+                        bool found = listView12.Items.Cast<ListViewItem>().Any(item12 => item.SubItems[2].Text.Contains(item12.SubItems[2].Text));
 
-                    if (found && m.ReadInt(MATION_CHECK) != 1)
-                    {
-                        await ProcessItem(item, 3, 10);
+                        if (found && m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            await ProcessItem(item, 3, 10);
+                        }
+                        else if (item.SubItems[0].Text == "4")
+                        {
+                            await ProcessItem(item, 4, 50);
+                        }
                     }
-                    else if (item.SubItems[0].Text == "4")
-                    {
-                        await ProcessItem(item, 4, 50);
-                    }
+
                 }
             }
             catch (Exception ex)
