@@ -1903,6 +1903,10 @@ namespace Kappa
                         {
                             m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
                             m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
+                            if (check_hp_mon < 5)
+                            {
+                                break;
+                            }
 
                             int idskilltype1 = m.ReadByte(i2.ToString("X"));
                             int num = i2 + 2;
