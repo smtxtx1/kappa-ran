@@ -1780,7 +1780,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            float limitdistance = 4f;
+            float limitdistance = 7f;
             const int OffsetID = 0x17A4;
             const int OffsetX = 0x1678;
             const int OffsetY = 0x167C;
