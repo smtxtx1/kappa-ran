@@ -3172,6 +3172,8 @@ namespace Kappa
 
         private void checkBox32_CheckedChanged(object sender, EventArgs e)
         {
+            ANTICHAT = !ANTICHAT;
+
             if (ANTICHAT == true)
             {
                 m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "C7 86 94 01 00 00 00 00 80 BF");
