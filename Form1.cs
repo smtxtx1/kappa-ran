@@ -1484,15 +1484,24 @@ namespace Kappa
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedItem != null)
+            if (comboBox3.SelectedItem != null && !string.IsNullOrEmpty(selectedFilePath))
             {
-                saveID = m.ReadString(IDadr);
+                //saveID = m.ReadString(IDadr);
                 string key = comboBox3.SelectedItem.ToString();
-                if (listViewDictionary.TryGetValue(key, out var value))
+                if (listViewDictionary.TryGetValue(key, out var listView))
                 {
-                    SaveListViewToJSON(value, $"{comboBox3.SelectedItem}{saveID}.json");
-                    MessageBox.Show($"૿{comboBox2.SelectedItem}{saveID}��\u0e35º�\u0e49��", "Save Complete");
+                    string filePath = Path.Combine(selectedFilePath, $"{key}.json");
+                    SaveListViewToJSON(listView, filePath);
+                    MessageBox.Show($"{comboBox2.SelectedItem} saved successfully.", "Save Complete");
                 }
+                else
+                {
+                    MessageBox.Show("No matching ListView found.", "Error");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a folder and an item from the combo box.", "Warning");
             }
         }
 
