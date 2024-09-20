@@ -1975,7 +1975,7 @@ namespace Kappa
                                 myZ = m.ReadFloat(CurrentZ);
                                 Console.WriteLine($"Distance is: {distance_mon}");
 
-
+                                break;
                             }
 
                         }
