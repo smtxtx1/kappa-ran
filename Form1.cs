@@ -3031,6 +3031,63 @@ namespace Kappa
             f_GET_Buff();
             f_GET_SKILL_LIST();
         }
+
+        private void ClearAllListViews()
+        {
+            try
+            {
+                for (int i = 1; i <= 10; i++)
+                {
+                    // Construct the ListView name dynamically (e.g., listView1, listView2, etc.)
+                    string listViewName = $"listView{i}";
+
+                    // Find the ListView control by its name
+                    ListView listView = FindControlRecursive(this, listViewName) as ListView;
+
+                    if (listView != null)
+                    {
+                        // Clear the items in the ListView
+                        listView.Items.Clear();
+                        positionCounter = 1;
+                        // MessageBox.Show($"Cleared items from {listViewName}");
+                    }
+                    else
+                    {
+                        //MessageBox.Show($"ListView {listViewName} not found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // MessageBox.Show("Error clearing items: " + ex.Message);
+            }
+        }
+
+        // Helper method to recursively find a control by name
+        private Control FindControlRecursive(Control parent, string name)
+        {
+            if (parent.Name == name)
+            {
+                return parent;
+            }
+
+            foreach (Control child in parent.Controls)
+            {
+                Control result = FindControlRecursive(child, name);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
+        }
+
+        private void btnClearAll_Click(object sender, EventArgs e)
+        {
+            ClearAllListViews();
+        }
+
     }
 
 }
