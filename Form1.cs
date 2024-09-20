@@ -74,6 +74,7 @@ namespace Kappa
         public string NameAdr = "00FF38A0,2B0";
 
 
+        public string selectedFilePath;
         public long AOB_MONVIEW;
         public long AOB_LOCALPLAYER;
         public long AOB_AOE;
@@ -1419,6 +1420,20 @@ namespace Kappa
             }
             string contents = JsonConvert.SerializeObject(list, Formatting.Indented);
             File.WriteAllText(fileName, contents);
+        }
+
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "Select a folder containing JSON files";
+                folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    selectedFilePath = folderBrowserDialog.SelectedPath;
+                    selectedPathTextBox.Text = selectedFilePath;
+                }
+            }
         }
 
 
