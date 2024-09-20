@@ -1986,10 +1986,16 @@ namespace Kappa
                         {
                             break;
                         }
+                        if (check_hp_mon < 5)
+                        {
+                            break;
+                        }
+
                         if (m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
                         }
+
 
                     }
                 }
