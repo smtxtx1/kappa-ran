@@ -1914,6 +1914,13 @@ namespace Kappa
                             m.WriteMemory(actioncheck, "int", "2");
                             if (idskilltype1 != 255 && idskilltype2 != 255)
                             {
+                                if (hp_mon > 70 && distance_mon <= limitdistance)
+                                {
+
+                                    m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
+                                    m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
+                                }
+
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
