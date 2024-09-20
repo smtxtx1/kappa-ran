@@ -1776,7 +1776,7 @@ namespace Kappa
             RunDeActive();
 
             // Unlock movement
-            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
         }
 
         private async Task AutoSkills2()
