@@ -1826,13 +1826,18 @@ namespace Kappa
                                 m.WriteMemory(prevskill1_adr, "byte", idskilltype1.ToString("x"));
                                 m.WriteMemory(prevskill2_adr, "byte", idskilltype2.ToString("x"));
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                while(m.ReadInt(MATION_CHECK) == 3)
+                                while (m.ReadInt(MATION_CHECK) == 3)
                                 {
-                                    Thread.Sleep(200);
-                                    if (m.ReadInt(MATION_CHECK) != 3)
+                                    await Task.Delay(50);
+                                    if (m.ReadFloat(SKILL_TIME) > 1.32f)
                                     {
+                                        Console.WriteLine("Moving");
+
+                                        await MoveWhileAttacking();
                                         break;
+
                                     }
+
                                 }
 
                             }
