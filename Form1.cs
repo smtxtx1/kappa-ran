@@ -3100,10 +3100,21 @@ namespace Kappa
             }
         }
 
+        private bool Get = false;
         private void button19_Click(object sender, EventArgs e)
         {
-            f_GET_Buff();
-            f_GET_SKILL_LIST();
+            if (Get == false && selectedProcessId != null)
+            {
+                button6.Enabled = true;
+                checkBox13.Enabled = true;
+                INJECT_GET_SKILL();
+                INJECT_GET_BUFF();
+                Get = true;
+            }
+            else
+            {
+                button19.Enabled = false;
+            }
         }
 
         private void ClearAllListViews()
