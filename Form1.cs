@@ -1859,16 +1859,13 @@ namespace Kappa
                             check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
 
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            if (check_hp_mon < 5 || distance_mon > limitdistance)
+                            if (check_hp_mon < 5 )
                             {
-                                if (distance_mon > limitdistance)
-                                {
-                                    Console.WriteLine("Distance Out Of Limit");
-                                }
                                 if (check_hp_mon < 5)
                                 {
                                     Console.WriteLine($"hp: {hp_mon}\n {m.ReadLong($"00FF5500,{OffsetHp:X}").ToString("x")}");
                                     Console.WriteLine($"Monster Is Dead {check_hp_mon}");
+                                    break;
                                 }
                                 await Task.Delay(100);
                                 check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
@@ -1881,14 +1878,14 @@ namespace Kappa
                                 myZ = m.ReadFloat(CurrentZ);
                                 Console.WriteLine($"Distance is: {distance_mon}");
 
-                                break;
+                                
                             }
 
                         }
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                         await Task.Delay(5);
-                        if (check_hp_mon < 5 || distance_mon > limitdistance)
+                        if (check_hp_mon < 5 )
                         {
                             break;
                         }
