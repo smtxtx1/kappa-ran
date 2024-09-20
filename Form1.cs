@@ -1436,6 +1436,63 @@ namespace Kappa
             }
         }
 
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            // Use the folder path from selectedPathTextBox
+            selectedFilePath = selectedPathTextBox.Text;
+
+            if (string.IsNullOrEmpty(selectedFilePath) || !Directory.Exists(selectedFilePath))
+            {
+                MessageBox.Show("Please select a valid folder first.", "Error");
+                return; // Exit if the path is invalid
+            }
+
+            // Get all JSON files in the selected folder
+            string[] jsonFiles = Directory.GetFiles(selectedFilePath, "*.json");
+
+            // Iterate over each file and try to find the corresponding ListView dynamically
+            foreach (string file in jsonFiles)
+            {
+                // Extract the base filename (without extension) and split the part before 'adslmas1'
+                string key = Path.GetFileNameWithoutExtension(file);
+
+                // Assume the ListView name is everything before the first non-digit/letter character
+                string listViewName = GetListViewName(key);
+
+                //   MessageBox.Show($"Trying to load file: {file}, with ListView name: {listViewName}", "Debug Info");
+
+                // Try to get the ListView control by its name dynamically
+                ListView listView = FindControlRecursive(this, listViewName) as ListView;
+
+                if (listView != null)
+                {
+                    // Load the JSON data into the ListView
+                    LoadListViewFromJSON(listView, file);
+                }
+                else
+                {
+                    //  MessageBox.Show($"No ListView found for key: {listViewName}", "Warning");
+                }
+            }
+
+            //   MessageBox.Show("All files loaded successfully.", "Load Complete");
+        }
+
+        // Method to extract the base list view name (e.g., listView1, listView2, etc.)
+        private string GetListViewName(string key)
+        {
+            // Match until the first non-letter or non-digit character after the 'listView' prefix
+            for (int i = 0; i < key.Length; i++)
+            {
+                if (!char.IsLetterOrDigit(key[i]))
+                {
+                    return key.Substring(0, i); // Return the base name like 'listView1'
+                }
+            }
+            return key; // In case there's no extra part, return the full key
+        }
+
+        // Helper method to recursively find a control by name in the form or its child containers
 
         private void LoadListViewFromJSON(ListView listView, string fileName)
         {
@@ -1443,7 +1500,13 @@ namespace Kappa
             {
                 return;
             }
-            foreach (LocationData item in JsonConvert.DeserializeObject<List<LocationData>>(File.ReadAllText(fileName)))
+
+            var items = JsonConvert.DeserializeObject<List<LocationData>>(File.ReadAllText(fileName));
+
+            // Clear existing items in the ListView before loading new data
+            listView.Items.Clear();
+
+            foreach (LocationData item in items)
             {
                 ListViewItem listViewItem = new ListViewItem(item.Position);
                 listViewItem.SubItems.Add(item.X);
@@ -1505,19 +1568,6 @@ namespace Kappa
             }
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            if (comboBox3.SelectedItem != null)
-            {
-                saveID = m.ReadString(IDadr);
-                string key = comboBox3.SelectedItem.ToString();
-                if (listViewDictionary.TryGetValue(key, out var value))
-                {
-                    LoadListViewFromJSON(value, $"{comboBox3.SelectedItem}{saveID}.json");
-                    MessageBox.Show($"��Ŵ{comboBox2.SelectedItem}{saveID}��\u0e35º�\u0e49��", "Load Complete");
-                }
-            }
-        }
         private void buttonStop_Click(object sender, EventArgs e)
         {
             autoAddItems = false;
