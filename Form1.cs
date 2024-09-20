@@ -1740,6 +1740,43 @@ namespace Kappa
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
+        private async Task MoveWhileAttacking()
+        {
+            // Lock movement
+            m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+
+            // Read current coordinates
+            float myX = m.ReadFloat(CurrentX);
+            float myY = m.ReadFloat(CurrentY);
+            float myZ = m.ReadFloat(CurrentZ);
+
+            float rangefix = 5f;
+            float rangefixminus = -5f;
+
+            // Create a random generator
+            Random random = new Random();
+
+            // Randomly decide to add or subtract 20 for myX
+            float xOffset = (random.Next(2) == 0) ? rangefix : rangefixminus;
+            float newX = myX + xOffset;
+
+            // Randomly decide to add or subtract 20 for myZ
+            float zOffset = (random.Next(2) == 0) ? rangefix : rangefixminus;
+            float newZ = myZ + zOffset;
+
+            // Write new coordinates
+            m.WriteMemory(getadr + "+4", "float", newX.ToString());
+            m.WriteMemory(getadr + "+C", "float", myY.ToString()); // Y-coordinate stays the same
+            m.WriteMemory(getadr + "+14", "float", newZ.ToString());
+
+            // Perform the movement
+            RunActive();
+            await Task.Delay(100); // Delay to simulate the move duration
+            RunDeActive();
+
+            // Unlock movement
+            m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
+        }
 
         private async Task AutoSkills2()
         {
