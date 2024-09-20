@@ -1933,7 +1933,7 @@ namespace Kappa
                             check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
 
                             distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                            if (check_hp_mon < 5 )
+                            if (check_hp_mon < 5)
                             {
                                 if (check_hp_mon < 5)
                                 {
@@ -1952,14 +1952,14 @@ namespace Kappa
                                 myZ = m.ReadFloat(CurrentZ);
                                 Console.WriteLine($"Distance is: {distance_mon}");
 
-                                
+
                             }
 
                         }
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         check_hp_mon = m.ReadInt($"00FF5500,{OffsetHp:X}");
                         await Task.Delay(5);
-                        if (check_hp_mon < 5 )
+                        if (check_hp_mon < 5)
                         {
                             break;
                         }
