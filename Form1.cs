@@ -1889,6 +1889,15 @@ namespace Kappa
                     m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
                     while (true)
                     {
+
+                        if (hp_mon > 70 && distance_mon <= limitdistance)
+                        {
+
+                            m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
+                            m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
+
+                        }
+
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
                         for (int i2 = 0x00B95B3C; i2 <= 0x00B95B60; i2 += 4)
                         {
