@@ -3168,14 +3168,15 @@ namespace Kappa
                 MessageBox.Show("Please select an item in listView11 to copy.", "No item selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        private bool ANTICHAT = false;
 
         private void checkBox32_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox29.Checked)
+            if (ANTICHAT == true)
             {
                 m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "C7 86 94 01 00 00 00 00 80 BF");
             }
-            else
+            else if (ANTICHAT == false)
             {
                 m.WriteMemory(ANTICHAT_ADR_RESULT, "bytes", "C7 86 94 01 00 00 00 00 00 41");
 
