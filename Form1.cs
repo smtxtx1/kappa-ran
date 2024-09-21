@@ -1856,7 +1856,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            float limitdistance = 7f;
+            float limitdistance = 5f;
             const int OffsetID = 0x17A4;
             const int OffsetX = 0x1678;
             const int OffsetY = 0x167C;
@@ -1928,7 +1928,7 @@ namespace Kappa
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     await Task.Delay(50);
-                                    if (m.ReadFloat(SKILL_TIME) > 1.95f)
+                                    if (m.ReadFloat(SKILL_TIME) > 1.7f)
                                     {
                                         Console.WriteLine("Moving");
 
