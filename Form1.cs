@@ -1928,7 +1928,7 @@ namespace Kappa
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     await Task.Delay(50);
-                                    if (m.ReadFloat(SKILL_TIME) > 1.82f)
+                                    if (m.ReadFloat(SKILL_TIME) > 1.95f)
                                     {
                                         Console.WriteLine("Moving");
 
