@@ -1932,8 +1932,12 @@ namespace Kappa
                                     {
                                         Console.WriteLine("Moving");
 
-                                        await MoveWhileAttacking();
-                                        break;
+                                        if (autoskillsstand)
+                                        {
+                                            await MoveWhileAttacking();
+                                            break;
+
+                                        }
 
                                     }
 
