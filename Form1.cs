@@ -418,7 +418,9 @@ namespace Kappa
             var AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 00 30 00 00", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("74 58 55 55", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
-            //C7 86 94 01 00 00 00 00 00 41
+            var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
+            //0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10
+            long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
@@ -440,6 +442,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            string ANTIDELAY_ADR_RESULT = AOB_ANTIDELAY.ToString(x);
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
@@ -474,6 +477,7 @@ namespace Kappa
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory("00FAA000", "float", "4800");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
             LOCALPLAYER_ALLOC();
 
 
