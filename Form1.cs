@@ -276,7 +276,7 @@ namespace Kappa
 
         public string ASPD_adr = "MiniA.exe+5694D8";
 
-        public bool autoskillsstand = true;
+        public bool autoskillsstand = false;
 
         private int selectedProcessId = -1;
 
