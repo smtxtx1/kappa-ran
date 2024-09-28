@@ -1936,7 +1936,7 @@ namespace Kappa
                                     {
                                         Console.WriteLine("Moving");
 
-                                        if (autoskillsstand)
+                                        if (!autoskillsstand)
                                         {
                                             await MoveWhileAttacking();
                                             break;
