@@ -442,7 +442,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
-            string ANTIDELAY_ADR_RESULT = AOB_ANTIDELAY.ToString(x);
+            string ANTIDELAY_ADR_RESULT = AOB_ANTIDELAY.ToString("x");
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
             string ATKBP_ADR_RESULT = AOB_ATKBP.ToString("x");
