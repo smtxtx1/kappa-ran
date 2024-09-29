@@ -1819,6 +1819,24 @@ namespace Kappa
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
+
+        private float rangefix;
+        private float rangefixminus;
+        private float skilltimer = 2;
+        private void OpenSettingsForm()
+        {
+            using (Settings settingsForm = new Settings())
+            {
+                if (settingsForm.ShowDialog() == DialogResult.OK)
+                {
+                    // Retrieve the values from SettingsForm
+                    rangefix = settingsForm.RangeFix;
+                    rangefixminus = settingsForm.RangeFixMinus;
+                    skilltimer = settingsForm.skilltimer;
+                }
+            }
+        }
+
         private async Task MoveWhileAttacking()
         {
             // Lock movement
