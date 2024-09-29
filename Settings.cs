@@ -16,9 +16,9 @@ namespace Kappa
         {
             InitializeComponent();
         }
-        private float _rangeFix;
-        private float _skillTimer;
-        private float _monDistance;
+        public float _rangeFix;
+        public float _skillTimer;
+        public float _monDistance;
 
         public float RangeFix
         {
