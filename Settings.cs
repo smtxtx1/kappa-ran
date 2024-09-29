@@ -94,6 +94,11 @@ namespace Kappa
             if(_rangeFix != null || _rangeFix != null || _monDistance != null)
             {
                 Form1 form1 = new Form1();
+                form1.skilltimer = _skillTimer;
+                form1.rangefix = _rangeFix;
+                form1.rangefixminus = -_rangeFix;
+                form1.skilltimer = _skillTimer;
+
                 textBox2.Text = _rangeFix.ToString();
                 textBox1.Text = _skillTimer.ToString();
                 textBox3.Text = _monDistance.ToString();

@@ -1820,9 +1820,9 @@ namespace Kappa
         string base_mon = "00000000";
 
 
-        private float rangefix;
-        private float rangefixminus;
-        private float skilltimer = 2;
+        public float rangefix;
+        public float rangefixminus;
+        public float skilltimer = 2;
         private void OpenSettingsForm()
         {
             using (Settings settingsForm = new Settings())
