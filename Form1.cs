@@ -1832,7 +1832,7 @@ namespace Kappa
                     // Retrieve the values from SettingsForm
                     rangefix = settingsForm.RangeFix;
                     rangefixminus = settingsForm.RangeFixMinus;
-                    skilltimer = settingsForm.skilltimer;
+                    skilltimer = settingsForm.SkillTimer;
                     MonDistance = settingsForm.MonDistance;
                 }
             }
