@@ -20,6 +20,10 @@ namespace Kappa
         {
             get
             {
+                if(RangeFix != null)
+                {
+                    textBox2.Text = RangeFix.ToString();
+                }
                 float.TryParse(textBox2.Text, out float value);
                 return value;
             }
@@ -28,6 +32,11 @@ namespace Kappa
         {
             get
             {
+                if (skilltimer != null)
+                {
+                    textBox1.Text = skilltimer.ToString();
+                }
+
                 float.TryParse(textBox1.Text, out float value);
                 return value;
             }
@@ -36,6 +45,11 @@ namespace Kappa
         {
             get
             {
+                if (MonDistance != null)
+                {
+                    textBox3.Text = MonDistance.ToString();
+                }
+
                 float.TryParse(textBox3.Text, out float value);
                 return value;
             }
@@ -45,6 +59,11 @@ namespace Kappa
         {
             get
             {
+                if (RangeFixMinus != null)
+                {
+                    textBox2.Text = RangeFixMinus.ToString();
+                }
+
                 float.TryParse("-" + textBox2.Text, out float value);
                 return value;
             }
