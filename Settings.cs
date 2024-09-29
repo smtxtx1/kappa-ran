@@ -16,42 +16,55 @@ namespace Kappa
         {
             InitializeComponent();
         }
+        private float _rangeFix;
+        private float _skillTimer;
+        private float _monDistance;
+
         public float RangeFix
         {
             get
             {
-                if(RangeFix != null)
-                {
-                    textBox2.Text = RangeFix.ToString();
-                }
-                float.TryParse(textBox2.Text, out float value);
-                return value;
+                // Update the text box and return the current value
+                textBox2.Text = _rangeFix.ToString();
+                return _rangeFix;
+            }
+            set
+            {
+                // Set the value and update the text box
+                _rangeFix = value;
+                textBox2.Text = _rangeFix.ToString();
             }
         }
-        public float skilltimer
+
+        public float SkillTimer
         {
             get
             {
-                if (skilltimer != null)
-                {
-                    textBox1.Text = skilltimer.ToString();
-                }
-
-                float.TryParse(textBox1.Text, out float value);
-                return value;
+                // Update the text box and return the current value
+                textBox1.Text = _skillTimer.ToString();
+                return _skillTimer;
+            }
+            set
+            {
+                // Set the value and update the text box
+                _skillTimer = value;
+                textBox1.Text = _skillTimer.ToString();
             }
         }
+
         public float MonDistance
         {
             get
             {
-                if (MonDistance != null)
-                {
-                    textBox3.Text = MonDistance.ToString();
-                }
-
-                float.TryParse(textBox3.Text, out float value);
-                return value;
+                // Update the text box and return the current value
+                textBox3.Text = _monDistance.ToString();
+                return _monDistance;
+            }
+            set
+            {
+                // Set the value and update the text box
+                _monDistance = value;
+                textBox3.Text = _monDistance.ToString();
             }
         }
 
@@ -59,13 +72,10 @@ namespace Kappa
         {
             get
             {
-                if (RangeFixMinus != null)
-                {
-                    textBox2.Text = RangeFixMinus.ToString();
-                }
-
-                float.TryParse("-" + textBox2.Text, out float value);
-                return value;
+                // Return the negative value of RangeFix
+                float negativeValue = -_rangeFix;
+                textBox2.Text = negativeValue.ToString();
+                return negativeValue;
             }
         }
 
