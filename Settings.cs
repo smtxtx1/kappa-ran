@@ -32,6 +32,14 @@ namespace Kappa
                 return value;
             }
         }
+        public float MonDistance
+        {
+            get
+            {
+                float.TryParse(textBox3.Text, out float value);
+                return value;
+            }
+        }
 
         public float RangeFixMinus
         {

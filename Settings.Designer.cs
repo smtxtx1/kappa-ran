@@ -35,11 +35,17 @@
             label1 = new Label();
             button1 = new Button();
             textBox1 = new TextBox();
+            button3 = new Button();
+            textBox3 = new TextBox();
+            label3 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button3);
+            groupBox1.Controls.Add(textBox3);
+            groupBox1.Controls.Add(label3);
             groupBox1.Controls.Add(button2);
             groupBox1.Controls.Add(textBox2);
             groupBox1.Controls.Add(label2);
@@ -48,7 +54,7 @@
             groupBox1.Controls.Add(textBox1);
             groupBox1.Location = new Point(2, 2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(195, 103);
+            groupBox1.Size = new Size(195, 120);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             // 
@@ -108,11 +114,39 @@
             textBox1.Size = new Size(54, 21);
             textBox1.TabIndex = 0;
             // 
+            // button3
+            // 
+            button3.Location = new Point(141, 81);
+            button3.Name = "button3";
+            button3.Size = new Size(48, 23);
+            button3.TabIndex = 8;
+            button3.Text = "Save";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += btnSave_Click;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(81, 83);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(54, 21);
+            textBox3.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.Location = new Point(6, 83);
+            label3.Name = "label3";
+            label3.Size = new Size(71, 21);
+            label3.TabIndex = 6;
+            label3.Text = "ระยะมอน";
+            // 
             // Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(209, 109);
+            ClientSize = new Size(209, 130);
             Controls.Add(groupBox1);
             Name = "Settings";
             Text = "Settings";
@@ -131,5 +165,8 @@
         private Button button2;
         private TextBox textBox2;
         private Label label2;
+        private Button button3;
+        private TextBox textBox3;
+        private Label label3;
     }
 }
