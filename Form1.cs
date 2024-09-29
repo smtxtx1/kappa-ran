@@ -2593,11 +2593,11 @@ namespace Kappa
         {
             if (checkBox16.Checked)
             {
-                m.WriteMemory("00ff95F0", "float", textBox6.Text);
+                m.WriteMemory("00FAA000", "float", textBox6.Text);
             }
             else
             {
-                m.WriteMemory("00ff95F0", "float", "4800");
+                m.WriteMemory("00FAA000", "float", "4800");
 
             }
         }
