@@ -1825,13 +1825,12 @@ namespace Kappa
         public float skilltimer = 2;
         private void OpenSettingsForm()
         {
-            using (Settings settingsForm = new Settings())
+            using (Settings settingsForm = new Settings(rangefix, skilltimer, MonDistance))
             {
                 if (settingsForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Retrieve the values from SettingsForm
                     rangefix = settingsForm.RangeFix;
-                    rangefixminus = settingsForm.RangeFixMinus;
+                    rangefixminus = settingsForm.RangeFixMinus; // If you need this updated
                     skilltimer = settingsForm.SkillTimer;
                     MonDistance = settingsForm.MonDistance;
                 }
@@ -3346,7 +3345,6 @@ namespace Kappa
         }
         private void button20_Click(object sender, EventArgs e)
         {
-            Settings form = new Settings();
 
             OpenSettingsForm();
         }
