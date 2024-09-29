@@ -95,9 +95,9 @@ namespace Kappa
             Form1 form1 = new Form1();
 
             // Set the values from the private fields
-            form1.SkillTimer = _skillTimer; // Ensure SkillTimer property is properly named
-            form1.RangeFix = _rangeFix; // Ensure RangeFix property is properly named
-            form1.RangeFixMinus = -_rangeFix; // Calculate the negative of RangeFix
+            form1.skilltimer = _skillTimer; // Ensure SkillTimer property is properly named
+            form1.rangefix = _rangeFix; // Ensure RangeFix property is properly named
+            form1.rangefixminus = -_rangeFix; // Calculate the negative of RangeFix
 
             // Update the text boxes with the current values
             textBox2.Text = _rangeFix.ToString();
