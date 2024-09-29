@@ -91,6 +91,9 @@ namespace Kappa
 
         private void Settings_Load(object sender, EventArgs e)
         {
+            textBox2.Text = _rangeFix.ToString();
+            textBox1.Text = _skillTimer.ToString();
+            textBox3.Text = _monDistance.ToString();
 
         }
     }
