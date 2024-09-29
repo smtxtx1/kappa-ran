@@ -1847,8 +1847,8 @@ namespace Kappa
             float myY = m.ReadFloat(CurrentY);
             float myZ = m.ReadFloat(CurrentZ);
 
-            float rangefix = 5f;
-            float rangefixminus = -5f;
+            rangefix = 5f;
+            rangefixminus = -5f;
 
             // Create a random generator
             Random random = new Random();
@@ -1950,7 +1950,7 @@ namespace Kappa
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     await Task.Delay(50);
-                                    if (m.ReadFloat(SKILL_TIME) > 1.7f)
+                                    if (m.ReadFloat(SKILL_TIME) > skilltimer)
                                     {
                                         Console.WriteLine("Moving");
 
