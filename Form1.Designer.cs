@@ -145,6 +145,7 @@
             checkBox8 = new CheckBox();
             checkBox7 = new CheckBox();
             groupBox5 = new GroupBox();
+            button20 = new Button();
             checkBox34 = new CheckBox();
             checkBox33 = new CheckBox();
             button19 = new Button();
@@ -315,6 +316,7 @@
             checkBox32.TabIndex = 28;
             checkBox32.Text = "Anti CHAT";
             checkBox32.UseVisualStyleBackColor = true;
+            checkBox32.Visible = false;
             checkBox32.CheckedChanged += checkBox32_CheckedChanged;
             // 
             // checkBox30
@@ -326,6 +328,7 @@
             checkBox30.TabIndex = 27;
             checkBox30.Text = "BestPae";
             checkBox30.UseVisualStyleBackColor = true;
+            checkBox30.Visible = false;
             checkBox30.CheckedChanged += checkBox30_CheckedChanged;
             // 
             // checkBox22
@@ -337,6 +340,7 @@
             checkBox22.TabIndex = 26;
             checkBox22.Text = "Fast Tele";
             checkBox22.UseVisualStyleBackColor = true;
+            checkBox22.Visible = false;
             checkBox22.CheckedChanged += checkBox22_CheckedChanged_1;
             // 
             // checkBox29
@@ -348,6 +352,7 @@
             checkBox29.TabIndex = 25;
             checkBox29.Text = "Unlock Pet";
             checkBox29.UseVisualStyleBackColor = true;
+            checkBox29.Visible = false;
             checkBox29.CheckedChanged += checkBox29_CheckedChanged;
             // 
             // checkBox28
@@ -359,6 +364,7 @@
             checkBox28.TabIndex = 24;
             checkBox28.Text = "No limit";
             checkBox28.UseVisualStyleBackColor = true;
+            checkBox28.Visible = false;
             checkBox28.CheckedChanged += checkBox28_CheckedChanged;
             // 
             // checkBox27
@@ -370,6 +376,7 @@
             checkBox27.TabIndex = 23;
             checkBox27.Text = "Hitself";
             checkBox27.UseVisualStyleBackColor = true;
+            checkBox27.Visible = false;
             // 
             // checkBox24
             // 
@@ -380,6 +387,7 @@
             checkBox24.TabIndex = 21;
             checkBox24.Text = "Cut Skill";
             checkBox24.UseVisualStyleBackColor = true;
+            checkBox24.Visible = false;
             checkBox24.CheckedChanged += checkBox24_CheckedChanged;
             // 
             // textBox8
@@ -390,6 +398,7 @@
             textBox8.Size = new Size(57, 19);
             textBox8.TabIndex = 22;
             textBox8.Text = "-0.4";
+            textBox8.Visible = false;
             // 
             // checkBox19
             // 
@@ -400,6 +409,7 @@
             checkBox19.TabIndex = 7;
             checkBox19.Text = "BestAim";
             checkBox19.UseVisualStyleBackColor = true;
+            checkBox19.Visible = false;
             checkBox19.CheckedChanged += checkBox19_CheckedChanged;
             // 
             // checkBox23
@@ -411,6 +421,7 @@
             checkBox23.TabIndex = 20;
             checkBox23.Text = "Auto Pet";
             checkBox23.UseVisualStyleBackColor = true;
+            checkBox23.Visible = false;
             checkBox23.CheckedChanged += checkBox23_CheckedChanged;
             // 
             // checkBox21
@@ -475,6 +486,7 @@
             checkBox12.TabIndex = 12;
             checkBox12.Text = "Wall Hack";
             checkBox12.UseVisualStyleBackColor = true;
+            checkBox12.Visible = false;
             checkBox12.CheckedChanged += checkBox12_CheckedChanged;
             // 
             // checkBox11
@@ -486,6 +498,7 @@
             checkBox11.TabIndex = 11;
             checkBox11.Text = "Hit Tru";
             checkBox11.UseVisualStyleBackColor = true;
+            checkBox11.Visible = false;
             checkBox11.CheckedChanged += checkBox11_CheckedChanged;
             // 
             // checkBox1
@@ -949,7 +962,7 @@
             // checkBox31
             // 
             checkBox31.AutoSize = true;
-            checkBox31.Location = new Point(6, 85);
+            checkBox31.Location = new Point(6, 79);
             checkBox31.Name = "checkBox31";
             checkBox31.Size = new Size(67, 19);
             checkBox31.TabIndex = 14;
@@ -978,7 +991,7 @@
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(87, 74);
+            textBox4.Location = new Point(87, 66);
             textBox4.Multiline = true;
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(43, 18);
@@ -995,7 +1008,7 @@
             // checkBox15
             // 
             checkBox15.AutoSize = true;
-            checkBox15.Location = new Point(6, 65);
+            checkBox15.Location = new Point(6, 61);
             checkBox15.Name = "checkBox15";
             checkBox15.Size = new Size(55, 19);
             checkBox15.TabIndex = 7;
@@ -1069,6 +1082,7 @@
             // 
             // groupBox5
             // 
+            groupBox5.Controls.Add(button20);
             groupBox5.Controls.Add(checkBox34);
             groupBox5.Controls.Add(checkBox33);
             groupBox5.Controls.Add(button19);
@@ -1082,10 +1096,20 @@
             groupBox5.TabStop = false;
             groupBox5.Text = "Misc";
             // 
+            // button20
+            // 
+            button20.Location = new Point(103, 36);
+            button20.Name = "button20";
+            button20.Size = new Size(42, 23);
+            button20.TabIndex = 21;
+            button20.Text = "Set";
+            button20.UseVisualStyleBackColor = true;
+            button20.Click += button20_Click;
+            // 
             // checkBox34
             // 
             checkBox34.AutoSize = true;
-            checkBox34.Location = new Point(73, 79);
+            checkBox34.Location = new Point(73, 65);
             checkBox34.Name = "checkBox34";
             checkBox34.Size = new Size(52, 19);
             checkBox34.TabIndex = 20;
@@ -1095,7 +1119,7 @@
             // checkBox33
             // 
             checkBox33.AutoSize = true;
-            checkBox33.Location = new Point(6, 79);
+            checkBox33.Location = new Point(6, 65);
             checkBox33.Name = "checkBox33";
             checkBox33.Size = new Size(66, 19);
             checkBox33.TabIndex = 19;
@@ -1104,7 +1128,7 @@
             // 
             // button19
             // 
-            button19.Location = new Point(80, 23);
+            button19.Location = new Point(80, 12);
             button19.Name = "button19";
             button19.Size = new Size(59, 23);
             button19.TabIndex = 18;
@@ -1115,9 +1139,9 @@
             // button7
             // 
             button7.Enabled = false;
-            button7.Location = new Point(80, 51);
+            button7.Location = new Point(55, 36);
             button7.Name = "button7";
-            button7.Size = new Size(59, 23);
+            button7.Size = new Size(42, 23);
             button7.TabIndex = 6;
             button7.Text = "Stop";
             button7.UseVisualStyleBackColor = true;
@@ -1126,9 +1150,9 @@
             // button6
             // 
             button6.Enabled = false;
-            button6.Location = new Point(6, 51);
+            button6.Location = new Point(6, 36);
             button6.Name = "button6";
-            button6.Size = new Size(59, 23);
+            button6.Size = new Size(43, 23);
             button6.TabIndex = 5;
             button6.Text = "Start";
             button6.UseVisualStyleBackColor = true;
@@ -1137,7 +1161,7 @@
             // checkBox6
             // 
             checkBox6.AutoSize = true;
-            checkBox6.Location = new Point(8, 26);
+            checkBox6.Location = new Point(6, 16);
             checkBox6.Name = "checkBox6";
             checkBox6.Size = new Size(66, 19);
             checkBox6.TabIndex = 4;
@@ -1571,5 +1595,6 @@
         private TextBox selectedPathTextBox;
         private Button button3;
         private Button btnClearAll;
+        private Button button20;
     }
 }
