@@ -1833,6 +1833,7 @@ namespace Kappa
                     rangefix = settingsForm.RangeFix;
                     rangefixminus = settingsForm.RangeFixMinus;
                     skilltimer = settingsForm.skilltimer;
+                    MonDistance = settingsForm.MonDistance;
                 }
             }
         }
@@ -1879,7 +1880,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            float limitdistance = 5f;
+            float limitdistance = MonDistance;
             const int OffsetID = 0x17A4;
             const int OffsetX = 0x1678;
             const int OffsetY = 0x167C;
