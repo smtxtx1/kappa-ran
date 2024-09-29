@@ -91,20 +91,18 @@ namespace Kappa
 
         private void Settings_Load(object sender, EventArgs e)
         {
-            if(_rangeFix != null || _rangeFix != null || _monDistance != null)
-            {
-                Form1 form1 = new Form1();
-                form1.skilltimer = _skillTimer;
-                form1.rangefix = _rangeFix;
-                form1.rangefixminus = -_rangeFix;
-                form1.skilltimer = _skillTimer;
+            // Create an instance of Form1
+            Form1 form1 = new Form1();
 
-                textBox2.Text = _rangeFix.ToString();
-                textBox1.Text = _skillTimer.ToString();
-                textBox3.Text = _monDistance.ToString();
+            // Set the values from the private fields
+            form1.SkillTimer = _skillTimer; // Ensure SkillTimer property is properly named
+            form1.RangeFix = _rangeFix; // Ensure RangeFix property is properly named
+            form1.RangeFixMinus = -_rangeFix; // Calculate the negative of RangeFix
 
-            }
-
+            // Update the text boxes with the current values
+            textBox2.Text = _rangeFix.ToString();
+            textBox1.Text = _skillTimer.ToString();
+            textBox3.Text = _monDistance.ToString();
         }
     }
 }
