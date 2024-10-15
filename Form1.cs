@@ -1470,49 +1470,6 @@ namespace Kappa
         {
             isRunning = false;
         }
-        private bool isCutting = false;
-
-        private void StartAutoCut()
-        {
-            isCutting = true;
-            Task.Run(() =>
-            {
-                try
-                {
-                    while (isCutting)
-                    {
-                        while (m.ReadInt(MATION_CHECK) == 3)
-                        {
-                             Task.Delay(50);
-                            if (m.ReadFloat(SKILL_TIME) > skilltimer)
-                            {
-                                Console.WriteLine("Moving");
-
-                                if (!autoskillsstand)
-                                {
-                                    MoveWhileAttacking();
-                                    break;
-
-                                }
-
-                            }
-                            Task.Delay(50);
-                        }
-                        Task.Delay(50);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
-                    isCutting = false; // Stop if there's an error
-                }
-            });
-        }
-
-        private void StopAutoCut()
-        {
-            isRunning = false;
-        }
 
         public uint MonsterID_FromGetMonster = 0;
         public uint MonsterHP_FromGetMonster = 0;
@@ -3494,17 +3451,7 @@ namespace Kappa
 
         private void checkBox35_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox35.Checked)
-            {
-                isCutting = true;
-                StartAutoCut();
 
-            }
-            else
-            {
-                isCutting = false;
-                StopAutoCut();
-            }
         }
     }
 
