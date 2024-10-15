@@ -1490,7 +1490,7 @@ namespace Kappa
 
                                 if (!autoskillsstand)
                                 {
-                                     MoveWhileAttacking();
+                                    MoveWhileAttacking();
                                     break;
 
                                 }
@@ -3494,7 +3494,17 @@ namespace Kappa
 
         private void checkBox35_CheckedChanged(object sender, EventArgs e)
         {
-            
+            if (checkBox35.Checked)
+            {
+                isCutting = true;
+                StartAutoCut();
+
+            }
+            else
+            {
+                isCutting = false;
+                StopAutoCut();
+            }
         }
     }
 
