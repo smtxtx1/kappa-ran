@@ -479,15 +479,14 @@ namespace Kappa
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
             LOCALPLAYER_ALLOC();
-
-
             int num = 20;
 
             byte[] array = m.ReadBytes(NameAdr, num);
-            if (array != null)
+            while (array != null)
             {
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
+                break;
             }
             YourCallingMethod();
 
