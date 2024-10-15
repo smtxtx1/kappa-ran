@@ -1470,6 +1470,34 @@ namespace Kappa
         {
             isRunning = false;
         }
+        private bool isCutting = false;
+
+        private void StartAutoCut()
+        {
+            isCutting = true;
+            Task.Run(() =>
+            {
+                try
+                {
+                    while (isCutting)
+                    {
+                        MoveWhileAttacking();
+                        Thread.Sleep(100); // Adjust the delay as needed
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
+                    isCutting = false; // Stop if there's an error
+                }
+            });
+        }
+
+        private void StopMonitoringMonsters()
+        {
+            isRunning = false;
+        }
+
         public uint MonsterID_FromGetMonster = 0;
         public uint MonsterHP_FromGetMonster = 0;
         public float distance_FromGetMonster = 0;
@@ -3377,8 +3405,8 @@ namespace Kappa
             {
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
-               // INJECT_GET_SKILL();
-              //  INJECT_GET_BUFF();
+                // INJECT_GET_SKILL();
+                //  INJECT_GET_BUFF();
                 Get = true;
             }
             else
@@ -3448,6 +3476,10 @@ namespace Kappa
             OpenSettingsForm();
         }
 
+        private void checkBox35_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 
 }
