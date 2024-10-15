@@ -1481,8 +1481,24 @@ namespace Kappa
                 {
                     while (isCutting)
                     {
-                        MoveWhileAttacking();
-                        Thread.Sleep(100); // Adjust the delay as needed
+                        while (m.ReadInt(MATION_CHECK) == 3)
+                        {
+                             Task.Delay(50);
+                            if (m.ReadFloat(SKILL_TIME) > skilltimer)
+                            {
+                                Console.WriteLine("Moving");
+
+                                if (!autoskillsstand)
+                                {
+                                     MoveWhileAttacking();
+                                    break;
+
+                                }
+
+                            }
+                            Task.Delay(50);
+                        }
+                        Task.Delay(50);
                     }
                 }
                 catch (Exception ex)
