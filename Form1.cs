@@ -1760,17 +1760,17 @@ namespace Kappa
                                 m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
                                 m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
-                                m.WriteMemory("02FD2D55", "byte", "63");
+                                m.WriteMemory("02FD1D4D", "byte", "63");
                                 await Task.Delay(5);
-                                m.WriteMemory("02FD2D55", "byte", "01");
+                                m.WriteMemory("02FD1D4D", "byte", "01");
                                 await Task.Delay(5);
-                                m.WriteMemory("02FD2D55", "byte", "63");
+                                m.WriteMemory("02FD1D4D", "byte", "63");
                                 await Task.Delay(5);
-                                m.WriteMemory("02FD2D55", "byte", "01");
+                                m.WriteMemory("02FD1D4D", "byte", "01");
                                 await Task.Delay(5);
-                                m.WriteMemory("02FD2D55", "byte", "63");
+                                m.WriteMemory("02FD1D4D", "byte", "63");
                                 await Task.Delay(5);
-                                m.WriteMemory("02FD2D55", "byte", "01");
+                                m.WriteMemory("02FD1D4D", "byte", "01");
                                 await Task.Delay(5);
                                 m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
                                 m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
@@ -1919,17 +1919,17 @@ namespace Kappa
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
-            m.WriteMemory("02FD2D55", "byte", "63");
+            m.WriteMemory("02FD1D4D", "byte", "63");
             await Task.Delay(5);
-            m.WriteMemory("02FD2D55", "byte", "01");
+            m.WriteMemory("02FD1D4D", "byte", "01");
             await Task.Delay(5);
-            m.WriteMemory("02FD2D55", "byte", "63");
+            m.WriteMemory("02FD1D4D", "byte", "63");
             await Task.Delay(5);
-            m.WriteMemory("02FD2D55", "byte", "01");
+            m.WriteMemory("02FD1D4D", "byte", "01");
             await Task.Delay(5);
-            m.WriteMemory("02FD2D55", "byte", "63");
+            m.WriteMemory("02FD1D4D", "byte", "63");
             await Task.Delay(5);
-            m.WriteMemory("02FD2D55", "byte", "01");
+            m.WriteMemory("02FD1D4D", "byte", "01");
             await Task.Delay(5);
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
