@@ -479,6 +479,7 @@ namespace Kappa
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
             LOCALPLAYER_ALLOC();
+            Thread.Sleep(1000);
             int num = 20;
 
             byte[] array = m.ReadBytes(NameAdr, num);
