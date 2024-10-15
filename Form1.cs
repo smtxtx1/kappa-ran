@@ -2022,7 +2022,7 @@ namespace Kappa
                         }
 
                         distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(x_mon - myX, 2) + MathF.Pow(z_mon - myZ, 2)) / 10, 2);
-                        for (int i2 = 0x00B95B3C; i2 <= 0x00B95B60; i2 += 4)
+                        for (int i2 = 0x00B94B34; i2 <= 0x00B94B58; i2 += 4)
                         {
                             m.WriteMemory(TARGET_SKILL, "int", id_mon.ToString());
                             m.WriteMemory(TARGET_RING, "int", id_mon.ToString());
