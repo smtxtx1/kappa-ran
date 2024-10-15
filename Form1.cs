@@ -1443,6 +1443,98 @@ namespace Kappa
             }
         }
 
+        private bool isRunning = false;
+
+        private void StartMonitoringMonsters()
+        {
+            isRunning = true;
+            Task.Run(() =>
+            {
+                try
+                {
+                    while (isRunning)
+                    {
+                        GetMonsters();
+                        Thread.Sleep(100); // Adjust the delay as needed
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
+                    isRunning = false; // Stop if there's an error
+                }
+            });
+        }
+
+        private void StopMonitoringMonsters()
+        {
+            isRunning = false;
+        }
+        public uint MonsterID_FromGetMonster = 0;
+        public uint MonsterHP_FromGetMonster = 0;
+        public float distance_FromGetMonster = 0;
+        private void GetMonsters()
+        {
+            try
+            {
+                int globalCrow = m.ReadInt("MiniA.exe+7A3B38,A954");
+                UIntPtr curr = m.GetCode("MiniA.exe+7A3B38,A958");
+
+                float closestDistance = float.MaxValue;
+                uint closestMonsterID = 0;
+                uint closestMonsterHP = 0;
+
+                for (int i = 0; i < globalCrow; i++)
+                {
+                    // Read the data from the current pointer
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+
+                    // Get the Mob ID and coordinates
+                    UIntPtr mobID = m.GetCode($"{data:X},C18");
+                    UIntPtr mob_X = m.GetCode($"{data:X},AEC");
+                    UIntPtr mob_Y = m.GetCode($"{data:X},AF0");
+                    UIntPtr mob_Z = m.GetCode($"{data:X},AF4");
+                    UIntPtr mob_HP = m.GetCode($"{data:X},A90");
+
+                    uint mobValue = m.ReadUInt(mobID.ToString("X"));
+                    float mobVaLue_X = m.ReadFloat(mob_X.ToString("x"));
+                    float mobVaLue_Y = m.ReadFloat(mob_Y.ToString("x"));
+                    float mobVaLue_Z = m.ReadFloat(mob_Z.ToString("x"));
+                    uint mobVaLue_HP = m.ReadUInt(mob_HP.ToString("X"));
+
+                    float myX = m.ReadFloat(CurrentX);
+                    float myY = m.ReadFloat(CurrentY);
+                    float myZ = m.ReadFloat(CurrentZ);
+
+                    // Calculate distance
+                    float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(mobVaLue_X - myX, 2) + MathF.Pow(mobVaLue_Z - myZ, 2)) / 10, 2);
+
+                    if (mobVaLue_HP > 50 && distance_mon <= 6.0f && distance_mon < closestDistance)
+                    {
+                        closestDistance = distance_mon;
+                        closestMonsterID = mobValue;
+                        closestMonsterHP = mobVaLue_HP;
+                    }
+
+                    // Move to the next entity
+                    curr = m.GetCode($"{curr:X},8");
+                }
+
+                // Update global variables with the closest monster's data if found
+                if (closestMonsterID != 0 && closestMonsterHP > 50 && closestDistance <= 6.0f)
+                {
+                    MonsterID_FromGetMonster = closestMonsterID;
+                    MonsterHP_FromGetMonster = closestMonsterHP;
+                    distance_FromGetMonster = closestDistance;
+
+                    Console.WriteLine("Closest MonsterID: " + MonsterID_FromGetMonster + " MonsterHP: " + MonsterHP_FromGetMonster + " Distance: " + closestDistance);
+                }
+
+
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Use the folder path from selectedPathTextBox
