@@ -914,7 +914,7 @@ namespace Kappa
                 };
 
                 // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset2 = (int)AOB_PATH + 0x30 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
+                int jumpOffset2 = (int)AOB_PATH + 0x38 - ((int)allocate_adr_Path + assemblyCode.Length + 0); // - 6
 
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
