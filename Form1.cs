@@ -1493,7 +1493,7 @@ namespace Kappa
             });
         }
 
-        private void StopMonitoringMonsters()
+        private void StopAutoCut()
         {
             isRunning = false;
         }
