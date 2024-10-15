@@ -825,7 +825,7 @@ namespace Kappa
                 }
             }
 
-            for (int k = 0x00B95BB4; k <= 0x00B95BD8; k += 0x4)
+            for (int k = 0x00B94BAC; k <= 0x00B94BD0; k += 0x4)
             {
                 if (m.Read2Byte(k.ToString("x")) == 65535)
                 {
