@@ -2962,22 +2962,8 @@ namespace Kappa
 
         private void checkBox23_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox23.Checked)
-            {
-                // Start the background worker if the checkbox is checked
-                if (!backgroundWorker5.IsBusy)
-                {
-                    backgroundWorker5.RunWorkerAsync();
-                }
-            }
-            else
-            {
-                // Stop the background worker if the checkbox is unchecked
-                if (backgroundWorker5.IsBusy)
-                {
-                    backgroundWorker5.CancelAsync();
-                }
-            }
+            FixedSkill();
+
         }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
@@ -3451,18 +3437,21 @@ namespace Kappa
             OpenSettingsForm();
         }
 
+        public bool _Inject_FixedSkill;
         public void FixedSkill()
         {
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
-            allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
-            getadr = allocate_adr_BA.ToString("x");
-
-            IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-
-            // Assembly code for fstp dword ptr [esp+38]
-            byte[] assemblyCode = new byte[]
+            if (_Inject_FixedSkill)
             {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                getadr = allocate_adr_BA.ToString("x");
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
                     0x83, 0x7F, 0x44, 0x01,      // cmp dword ptr [edi+44],01
                     0x74, 0x00,                 // je (short jump), to be replaced with jumpOffset1
                     0x0F, 0x1F, 0x40, 0x00,     // nop
@@ -3471,63 +3460,61 @@ namespace Kappa
                     0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset3
                     0xEB, 0x00,                 // jmp short backward (loop), to be replaced with jumpOffset4
                     0x0F, 0x1F, 0x44, 0x00, 0x00 // nop
-            };
+                };
 
-            // Calculate offsets dynamically
-            int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
-            int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);          // Offset for the first `jmp`, replace at offset 11
-            int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 27);          // Offset for the second `jmp`, replace at offset 23
-            int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 29);       // Short backward jump to `allocate_adr_BA`, replace at offset 28
+                // Calculate offsets dynamically
+                int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);          // Offset for the first `jmp`, replace at offset 11
+                int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 27);          // Offset for the second `jmp`, replace at offset 23
+                int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 29);       // Short backward jump to `allocate_adr_BA`, replace at offset 28
 
-            // Update the jump offsets in the assembly code
-            assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
-            BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first `jmp`
-            BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second `jmp`
-            assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+                // Update the jump offsets in the assembly code
+                assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first `jmp`
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second `jmp`
+                assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
 
-            // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
+                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
-            // Write the initial assembly code to the allocated address
-            m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
 
 
-            // Assembly code for jmp to allocate_adr with nop 2
-            jmpCodemy = new byte[]
-            {
+                // Assembly code for jmp to allocate_adr with nop 2
+                jmpCodemy = new byte[]
+                {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
                     0x0F, 0x1F, 0x44
 
-            };
+                };
 
-            // Calculate the jump offset for the second jmp instruction
-            int jmpOffset3 = (int)allocate_adr_BA - ((int)AOB_BA + jmpCodemy.Length - 3);
-            BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)AOB_BA + jmpCodemy.Length - 3);
+                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-            m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
-        }
-
-        private void checkBox35_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox35.Checked)
-            {
             }
             else
             {
-                if (allocate_adr_BA != IntPtr.Zero)
-                {
-                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
-                    allocate_adr_BA = IntPtr.Zero;
-                }
 
-                // Restore the original code
-                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+                    if (allocate_adr_BA != IntPtr.Zero)
+                    {
+                        IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                        VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                        allocate_adr_BA = IntPtr.Zero;
+                    }
+
+                    // Restore the original code
+                    m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+
+              
 
             }
 
         }
+
     }
 
 }
