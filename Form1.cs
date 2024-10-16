@@ -3482,7 +3482,7 @@ namespace Kappa
                 // Update the jump offsets in the assembly code
                 assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first jump
-                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 24); // Place the offset for the second jump
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second jump
 
                 // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
