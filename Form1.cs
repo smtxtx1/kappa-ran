@@ -3476,7 +3476,7 @@ namespace Kappa
                 };
 
                 // Calculate offsets dynamically
-                int jumpOffset1 = (int)allocate_adr_BA + 0x13+ 0x4 - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
+                int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);   // Offset for the first jmp, replace at offset 12
                 int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 27);   // Offset for the first jmp, replace at offset 12
                 int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA - 5); // Offset for `je`, replace at offset 5
