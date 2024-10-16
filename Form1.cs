@@ -2783,71 +2783,7 @@ namespace Kappa
             }
         }
 
-        private async Task BestAim()
-        {
-            while (checkBox19.Checked)
-            {
-                int currentSkill = m.ReadInt("00FF8000,44");
 
-                if (checkBox19.Checked)
-                {
-                    if (currentSkill >= 0)
-                    {
-                        m.WriteMemory("00FF8000,44", "int", "0");
-                        m.WriteMemory("00FF8000,48", "int", "1");
-
-                    }
-
-                    await Task.Delay(100);
-
-                }
-                if (checkBox27.Checked)
-                {
-                    m.WriteMemory("00FF8000,40", "int", "0");
-
-                }
-                else
-                {
-
-                    m.WriteMemory("00FF8000,40", "int", "1");
-                }
-                Thread.Sleep(100);
-
-            }
-        }
-
-        private async Task BestAim2()
-        {
-            while (checkBox30.Checked)
-            {
-                int currentSkill = m.ReadInt("00FF8000,44");
-
-                if (checkBox30.Checked)
-                {
-                    if (currentSkill >= 0)
-                    {
-                        m.WriteMemory("00FF8000,44", "int", "3");
-                        //  m.WriteMemory("00FF8000,48", "int", "1");
-
-                    }
-
-                    await Task.Delay(100);
-
-                }
-                if (checkBox27.Checked)
-                {
-                    m.WriteMemory("00FF8000,40", "int", "0");
-
-                }
-                else
-                {
-
-                    m.WriteMemory("00FF8000,40", "int", "1");
-                }
-                Thread.Sleep(100);
-
-            }
-        }
 
         public string ReadKeyFromFile()
         {
@@ -3203,32 +3139,47 @@ namespace Kappa
 
         private void checkBox30_CheckedChanged(object sender, EventArgs e)
         {
-            BestAim2();
             if (checkBox30.Checked)
             {
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                getadr = allocate_adr_BA.ToString("x");
 
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                0x89,0x3D,0x00,0x80,0xFF,0x00,0x83,0x7F,0x44,0x01,
-                0x0F, 0x85, 0x66, 0x01, 0x00, 0x00, // je 0x0000001D (to be replaced later) 83 7F 44 01 0F 85 6? 01 00 00
-                0xE9, 0x1A, 0x00, 0x00, 0x00 // jmp 0x0000001A (to be replaced later)
+                    0x83, 0x7F, 0x44, 0x01,      // cmp dword ptr [edi+44],01
+                    0x74, 0x00,                 // je (short jump), to be replaced with jumpOffset1
+                    0x0F, 0x1F, 0x40, 0x00,     // nop
+                    0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset2
+                    0xC7, 0x47, 0x44, 0x03, 0x00, 0x00, 0x00, // mov [edi+48], 3
+                    0xC7, 0x47, 0x48, 0x03, 0x00, 0x00, 0x00, // mov [edi+48], 3
+                    0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset3
+                    0xEB, 0x00,                 // jmp short backward (loop), to be replaced with jumpOffset4
+                    0x0F, 0x1F, 0x44, 0x00, 0x00 // nop
                 };
 
-                // Calculate the jump offsets for the je and jmp instructions
-                int jumpOffset1 = (int)AOB_BA + 0x170 - ((int)allocate_adr_BA + assemblyCode.Length - 5);
-                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                // Calculate offsets dynamically
+                int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);          // Offset for the first `jmp`, replace at offset 11
+                int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 34);          // Offset for the second `jmp`, replace at offset 23
+                int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 36);       // Short backward jump to `allocate_adr_BA`, replace at offset 28
 
-                // Replace the jump offsets in the assembly code
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
+                // Update the jump offsets in the assembly code
+                assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first `jmp`
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 30); // Place the offset for the second `jmp`
+                assemblyCode[35] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+
+                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
+
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+
 
                 // Assembly code for jmp to allocate_adr with nop 2
                 jmpCodemy = new byte[]
