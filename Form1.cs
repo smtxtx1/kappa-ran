@@ -2910,15 +2910,7 @@ namespace Kappa
         private void checkBox23_CheckedChanged(object sender, EventArgs e)
         {
             FixedSkill();
-            if (checkBox23.Checked)
-            {
-                _Inject_FixedSkill = true;
-            }
-            else
-            {
-                _Inject_FixedSkill = false;
-
-            }
+            _Inject_FixedSkill = !_Inject_FixedSkill;
         }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
