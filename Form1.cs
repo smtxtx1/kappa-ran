@@ -482,7 +482,7 @@ namespace Kappa
             MessageBox.Show("All Done");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 60 FF 00");
+            m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory("00FAA000", "float", "4800");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
