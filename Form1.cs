@@ -3508,6 +3508,26 @@ namespace Kappa
 
         }
 
+        private void checkBox35_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox35.Checked)
+            {
+            }
+            else
+            {
+                if (allocate_adr_BA != IntPtr.Zero)
+                {
+                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                    allocate_adr_BA = IntPtr.Zero;
+                }
+
+                // Restore the original code
+                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+
+            }
+
+        }
     }
 
 }
