@@ -3410,7 +3410,7 @@ namespace Kappa
         public bool _Inject_FixedSkill;
         public void FixedSkill()
         {
-            if (_Inject_FixedSkill)
+            if (_Inject_FixedSkill == true)
             {
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
