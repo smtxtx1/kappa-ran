@@ -3476,13 +3476,15 @@ namespace Kappa
                 };
 
                 // Calculate offsets dynamically
-                int jumpOffset1 = (int)allocate_adr_BA - ((int)allocate_adr_BA - 5); // Offset for `je`, replace at offset 5
+                int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA - 5); // Offset for `je`, replace at offset 5
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);   // Offset for the first jmp, replace at offset 12
                 int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 27);   // Offset for the first jmp, replace at offset 12
+                int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA - 5); // Offset for `je`, replace at offset 5
+
                 // Update the jump offsets in the assembly code
                 assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first jump
-                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second jump
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 11); // Place the offset for the first jump
+                BitConverter.GetBytes(jumpOffset4).CopyTo(assemblyCode, 23); // Place the offset for the second jump
 
                 // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
