@@ -3407,7 +3407,7 @@ namespace Kappa
             OpenSettingsForm();
         }
 
-        public bool _Inject_FixedSkill;
+        public bool _Inject_FixedSkill = true;
         public void FixedSkill()
         {
             if (_Inject_FixedSkill == true)
