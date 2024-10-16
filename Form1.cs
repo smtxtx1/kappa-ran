@@ -2734,12 +2734,14 @@ namespace Kappa
                 // Calculate the jump offsets for the je and jmp instructions
                 int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
-
+                int jumpOffset3 = (int)allocate_adr_BA + 0x04 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+
 
                 // Assembly code for jmp to allocate_adr with nop 2
                 jmpCodemy = new byte[]
