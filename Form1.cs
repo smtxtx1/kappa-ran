@@ -3465,22 +3465,27 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0x83, 0x7F, 0x44, 0x01,
-                    0x74, 0x09,
-                    0x0F, 0x1F, 0x40, 0x00,
-                    0xE9, 0x48, 0x07, 0xA0, 0xF5, // here i want to use jumpOffset2
-                    0xC7, 0x47, 0x48, 0x03, 0x00, 0x00, 0x00,
-                    0xE9, 0x3C, 0x07, 0xA0, 0xF5, // here i want to use jumpOffset2
-                    0xEB, 0xE3,
-                    0x0F, 0x1F, 0x44, 0x00, 0x00               
+                    0x83, 0x7F, 0x44, 0x01,      // cmp dword ptr [edi+44],01
+                    0x74, 0x00,                 // je (short jump), to be replaced with jumpOffset1
+                    0x0F, 0x1F, 0x40, 0x00,     // nop
+                    0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset2
+                    0xC7, 0x47, 0x48, 0x03, 0x00, 0x00, 0x00, // mov [edi+48], 3
+                    0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset2
+                    0xEB, 0xE3,                 // jmp short backward (loop)
+                    0x0F, 0x1F, 0x44, 0x00, 0x00 // nop
                 };
 
-                int jumpOffset1 = (int)allocate_adr_BA - ((int)allocate_adr_BA + assemblyCode.Length - 5); // here i want to change to jumpback to allocate_adr_BA
-                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+                // Calculate offsets dynamically
+                int jumpOffset1 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);   // Offset for the first jmp, replace at offset 12
 
-                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 5);
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 7);
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 19);
+                // Update the jump offsets in the assembly code
+                assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first jump
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 24); // Place the offset for the second jump
+
+                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
+
                 // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
