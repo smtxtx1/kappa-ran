@@ -2734,7 +2734,7 @@ namespace Kappa
                 // Calculate the jump offsets for the je and jmp instructions
                 int jumpOffset1 = (int)AOB_BA + 0x16E - ((int)allocate_adr_BA + assemblyCode.Length - 5);
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
-                int jumpOffset3 = (int)allocate_adr_BA + 0x04 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+               // int jumpOffset3 = (int)allocate_adr_BA + 0x04 - ((int)allocate_adr_BA + assemblyCode.Length + 0);
                 // Replace the jump offsets in the assembly code
                 BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 9);
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 4);
@@ -3453,6 +3453,66 @@ namespace Kappa
 
         private void checkBox35_CheckedChanged(object sender, EventArgs e)
         {
+            if (checkBox35.Checked)
+            {
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                allocate_adr_BA = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                getadr = allocate_adr_BA.ToString("x");
+
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0x83, 0x7F, 0x44, 0x01,
+                    0x74, 0x09,
+                    0x0F, 0x1F, 0x40, 0x00,
+                    0xE9, 0x48, 0x07, 0xA0, 0xF5, // here i want to use jumpOffset2
+                    0xC7, 0x47, 0x48, 0x03, 0x00, 0x00, 0x00,
+                    0xE9, 0x3C, 0x07, 0xA0, 0xF5, // here i want to use jumpOffset2
+                    0xEB, 0xE3,
+                    0x0F, 0x1F, 0x44, 0x00, 0x00               
+                };
+
+                int jumpOffset1 = (int)allocate_adr_BA - ((int)allocate_adr_BA + assemblyCode.Length - 5); // here i want to change to jumpback to allocate_adr_BA
+                int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + assemblyCode.Length + 0);
+
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, assemblyCode.Length - 5);
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 7);
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, assemblyCode.Length - 19);
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_BA.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                jmpCodemy = new byte[]
+                {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x0F, 0x1F, 0x44
+
+                };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset3 = (int)allocate_adr_BA - ((int)AOB_BA + jmpCodemy.Length - 3);
+                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+            }
+            else
+            {
+                if (allocate_adr_BA != IntPtr.Zero)
+                {
+                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                    allocate_adr_BA = IntPtr.Zero;
+                }
+
+                // Restore the original code
+                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+
+            }
 
         }
     }
