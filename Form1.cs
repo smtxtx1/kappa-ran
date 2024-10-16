@@ -3482,10 +3482,10 @@ namespace Kappa
                 int jumpOffset4 = (int)allocate_adr_BA + 0x00 - ((int)allocate_adr_BA - 5);       // Short backward jump offset, replace at offset 29
 
                 // Update the jump offsets in the assembly code
-                assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset1).CopyTo(assemblyCode, 5); // Place the offset for the first `jmp`
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first `jmp`
                 BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second `jmp`
-                assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset4).CopyTo(assemblyCode, 28); // Place the offset for the first `jmp`
 
                 // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
