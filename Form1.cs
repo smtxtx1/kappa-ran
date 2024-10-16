@@ -102,8 +102,9 @@ namespace Kappa
         public long AOB_UNLOCK;
         public long AOB_ANTICB;
         public long AOB_ANTICHAT;
+        public long AOB_LONGBUFF;
 
-
+        public string LONGBUFF_ADR_RESUT;
         public string GETBUFF_ADR_RESULT;
         public string GETSKILL_LIST_ADR_RESULT;
         public string ANTICHAT_ADR_RESULT;
@@ -400,6 +401,8 @@ namespace Kappa
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LB = await m.AoBScan("0f b7 ? ? ? ? ? 89 44 ? ? db 44 ? ? 89 4c ? ? da 44", false, true);
+
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
             IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
@@ -411,6 +414,8 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
+
+            //
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("8b 86 ? ? ? ? 81 c6 ? ? ? ? 52", false, true);
@@ -420,6 +425,8 @@ namespace Kappa
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
             var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
             //0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10
+
+            AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
@@ -457,6 +464,7 @@ namespace Kappa
             RUN5_ADR_RESULT = (AOB_RUN + 0xF7B).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
 
+            LONGBUFF_ADR_RESUT = (AOB_LONGBUFF + 0x03).ToString("x");
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
@@ -474,6 +482,7 @@ namespace Kappa
             MessageBox.Show("All Done");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
             m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 60 FF 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory("00FAA000", "float", "4800");
             m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
