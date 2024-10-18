@@ -560,6 +560,7 @@ namespace Kappa
             if (textBox2.Text != null && checkBox2.Checked)
             {
                 m.WriteMemory("00FF6000", "float", textBox2.Text);
+                m.WriteMemory("00FF6600", "int", textBox2.Text);
             }
 
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
