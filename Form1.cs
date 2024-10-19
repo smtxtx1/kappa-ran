@@ -1488,8 +1488,8 @@ namespace Kappa
         {
             try
             {
-                int globalCrow = m.ReadInt("MiniA.exe+7A3B38,A954");
-                UIntPtr curr = m.GetCode("MiniA.exe+7A3B38,A958");
+                int globalCrow = m.ReadInt("MiniA.exe+7943E0,A7EC");
+                UIntPtr curr = m.GetCode("MiniA.exe+7943E0,A7F0");
 
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
