@@ -1488,6 +1488,8 @@ namespace Kappa
         {
             try
             {
+
+
                 int globalCrow = m.ReadInt("MiniA.exe+7943E0,A7EC");
                 UIntPtr curr = m.GetCode("MiniA.exe+7943E0,A7F0");
 
@@ -1501,11 +1503,13 @@ namespace Kappa
                     UIntPtr data = m.GetCode($"{curr:X},0");
 
                     // Get the Mob ID and coordinates
-                    UIntPtr mobID = m.GetCode($"{data:X},C18");
-                    UIntPtr mob_X = m.GetCode($"{data:X},AEC");
-                    UIntPtr mob_Y = m.GetCode($"{data:X},AF0");
-                    UIntPtr mob_Z = m.GetCode($"{data:X},AF4");
-                    UIntPtr mob_HP = m.GetCode($"{data:X},A90");
+
+
+                    UIntPtr mobID = m.GetCode($"{data:X},17A4");
+                    UIntPtr mob_X = m.GetCode($"{data:X},1678");
+                    UIntPtr mob_Y = m.GetCode($"{data:X},167C");
+                    UIntPtr mob_Z = m.GetCode($"{data:X},1680");
+                    UIntPtr mob_HP = m.GetCode($"{data:X},1618");
 
                     uint mobValue = m.ReadUInt(mobID.ToString("X"));
                     float mobVaLue_X = m.ReadFloat(mob_X.ToString("x"));
