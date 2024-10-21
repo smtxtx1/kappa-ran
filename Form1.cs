@@ -2073,7 +2073,7 @@ namespace Kappa
             while (true)
             {
                 monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
+                Console.WriteLine($"monsterHP{monsterHP} + from Autoskills2");
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
                     
