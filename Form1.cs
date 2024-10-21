@@ -2068,7 +2068,7 @@ namespace Kappa
         private async Task AutoSkills2()
         {
             
-            float limitdistance = ;
+            float limitdistance = MonDistance;
 
             // Calculate offsets based on the iteration
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
