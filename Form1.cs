@@ -2101,6 +2101,12 @@ namespace Kappa
                             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
                         }
+                        if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
+                        {
+                            Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
+
+                            break;
+                        }
 
                         m.WriteMemory(actioncheck, "int", "2");
                         m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
