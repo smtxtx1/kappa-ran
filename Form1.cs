@@ -1524,7 +1524,7 @@ namespace Kappa
                     // Calculate distance
                     float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(mobVaLue_X - myX, 2) + MathF.Pow(mobVaLue_Z - myZ, 2)) / 10, 2);
 
-                    if (mobVaLue_HP > 50 && distance_mon <= 6.0f && distance_mon < closestDistance)
+                    if (mobVaLue_HP > 70 && distance_mon <= 6.0f && distance_mon < closestDistance)
                     {
                         closestDistance = distance_mon;
                         closestMonsterID = mobValue;
