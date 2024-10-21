@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Security.Policy;
 using LOGIN;
 using KeyAuth;
+using Loader;
 
 namespace Kappa
 {
@@ -563,8 +564,8 @@ namespace Kappa
         public void INJECT_GET_SKILL()
         {
             if (!_INJECT_GET_SKILL)
-            {
-                byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0xFC, 0x5E, 0x00, 0x00 };
+            {//A3 00 20 FE 00 8B BC B8 A4 09 00 00
+                byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0xA4, 0x09, 0x00, 0x00 };
                 SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 7, 100, m);//Input address to create codecave
                 _INJECT_GET_SKILL = true;
 
@@ -579,7 +580,7 @@ namespace Kappa
         {
             if (!_INJECT_GET_BUFF)
             {
-                byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x3B, 0xD5 };
+                byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA };
                 SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 6, 100, m);//Input address to create codecave
                 _INJECT_GET_BUFF = true;
 
