@@ -256,6 +256,7 @@ namespace Kappa
         public string TARGET_RING = "00FF38A0,400C"; //
 
         public string MATION_CHECK = "00FF38A0,30FC";
+
         public string SKILL_TIME = "00FF38A0,3270";
 
         public string PATH2_ADR_RESULT;
