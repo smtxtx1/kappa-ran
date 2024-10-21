@@ -898,14 +898,15 @@ namespace Kappa
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    if (m.ReadInt(MATION_CHECK) != 3)
+                    while (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
                         while (m.ReadInt(MATION_CHECK) == 1)
                         {
                             Thread.Sleep(500);
+                            break;
                         }
-
+                        break;
                     }
                     if (frenzzy_tar != -1)
                     {
