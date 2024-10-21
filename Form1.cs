@@ -2079,6 +2079,8 @@ namespace Kappa
                     
                     if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                     {
+                        Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
+
                         break;
                     }
 
@@ -2116,6 +2118,8 @@ namespace Kappa
                         monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                         if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                         {
+                            Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
+
                             break;
                         }
                     }
@@ -2126,6 +2130,8 @@ namespace Kappa
                 monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                 if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                 {
+                    Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
+
                     break;
                 }
 
