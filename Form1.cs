@@ -454,6 +454,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
             string ANTIDELAY_ADR_RESULT = AOB_ANTIDELAY.ToString("x");
             ANTICHAT_ADR_RESULT = AOB_ANTICHAT.ToString("x");
             ANTICB_ADR_RESULT = AOB_ANTICB.ToString("x");
@@ -1528,6 +1529,9 @@ namespace Kappa
         public uint MonsterID_FromGetMonster = 0;
         public uint MonsterHP_FromGetMonster = 0;
         public float distance_FromGetMonster = 0;
+        public UIntPtr mob_HP;
+        public UIntPtr closestMonsterHP_ADR;
+
         private void GetMonsters()
         {
             try
@@ -1540,6 +1544,7 @@ namespace Kappa
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
                 uint closestMonsterHP = 0;
+                UIntPtr closestMonsterHP_ADR;
 
                 for (int i = 0; i < globalCrow; i++)
                 {
@@ -1553,7 +1558,7 @@ namespace Kappa
                     UIntPtr mob_X = m.GetCode($"{data:X},1678");
                     UIntPtr mob_Y = m.GetCode($"{data:X},167C");
                     UIntPtr mob_Z = m.GetCode($"{data:X},1680");
-                    UIntPtr mob_HP = m.GetCode($"{data:X},1618");
+                    mob_HP = m.GetCode($"{data:X},1618");
 
                     uint mobValue = m.ReadUInt(mobID.ToString("X"));
                     float mobVaLue_X = m.ReadFloat(mob_X.ToString("x"));
@@ -1573,6 +1578,7 @@ namespace Kappa
                         closestDistance = distance_mon;
                         closestMonsterID = mobValue;
                         closestMonsterHP = mobVaLue_HP;
+                        closestMonsterHP_ADR = mob_HP;
                     }
 
                     // Move to the next entity
@@ -2062,13 +2068,16 @@ namespace Kappa
             // Calculate offsets based on the iteration
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+            uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
             while (true)
             {
+                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
-                    await Task.Delay(50);
-                    if (MonsterHP_FromGetMonster < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
+                    
+                    if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                     {
                         break;
                     }
@@ -2104,8 +2113,8 @@ namespace Kappa
                             await Task.Delay(20);
                         }
 
-                        // Ensure loop breaks on these conditions
-                        if (MonsterHP_FromGetMonster < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
+                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+                        if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                         {
                             break;
                         }
@@ -2114,8 +2123,8 @@ namespace Kappa
                     await Task.Delay(10);
                 }
 
-                // Additional conditions to exit the main while loop
-                if (MonsterHP_FromGetMonster < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
+                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+                if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                 {
                     break;
                 }
@@ -2655,6 +2664,7 @@ namespace Kappa
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            StopMonitoringMonsters();
             Application.Exit();
         }
 
@@ -3322,7 +3332,7 @@ namespace Kappa
             {
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
-                 INJECT_GET_SKILL();
+                INJECT_GET_SKILL();
                 //  INJECT_GET_BUFF();
                 Get = true;
             }
@@ -3394,6 +3404,11 @@ namespace Kappa
         }
 
         public bool _Inject_FixedSkill = true;
+
+        public UIntPtr Mob_HP { get => Mob_HP2; set => Mob_HP2 = value; }
+        public UIntPtr Mob_HP1 { get => Mob_HP2; set => Mob_HP2 = value; }
+        public UIntPtr Mob_HP2 { get => mob_HP; set => mob_HP = value; }
+
         public void FixedSkill()
         {
             if (_Inject_FixedSkill == true)
