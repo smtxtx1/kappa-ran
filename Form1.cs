@@ -2065,7 +2065,7 @@ namespace Kappa
 
             while (true)
             {
-                for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
+                for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
                     await Task.Delay(50);
                     if (MonsterHP_FromGetMonster < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
