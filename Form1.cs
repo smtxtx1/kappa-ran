@@ -3322,7 +3322,7 @@ namespace Kappa
             {
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
-                // INJECT_GET_SKILL();
+                 INJECT_GET_SKILL();
                 //  INJECT_GET_BUFF();
                 Get = true;
             }
