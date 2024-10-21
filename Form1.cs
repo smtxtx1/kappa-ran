@@ -427,6 +427,8 @@ namespace Kappa
             //0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true); // LINE 731
+            AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
+            AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
 
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
