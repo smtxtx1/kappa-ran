@@ -553,6 +553,45 @@ namespace Kappa
 
 
         }
+
+        public bool _INJECT_GET_SKILL = false;
+        public bool _INJECT_GET_BUFF = false;
+
+        public int SKILLPET_ADR_GET_SKILL = 0;
+        public int SKILLPET_ADR_GET_BUFF = 0;
+        //SKILLPET_ADR_GET_BUFF
+        public void INJECT_GET_SKILL()
+        {
+            if (!_INJECT_GET_SKILL)
+            {
+                byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0xFC, 0x5E, 0x00, 0x00 };
+                SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 7, 100, m);//Input address to create codecave
+                _INJECT_GET_SKILL = true;
+
+            }
+            else
+            {
+                _INJECT_GET_SKILL = false;
+
+            }
+        }
+        public void INJECT_GET_BUFF()
+        {
+            if (!_INJECT_GET_BUFF)
+            {
+                byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x3B, 0xD5 };
+                SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 6, 100, m);//Input address to create codecave
+                _INJECT_GET_BUFF = true;
+
+            }
+            else
+            {
+                _INJECT_GET_BUFF = false;
+
+            }
+        }
+
+
         string originalcode_cutam = "D8 4C 24 10 8B CE";
         string originalcode_LR = "D9 5C 24 38 FF 52 10";
         string originalcode_ALE = "D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8";
