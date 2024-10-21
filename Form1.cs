@@ -504,7 +504,7 @@ namespace Kappa
                 break;
             }
             YourCallingMethod();
-
+            StartMonitoringMonsters();
         }
         public void RunActive()
         {
