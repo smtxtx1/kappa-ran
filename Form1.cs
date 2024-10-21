@@ -1544,8 +1544,6 @@ namespace Kappa
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
                 uint closestMonsterHP = 0;
-                UIntPtr closestMonsterHP_ADR;
-
                 for (int i = 0; i < globalCrow; i++)
                 {
                     // Read the data from the current pointer
@@ -1579,6 +1577,7 @@ namespace Kappa
                         closestMonsterID = mobValue;
                         closestMonsterHP = mobVaLue_HP;
                         closestMonsterHP_ADR = mob_HP;
+                       // Console.WriteLine(mob_HP.ToString("x"));
                     }
 
                     // Move to the next entity
@@ -1592,7 +1591,7 @@ namespace Kappa
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
 
-                    Console.WriteLine("Closest MonsterID: " + MonsterID_FromGetMonster + " MonsterHP: " + MonsterHP_FromGetMonster + " Distance: " + closestDistance);
+                  //  Console.WriteLine("Closest MonsterID: " + MonsterID_FromGetMonster + " MonsterHP: " + MonsterHP_FromGetMonster + " Distance: " + closestDistance);
                 }
 
 
@@ -1809,7 +1808,7 @@ namespace Kappa
                             {
                                 await AutoSkills2();
                                 await Task.Delay(10);
-                                await Autobuff();
+                                Console.WriteLine($"Attacking {j} < {numberOfIterations}");
 
                             }
 
@@ -1852,6 +1851,8 @@ namespace Kappa
                                 {
                                     await AutoSkills2();
                                     await Task.Delay(10);
+                                    Console.WriteLine($"Attacking {j2} < {numberOfIterations2}");
+
                                 }
 
                                 for (int u2 = 0; u2 < j; u2++)
@@ -1875,6 +1876,7 @@ namespace Kappa
                                     m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
                                     m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
                                     m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+                                    Console.WriteLine($"Looting{u2} < {j}");
 
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
@@ -1885,6 +1887,8 @@ namespace Kappa
                                     {
                                         await Autobuff();
                                         await Task.Delay(20);
+                                        await Autobuff();
+
                                     }
                                 }
 
@@ -2068,8 +2072,8 @@ namespace Kappa
             // Calculate offsets based on the iteration
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-            uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
+            uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("x"));
+            Console.WriteLine($"{monsterHP},{closestMonsterHP_ADR}");
             while (true)
             {
                 monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
