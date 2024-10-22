@@ -3145,7 +3145,7 @@ namespace Kappa
 
         private void checkBox29_CheckedChanged(object sender, EventArgs e)
         {
-            m.WriteMemory("0074D995", "byte", "eb");
+            
         }
 
         private void checkBox22_CheckedChanged_1(object sender, EventArgs e)
