@@ -3145,7 +3145,7 @@ namespace Kappa
 
         private void checkBox29_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox29.Checked == true)
+            if (checkBox29.Checked)
             {
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
@@ -3162,6 +3162,7 @@ namespace Kappa
                     0x0F, 0x1F, 0x40, 0x00,     // nop
                     0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset2
                     0xC7, 0x47, 0x44, 0x00, 0x00, 0x00, 0x00, // mov [edi+48], 3
+                    0xC7, 0x47, 0x48, 0x01, 0x00, 0x00, 0x00, // mov [edi+48], 3
                     0xE9, 0x00, 0x00, 0x00, 0x00, // jmp, to be replaced with jumpOffset3
                     0xEB, 0x00,                 // jmp short backward (loop), to be replaced with jumpOffset4
                     0x0F, 0x1F, 0x44, 0x00, 0x00 // nop
@@ -3170,14 +3171,14 @@ namespace Kappa
                 // Calculate offsets dynamically
                 int jumpOffset1 = (int)allocate_adr_BA + 0x0F - ((int)allocate_adr_BA + 6); // Offset for `je`, replace at offset 5
                 int jumpOffset2 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 15);          // Offset for the first `jmp`, replace at offset 11
-                int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 27);          // Offset for the second `jmp`, replace at offset 23
-                int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 29);       // Short backward jump to `allocate_adr_BA`, replace at offset 28
+                int jumpOffset3 = (int)AOB_BA + 0xA - ((int)allocate_adr_BA + 34);          // Offset for the second `jmp`, replace at offset 23
+                int jumpOffset4 = (int)allocate_adr_BA - ((int)allocate_adr_BA + 36);       // Short backward jump to `allocate_adr_BA`, replace at offset 28
 
                 // Update the jump offsets in the assembly code
                 assemblyCode[5] = (byte)(jumpOffset1 & 0xFF); // Short jump offset for `je` instruction, which only takes 1 byte
                 BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 11); // Place the offset for the first `jmp`
-                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 23); // Place the offset for the second `jmp`
-                assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 30); // Place the offset for the second `jmp`
+                assemblyCode[35] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
 
                 // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
@@ -3199,7 +3200,6 @@ namespace Kappa
                 BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
                 m.WriteMemory(BA_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
-
             }
             else
             {
