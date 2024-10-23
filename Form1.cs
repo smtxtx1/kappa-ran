@@ -506,7 +506,7 @@ namespace Kappa
                 break;
             }
             YourCallingMethod();
-            StartMonitoringMonsters();
+            
         }
         public void RunActive()
         {
@@ -1500,108 +1500,109 @@ namespace Kappa
             }
         }
 
-        private bool isRunning = false;
-
-        private void StartMonitoringMonsters()
+        private CancellationTokenSource monitoringCts;
+        private async Task StartMonitoringMonstersAsync()
         {
-            isRunning = true;
-            Task.Run(() =>
+            monitoringCts = new CancellationTokenSource();
+            try
             {
-                try
+                while (!monitoringCts.Token.IsCancellationRequested)
                 {
-                    while (isRunning)
-                    {
-                        label2.Text = MonDistance.ToString();
-                        GetMonsters();
-                        Thread.Sleep(100); // Adjust the delay as needed
-                    }
+                    label2.Text = MonDistance.ToString();
+                    await GetMonstersAsync();
+                    await Task.Delay(100); // Adjust the delay as needed
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
-                    isRunning = false; // Stop if there's an error
-                }
-            });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
+                StopMonitoringMonsters(); // Ensure stopping on exception
+            }
         }
 
         private void StopMonitoringMonsters()
         {
-            isRunning = false;
+            monitoringCts?.Cancel();
         }
-
         public uint MonsterID_FromGetMonster = 0;
         public uint MonsterHP_FromGetMonster = 0;
         public float distance_FromGetMonster = 0;
         public UIntPtr mob_HP;
         public UIntPtr closestMonsterHP_ADR;
 
-        private void GetMonsters()
+        private async Task GetMonstersAsync()
         {
             try
             {
-
-
                 int globalCrow = m.ReadInt("MiniA.exe+7953E0,A7EC");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,A7F0");
 
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
                 uint closestMonsterHP = 0;
+
                 for (int i = 0; i < globalCrow; i++)
                 {
-                    // Read the data from the current pointer
                     UIntPtr data = m.GetCode($"{curr:X},0");
+                    // Reading data pointers
+                    var mobDetails = await ReadMonsterDetailsAsync(data);
 
-                    // Get the Mob ID and coordinates
-
-
-                    UIntPtr mobID = m.GetCode($"{data:X},17A4");
-                    UIntPtr mob_X = m.GetCode($"{data:X},1678");
-                    UIntPtr mob_Y = m.GetCode($"{data:X},167C");
-                    UIntPtr mob_Z = m.GetCode($"{data:X},1680");
-                    mob_HP = m.GetCode($"{data:X},1618");
-
-                    uint mobValue = m.ReadUInt(mobID.ToString("X"));
-                    float mobVaLue_X = m.ReadFloat(mob_X.ToString("x"));
-                    float mobVaLue_Y = m.ReadFloat(mob_Y.ToString("x"));
-                    float mobVaLue_Z = m.ReadFloat(mob_Z.ToString("x"));
-                    uint mobVaLue_HP = m.ReadUInt(mob_HP.ToString("X"));
-
-                    float myX = m.ReadFloat(CurrentX);
-                    float myY = m.ReadFloat(CurrentY);
-                    float myZ = m.ReadFloat(CurrentZ);
-
-                    // Calculate distance
-                    float distance_mon = (float)Math.Round(MathF.Sqrt(MathF.Pow(mobVaLue_X - myX, 2) + MathF.Pow(mobVaLue_Z - myZ, 2)) / 10, 2);
-
-                    if (mobVaLue_HP > 70 && distance_mon <= MonDistance && distance_mon < closestDistance)
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < closestDistance)
                     {
                         closestDistance = distance_mon;
-                        closestMonsterID = mobValue;
-                        closestMonsterHP = mobVaLue_HP;
+                        closestMonsterID = mobDetails.ID;
+                        closestMonsterHP = mobDetails.HP;
                         closestMonsterHP_ADR = mob_HP;
-                       // Console.WriteLine(mob_HP.ToString("x"));
                     }
 
-                    // Move to the next entity
                     curr = m.GetCode($"{curr:X},8");
                 }
 
-                // Update global variables with the closest monster's data if found
+                // Update global variables
                 if (closestMonsterID != 0 && closestMonsterHP > 50 && closestDistance <= 6.0f)
                 {
                     MonsterID_FromGetMonster = closestMonsterID;
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
-
-                  //  Console.WriteLine("Closest MonsterID: " + MonsterID_FromGetMonster + " MonsterHP: " + MonsterHP_FromGetMonster + " Distance: " + closestDistance);
                 }
-
-
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+            }
         }
+        private async Task<(uint ID, float X, float Y, float Z, uint HP)> ReadMonsterDetailsAsync(UIntPtr data)
+        {
+            try
+            {
+                UIntPtr mobID = m.GetCode($"{data:X},17A4");
+                UIntPtr mob_X = m.GetCode($"{data:X},1678");
+                UIntPtr mob_Y = m.GetCode($"{data:X},167C");
+                UIntPtr mob_Z = m.GetCode($"{data:X},1680");
+                mob_HP = m.GetCode($"{data:X},1618");
 
+                uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
+                float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
+                float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
+                float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
+                uint mobVaLue_HP = await Task.Run(() => m.ReadUInt(mob_HP.ToString("X")));
+
+                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z, mobVaLue_HP);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading monster details: {ex.Message}");
+                return (0, 0, 0, 0, 0);
+            }
+        }
+        private float CalculateDistance(float mobX, float mobY, float mobZ)
+        {
+            float myX = m.ReadFloat(CurrentX);
+            float myY = m.ReadFloat(CurrentY);
+            float myZ = m.ReadFloat(CurrentZ);
+            return (float)Math.Round(MathF.Sqrt(MathF.Pow(mobX - myX, 2) + MathF.Pow(mobZ - myZ, 2)) / 10, 2);
+        }
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Use the folder path from selectedPathTextBox
@@ -2085,89 +2086,50 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            
             float limitdistance = MonDistance;
-
-            // Calculate offsets based on the iteration
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-            uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("x"));
-            Console.WriteLine($"{monsterHP},{closestMonsterHP_ADR}");
+
             while (true)
             {
-                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-                Console.WriteLine($"monsterHP{monsterHP} + from Autoskills2");
+                uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+                if (ShouldStopAttacking(monsterHP, limitdistance))
+                {
+                    break;
+                }
+
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
-                    
                     if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
                     {
-                        Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
-
                         break;
                     }
 
                     int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                    int num_test = i3 + 0x02;
-                    int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test:x}");
+                    int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
-                    if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                    if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
                     {
-                        if (MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
-                        {
-                            m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
-                            m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-                        }
-                        if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
-                        {
-                            Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
-
-                            break;
-                        }
-
-                        m.WriteMemory(actioncheck, "int", "2");
-                        m.WriteMemory(prevskill1_adr, "byte", idskilltype_test1.ToString("x"));
-                        m.WriteMemory(prevskill2_adr, "byte", idskilltype_test2.ToString("x"));
-                        m.WriteMemory(forceattack_adr, "int", "5");
-
-                        while (m.ReadInt(MATION_CHECK) == 3)
-                        {
-                            if (m.ReadFloat(SKILL_TIME) > skilltimer)
-                            {
-                                Console.WriteLine("Moving");
-                                if (!autoskillsstand)
-                                {
-                                    await MoveWhileAttacking();
-                                    break;
-                                }
-                            }
-                            await Task.Delay(20);
-                        }
-
-                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-                        if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
-                        {
-                            Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
-
-                            break;
-                        }
+                        PerformSkill(idskilltype_test1, idskilltype_test2);
                     }
 
                     await Task.Delay(10);
                 }
-
-                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-                if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
-                {
-                    Console.WriteLine($"monsterHP{monsterHP}\n BreakHP");
-
-                    break;
-                }
-
-                await Task.Delay(5);
             }
         }
 
+        private void PerformSkill(int skill1, int skill2)
+        {
+            m.WriteMemory(actioncheck, "int", "2");
+            m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
+            m.WriteMemory(prevskill2_adr, "byte", skill2.ToString("x"));
+            m.WriteMemory(forceattack_adr, "int", "5");
+        }
+
+        private bool ShouldStopAttacking(uint monsterHP, float limitDistance)
+        {
+            return monsterHP < 5 || distance_FromGetMonster > limitDistance || m.ReadInt(TARGET_RING) == -1;
+        }
 
 
         public void LOCALPLAYER_ALLOC()
