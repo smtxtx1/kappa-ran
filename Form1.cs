@@ -506,7 +506,9 @@ namespace Kappa
                 break;
             }
             YourCallingMethod();
-            
+           await StartMonitoringMonstersAsync();
+
+
         }
         public void RunActive()
         {
@@ -2101,7 +2103,7 @@ namespace Kappa
 
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
-                    if (monsterHP < 5 || distance_FromGetMonster > limitdistance || m.ReadInt(TARGET_RING) == -1)
+                    if (ShouldStopAttacking(monsterHP, limitdistance))
                     {
                         break;
                     }
@@ -2111,6 +2113,11 @@ namespace Kappa
 
                     if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
                     {
+                        if (ShouldStopAttacking(monsterHP, limitdistance))
+                        {
+                            break;
+                        }
+
                         PerformSkill(idskilltype_test1, idskilltype_test2);
                     }
 
