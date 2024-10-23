@@ -1906,10 +1906,17 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                await ItemGet();
-                                await Task.Delay(10);
-                                await ItemGet();
-                                await Task.Delay(10);
+                                try {
+                                    await ItemGet();
+                                    await Task.Delay(10);
+                                    await ItemGet();
+                                    await Task.Delay(10);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex);
+                                }
+                                
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -1926,10 +1933,17 @@ namespace Kappa
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
-                                    await ItemGet();
-                                    await Task.Delay(10);
-                                    await ItemGet();
-                                    await Task.Delay(10);
+                                    try
+                                    {
+                                        await ItemGet();
+                                        await Task.Delay(10);
+                                        await ItemGet();
+                                        await Task.Delay(10);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine(ex);
+                                    }
                                 }
                                 m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
                                 if (int.TryParse(textBox1.Text, out var numberOfIterations3))
@@ -2480,7 +2494,7 @@ namespace Kappa
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 return;
             }
 
