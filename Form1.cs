@@ -2080,7 +2080,7 @@ namespace Kappa
             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
 
         }
-        float MonDistance = 5f;
+        float MonDistance = 8f;
 
         private async Task AutoSkills2()
         {
