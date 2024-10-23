@@ -1511,6 +1511,7 @@ namespace Kappa
                 {
                     while (isRunning)
                     {
+                        label2.Text = MonDistance.ToString();
                         GetMonsters();
                         Thread.Sleep(100); // Adjust the delay as needed
                     }
