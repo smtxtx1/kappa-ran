@@ -409,7 +409,7 @@ namespace Kappa
                 IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
                 IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
                 IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
-                IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("D9 44 24 44 8B 40 08", false, true);
+                IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("0f 84 ? ? ? ? 83 f8 ? 0f 84 ? ? ? ? f6 84 24 4c 01 00 00", false, true);
                 IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
                 IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
                 IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
@@ -1380,15 +1380,15 @@ namespace Kappa
         {
             if (checkBox11.Checked)
             {
-                m.WriteMemory(HT_ADR_RESULT, "bytes", "90 90 90 90");
-                m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 FA 02 00 00 90");
+                m.WriteMemory(HT_ADR_RESULT, "bytes", "E9 E3 02 00 00 90");
+             //   m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 FA 02 00 00 90");
                 //   m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
                 //0F 84 ED 02 00 00
             }
             else
             {
-                m.WriteMemory(HT_ADR_RESULT, "bytes", "D9 44 24 44");
-                m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 F9 02 00 00");
+                m.WriteMemory(HT_ADR_RESULT, "bytes", "0F 84 E2 02 00 00");
+              //  m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 F9 02 00 00");
                 //       m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 ED 02 00 00");
 
             }
