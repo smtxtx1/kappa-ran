@@ -1914,8 +1914,6 @@ namespace Kappa
                                 try {
                                     await ItemGet();
                                     await Task.Delay(10);
-                                    await ItemGet();
-                                    await Task.Delay(10);
                                 }
                                 catch (Exception ex)
                                 {
@@ -1940,8 +1938,6 @@ namespace Kappa
                                 {
                                     try
                                     {
-                                        await ItemGet();
-                                        await Task.Delay(10);
                                         await ItemGet();
                                         await Task.Delay(10);
                                     }
@@ -2423,54 +2419,144 @@ namespace Kappa
 
 
         List<int> ItemID = new List<int>();
+        private bool ShouldAddItem(int itemType)
+        {
+            return itemType != 0 && itemType != 5 && itemType != 2;
+        }
+
+        private bool IsItemAlreadyInList(int itemId)
+        {
+            return listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == itemId.ToString());
+        }
+
+        private async Task WriteMemoryMultipleTimes(string address, string type, string value, int times, int delay)
+        {
+            for (int i = 0; i < times; i++)
+            {
+                m.WriteMemory(address, type, value);
+                await Task.Delay(delay);
+            }
+        }
+
+        private void LogError(Exception ex, string names)
+        {
+            string logFileName = $"error_logs_{names}.txt";
+            File.AppendAllText(logFileName, $"{DateTime.Now}: {ex.Message}{Environment.NewLine}{ex.StackTrace}{Environment.NewLine}");
+        }
+
+        // Refactored AddItemToListView Method
         private async Task AddItemToListView()
         {
             try
             {
                 int num = 30;
-                int ItemType = m.ReadInt("00FF4550,3b8");
-                int ItemID = m.ReadInt("00FF4550,3bc");
+                int itemType = m.ReadInt("00FF4550,3b8");
+                int itemId = m.ReadInt("00FF4550,3bc");
                 byte[] array = m.ReadBytes("00FF4550,3d1", num);
-                byte[] itemtoget = new byte[] { 0xA1, 0xC5, 0xE8, 0xCD, 0xA7 };
-                string stringFromBytes;
-                string expectedString;
-                if (array != null)
+
+                if (array != null && ShouldAddItem(itemType))
                 {
-                    stringFromBytes = Encoding.GetEncoding(874).GetString(array);
-                    expectedString = Encoding.GetEncoding(874).GetString(itemtoget);
-                    if (ItemType != 0 && ItemType != 5 && ItemType != 2)
+                    string stringFromBytes = Encoding.GetEncoding(874).GetString(array);
+                    if (!IsItemAlreadyInList(itemId))
                     {
-                        //  saveID = m.ReadString(IDadr);
-
-                        if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == ItemID.ToString()))
-                        {
-                            string[] row = { ItemType.ToString(), ItemID.ToString(), stringFromBytes };
-                            var listViewItem = new ListViewItem(row);
-
-                            listView11.Items.Add(listViewItem);
-                            //  string contents = JsonConvert.SerializeObject(row);
-                            //  File.AppendAllText($"item_logs_{saveID}.json", contents);
-                        }
-
+                        string[] row = { itemType.ToString(), itemId.ToString(), stringFromBytes };
+                        listView11.Items.Add(new ListViewItem(row));
                     }
-
                 }
 
                 if (listView11.Items.Count > 8)
                 {
                     listView11.Items.Clear();
                 }
-                await Task.Delay(10);
 
+                await Task.Delay(10);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                return;
             }
-
         }
 
+        // Refactored ItemGet Method
+        private async Task ItemGet()
+        {
+            string names = m.ReadString(IDadr);
+            try
+            {
+                if (listView11 != null)
+                {
+                    foreach (ListViewItem item in listView11.Items)
+                    {
+                        bool found = false;
+
+                        foreach (ListViewItem item12 in listView12.Items)
+                        {
+                            if (item.SubItems[2].Text.Contains(item12.SubItems[2].Text))
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+
+                        if (found)
+                        {
+                            if (m.ReadInt(MATION_CHECK) != 1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "3");
+                                m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                                item.Remove();
+
+                                while (m.ReadInt(MATION_CHECK) == 1)
+                                {
+                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
+
+                                    if (m.ReadInt(MATION_CHECK) == 0)
+                                    {
+                                        await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                                        await WriteMemoryMultipleTimes(TARGET_SKILL, "int", item.SubItems[1].Text, 3, 50);
+                                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
+
+                                        item.Remove();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (item.SubItems[0].Text == "4")
+                        {
+                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
+                            if (m.ReadInt(MATION_CHECK) != 1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "4");
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", item.SubItems[1].Text, 1, 50);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
+                                item.Remove();
+
+                                while (m.ReadInt(MATION_CHECK) == 1)
+                                {
+                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 10);
+
+                                    if (m.ReadInt(MATION_CHECK) == 0)
+                                    {
+                                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 2, 50);
+                                        item.Remove();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, names);
+            }
+
+            await Task.Delay(20);
+        }
 
         private async Task ItemGetAll()
         {
@@ -2563,109 +2649,6 @@ namespace Kappa
 
 
 
-        private async Task ItemGet()
-        {
-            string names = m.ReadString(IDadr);
-            try
-            {
-                if (listView11 != null)
-                {
-                    foreach (ListViewItem item in listView11.Items)
-                    {
-                        bool found = false;
-
-                        foreach (ListViewItem item12 in listView12.Items)
-                        {
-                            if (item.SubItems[2].Text.Contains(item12.SubItems[2].Text))
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (found)
-                        {
-                            if (m.ReadInt(MATION_CHECK) != 1)
-                            {
-                                m.WriteMemory(actioncheck, "int", "3");
-                                m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                m.WriteMemory(forceattack_adr, "int", "4");
-                                await Task.Delay(100);
-                                item.Remove();
-
-                                while (m.ReadInt(MATION_CHECK) == 1)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-
-                                    await Task.Delay(1000);
-
-                                    if (m.ReadInt(MATION_CHECK) == 0)
-                                    {
-                                        m.WriteMemory(actioncheck, "int", "3");
-                                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                        m.WriteMemory(forceattack_adr, "int", "4");
-                                        await Task.Delay(50);
-                                        m.WriteMemory(actioncheck, "int", "3");
-                                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                        m.WriteMemory(forceattack_adr, "int", "4");
-                                        await Task.Delay(50);
-                                        m.WriteMemory(actioncheck, "int", "3");
-                                        m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                        m.WriteMemory(forceattack_adr, "int", "4");
-                                        await Task.Delay(50);
-
-                                        item.Remove();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (item.SubItems[0].Text == "4")
-                        {
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                            if (m.ReadInt(MATION_CHECK) != 1)
-                            {
-                                m.WriteMemory(actioncheck, "int", "4");
-                                m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                m.WriteMemory(forceattack_adr, "int", "4");
-                                await Task.Delay(50);
-                                item.Remove();
-
-                                while (m.ReadInt(MATION_CHECK) == 1)
-                                {
-                                    m.WriteMemory(forceattack_adr, "int", "4");
-
-                                    await Task.Delay(10);
-
-                                    if (m.ReadInt(MATION_CHECK) == 0)
-                                    {
-                                        m.WriteMemory(forceattack_adr, "int", "4");
-                                        m.WriteMemory(forceattack_adr, "int", "4");
-                                        await Task.Delay(50);
-
-                                        item.Remove();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                File.AppendAllText($"errorlogsStacktrace{names}", ex.StackTrace);
-                File.AppendAllText($"errorlogsMessage{names}", ex.Message);
-                return;
-            }
-
-
-
-            await Task.Delay(20);
-
-        }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
