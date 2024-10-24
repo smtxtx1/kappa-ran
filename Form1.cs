@@ -911,13 +911,28 @@ namespace Kappa
                         }
                         break;
                     }
-                    if (frenzzy_tar != -1)
+                    if (frenzzy_tarList.Count > 0)
                     {
 
-                        m.WriteMemory(actioncheck, "int", "0");
-                        m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(300);
+                        for (int i = 0; i < frenzzy_tarList.Count; i++)
+                        {
+                            int frenzzy_tar = frenzzy_tarList[i];
+
+                            Console.WriteLine($"Buffering To {frenzzy_tar}");
+
+                            if (frenzzy_tar != -1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "0");
+                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                                m.WriteMemory(forceattack_adr, "int", "5");
+                                while (m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Console.WriteLine("Buffering");
+                                    await Task.Delay(1000);
+                                }
+                                m.WriteMemory(forceattack_adr, "int", "9");
+                            }
+                        }
                     }
 
                 }
