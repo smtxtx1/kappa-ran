@@ -2925,12 +2925,26 @@ namespace Kappa
             }
         }
 
+        List<int> frenzzy_tarList = new List<int>();
+
         private void button14_Click(object sender, EventArgs e)
         {
-            frenzzy_tar = m.ReadInt(TARGET_RING);
-            MessageBox.Show(frenzzy_tar.ToString());
+            int frenzzy_tar = m.ReadInt(TARGET_RING);
+            if (frenzzy_tarList.Count > 8)
+            {
+                frenzzy_tarList.Clear();
+            }
+            if (frenzzy_tar != null)
+            {
+                // Add the value to the list
+                frenzzy_tarList.Add(frenzzy_tar);
+                MessageBox.Show($"frenzzy_tar{frenzzy_tarList.Count} saved: {frenzzy_tar}");
+            }
+            else
+            {
+                MessageBox.Show("frenzzy_tar must be greater than 1.");
+            }
         }
-
         private void checkBox24_CheckedChanged(object sender, EventArgs e)
         {
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
