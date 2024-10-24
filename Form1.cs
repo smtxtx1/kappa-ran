@@ -1789,12 +1789,12 @@ namespace Kappa
 
         private async Task PerformAutoSkillsAsync()
         {
-            // Your implementation here
+            await AutoSkills2();
         }
 
         private async Task PerformItemGetAsync()
         {
-            // Your implementation here
+            await ItemGet();
         }
 
         private async Task PerformZoomAdjustmentsAsync(int iterations)
