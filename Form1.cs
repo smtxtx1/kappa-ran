@@ -446,7 +446,7 @@ namespace Kappa
             var AoB_Scan_ANTICB = await m.AoBScan("74 58 55 55", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
             var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
-            var AoB_Scan_DelayPot = await m.AoBScan("74 ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e", false, true);
+            var AoB_Scan_DelayPot = await m.AoBScan("7A ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e", false, true);
 
             //74 ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
