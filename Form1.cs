@@ -400,6 +400,15 @@ namespace Kappa
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        private const uint SWP_NOZORDER = 0x0004;
+        private const uint SWP_NOACTIVATE = 0x0010;
+        private const uint SWP_SHOWWINDOW = 0x0040;
+        private const uint SWP_NOMOVE = 0x0002;
+
+        private const int GWL_STYLE = -16;
+        private const int WS_THICKFRAME = 0x00040000; // Window style that allows resizing
+        private const int WS_VISIBLE = 0x10000000;    // Window style that makes the window visible
+
 
         private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
