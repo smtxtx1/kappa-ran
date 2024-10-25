@@ -2147,7 +2147,7 @@ namespace Kappa
 
         private async Task AutoSkills2()
         {
-            float limitdistance = MonDistance;
+            float limitdistance = 6f;
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
 

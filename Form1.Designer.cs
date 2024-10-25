@@ -1400,7 +1400,7 @@
             MaximizeBox = false;
             Name = "Form1";
             Opacity = 0.9D;
-            Text = "smt-kappa";
+            Text = "SMT BOT & CHEATS";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);
