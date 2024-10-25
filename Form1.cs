@@ -965,7 +965,7 @@ namespace Kappa
                     while (m.ReadInt(MATION_CHECK) == 3)
                     {
                         Console.WriteLine("Buffering");
-                        await Task.Delay(1000);
+                        await Task.Delay(500);
                         break;
                     }
 
@@ -984,7 +984,7 @@ namespace Kappa
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Console.WriteLine("Buffering");
-                                    await Task.Delay(1000);
+                                    await Task.Delay(500);
                                 }
 
                                 m.WriteMemory(forceattack_adr, "int", "9");
@@ -1010,7 +1010,8 @@ namespace Kappa
 
                         if (mationCheck == 1)
                         {
-                            await Task.Delay(500);
+                            await Task.Delay(50);
+                            break;
                         }
                         mationCheck = m.ReadInt(MATION_CHECK);
                     }
@@ -1030,7 +1031,7 @@ namespace Kappa
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Console.WriteLine("Buffering");
-                                    await Task.Delay(1000);
+                                    await Task.Delay(500);
                                 }
 
                                 m.WriteMemory(forceattack_adr, "int", "9");
