@@ -951,15 +951,11 @@ namespace Kappa
 
                     // Optimized memory read and waiting
                     int mationCheck = m.ReadInt(MATION_CHECK);
-                    while (mationCheck != 3)
+                    while (m.ReadInt(MATION_CHECK) == 3)
                     {
-                        m.WriteMemory(forceattack_adr, "int", "5");
-
-                        if (mationCheck == 1)
-                        {
-                            await Task.Delay(500);
-                        }
-                        mationCheck = m.ReadInt(MATION_CHECK);
+                        Console.WriteLine("Buffering");
+                        await Task.Delay(1000);
+                        break;
                     }
 
                     if (frenzzy_tarList.Count > 0)
@@ -1149,6 +1145,7 @@ namespace Kappa
                 int mainSK2 = mem.Read2Byte(prevskill2_adr);
                 int target = mem.ReadInt(TARGET_RING);
                 int mationCheck = mem.ReadInt(MATION_CHECK);
+                int actiontarget = mem.ReadInt(actioncheck);
 
                 // Calculate new follow positions
                 float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
@@ -1196,15 +1193,10 @@ namespace Kappa
                         }
 
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString());
-                        m.WriteMemory(actioncheck, "int", "2");
+                        m.WriteMemory(actioncheck, "int", actiontarget.ToString());
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        m.WriteMemory(actioncheck, "int", "0");
-                        m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
-                        m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                    }
 
                     await Task.Delay(10); // Wait before the next iteration
                 }
