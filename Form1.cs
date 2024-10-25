@@ -913,7 +913,7 @@ namespace Kappa
             HashSet<int> listREMAIN = new HashSet<int>();
 
             // Clear list when it reaches 5 items to avoid excessive memory usage
-            if (list.Count == 5)
+            if (list.Count == 8)
             {
                 list.Clear();
             }
@@ -935,6 +935,10 @@ namespace Kappa
                 if (item3 <= 50f && !listREMAIN.Contains(item2))
                 {
                     listREMAIN.Add(item2);
+                }
+                else
+                {
+                    listREMAIN.Remove(item2);
                 }
                 list.Add(item2);
             }
