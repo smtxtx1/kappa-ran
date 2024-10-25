@@ -2175,6 +2175,10 @@ namespace Kappa
 
                     await Task.Delay(10);
                 }
+                if (ShouldStopAttacking(monsterHP, limitdistance))
+                {
+                    break;
+                }
             }
         }
 
