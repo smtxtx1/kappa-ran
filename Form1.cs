@@ -2179,6 +2179,8 @@ namespace Kappa
                 {
                     break;
                 }
+                await Task.Delay(200);
+
             }
         }
 
