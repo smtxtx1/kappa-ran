@@ -2190,6 +2190,9 @@ namespace Kappa
 
             while (true)
             {
+                m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+                m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+
                 uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                 if (ShouldStopAttacking(monsterHP, limitdistance))
                 {
@@ -2198,6 +2201,9 @@ namespace Kappa
 
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
+                    m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+                    m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+
                     if (ShouldStopAttacking(monsterHP, limitdistance))
                     {
                         break;
