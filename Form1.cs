@@ -990,7 +990,7 @@ namespace Kappa
                 }
                 else
                 {
-                    list.Remove(num7);
+                    listREMAIN.Remove(num7);
                 }
 
                 if (!list.Contains(num7))
