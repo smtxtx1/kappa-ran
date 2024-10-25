@@ -505,6 +505,27 @@ namespace Kappa
                 label1.Text = @string + " " + comboBox1.Text;
                 break;
             }
+
+            Process process = Process.GetProcessById(selectedProcessId);
+            IntPtr windowHandle = process.MainWindowHandle;
+
+            // Check if the handle is valid
+            if (windowHandle != IntPtr.Zero)
+            {
+
+                // Set the window position and size
+                int newX = 100; // X coordinate
+                int newY = 100; // Y coordinate
+                int newWidth = 400; // Window width
+                int newHeight = 600; // Window height
+                                     // Change the window title
+                int style = GetWindowLong(windowHandle, GWL_STYLE);
+                SetWindowLong(windowHandle, GWL_STYLE, style | WS_THICKFRAME | WS_VISIBLE);
+                bool result = SetWindowPos(windowHandle, IntPtr.Zero, 0, 0, newWidth, newHeight, SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOMOVE | SWP_SHOWWINDOW);
+
+                SetWindowText(windowHandle, this.Text);
+            }
+
             YourCallingMethod();
            await StartMonitoringMonstersAsync();
 
