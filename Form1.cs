@@ -900,65 +900,71 @@ namespace Kappa
 
         private async Task Autobuff()
         {
+            HashSet<int> list = new HashSet<int>();
+            HashSet<int> listREMAIN = new HashSet<int>();
 
-            await Task.Delay(1);
-            List<int> list = new List<int>();
+            // Clear list when it reaches 5 items to avoid excessive memory usage
             if (list.Count == 5)
             {
                 list.Clear();
             }
 
+            // Loop to check specific addresses
             for (int j = 0x00B966DC; j <= 0x00B971DC; j += 0xB0)
             {
-                if (m.Read2Byte(j.ToString("x")) == 65535)
+                int readValue = m.Read2Byte(j.ToString("x"));
+                if (readValue == 65535)
                 {
                     continue;
                 }
 
                 int num4 = j + 2;
-                int item = m.Read2Byte(j.ToString("x"));
+                int SkillRemain = j + 8;
                 int item2 = m.Read2Byte(num4.ToString("x"));
-                if (!list.Contains(item2))
+                float item3 = m.ReadFloat(SkillRemain.ToString("x"));
+
+                if (item3 <= 50f && !listREMAIN.Contains(item2))
                 {
-                    list.Add(item2);
+                    listREMAIN.Add(item2);
                 }
+                list.Add(item2);
             }
 
+            // Process another set of addresses
             for (int k = 0x00B95BAC; k <= 0x00B95BD0; k += 0x4)
             {
-                if (m.Read2Byte(k.ToString("x")) == 65535)
+                int readValue = m.Read2Byte(k.ToString("x"));
+                if (readValue == 65535)
                 {
                     continue;
                 }
 
                 int num5 = k + 2;
-                int num6 = m.Read2Byte(k.ToString("x"));
+                int num6 = readValue;
                 int num7 = m.Read2Byte(num5.ToString("x"));
 
                 if (!list.Contains(num7))
                 {
-
                     m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                    m.Read2Byte(k.ToString("x"));
-                    m.Read2Byte(num5.ToString("x"));
-                    while (m.ReadInt(MATION_CHECK) != 3)
+
+                    // Optimized memory read and waiting
+                    int mationCheck = m.ReadInt(MATION_CHECK);
+                    while (mationCheck != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        while (m.ReadInt(MATION_CHECK) == 1)
+
+                        if (mationCheck == 1)
                         {
-                            Thread.Sleep(500);
-                            break;
+                            await Task.Delay(500);
                         }
-                        break;
+                        mationCheck = m.ReadInt(MATION_CHECK);
                     }
+
                     if (frenzzy_tarList.Count > 0)
                     {
-
-                        for (int i = 0; i < frenzzy_tarList.Count; i++)
+                        foreach (int frenzzy_tar in frenzzy_tarList)
                         {
-                            int frenzzy_tar = frenzzy_tarList[i];
-
                             Console.WriteLine($"Buffering To {frenzzy_tar}");
 
                             if (frenzzy_tar != -1)
@@ -966,25 +972,23 @@ namespace Kappa
                                 m.WriteMemory(actioncheck, "int", "0");
                                 m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
+
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Console.WriteLine("Buffering");
                                     await Task.Delay(1000);
                                 }
+
                                 m.WriteMemory(forceattack_adr, "int", "9");
                             }
                         }
                     }
-
                 }
-                if (list.Contains(num7))
+                else
                 {
                     list.Remove(num7);
-
                 }
-
             }
-
         }
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
