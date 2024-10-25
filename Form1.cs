@@ -519,13 +519,15 @@ namespace Kappa
             int num = 20;
 
             byte[] array = m.ReadBytes(NameAdr, num);
-            while (array != null)
+            if (array != null)
             {
+                saveID = m.ReadString(IDadr);
+
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
-                break;
-            }
+                this.Text = selectedProcessId.ToString() + " " + @string + $"{saveID}";
 
+            }
             Process process = Process.GetProcessById(selectedProcessId);
             IntPtr windowHandle = process.MainWindowHandle;
 
