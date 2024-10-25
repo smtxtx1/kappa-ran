@@ -944,6 +944,51 @@ namespace Kappa
                 int num5 = k + 2;
                 int num6 = readValue;
                 int num7 = m.Read2Byte(num5.ToString("x"));
+                if (!listREMAIN.Contains(num7))
+                {
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+
+                    // Optimized memory read and waiting
+                    int mationCheck = m.ReadInt(MATION_CHECK);
+                    while (mationCheck != 3)
+                    {
+                        m.WriteMemory(forceattack_adr, "int", "5");
+
+                        if (mationCheck == 1)
+                        {
+                            await Task.Delay(500);
+                        }
+                        mationCheck = m.ReadInt(MATION_CHECK);
+                    }
+
+                    if (frenzzy_tarList.Count > 0)
+                    {
+                        foreach (int frenzzy_tar in frenzzy_tarList)
+                        {
+                            Console.WriteLine($"Buffering To {frenzzy_tar}");
+
+                            if (frenzzy_tar != -1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "0");
+                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                                m.WriteMemory(forceattack_adr, "int", "5");
+
+                                while (m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Console.WriteLine("Buffering");
+                                    await Task.Delay(1000);
+                                }
+
+                                m.WriteMemory(forceattack_adr, "int", "9");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    list.Remove(num7);
+                }
 
                 if (!list.Contains(num7))
                 {
