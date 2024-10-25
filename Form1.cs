@@ -1198,18 +1198,18 @@ namespace Kappa
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
 
-                    await Task.Delay(10); // Wait before the next iteration
+                        await Task.Delay(10); // Wait before the next iteration
+                    }
+
+                    // Store current position for the next iteration
+                    previousX = currentX;
+                    previousZ = currentZ;
                 }
 
-                // Store current position for the next iteration
-                previousX = currentX;
-                previousZ = currentZ;
+                // Perform any cleanup or final actions outside the loop
+                await Task.Delay(10);
             }
-
-            // Perform any cleanup or final actions outside the loop
-            await Task.Delay(10);
         }
-
         private void button3_Click(object sender, EventArgs e)
         {
             currentrange = m.ReadFloat(AngleAdr);
