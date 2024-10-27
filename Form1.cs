@@ -2918,7 +2918,7 @@ namespace Kappa
         }
 
 
-        public string webhookUrl = "https://discord.com/api/webhooks/1275688413370257429/JfSQdqdgukeXY1s-K9RhvyaRdal-HT9B2My8ZoXCqNAf6K2D5oBSKPNEpPyQh-grTGeg";
+        public string webhookUrl = "https://discordapp.com/api/webhooks/1299969140152602635/2uSYRdtTXQm56hDex2R7MVXvx7JPQZY30lJu0bGCaOWt_vMIkermqlUg_eiu-j2GDDvq";
 
         private async void YourCallingMethod()
         {
@@ -2927,7 +2927,7 @@ namespace Kappa
 
             var payload = new
             {
-                avatar_url = "https://imgcdn.stablediffusionweb.com/2024/3/27/da1d6cfc-7e30-44e4-af16-b119c181eefa.jpg",
+                avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
                 content = $"ตัวละครที่ล็อคอิน: {label1.Text}\nID: {saveID}\nKEY: {value} "
 
