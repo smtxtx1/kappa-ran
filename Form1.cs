@@ -1925,7 +1925,7 @@ namespace Kappa
                             for (j = 0; j < numberOfIterations; j++)
                             {
                                 await AutoSkills2();
-                                await Task.Delay(10);
+                                await Task.Delay(100);
                                 Console.WriteLine($"Attacking {j} < {numberOfIterations}");
 
                             }
@@ -2004,8 +2004,8 @@ namespace Kappa
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
                                         await Autobuff();
-                                        await Task.Delay(20);
-                                        await Autobuff();
+                                        await Task.Delay(100);
+                                      
 
                                     }
                                 }
@@ -2042,7 +2042,7 @@ namespace Kappa
                                 for (j2 = 0; j2 < numberOfIterations2; j2++)
                                 {
                                     await AutoSkills2();
-                                    await Task.Delay(10);
+                                    await Task.Delay(100);
                                 }
 
                                 for (int u2 = 0; u2 < j; u2++)
@@ -2064,7 +2064,7 @@ namespace Kappa
                                     for (j3 = 0; j3 < numberOfIterations3; j3++)
                                     {
                                         await Autobuff();
-                                        await Task.Delay(20);
+                                        await Task.Delay(100);
                                     }
                                 }
 
