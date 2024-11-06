@@ -1675,13 +1675,21 @@ namespace Kappa
                     var mobDetails = await ReadMonsterDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < closestDistance)
+                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < 6f)
                     {
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.HP;
                         closestMonsterHP_ADR = mob_HP;
                         label2.Text = MonDistance.ToString();
+                    }
+                    else if (distance_mon > 6f)
+                    {
+                        closestDistance = 0f;
+                        closestMonsterID = 0;
+                        closestMonsterHP = 0;
+                        closestMonsterHP_ADR = mob_HP;
+
                     }
 
                     curr = m.GetCode($"{curr:X},8");
@@ -1694,6 +1702,7 @@ namespace Kappa
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
                 }
+
             }
             catch (Exception ex)
             {
