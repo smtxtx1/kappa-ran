@@ -2219,10 +2219,12 @@ namespace Kappa
                 m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                 m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
                 int TARGET_RINGS = m.ReadInt(TARGET_RING);
+                int TARGET_SKILLS = m.ReadInt(TARGET_SKILL);
                 uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                 if (ShouldStopAttacking(monsterHP, limitdistance,TARGET_RINGs))
                 {
                     break;
+
                 }
 
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
@@ -2242,15 +2244,19 @@ namespace Kappa
 
                     if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
                     {
-                        TARGET_RINGS = m.ReadInt(TARGET_RING);
-                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
-                        if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
+                        if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
                         {
-                            break;
-                        }
+                            TARGET_RINGS = m.ReadInt(TARGET_RING);
+                            monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                        PerformSkill(idskilltype_test1, idskilltype_test2);
+                            if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
+                            {
+                                break;
+                            }
+
+                            PerformSkill(idskilltype_test1, idskilltype_test2);
+
+                        }
                     }
 
                     await Task.Delay(10);
