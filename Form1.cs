@@ -919,7 +919,7 @@ namespace Kappa
             }
 
             // Loop to check specific addresses
-            for (int j = 0x00B966DC; j <= 0x00B971DC; j += 0xB0)
+            for (int j = 0x00B966DC; j <= 0x00B971DC; j += 0xB0) // this is buff check 
             {
                 int readValue = m.Read2Byte(j.ToString("x"));
                 if (readValue == 65535)
@@ -944,7 +944,7 @@ namespace Kappa
             }
 
             // Process another set of addresses
-            for (int k = 0x00B95BAC; k <= 0x00B95BD0; k += 0x4)
+            for (int k = 0x00B95BAC; k <= 0x00B95BD0; k += 0x4) // this is buff loop
             {
                 int readValue = m.Read2Byte(k.ToString("x"));
                 if (readValue == 65535)
@@ -2193,7 +2193,7 @@ namespace Kappa
 
         }
         float MonDistance = 8f;
-        int TARGET_RINGs;
+        int TARGET_RINGs = -1;
 
         private async Task AutoSkills2()
         {
@@ -2252,6 +2252,7 @@ namespace Kappa
             m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
             m.WriteMemory(prevskill2_adr, "byte", skill2.ToString("x"));
             m.WriteMemory(forceattack_adr, "int", "5");
+            Task.Delay(200);
         }
         
         private bool ShouldStopAttacking(uint monsterHP, float limitDistance , int TARGET_RINGs)
@@ -2986,11 +2987,18 @@ namespace Kappa
         {
             while (autoskillsstand)
             {
-                await AddItemToListView();
-                await ItemGet();
+                //await AddItemToListView();
+                //await Task.Delay(100);
+
+                //await ItemGet();
+                //await Task.Delay(100);
+
                 await Autobuff();
+                await Task.Delay(100);
+
                 await AutoSkills2();
-                await Task.Delay(10);
+
+                await Task.Delay(100);
 
             }
         }
