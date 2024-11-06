@@ -2280,6 +2280,8 @@ namespace Kappa
                 await Task.Delay(200);
 
             }
+            label6.Text = "NONE";
+
         }
 
         private void PerformSkill(int skill1, int skill2)
