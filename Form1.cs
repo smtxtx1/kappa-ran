@@ -1901,6 +1901,8 @@ namespace Kappa
                     float newY = float.Parse(listViewItem.SubItems[2].Text);
                     float newZ = float.Parse(listViewItem.SubItems[3].Text);
                     RunActive();
+                    label6.Text = "Runing";
+                    label6.ForeColor = Color.Red;
                     m.WriteMemory(getadr + "+4", "float", newX.ToString());
                     m.WriteMemory(getadr + "+C", "float", newY.ToString());
                     m.WriteMemory(getadr + "+14", "float", newZ.ToString());
