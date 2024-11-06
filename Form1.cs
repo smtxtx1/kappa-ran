@@ -631,7 +631,7 @@ namespace Kappa
         {
             if (!_INJECT_GET_BUFF)
             {
-                byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x39, 0xEA };
+                byte[] freezebytesX = { 0x89, 0x35, 0x00, 0x30, 0xFE, 0x00, 0x8B, 0x16, 0x3B, 0xD5 };
                 SKILLPET_ADR_GET_BUFF = CodeCave.CreateCodeCave(freezebytesX, GETBUFF_ADR_RESULT, SKILLPET_ADR_GET_BUFF, 6, 100, m);//Input address to create codecave
                 _INJECT_GET_BUFF = true;
 
@@ -3557,7 +3557,7 @@ namespace Kappa
                 button6.Enabled = true;
                 checkBox13.Enabled = true;
                 INJECT_GET_SKILL();
-                //  INJECT_GET_BUFF();
+                INJECT_GET_BUFF();
                 Get = true;
             }
             else
