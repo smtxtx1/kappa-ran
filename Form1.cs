@@ -1675,7 +1675,7 @@ namespace Kappa
                     var mobDetails = await ReadMonsterDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < 6f)
+                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < MonDistance)
                     {
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
@@ -1688,13 +1688,13 @@ namespace Kappa
                 }
 
                 // Update global variables
-                if (closestMonsterID != 0 && closestMonsterHP > 50 && closestDistance <= 6.0f)
+                if (closestMonsterID != 0 && closestMonsterHP > 50 && closestDistance <= MonDistance)
                 {
                     MonsterID_FromGetMonster = closestMonsterID;
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
                 }
-                else if (closestDistance > limitdistance)
+                else if (closestDistance > MonDistance)
                 {
                     // Clear the variables if no monster meets the conditions
                     MonsterID_FromGetMonster = 0;
@@ -2215,7 +2215,7 @@ namespace Kappa
         }
         float MonDistance = 8f;
         int TARGET_RINGs = -1;
-        float limitdistance = 6f;
+        float limitdistance = 8f;
         private async Task AutoSkills2()
         {
             
