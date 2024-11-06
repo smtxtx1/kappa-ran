@@ -1681,7 +1681,7 @@ namespace Kappa
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.HP;
                         closestMonsterHP_ADR = mob_HP;
-                        label2.Text = MonDistance.ToString();
+                      //  label2.Text = MonDistance.ToString();
                     }
 
                     curr = m.GetCode($"{curr:X},8");
