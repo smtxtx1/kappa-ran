@@ -2259,7 +2259,7 @@ namespace Kappa
                         }
                     }
 
-                    await Task.Delay(10);
+                    await Task.Delay(100);
                 }
                 TARGET_RINGS = m.ReadInt(TARGET_RING);
                 monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
