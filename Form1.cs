@@ -2214,12 +2214,11 @@ namespace Kappa
             float limitdistance = 6f;
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-            int TARGET_RINGS = m.ReadInt(TARGET_RING);
             while (true)
             {
                 m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                 m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-
+                int TARGET_RINGS = m.ReadInt(TARGET_RING);
                 uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                 if (ShouldStopAttacking(monsterHP, limitdistance,TARGET_RINGs))
                 {
@@ -2230,6 +2229,8 @@ namespace Kappa
                 {
                     m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                     m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+                     TARGET_RINGS = m.ReadInt(TARGET_RING);
+                     monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
                     if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
                     {
@@ -2241,6 +2242,9 @@ namespace Kappa
 
                     if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
                     {
+                        TARGET_RINGS = m.ReadInt(TARGET_RING);
+                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
                         if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
                         {
                             break;
@@ -2251,6 +2255,9 @@ namespace Kappa
 
                     await Task.Delay(10);
                 }
+                TARGET_RINGS = m.ReadInt(TARGET_RING);
+                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
                 if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
                 {
                     break;
@@ -2262,6 +2269,7 @@ namespace Kappa
 
         private void PerformSkill(int skill1, int skill2)
         {
+
             m.WriteMemory(actioncheck, "int", "2");
             m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
             m.WriteMemory(prevskill2_adr, "byte", skill2.ToString("x"));
