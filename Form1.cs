@@ -909,117 +909,87 @@ namespace Kappa
 
         private async Task Autobuff()
         {
-            HashSet<int> list = new HashSet<int>();
-            HashSet<int> listREMAIN = new HashSet<int>();
 
-            // Clear list when it reaches 5 items to avoid excessive memory usage
+            // 66 81 7D F0 FF FF aob for buff 
+            // 8B BC B8 6C 09 00 00
+
+
+            await Task.Delay(1);
+            List<int> list = new List<int>();
+            List<int> listREMAIN = new List<int>();
             if (list.Count == 5)
             {
                 list.Clear();
             }
 
-            // Loop to check specific addresses
-            for (int j = 0x00B966DC; j <= 0x00B971DC; j += 0xB0) // this is buff check 
+            //string OffsetSKill = i3.ToString("x");
+            ////    
+
+            //int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
+            //int num_test = i3 + 0x02;
+            //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
+            //Console.WriteLine("Offset2:" + num_test);
+
+            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
             {
-                int readValue = m.Read2Byte(j.ToString("x"));
-                if (readValue == 65535)
+                if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
                     continue;
                 }
-
-                int num4 = j + 2;
-                int SkillRemain = j + 8;
-                int item2 = m.Read2Byte(num4.ToString("x"));
-                float item3 = m.ReadFloat(SkillRemain.ToString("x"));
-
+                if (j == 0x0)
+                {  //supaporn stream artnarong
+                    j = -0x8F0;
+                }
+                string OffsetBuff = j.ToString("x");
+                int num4 = j + 0x02;
+                int SkillRemain = j + 0x8;
+                int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
+                int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
+                float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
+                //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
                 if (item3 <= 50f && !listREMAIN.Contains(item2))
                 {
                     listREMAIN.Add(item2);
                 }
-                else
+                if (!list.Contains(item2))
                 {
-                    listREMAIN.Remove(item2);
+                    list.Add(item2);
                 }
-                list.Add(item2);
             }
 
-            // Process another set of addresses
-            for (int k = 0x00B95BAC; k <= 0x00B95BD0; k += 0x4) // this is buff loop
+            for (int k = 0xA04; k <= 0xA28; k += 0x04)
             {
-                int readValue = m.Read2Byte(k.ToString("x"));
-                if (readValue == 65535)
+                if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
                     continue;
                 }
 
-                int num5 = k + 2;
-                int num6 = readValue;
-                int num7 = m.Read2Byte(num5.ToString("x"));
-                if (!listREMAIN.Contains(num7))
+                int num5 = k + 0x02;
+                int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
+                //  Console.WriteLine($"F4 Skills: {num6},{num7}");
+
+                if (listREMAIN.Contains(num7))
                 {
                     m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-
-                    // Optimized memory read and waiting
-                    int mationCheck = m.ReadInt(MATION_CHECK);
-                    while (m.ReadInt(MATION_CHECK) == 3)
-                    {
-                        Console.WriteLine("Buffering");
-                        await Task.Delay(500);
-                        break;
-                    }
-
-                    if (frenzzy_tarList.Count > 0)
-                    {
-                        foreach (int frenzzy_tar in frenzzy_tarList)
-                        {
-                            Console.WriteLine($"Buffering To {frenzzy_tar}");
-
-                            if (frenzzy_tar != -1)
-                            {
-                                m.WriteMemory(actioncheck, "int", "0");
-                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                                m.WriteMemory(forceattack_adr, "int", "5");
-
-                                while (m.ReadInt(MATION_CHECK) == 3)
-                                {
-                                    Console.WriteLine("Buffering");
-                                    await Task.Delay(500);
-                                }
-
-                                m.WriteMemory(forceattack_adr, "int", "9");
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    listREMAIN.Remove(num7);
-                }
-
-                if (!list.Contains(num7))
-                {
-                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
-                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-
-                    // Optimized memory read and waiting
-                    int mationCheck = m.ReadInt(MATION_CHECK);
-                    while (mationCheck != 3)
+                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
+                    if (m.ReadInt(MATION_CHECK) != 3)
                     {
                         m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(1500);
+                        m.WriteMemory(forceattack_adr, "int", "9");
 
-                        if (mationCheck == 1)
-                        {
-                            await Task.Delay(50);
-                            break;
-                        }
-                        mationCheck = m.ReadInt(MATION_CHECK);
+
                     }
-
                     if (frenzzy_tarList.Count > 0)
                     {
-                        foreach (int frenzzy_tar in frenzzy_tarList)
+
+                        for (int i = 0; i < frenzzy_tarList.Count; i++)
                         {
+                            int frenzzy_tar = frenzzy_tarList[i];
+
                             Console.WriteLine($"Buffering To {frenzzy_tar}");
 
                             if (frenzzy_tar != -1)
@@ -1027,23 +997,70 @@ namespace Kappa
                                 m.WriteMemory(actioncheck, "int", "0");
                                 m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
-
                                 while (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Console.WriteLine("Buffering");
-                                    await Task.Delay(500);
+                                    await Task.Delay(1000);
                                 }
 
                                 m.WriteMemory(forceattack_adr, "int", "9");
                             }
                         }
                     }
+                    if (listREMAIN.Contains(num7))
+                    {
+                        listREMAIN.Remove(num7);
+
+                    }
+
                 }
-                else
+                if (!list.Contains(num7))
+                {
+
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+                    m.Read2Byte(k.ToString("x"));
+                    m.Read2Byte(num5.ToString("x"));
+                    if (m.ReadInt(MATION_CHECK) != 3)
+                    {
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        Thread.Sleep(1500);
+                        m.WriteMemory(forceattack_adr, "int", "9");
+
+                    }
+                    if (frenzzy_tarList.Count > 0)
+                    {
+
+                        for (int i = 0; i < frenzzy_tarList.Count; i++)
+                        {
+                            int frenzzy_tar = frenzzy_tarList[i];
+
+                            Console.WriteLine($"Buffering To {frenzzy_tar}");
+
+                            if (frenzzy_tar != -1)
+                            {
+                                m.WriteMemory(actioncheck, "int", "0");
+                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
+                                m.WriteMemory(forceattack_adr, "int", "5");
+                                while (m.ReadInt(MATION_CHECK) == 3)
+                                {
+                                    Console.WriteLine("Buffering");
+                                    await Task.Delay(1000);
+                                }
+                                m.WriteMemory(forceattack_adr, "int", "9");
+                            }
+                        }
+                    }
+
+                }
+                if (list.Contains(num7))
                 {
                     list.Remove(num7);
+
                 }
+
             }
+
         }
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
