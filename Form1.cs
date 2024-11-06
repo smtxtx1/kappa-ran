@@ -2233,7 +2233,7 @@ namespace Kappa
                 int TARGET_RINGS = m.ReadInt(TARGET_RING);
                 int TARGET_SKILLS = m.ReadInt(TARGET_SKILL);
                 uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-                if (ShouldStopAttacking(monsterHP, limitdistance,TARGET_RINGs))
+                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                 {
                     break;
 
@@ -2246,7 +2246,7 @@ namespace Kappa
                      TARGET_RINGS = m.ReadInt(TARGET_RING);
                      monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                    if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
+                    if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                     {
                         break;
                     }
@@ -2254,14 +2254,14 @@ namespace Kappa
                     int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                     int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
-                    if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= limitdistance)
+                    if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= MonDistance)
                     {
                         if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
                         {
                             TARGET_RINGS = m.ReadInt(TARGET_RING);
                             monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                            if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
+                            if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                             {
                                 break;
                             }
@@ -2276,7 +2276,7 @@ namespace Kappa
                 TARGET_RINGS = m.ReadInt(TARGET_RING);
                 monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                if (ShouldStopAttacking(monsterHP, limitdistance, TARGET_RINGs))
+                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                 {
                     break;
                 }
@@ -2298,9 +2298,9 @@ namespace Kappa
             Task.Delay(200);
         }
         
-        private bool ShouldStopAttacking(uint monsterHP, float limitDistance , int TARGET_RINGs)
+        private bool ShouldStopAttacking(uint monsterHP, float MonDistance, int TARGET_RINGs)
         {
-            return monsterHP < 5 || distance_FromGetMonster > limitDistance || m.ReadInt(TARGET_RING) == -1;
+            return monsterHP < 5 || distance_FromGetMonster > MonDistance || m.ReadInt(TARGET_RING) == -1;
         }
 
 

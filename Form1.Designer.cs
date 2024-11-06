@@ -145,6 +145,8 @@
             checkBox8 = new CheckBox();
             checkBox7 = new CheckBox();
             groupBox5 = new GroupBox();
+            label6 = new Label();
+            label5 = new Label();
             button20 = new Button();
             checkBox34 = new CheckBox();
             checkBox33 = new CheckBox();
@@ -180,8 +182,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            label5 = new Label();
-            label6 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -1088,6 +1088,25 @@
             groupBox5.TabStop = false;
             groupBox5.Text = "Misc";
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.BackColor = Color.Wheat;
+            label6.Location = new Point(81, 85);
+            label6.Name = "label6";
+            label6.Size = new Size(40, 15);
+            label6.TabIndex = 23;
+            label6.Text = "NONE";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(38, 85);
+            label5.Name = "label5";
+            label5.Size = new Size(45, 15);
+            label5.TabIndex = 22;
+            label5.Text = "Status :";
+            // 
             // button20
             // 
             button20.Location = new Point(103, 36);
@@ -1390,24 +1409,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(38, 85);
-            label5.Name = "label5";
-            label5.Size = new Size(44, 15);
-            label5.TabIndex = 22;
-            label5.Text = "status :";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(81, 85);
-            label6.Name = "label6";
-            label6.Size = new Size(40, 15);
-            label6.TabIndex = 23;
-            label6.Text = "NONE";
             // 
             // Form1
             // 
