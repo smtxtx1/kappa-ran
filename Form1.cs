@@ -936,10 +936,6 @@ namespace Kappa
                 {
                     continue;
                 }
-                if (j == 0x0)
-                {  //supaporn stream artnarong
-                    j = -0x8F0;
-                }
                 string OffsetBuff = j.ToString("x");
                 int num4 = j + 0x02;
                 int SkillRemain = j + 0x8;
