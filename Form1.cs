@@ -914,7 +914,7 @@ namespace Kappa
             // 8B BC B8 6C 09 00 00
 
             label6.Text = "Buffing";
-
+            label6.ForeColor = Color.Green;
             await Task.Delay(1);
             List<int> list = new List<int>();
             List<int> listREMAIN = new List<int>();
@@ -2225,6 +2225,7 @@ namespace Kappa
             while (true)
             {
                 label6.Text = "Attacking";
+                label6.ForeColor = Color.Red;
                 m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                 m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
                 int TARGET_RINGS = m.ReadInt(TARGET_RING);
@@ -2281,6 +2282,7 @@ namespace Kappa
 
             }
             label6.Text = "NONE";
+            label6.ForeColor = Color.Green;
 
         }
 
