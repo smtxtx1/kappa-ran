@@ -1694,7 +1694,7 @@ namespace Kappa
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
                 }
-                else if (closestDistance > 6.0f)
+                else if (closestDistance > limitdistance)
                 {
                     // Clear the variables if no monster meets the conditions
                     MonsterID_FromGetMonster = 0;
@@ -2215,10 +2215,10 @@ namespace Kappa
         }
         float MonDistance = 8f;
         int TARGET_RINGs = -1;
-
+        float limitdistance = 6f;
         private async Task AutoSkills2()
         {
-            float limitdistance = 6f;
+            
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
             while (true)
