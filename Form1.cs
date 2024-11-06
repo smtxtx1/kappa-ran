@@ -494,7 +494,7 @@ namespace Kappa
             RUN4_ADR_RESULT = (AOB_RUN + 0xF07).ToString("x");
             RUN5_ADR_RESULT = (AOB_RUN + 0xF7B).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
-
+            GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             LONGBUFF_ADR_RESUT = (AOB_LONGBUFF + 0x03).ToString("x");
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
             MONVIEW_ADR = AOB_MONVIEW.ToString("x");
@@ -930,7 +930,7 @@ namespace Kappa
             //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
             //Console.WriteLine("Offset2:" + num_test);
 
-            for (int j = -0x8F0; j <= 0x0; j += 0xB0)
+            for (int j = -0xB00; j <= 0x0; j += 0xB0)
             {
                 if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
