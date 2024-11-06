@@ -1683,14 +1683,6 @@ namespace Kappa
                         closestMonsterHP_ADR = mob_HP;
                         label2.Text = MonDistance.ToString();
                     }
-                    else if (distance_mon > 6f)
-                    {
-                        closestDistance = 0f;
-                        closestMonsterID = 0;
-                        closestMonsterHP = 0;
-                        closestMonsterHP_ADR = mob_HP;
-
-                    }
 
                     curr = m.GetCode($"{curr:X},8");
                 }
@@ -1701,6 +1693,10 @@ namespace Kappa
                     MonsterID_FromGetMonster = closestMonsterID;
                     MonsterHP_FromGetMonster = closestMonsterHP;
                     distance_FromGetMonster = closestDistance;
+                }
+                else if (closestDistance > 6.0f)
+                {
+                    return;
                 }
 
             }
