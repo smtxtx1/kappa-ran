@@ -1696,9 +1696,11 @@ namespace Kappa
                 }
                 else if (closestDistance > 6.0f)
                 {
-                    return;
+                    // Clear the variables if no monster meets the conditions
+                    MonsterID_FromGetMonster = 0;
+                    MonsterHP_FromGetMonster = 0;
+                    distance_FromGetMonster = float.MaxValue;
                 }
-
             }
             catch (Exception ex)
             {
