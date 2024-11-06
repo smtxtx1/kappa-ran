@@ -913,6 +913,7 @@ namespace Kappa
             // 66 81 7D F0 FF FF aob for buff 
             // 8B BC B8 6C 09 00 00
 
+            label6.Text = "Buffing";
 
             await Task.Delay(1);
             List<int> list = new List<int>();
@@ -2223,6 +2224,7 @@ namespace Kappa
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
             while (true)
             {
+                label6.Text = "Attacking";
                 m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                 m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
                 int TARGET_RINGS = m.ReadInt(TARGET_RING);

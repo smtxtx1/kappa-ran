@@ -180,6 +180,8 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            label5 = new Label();
+            label6 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -1070,6 +1072,8 @@
             // 
             // groupBox5
             // 
+            groupBox5.Controls.Add(label6);
+            groupBox5.Controls.Add(label5);
             groupBox5.Controls.Add(button20);
             groupBox5.Controls.Add(checkBox34);
             groupBox5.Controls.Add(checkBox33);
@@ -1079,7 +1083,7 @@
             groupBox5.Controls.Add(checkBox6);
             groupBox5.Location = new Point(238, 6);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(150, 100);
+            groupBox5.Size = new Size(150, 105);
             groupBox5.TabIndex = 7;
             groupBox5.TabStop = false;
             groupBox5.Text = "Misc";
@@ -1387,6 +1391,24 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(38, 85);
+            label5.Name = "label5";
+            label5.Size = new Size(44, 15);
+            label5.TabIndex = 22;
+            label5.Text = "status :";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(81, 85);
+            label6.Name = "label6";
+            label6.Size = new Size(40, 15);
+            label6.TabIndex = 23;
+            label6.Text = "NONE";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1584,5 +1606,7 @@
         private Button button3;
         private Button btnClearAll;
         private Button button20;
+        private Label label5;
+        private Label label6;
     }
 }
