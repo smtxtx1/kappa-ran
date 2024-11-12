@@ -1644,7 +1644,7 @@ namespace Kappa
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
-                StopMonitoringMonsters(); // Ensure stopping on exception
+                // StopMonitoringMonsters(); // Ensure stopping on exception
             }
         }
 
