@@ -1669,6 +1669,25 @@ namespace Kappa
                 // StopMonitoringMonsters(); // Ensure stopping on exception
             }
         }
+        private async Task StartMonitoringPlayerAsync()
+        {
+            monitoringCts = new CancellationTokenSource();
+            try
+            {
+                while (!monitoringCts.Token.IsCancellationRequested)
+                {
+                    //   label2.Text = MonDistance.ToString();
+                    await GetPlayerAsync();
+                    await Task.Delay(100); // Adjust the delay as needed
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
+                // StopMonitoringMonsters(); // Ensure stopping on exception
+            }
+        }
+
 
         private void StopMonitoringMonsters()
         {
