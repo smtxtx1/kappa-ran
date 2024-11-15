@@ -1730,6 +1730,7 @@ namespace Kappa
                         m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
                         m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
                         m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+                        m.WriteMemory($"{forceattack_adr}","int","5");
 
                     }
 
