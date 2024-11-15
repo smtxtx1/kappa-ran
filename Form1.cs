@@ -608,10 +608,11 @@ namespace Kappa
 
         public bool _INJECT_GET_SKILL = false;
         public bool _INJECT_GET_BUFF = false;
-
+        public bool _INJECT_PET = false;
         public int SKILLPET_ADR_GET_SKILL = 0;
         public int SKILLPET_ADR_GET_BUFF = 0;
         //SKILLPET_ADR_GET_BUFF
+        public int SKILLPET_ADR_RESULT2 = 0;
 
         public void INJECT_PET()
         {
