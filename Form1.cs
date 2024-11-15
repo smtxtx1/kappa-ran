@@ -1731,6 +1731,7 @@ namespace Kappa
                     }
 
                     curr = m.GetCode($"{curr:X},8");
+                 await   Task.Delay(50);
                 }
 
             }
