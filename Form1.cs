@@ -1679,6 +1679,70 @@ namespace Kappa
         public float distance_FromGetMonster = 0;
         public UIntPtr mob_HP;
         public UIntPtr closestMonsterHP_ADR;
+        private async Task GetPlayerAsync()
+        {
+            try
+            {
+                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
+                UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
+
+                float closestDistance = float.MaxValue;
+                uint closestMonsterID = 0;
+                uint closestMonsterHP = 0;
+
+                for (int i = 0; i < globalCrow; i++)
+                {
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+                    // Reading data pointers
+                    var mobDetails = await ReadPlayerDetailsAsync(data);
+
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (distance_mon <= MonDistance && distance_mon <= closestDistance)
+                    {
+                        float myX = m.ReadFloat(CurrentX);
+                        float myY = m.ReadFloat(CurrentY);
+                        float myZ = m.ReadFloat(CurrentZ);
+
+                        UIntPtr mob_X = m.GetCode($"{data:X},10");
+                        UIntPtr mob_Y = m.GetCode($"{data:X},14");
+                        UIntPtr mob_Z = m.GetCode($"{data:X},18");
+                       
+                        m.WriteMemory(mob_X.ToString("x"),"float",myX.ToString());
+                        m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
+                        m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
+
+                    }
+
+                    curr = m.GetCode($"{curr:X},8");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+            }
+        }
+        private async Task<(float X, float Y, float Z)> ReadPlayerDetailsAsync(UIntPtr data)
+        {
+            try
+            {
+                UIntPtr mob_X = m.GetCode($"{data:X},10");
+                UIntPtr mob_Y = m.GetCode($"{data:X},14");
+                UIntPtr mob_Z = m.GetCode($"{data:X},18");
+
+                float Player_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
+                float Player_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
+                float Player_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
+
+                return (Player_X, Player_Y, Player_Z);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading monster details: {ex.Message}");
+
+                return (0, 0, 0);
+            }
+        }
 
         private async Task GetMonstersAsync()
         {
@@ -1730,6 +1794,7 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
+
         private async Task<(uint ID, float X, float Y, float Z, uint HP)> ReadMonsterDetailsAsync(UIntPtr data)
         {
             try
