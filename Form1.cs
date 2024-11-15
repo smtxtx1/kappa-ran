@@ -1729,6 +1729,8 @@ namespace Kappa
                         m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
                         m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
                         m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
+                        m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+
                     }
 
                     curr = m.GetCode($"{curr:X},8");
