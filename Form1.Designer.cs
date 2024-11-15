@@ -275,6 +275,7 @@
             comboBox4.Name = "comboBox4";
             comboBox4.Size = new Size(107, 23);
             comboBox4.TabIndex = 1;
+            comboBox4.SelectedIndexChanged += comboBox4_SelectedIndexChanged;
             // 
             // groupBox4
             // 

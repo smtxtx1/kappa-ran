@@ -422,21 +422,21 @@ namespace Kappa
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
 
-                IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
-                IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
-                IEnumerable<long> AoB_Scan_LB = await m.AoBScan("0f b7 ? ? ? ? ? 89 44 ? ? db 44 ? ? 89 4c ? ? da 44", false, true);
+            IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LB = await m.AoBScan("0f b7 ? ? ? ? ? 89 44 ? ? db 44 ? ? 89 4c ? ? da 44", false, true);
 
-                IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
-                IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
-                IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
-                IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
-                IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("0f 84 ? ? ? ? 83 f8 ? 0f 84 ? ? ? ? f6 84 24 4c 01 00 00", false, true);
-                IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
-                IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
-                IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
-                IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
-                IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
-                IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
+            IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
+            IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
+            IEnumerable<long> AoB_Scan_Superpot = await m.AoBScan("6A 02 52 83 CE FF", false, true);
+            IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
+            IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("0f 84 ? ? ? ? 83 f8 ? 0f 84 ? ? ? ? f6 84 24 4c 01 00 00", false, true);
+            IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
+            IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
 
             //66 8B 4F 1E 33 D2 66 8B 57 1C
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
@@ -448,7 +448,7 @@ namespace Kappa
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
             var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
             var AoB_Scan_DelayPot = await m.AoBScan("7A ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e", false, true);
-            var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4F 1E 33 D2 66 8B 57 1C", false,true);
+            var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4F 1E 33 D2 66 8B 57 1C", false, true);
             //74 ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true); // LINE 731
@@ -557,7 +557,7 @@ namespace Kappa
             }
 
             YourCallingMethod();
-           await StartMonitoringMonstersAsync();
+            await StartMonitoringMonstersAsync();
 
 
         }
@@ -977,7 +977,7 @@ namespace Kappa
             }
             //for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
 
-                for (int k = 0xA1C; k <= 0xA40; k += 0x04)
+            for (int k = 0xA1C; k <= 0xA40; k += 0x04)
             {
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
@@ -1531,14 +1531,14 @@ namespace Kappa
             if (checkBox11.Checked)
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "E9 E3 02 00 00 90");
-             //   m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 FA 02 00 00 90");
+                //   m.WriteMemory(HT2_ADR_RESULT, "bytes", "E9 FA 02 00 00 90");
                 //   m.WriteMemory(HT3_ADR_RESULT, "bytes", "E9 EE 02 00 00 90");
                 //0F 84 ED 02 00 00
             }
             else
             {
                 m.WriteMemory(HT_ADR_RESULT, "bytes", "0F 84 E2 02 00 00");
-              //  m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 F9 02 00 00");
+                //  m.WriteMemory(HT2_ADR_RESULT, "bytes", "0F 84 F9 02 00 00");
                 //       m.WriteMemory(HT3_ADR_RESULT, "bytes", "0F 84 ED 02 00 00");
 
             }
@@ -1658,7 +1658,7 @@ namespace Kappa
             {
                 while (!monitoringCts.Token.IsCancellationRequested)
                 {
-                 //   label2.Text = MonDistance.ToString();
+                    //   label2.Text = MonDistance.ToString();
                     await GetMonstersAsync();
                     await Task.Delay(100); // Adjust the delay as needed
                 }
@@ -1704,7 +1704,7 @@ namespace Kappa
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.HP;
                         closestMonsterHP_ADR = mob_HP;
-                      //  label2.Text = MonDistance.ToString();
+                        //  label2.Text = MonDistance.ToString();
                     }
 
                     curr = m.GetCode($"{curr:X},8");
@@ -2063,7 +2063,7 @@ namespace Kappa
                                     {
                                         await Autobuff();
                                         await Task.Delay(100);
-                                      
+
 
                                     }
                                 }
@@ -2080,7 +2080,8 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                try {
+                                try
+                                {
                                     await ItemGet();
                                     await Task.Delay(10);
                                 }
@@ -2088,7 +2089,7 @@ namespace Kappa
                                 {
                                     Console.WriteLine(ex);
                                 }
-                                
+
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -2255,7 +2256,7 @@ namespace Kappa
         float limitdistance = 8f;
         private async Task AutoSkills2()
         {
-            
+
             m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
             m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
             while (true)
@@ -2277,8 +2278,8 @@ namespace Kappa
                 {
                     m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                     m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-                     TARGET_RINGS = m.ReadInt(TARGET_RING);
-                     monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+                    TARGET_RINGS = m.ReadInt(TARGET_RING);
+                    monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
                     if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                     {
@@ -2331,7 +2332,7 @@ namespace Kappa
             m.WriteMemory(forceattack_adr, "int", "5");
             Task.Delay(200);
         }
-        
+
         private bool ShouldStopAttacking(uint monsterHP, float MonDistance, int TARGET_RINGs)
         {
             return monsterHP < 5 || distance_FromGetMonster > MonDistance || m.ReadInt(TARGET_RING) == -1;
@@ -3754,22 +3755,35 @@ namespace Kappa
             else
             {
 
-                    if (allocate_adr_BA != IntPtr.Zero)
-                    {
-                        IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-                        VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
-                        allocate_adr_BA = IntPtr.Zero;
-                    }
+                if (allocate_adr_BA != IntPtr.Zero)
+                {
+                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                    VirtualFreeEx(processHandle, allocate_adr_BA, 0, 0x8000);
+                    allocate_adr_BA = IntPtr.Zero;
+                }
 
-                    // Restore the original code
-                    m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
+                // Restore the original code
+                m.WriteMemory(BA_ADR_RESULT, "bytes", originalcode_BA);
 
-              
+
 
             }
 
         }
 
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_INJECT_PET)
+            {
+                INJECT_PET();
+            }
+            comboBox4.Invoke((Action)delegate
+            {
+                int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
+                m.FreezeValue("00FAFA00", "2bytes", num2.ToString());
+            });
+
+        }
     }
 
 }
