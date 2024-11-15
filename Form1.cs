@@ -1751,19 +1751,8 @@ namespace Kappa
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
-                UIntPtr mobID = m.GetCode($"{data:X},17A4");
-                UIntPtr mob_X = m.GetCode($"{data:X},1678");
-                UIntPtr mob_Y = m.GetCode($"{data:X},167C");
-                UIntPtr mob_Z = m.GetCode($"{data:X},1680");
-                mob_HP = m.GetCode($"{data:X},1618");
 
-                uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
-                float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
-                float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
-                float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
-                uint mobVaLue_HP = await Task.Run(() => m.ReadUInt(mob_HP.ToString("X")));
-
-                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z, mobVaLue_HP);
+                return (0, 0, 0, 0, 0);
             }
         }
         private float CalculateDistance(float mobX, float mobY, float mobZ)
