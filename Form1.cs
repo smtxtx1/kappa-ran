@@ -105,6 +105,7 @@ namespace Kappa
         public long AOB_ANTICHAT;
         public long AOB_LONGBUFF;
 
+        public string SKILLPET_ADR_RESULT;
         public string LONGBUFF_ADR_RESUT;
         public string GETBUFF_ADR_RESULT;
         public string GETSKILL_LIST_ADR_RESULT;
