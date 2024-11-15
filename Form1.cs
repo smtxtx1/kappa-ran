@@ -1687,8 +1687,6 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
                 float closestDistance = float.MaxValue;
-                uint closestMonsterID = 0;
-                uint closestMonsterHP = 0;
 
                 for (int i = 0; i < globalCrow; i++)
                 {
