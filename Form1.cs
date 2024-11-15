@@ -20,6 +20,8 @@ using System.Security.Policy;
 using LOGIN;
 using KeyAuth;
 using Loader;
+using Microsoft.VisualBasic.Devices;
+using System.Windows.Forms;
 
 namespace Kappa
 {
@@ -1698,6 +1700,14 @@ namespace Kappa
         public float distance_FromGetMonster = 0;
         public UIntPtr mob_HP;
         public UIntPtr closestMonsterHP_ADR;
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(Keys vKey);
+
+        private static bool IsKeyPressed(Keys key)
+        {
+            return (GetAsyncKeyState(key) & 0x8000) != 0;
+        }
+
         private async Task GetPlayerAsync()
         {
             try
@@ -1719,19 +1729,21 @@ namespace Kappa
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
                         float myZ = m.ReadFloat(CurrentZ);
-
                         UIntPtr mob_X = m.GetCode($"{data:X},10");
                         UIntPtr mob_Y = m.GetCode($"{data:X},14");
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
                         UIntPtr PlayerID = m.GetCode($"{data:X},28C");
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
-                        m.WriteMemory(mob_X.ToString("x"),"float",myX.ToString());
-                        m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                        m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                        m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
-                        m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
-                        m.WriteMemory($"{forceattack_adr}","int","5");
+                        if (IsKeyPressed(Keys.X))
+                        {
 
+                            m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
+                            m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
+                            m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
+                            m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+                            m.WriteMemory($"{forceattack_adr}", "int", "5");
+                        }
                     }
 
                     curr = m.GetCode($"{curr:X},8");
