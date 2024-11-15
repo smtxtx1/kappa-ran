@@ -454,6 +454,7 @@ namespace Kappa
             long AOB_DELAYPOT = AoB_Scan_DelayPot.FirstOrDefault();
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
+            long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
 
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
