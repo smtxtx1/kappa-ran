@@ -557,7 +557,7 @@ namespace Kappa
             }
 
             YourCallingMethod();
-            await StartMonitoringMonstersAsync();
+            await StartMonitoringPlayerAsync();
 
 
         }
@@ -1678,7 +1678,7 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetPlayerAsync();
-                    await Task.Delay(100); // Adjust the delay as needed
+                    await Task.Delay(10); // Adjust the delay as needed
                 }
             }
             catch (Exception ex)
@@ -1723,15 +1723,16 @@ namespace Kappa
                         UIntPtr mob_X = m.GetCode($"{data:X},10");
                         UIntPtr mob_Y = m.GetCode($"{data:X},14");
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
-                       
+                        UIntPtr PlayerID = m.GetCode($"{data:X},28C");
+                        int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         m.WriteMemory(mob_X.ToString("x"),"float",myX.ToString());
                         m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
                         m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-
+                        m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
                     }
 
                     curr = m.GetCode($"{curr:X},8");
-                 await   Task.Delay(50);
+                 await   Task.Delay(10);
                 }
 
             }
@@ -1740,25 +1741,26 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
-        private async Task<(float X, float Y, float Z)> ReadPlayerDetailsAsync(UIntPtr data)
+        private async Task<(float X, float Y, float Z,int ID)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
             {
+                
                 UIntPtr mob_X = m.GetCode($"{data:X},10");
                 UIntPtr mob_Y = m.GetCode($"{data:X},14");
                 UIntPtr mob_Z = m.GetCode($"{data:X},18");
-
+                UIntPtr PlayerID = m.GetCode($"{data:X},28C");
                 float Player_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float Player_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float Player_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
-
-                return (Player_X, Player_Y, Player_Z);
+                int Player_ID = await Task.Run(() => m.ReadInt(PlayerID.ToString("x")));
+                return (Player_X, Player_Y, Player_Z,Player_ID);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0);
+                return (0, 0, 0, 0);
             }
         }
 
