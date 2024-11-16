@@ -1777,7 +1777,7 @@ namespace Kappa
                                     Console.WriteLine($"{RUN}");
                                     if (RUN == 1)
                                     {
-                                        m.WriteMemory(MATION_CHECK, "2bytes", "3");
+                                        m.WriteMemory(MATION_CHECK, "int", "3");
 
                                     }
 
