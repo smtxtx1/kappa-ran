@@ -1713,7 +1713,7 @@ namespace Kappa
         private async Task GetPlayerAsync()
         {
             int GETPlAYERID = 0;
-
+            int SendID = 0;
             try
             {
                 string Guild = "";
@@ -1764,6 +1764,10 @@ namespace Kappa
 
                         GETPlAYERID = mobDetails.ID;
                     }
+                    if (closestDistance <= MonDistance)
+                    {
+                        SendID = GETPlAYERID;
+                    }
 
                     curr = m.GetCode($"{curr:X},8");
                     await Task.Delay(0);
@@ -1787,8 +1791,8 @@ namespace Kappa
                             //m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
                             //m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
                             //m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                            m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
 
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
