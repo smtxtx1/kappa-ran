@@ -1709,6 +1709,7 @@ namespace Kappa
         {
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
+
         private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID, string guild)
         {
             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
@@ -1788,7 +1789,21 @@ private async Task GetPlayerAsync()
                 {
                     await HandleKeyLogicAsync(myX, myY, myZ, mobDetails.ID, Guild);
                 }
-            }
+                if (IsKeyPressed(Keys.Z))
+                        {
+                            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
+                            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+
+                        }
+                        else
+                        {
+                            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
+                            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
+                            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+
+                        }
+                    }
 
             curr = m.GetCode($"{curr:X},8");
             if (i % 10 == 0) await Task.Delay(10);

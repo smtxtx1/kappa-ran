@@ -230,7 +230,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(101, 280);
+            label4.Location = new Point(101, 260);
             label4.Name = "label4";
             label4.Size = new Size(19, 21);
             label4.TabIndex = 17;
@@ -240,7 +240,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(6, 280);
+            label3.Location = new Point(6, 260);
             label3.Name = "label3";
             label3.Size = new Size(99, 21);
             label3.TabIndex = 16;
@@ -305,7 +305,7 @@
             groupBox4.Controls.Add(textBox3);
             groupBox4.Location = new Point(212, 6);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(176, 261);
+            groupBox4.Size = new Size(176, 251);
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
