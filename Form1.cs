@@ -1733,6 +1733,7 @@ namespace Kappa
                         UIntPtr mob_Y = m.GetCode($"{data:X},14");
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
                         UIntPtr PlayerID = m.GetCode($"{data:X},28C");
+                        UIntPtr PlayerGUILD = m.GetCode($"{data:X},1E0");
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
@@ -1743,7 +1744,7 @@ namespace Kappa
                                     break;
                                 }
 
-                                    int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                                 int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
                                 if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
