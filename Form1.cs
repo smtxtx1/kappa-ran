@@ -1712,8 +1712,8 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
-            int GETPlAYERID = 0;
-            int SendID = 0;
+            int GETPlAYERID = 0; // Closest Player ID
+            int SendID = 0; // ID to send for targeting
             try
             {
                 string Guild = "";
@@ -1736,42 +1736,40 @@ namespace Kappa
                     byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
                     if (guildArray != null)
                     {
-                        Guild = Encoding.GetEncoding(874).GetString(guildArray);
+                        Guild = Encoding.GetEncoding(874).GetString(guildArray).TrimEnd('\0');
                     }
 
                     byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), num);
                     if (nameArray != null)
                     {
-                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray);
+                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray).TrimEnd('\0');
                         if (!IsItemAlreadyInList2(NAMEGET))
                         {
                             string[] row = { NAMEGET, NAMEGET, NAMEGET };
                             listView11.Items.Add(new ListViewItem(row));
                         }
-
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
-                        distance_mon <= closestDistance &&
+                        distance_mon < closestDistance &&
                         !Guild.Contains("Sumrit") &&
                         !IsNameInListView12(NAMEGET))
                     {
-                        float myX = m.ReadFloat(CurrentX);
-                        float myY = m.ReadFloat(CurrentY);
-                        float myZ = m.ReadFloat(CurrentZ);
-
-
+                        closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
-                    }
-                    if (closestDistance <= MonDistance)
-                    {
-                        SendID = GETPlAYERID;
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                     await Task.Delay(0);
                 }
+
+                // Assign the closest player ID if found
+                if (closestDistance <= MonDistance)
+                {
+                    SendID = GETPlAYERID;
+                }
+
                 if (IsKeyPressed(Keys.X))
                 {
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
@@ -1788,11 +1786,8 @@ namespace Kappa
 
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                         {
-                            //m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
-                            //m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                            //m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
 
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
@@ -1804,14 +1799,13 @@ namespace Kappa
                             }
                         }
 
-                        await Task.Delay(0);
+                        await Task.Delay(50);
                     }
                 }
-
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+                Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
         }
         private bool IsNameInListView12(string name)
