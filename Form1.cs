@@ -1738,8 +1738,12 @@ namespace Kappa
                         {
                             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                             {
+                                if (!IsKeyPressed(Keys.X))
+                                {
+                                    break;
+                                }
 
-                                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                                    int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                                 int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
                                 if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
@@ -1759,7 +1763,7 @@ namespace Kappa
 
                                 }
 
-                                await Task.Delay(100);
+                                await Task.Delay(10);
                             }
                         }
                     }
