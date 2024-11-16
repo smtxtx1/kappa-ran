@@ -1720,12 +1720,22 @@ namespace Kappa
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    // Reading data pointers
+                    string Guild = "";
                     var mobDetails = await ReadPlayerDetailsAsync(data);
+                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    int num = 30;
+                    byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                    if (array != null)
+                    {
+                        string @string = Encoding.GetEncoding(874).GetString(array);
+                        @string = Guild;
+                        label2.Text = Guild;
+                    }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
+
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
                         float myZ = m.ReadFloat(CurrentZ);
@@ -1733,14 +1743,6 @@ namespace Kappa
                         UIntPtr mob_Y = m.GetCode($"{data:X},14");
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
                         UIntPtr PlayerID = m.GetCode($"{data:X},28C");
-                        UIntPtr PlayerGUILD = m.GetCode($"{data:X},1E0");
-                        int num = 30;
-                        byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                        if (array != null)
-                        {
-                            string @string = Encoding.GetEncoding(874).GetString(array);
-                            label1.Text = @string + " " + comboBox1.Text;
-                        }
 
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
@@ -1751,6 +1753,7 @@ namespace Kappa
                                 {
                                     break;
                                 }
+                                label2.Text = Guild;
 
                                 int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                                 int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
