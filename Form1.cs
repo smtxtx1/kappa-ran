@@ -1763,13 +1763,13 @@ namespace Kappa
 
                                 }
 
-                                await Task.Delay(10);
+                                await Task.Delay(0);
                             }
                         }
                     }
 
                     curr = m.GetCode($"{curr:X},8");
-                 await   Task.Delay(10);
+                 await   Task.Delay(0);
                 }
 
             }
