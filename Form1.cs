@@ -1731,7 +1731,7 @@ namespace Kappa
                     {
                         string @string = Encoding.GetEncoding(874).GetString(array);
                         Guild = @string;
-                        Console.WriteLine(@string);
+                        
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
