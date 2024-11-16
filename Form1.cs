@@ -1732,7 +1732,6 @@ namespace Kappa
                     m.WriteMemory($"{TARGET_SKILL}", "int", playerID.ToString());
                     m.WriteMemory($"{CurrentX}", "float", myX.ToString());
                     m.WriteMemory($"{CurrentY}", "float", myY.ToString());
-
                     m.WriteMemory($"{CurrentZ}", "float", myZ.ToString());
 
                     PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
