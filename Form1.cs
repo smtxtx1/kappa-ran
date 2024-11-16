@@ -1750,9 +1750,11 @@ namespace Kappa
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (distance_mon <= MonDistance && distance_mon <= closestDistance && !Guild.Contains("Sumrit"))
+                    if (distance_mon <= MonDistance &&
+                        distance_mon <= closestDistance &&
+                        !Guild.Contains("Sumrit") &&
+                        !IsNameInListView12(NAMEGET))
                     {
-                       
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
                         float myZ = m.ReadFloat(CurrentZ);
@@ -1810,6 +1812,28 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
+        private bool IsNameInListView12(string name)
+        {
+            foreach (ListViewItem item in listView12.Items)
+            {
+                // Check the item's main text
+                if (item.Text.Contains(name))
+                {
+                    return true;
+                }
+
+                // Check all subitems
+                foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                {
+                    if (subItem.Text.Contains(name))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         private async Task<(float X, float Y, float Z,int ID)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
