@@ -1717,15 +1717,6 @@ namespace Kappa
 
                 int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
-                UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-                int num = 30;
-                byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                if (array != null)
-                {
-                    string @string = Encoding.GetEncoding(874).GetString(array);
-                    Guild = @string;
-                    Console.WriteLine(@string);
-                }
 
                 float closestDistance = float.MaxValue;
 
@@ -1733,6 +1724,15 @@ namespace Kappa
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadPlayerDetailsAsync(data);
+                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    int num = 30;
+                    byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                    if (array != null)
+                    {
+                        string @string = Encoding.GetEncoding(874).GetString(array);
+                        Guild = @string;
+                        Console.WriteLine(@string);
+                    }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance && distance_mon <= closestDistance)
