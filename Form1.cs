@@ -1734,6 +1734,14 @@ namespace Kappa
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
                         UIntPtr PlayerID = m.GetCode($"{data:X},28C");
                         UIntPtr PlayerGUILD = m.GetCode($"{data:X},1E0");
+                        int num = 30;
+                        byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                        if (array != null)
+                        {
+                            string @string = Encoding.GetEncoding(874).GetString(array);
+                            label1.Text = @string + " " + comboBox1.Text;
+                        }
+
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
