@@ -23,6 +23,7 @@ using Loader;
 using Microsoft.VisualBasic.Devices;
 using System.Windows.Forms;
 using static KeyAuth.api;
+using Newtonsoft.Json.Linq;
 
 namespace Kappa
 {
@@ -1714,7 +1715,7 @@ namespace Kappa
             try
             {
                 string Guild = "";
-
+                string NAMEGET = "";
                 int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
@@ -1724,23 +1725,38 @@ namespace Kappa
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadPlayerDetailsAsync(data);
+
+                    // Read Guild and Player Name
                     UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
+
                     int num = 30;
-                    byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                    if (array != null)
+                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                    if (guildArray != null)
                     {
-                        string @string = Encoding.GetEncoding(874).GetString(array);
-                        Guild = @string;
-                        
+                        Guild = Encoding.GetEncoding(874).GetString(guildArray);
+                    }
+
+                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), num);
+                    if (nameArray != null)
+                    {
+                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray);
+                        if (!IsItemAlreadyInList2(NAMEGET))
+                        {
+                            string[] row = { NAMEGET, NAMEGET, NAMEGET };
+                            listView11.Items.Add(new ListViewItem(row));
+                        }
+
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance && distance_mon <= closestDistance && !Guild.Contains("Sumrit"))
                     {
-
+                       
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
                         float myZ = m.ReadFloat(CurrentZ);
+
                         UIntPtr mob_X = m.GetCode($"{data:X},10");
                         UIntPtr mob_Y = m.GetCode($"{data:X},14");
                         UIntPtr mob_Z = m.GetCode($"{data:X},18");
@@ -1749,13 +1765,13 @@ namespace Kappa
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
-
                             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                             {
                                 if (!IsKeyPressed(Keys.X))
                                 {
                                     break;
                                 }
+
                                 label2.Text = Guild;
 
                                 int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
@@ -1763,10 +1779,6 @@ namespace Kappa
 
                                 if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                                 {
-
-
-
-
                                     m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
                                     m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
                                     m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
@@ -1780,9 +1792,7 @@ namespace Kappa
                                     if (RUN == 1)
                                     {
                                         m.WriteMemory(MATION_CHECK, "int", "3");
-
                                     }
-
                                 }
 
                                 await Task.Delay(0);
@@ -1791,7 +1801,7 @@ namespace Kappa
                     }
 
                     curr = m.GetCode($"{curr:X},8");
-                 await   Task.Delay(0);
+                    await Task.Delay(0);
                 }
 
             }
@@ -2767,6 +2777,10 @@ namespace Kappa
         private bool ShouldAddItem(int itemType)
         {
             return itemType != 0 && itemType != 5 && itemType != 2;
+        }
+        private bool IsItemAlreadyInList2(string itemId)
+        {
+            return listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == itemId.ToString());
         }
 
         private bool IsItemAlreadyInList(int itemId)
