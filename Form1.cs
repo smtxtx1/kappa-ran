@@ -1712,6 +1712,8 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
+            int GETPlAYERID = 0;
+
             try
             {
                 string Guild = "";
@@ -1759,51 +1761,47 @@ namespace Kappa
                         float myY = m.ReadFloat(CurrentY);
                         float myZ = m.ReadFloat(CurrentZ);
 
-                        UIntPtr mob_X = m.GetCode($"{data:X},10");
-                        UIntPtr mob_Y = m.GetCode($"{data:X},14");
-                        UIntPtr mob_Z = m.GetCode($"{data:X},18");
-                        UIntPtr PlayerID = m.GetCode($"{data:X},28C");
 
-                        int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
-                        if (IsKeyPressed(Keys.X))
-                        {
-                            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
-                            {
-                                if (!IsKeyPressed(Keys.X))
-                                {
-                                    break;
-                                }
-
-                                label2.Text = Guild;
-
-                                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
-
-                                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
-                                {
-                                    //m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
-                                    //m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                                    //m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                                    m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
-                                    m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
-
-                                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-
-                                    int RUN = m.Read2Byte(MATION_CHECK);
-                                    Console.WriteLine($"{RUN}");
-                                    if (RUN == 1)
-                                    {
-                                        m.WriteMemory(MATION_CHECK, "int", "3");
-                                    }
-                                }
-
-                                await Task.Delay(0);
-                            }
-                        }
+                        GETPlAYERID = mobDetails.ID;
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                     await Task.Delay(0);
+                }
+                if (IsKeyPressed(Keys.X))
+                {
+                    for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                    {
+                        if (!IsKeyPressed(Keys.X))
+                        {
+                            break;
+                        }
+
+                        label2.Text = Guild;
+
+                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                        {
+                            //m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
+                            //m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
+                            //m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
+                            m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+
+                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+
+                            int RUN = m.Read2Byte(MATION_CHECK);
+                            Console.WriteLine($"{RUN}");
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
+                        }
+
+                        await Task.Delay(0);
+                    }
                 }
 
             }
