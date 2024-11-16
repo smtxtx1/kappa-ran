@@ -1756,7 +1756,7 @@ namespace Kappa
                         !Guild.Contains("Sumrit") &&
                         !IsNameInListView12(NAMEGET))
                     {
-                        closestDistance = distance_mon;
+                       // closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
                     }
 
