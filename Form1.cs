@@ -1748,9 +1748,9 @@ namespace Kappa
                         if (IsKeyPressed(Keys.X))
                         {
                             int RUN = m.Read2Byte(MATION_CHECK);
-                            if (RUN != 3)
+                            if (RUN != 3 && RUN != 0)
                             {
-                                m.WriteMemory(MATION_CHECK, "int", "0");
+                                m.WriteMemory(MATION_CHECK, "2bytes", "0");
 
                             }
 
