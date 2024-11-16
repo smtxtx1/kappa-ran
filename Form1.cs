@@ -22,6 +22,7 @@ using KeyAuth;
 using Loader;
 using Microsoft.VisualBasic.Devices;
 using System.Windows.Forms;
+using static KeyAuth.api;
 
 namespace Kappa
 {
@@ -1712,29 +1713,30 @@ namespace Kappa
         {
             try
             {
+                string Guild = "";
+
                 int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
+                UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                int num = 30;
+                byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                if (array != null)
+                {
+                    string @string = Encoding.GetEncoding(874).GetString(array);
+                    Guild = @string;
+                    Console.WriteLine(@string);
+                }
 
                 float closestDistance = float.MaxValue;
 
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    string Guild = "";
                     var mobDetails = await ReadPlayerDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
-                        UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-                        int num = 30;
-                        byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                        if (array != null)
-                        {
-                            string @string = Encoding.GetEncoding(874).GetString(array);
-                            @string = Guild;
-                            label2.Text = Guild;
-                        }
 
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
