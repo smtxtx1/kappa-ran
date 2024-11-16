@@ -1747,13 +1747,6 @@ namespace Kappa
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
-                            int RUN = m.Read2Byte(MATION_CHECK);
-                            Console.WriteLine($"{RUN}");
-                            if (RUN != 3 && RUN != 0)
-                            {
-                                m.WriteMemory(MATION_CHECK, "2bytes", "0");
-
-                            }
 
                             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                             {
@@ -1780,6 +1773,13 @@ namespace Kappa
 
                                     PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
+                                    int RUN = m.Read2Byte(MATION_CHECK);
+                                    Console.WriteLine($"{RUN}");
+                                    if (RUN == 1)
+                                    {
+                                        m.WriteMemory(MATION_CHECK, "2bytes", "3");
+
+                                    }
 
                                 }
 
