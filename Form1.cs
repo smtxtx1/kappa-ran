@@ -1747,6 +1747,13 @@ namespace Kappa
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
+                            int RUN = m.ReadInt(MATION_CHECK);
+                            if (RUN != 0)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "0");
+
+                            }
+
                             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                             {
                                 if (!IsKeyPressed(Keys.X))
