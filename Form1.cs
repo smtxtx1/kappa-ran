@@ -1736,6 +1736,7 @@ namespace Kappa
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
+                            m.WriteMemory(actioncheck, "int", "0");
 
                             m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
                             m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
