@@ -182,7 +182,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            columnHeader47 = new ColumnHeader();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -1293,7 +1292,7 @@
             // listView11
             // 
             listView11.BackColor = SystemColors.InactiveCaptionText;
-            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43, columnHeader47 });
+            listView11.Columns.AddRange(new ColumnHeader[] { columnHeader41, columnHeader42, columnHeader43 });
             listView11.Dock = DockStyle.Fill;
             listView11.ForeColor = SystemColors.Info;
             listView11.GridLines = true;
@@ -1314,11 +1313,13 @@
             // 
             columnHeader42.Text = "ID ITEM";
             columnHeader42.TextAlign = HorizontalAlignment.Center;
+            columnHeader42.Width = 0;
             // 
             // columnHeader43
             // 
             columnHeader43.Text = "ชื่อไอเท็ม";
             columnHeader43.TextAlign = HorizontalAlignment.Center;
+            columnHeader43.Width = 285;
             // 
             // groupBox3
             // 
@@ -1609,6 +1610,5 @@
         private Button button20;
         private Label label5;
         private Label label6;
-        private ColumnHeader columnHeader47;
     }
 }

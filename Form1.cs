@@ -1773,12 +1773,12 @@ private async Task GetPlayerAsync()
             byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
             NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
 
-                    if (!IsItemAlreadyInList2(NAMEGET, mobDetails.X, mobDetails.Y, mobDetails.ID))
-                    {
-                        newItems.Add(new ListViewItem(new[] { NAMEGET, mobDetails.X.ToString(), mobDetails.Y.ToString(), mobDetails.ID.ToString() }));
-                    }
+            if (!IsItemAlreadyInList2(NAMEGET))
+            {
+                newItems.Add(new ListViewItem(new[] { NAMEGET, NAMEGET, NAMEGET }));
+            }
 
-                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+            float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
             if (distance_mon <= MonDistance &&
                 distance_mon <= closestDistance &&
                 !Guild.Contains("Sumrit") &&
@@ -2793,14 +2793,11 @@ private async Task GetPlayerAsync()
         {
             return itemType != 0 && itemType != 5 && itemType != 2;
         }
-        private bool IsItemAlreadyInList2(string itemId, float X, float Y, int ID)
+        private bool IsItemAlreadyInList2(string itemId)
         {
-            return listView11.Items.Cast<ListViewItem>().Any(item =>
-                item.SubItems[0].Text == itemId &&
-                item.SubItems[1].Text == X.ToString() &&
-                item.SubItems[2].Text == Y.ToString() &&
-                item.SubItems[3].Text == Z.ToString());
+            return listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == itemId.ToString());
         }
+
         private bool IsItemAlreadyInList(int itemId)
         {
             return listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == itemId.ToString());
