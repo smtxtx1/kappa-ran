@@ -1736,14 +1736,31 @@ namespace Kappa
                         int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
                         if (IsKeyPressed(Keys.X))
                         {
-                            m.WriteMemory(actioncheck, "int", "0");
+                            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                            {
 
-                            m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
-                            m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                            m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                            m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
-                            m.WriteMemory($"{forceattack_adr}", "int", "5");
+                                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                                {
+
+
+
+
+                                    m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
+                                    m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
+                                    m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
+                                    m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
+                                    m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
+
+                                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+
+
+                                }
+
+                                await Task.Delay(100);
+                            }
                         }
                     }
 
@@ -2411,6 +2428,15 @@ namespace Kappa
             label6.Text = "NONE";
             label6.ForeColor = Color.Green;
 
+        }
+        private void PerformSkillPlayer(int skill1, int skill2)
+        {
+
+            m.WriteMemory(actioncheck, "int", "0");
+            m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
+            m.WriteMemory(prevskill2_adr, "byte", skill2.ToString("x"));
+            m.WriteMemory(forceattack_adr, "int", "5");
+            Task.Delay(10);
         }
 
         private void PerformSkill(int skill1, int skill2)
