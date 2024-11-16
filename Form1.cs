@@ -1722,19 +1722,19 @@ namespace Kappa
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     string Guild = "";
                     var mobDetails = await ReadPlayerDetailsAsync(data);
-                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-                    int num = 30;
-                    byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                    if (array != null)
-                    {
-                        string @string = Encoding.GetEncoding(874).GetString(array);
-                        @string = Guild;
-                        label2.Text = Guild;
-                    }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
+                        UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                        int num = 30;
+                        byte[] array = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                        if (array != null)
+                        {
+                            string @string = Encoding.GetEncoding(874).GetString(array);
+                            @string = Guild;
+                            label2.Text = Guild;
+                        }
 
                         float myX = m.ReadFloat(CurrentX);
                         float myY = m.ReadFloat(CurrentY);
