@@ -1752,7 +1752,7 @@ namespace Kappa
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
-                        distance_mon < closestDistance &&
+                        distance_mon <= closestDistance &&
                         !Guild.Contains("Sumrit") &&
                         !IsNameInListView12(NAMEGET))
                     {
