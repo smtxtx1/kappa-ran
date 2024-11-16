@@ -1709,109 +1709,101 @@ namespace Kappa
         {
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
-
-        private async Task GetPlayerAsync()
+        private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID, string guild)
         {
-            try
+            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
             {
-                string Guild = "";
-                string NAMEGET = "";
-                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
-                UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
+                if (!IsKeyPressed(Keys.X)) break;
 
-                float closestDistance = float.MaxValue;
+                label2.Text = guild;
 
-                for (int i = 0; i < globalCrow; i++)
+                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                 {
-                    UIntPtr data = m.GetCode($"{curr:X},0");
-                    var mobDetails = await ReadPlayerDetailsAsync(data);
+                    // Write player's position
+                    m.WriteMemory($"{TARGET_RING}", "int", playerID.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", playerID.ToString());
+                    m.WriteMemory($"{CurrentX}", "float", myX.ToString());
+                    m.WriteMemory($"{CurrentY}", "float", myY.ToString());
 
-                    // Read Guild and Player Name
-                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-                    UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
+                    m.WriteMemory($"{CurrentZ}", "float", myZ.ToString());
 
-                    int num = 30;
-                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
-                    if (guildArray != null)
+                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+
+                    // Check and update motion state
+                    int runState = m.Read2Byte(MATION_CHECK);
+                    if (runState == 1)
                     {
-                        Guild = Encoding.GetEncoding(874).GetString(guildArray);
+                        m.WriteMemory(MATION_CHECK, "int", "3");
                     }
-
-                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), num);
-                    if (nameArray != null)
-                    {
-                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray);
-                        if (!IsItemAlreadyInList2(NAMEGET))
-                        {
-                            string[] row = { NAMEGET, NAMEGET, NAMEGET };
-                            listView11.Items.Add(new ListViewItem(row));
-                        }
-
-                    }
-
-                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (distance_mon <= MonDistance &&
-                        distance_mon <= closestDistance &&
-                        !Guild.Contains("Sumrit") &&
-                        !IsNameInListView12(NAMEGET))
-                    {
-                        float myX = m.ReadFloat(CurrentX);
-                        float myY = m.ReadFloat(CurrentY);
-                        float myZ = m.ReadFloat(CurrentZ);
-
-                        UIntPtr mob_X = m.GetCode($"{data:X},10");
-                        UIntPtr mob_Y = m.GetCode($"{data:X},14");
-                        UIntPtr mob_Z = m.GetCode($"{data:X},18");
-                        UIntPtr PlayerID = m.GetCode($"{data:X},28C");
-
-                        int GETPlAYERID = m.ReadInt(PlayerID.ToString("x"));
-                        if (IsKeyPressed(Keys.X))
-                        {
-                            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
-                            {
-                                if (!IsKeyPressed(Keys.X))
-                                {
-                                    break;
-                                }
-
-                                label2.Text = Guild;
-
-                                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
-
-                                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
-                                {
-                                    m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
-                                    m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                                    m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
-                                    m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
-                                    m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
-
-                                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-
-                                    int RUN = m.Read2Byte(MATION_CHECK);
-                                    Console.WriteLine($"{RUN}");
-                                    if (RUN == 1)
-                                    {
-                                        m.WriteMemory(MATION_CHECK, "int", "3");
-                                    }
-                                }
-
-                                await Task.Delay(0);
-                            }
-                        }
-                    }
-
-                    curr = m.GetCode($"{curr:X},8");
-                    await Task.Delay(0);
                 }
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+                await Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
+
+private async Task GetPlayerAsync()
+{
+    try
+    {
+        string Guild = "";
+        string NAMEGET = "";
+        int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
+        UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
+
+        float myX = m.ReadFloat(CurrentX);
+        float myY = m.ReadFloat(CurrentY);
+        float myZ = m.ReadFloat(CurrentZ);
+        float closestDistance = float.MaxValue;
+
+        List<ListViewItem> newItems = new List<ListViewItem>();
+
+        for (int i = 0; i < globalCrow; i++)
+        {
+            UIntPtr data = m.GetCode($"{curr:X},0");
+            var mobDetails = await ReadPlayerDetailsAsync(data);
+
+            UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+            UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
+
+            byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), 30);
+            Guild = guildArray != null ? Encoding.GetEncoding(874).GetString(guildArray) : "";
+
+            byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
+            NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
+
+            if (!IsItemAlreadyInList2(NAMEGET))
+            {
+                newItems.Add(new ListViewItem(new[] { NAMEGET, NAMEGET, NAMEGET }));
+            }
+
+            float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+            if (distance_mon <= MonDistance &&
+                distance_mon <= closestDistance &&
+                !Guild.Contains("Sumrit") &&
+                !IsNameInListView12(NAMEGET))
+            {
+                if (IsKeyPressed(Keys.X))
+                {
+                    await HandleKeyLogicAsync(myX, myY, myZ, mobDetails.ID, Guild);
+                }
+            }
+
+            curr = m.GetCode($"{curr:X},8");
+            if (i % 10 == 0) await Task.Delay(10);
+        }
+
+        listView11.BeginUpdate();
+        listView11.Items.AddRange(newItems.ToArray());
+        listView11.EndUpdate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
+    }
+}
         private bool IsNameInListView12(string name)
         {
             foreach (ListViewItem item in listView12.Items)
