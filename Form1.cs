@@ -1716,6 +1716,11 @@ namespace Kappa
                 if (!IsKeyPressed(Keys.X)) break;
 
                 label2.Text = guild;
+                int runState = m.Read2Byte(MATION_CHECK);
+                if (runState == 1)
+                {
+                    m.WriteMemory(MATION_CHECK, "int", "3");
+                }
 
                 int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                 int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
@@ -1733,11 +1738,6 @@ namespace Kappa
                     PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
                     // Check and update motion state
-                    int runState = m.Read2Byte(MATION_CHECK);
-                    if (runState == 1)
-                    {
-                        m.WriteMemory(MATION_CHECK, "int", "3");
-                    }
                 }
 
                 await Task.Delay(10); // Small delay to avoid excessive CPU usage
