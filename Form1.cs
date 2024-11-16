@@ -1781,9 +1781,9 @@ namespace Kappa
 
                                 if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                                 {
-                                    m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
-                                    m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
-                                    m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
+                                    //m.WriteMemory(mob_X.ToString("x"), "float", myX.ToString());
+                                    //m.WriteMemory(mob_Y.ToString("x"), "float", myY.ToString());
+                                    //m.WriteMemory(mob_Z.ToString("x"), "float", myZ.ToString());
                                     m.WriteMemory($"{TARGET_RING}", "int", GETPlAYERID.ToString());
                                     m.WriteMemory($"{TARGET_SKILL}", "int", GETPlAYERID.ToString());
 
