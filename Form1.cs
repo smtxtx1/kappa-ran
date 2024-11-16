@@ -1773,9 +1773,9 @@ private async Task GetPlayerAsync()
             byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
             NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
 
-                    if (!IsItemAlreadyInList2(NAMEGET, mobDetails.X, mobDetails.Y, mobDetails.Z))
+                    if (!IsItemAlreadyInList2(NAMEGET, mobDetails.X, mobDetails.Y, mobDetails.ID))
                     {
-                        newItems.Add(new ListViewItem(new[] { NAMEGET, mobDetails.X.ToString(), mobDetails.Y.ToString(), mobDetails.Z.ToString() }));
+                        newItems.Add(new ListViewItem(new[] { NAMEGET, mobDetails.X.ToString(), mobDetails.Y.ToString(), mobDetails.ID.ToString() }));
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
@@ -2793,7 +2793,7 @@ private async Task GetPlayerAsync()
         {
             return itemType != 0 && itemType != 5 && itemType != 2;
         }
-        private bool IsItemAlreadyInList2(string itemId, float X, float Y, float Z)
+        private bool IsItemAlreadyInList2(string itemId, float X, float Y, int ID)
         {
             return listView11.Items.Cast<ListViewItem>().Any(item =>
                 item.SubItems[0].Text == itemId &&
