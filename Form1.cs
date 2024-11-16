@@ -1682,7 +1682,7 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetPlayerAsync();
-                    await Task.Delay(1); // Adjust the delay as needed
+                     Task.Delay(1); // Adjust the delay as needed
                 }
             }
             catch (Exception ex)
@@ -1739,7 +1739,7 @@ namespace Kappa
                     // Check and update motion state
                 }
 
-                await Task.Delay(10); // Small delay to avoid excessive CPU usage
+                 Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
 
