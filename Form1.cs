@@ -1747,6 +1747,8 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
+            int GETPlAYERID = 0; // Closest Player ID
+            int SendID = 0; // ID to send for targeting
             try
             {
                 string Guild = "";
@@ -1754,66 +1756,87 @@ namespace Kappa
                 int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
-                float myX = m.ReadFloat(CurrentX);
-                float myY = m.ReadFloat(CurrentY);
-                float myZ = m.ReadFloat(CurrentZ);
                 float closestDistance = float.MaxValue;
-
-                List<ListViewItem> newItems = new List<ListViewItem>();
 
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadPlayerDetailsAsync(data);
 
+                    // Read Guild and Player Name
                     UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
                     UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
 
-                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), 30);
-                    Guild = guildArray != null ? Encoding.GetEncoding(874).GetString(guildArray) : "";
-
-
-                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
-                    NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
-
-                    if (!IsItemAlreadyInList2(NAMEGET))
+                    int num = 30;
+                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                    if (guildArray != null)
                     {
-                        newItems.Add(new ListViewItem(new[] { NAMEGET, NAMEGET, NAMEGET }));
+                        Guild = Encoding.GetEncoding(874).GetString(guildArray).TrimEnd('\0');
+                    }
+
+                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), num);
+                    if (nameArray != null)
+                    {
+                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray).TrimEnd('\0');
+                        if (!IsItemAlreadyInList2(NAMEGET))
+                        {
+                            string[] row = { NAMEGET, NAMEGET, NAMEGET };
+                            listView11.Items.Add(new ListViewItem(row));
+                        }
                     }
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
-                        distance_mon <= closestDistance &&
-                        !Guild.Contains(Guildselected) &&
+                        distance_mon < closestDistance &&
+                        !Guild.Contains("Sumrit") &&
                         !IsNameInListView12(NAMEGET))
                     {
-                        if (IsKeyPressed(Keys.X))
-                        {
-                            await HandleKeyLogicAsync(myX, myY, myZ, mobDetails.ID, Guild);
-                        }
-                        if (IsKeyPressed(Keys.Z))
-                        {
-                            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-
-                        }
-                        else
-                        {
-                            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
-                            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
-
-                        }
+                        closestDistance = distance_mon;
+                        GETPlAYERID = mobDetails.ID;
                     }
 
                     curr = m.GetCode($"{curr:X},8");
-                    if (i % 10 == 0) await Task.Delay(10);
+                    await Task.Delay(0);
                 }
 
-                listView11.BeginUpdate();
-                listView11.Items.AddRange(newItems.ToArray());
-                listView11.EndUpdate();
+                // Assign the closest player ID if found
+                if (closestDistance <= MonDistance)
+                {
+                    SendID = GETPlAYERID;
+                }
+
+                if (IsKeyPressed(Keys.X))
+                {
+                    for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                    {
+                        if (!IsKeyPressed(Keys.X))
+                        {
+                            break;
+                        }
+
+                        label2.Text = Guild;
+
+                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                        {
+                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+
+                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+
+                            int RUN = m.Read2Byte(MATION_CHECK);
+                            Console.WriteLine($"{RUN}");
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
+                        }
+
+                        await Task.Delay(0);
+                    }
+                }
             }
             catch (Exception ex)
             {
