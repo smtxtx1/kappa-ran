@@ -1800,11 +1800,6 @@ namespace Kappa
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
                     }
-                    else
-                    {
-                        GETPlAYERID = 0;
-                        SendID = 0;
-                    }
 
                     curr = m.GetCode($"{curr:X},8");
                     await Task.Delay(0);
