@@ -1771,7 +1771,7 @@ namespace Kappa
 
                     byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), 30);
                     Guild = guildArray != null ? Encoding.GetEncoding(874).GetString(guildArray) : "";
-                    
+
 
                     byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
                     NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
@@ -3967,6 +3967,11 @@ namespace Kappa
 
         }
 
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Guildselected = textBox9.Text;
+            textBox9.Enabled = false;
+        }
     }
 
 }

@@ -183,8 +183,11 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            textBox9 = new TextBox();
+            button21 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            groupBox12.SuspendLayout();
             groupBox9.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -230,6 +233,8 @@
             // 
             // groupBox12
             // 
+            groupBox12.Controls.Add(button21);
+            groupBox12.Controls.Add(textBox9);
             groupBox12.Location = new Point(6, 263);
             groupBox12.Name = "groupBox12";
             groupBox12.Size = new Size(184, 59);
@@ -1422,6 +1427,23 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(6, 22);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(107, 23);
+            textBox9.TabIndex = 0;
+            // 
+            // button21
+            // 
+            button21.Location = new Point(119, 22);
+            button21.Name = "button21";
+            button21.Size = new Size(59, 23);
+            button21.TabIndex = 4;
+            button21.Text = "ยืนยัน";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1441,6 +1463,8 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            groupBox12.ResumeLayout(false);
+            groupBox12.PerformLayout();
             groupBox9.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
@@ -1622,5 +1646,7 @@
         private Label label5;
         private Label label6;
         private GroupBox groupBox12;
+        private Button button21;
+        private TextBox textBox9;
     }
 }
