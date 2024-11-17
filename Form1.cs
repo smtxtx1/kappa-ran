@@ -1830,15 +1830,15 @@ namespace Kappa
                             m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
                             m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
                             m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
 
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
                             int RUN = m.Read2Byte(MATION_CHECK);
                             Console.WriteLine($"{RUN}");
-                            //if (RUN == 1)
-                            //{
-                            //    m.WriteMemory(MATION_CHECK, "int", "3");
-                            //}
                         }
 
                         await Task.Delay(0);
