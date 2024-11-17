@@ -109,6 +109,7 @@ namespace Kappa
         public long AOB_ANTICHAT;
         public long AOB_LONGBUFF;
 
+        public string Guildselected;
         public string SKILLPET_ADR_RESULT;
         public string LONGBUFF_ADR_RESUT;
         public string GETBUFF_ADR_RESULT;
@@ -1782,7 +1783,7 @@ namespace Kappa
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
                         distance_mon <= closestDistance &&
-                        !Guild.Contains("Sumrit") &&
+                        !Guild.Contains(Guildselected) &&
                         !IsNameInListView12(NAMEGET))
                     {
                         if (IsKeyPressed(Keys.X))
@@ -3967,7 +3968,7 @@ namespace Kappa
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Guildselected = comboBox5.SelectedItem.ToString();
+           Guildselected = comboBox5.SelectedItem.ToString();
         }
     }
 
