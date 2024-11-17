@@ -1821,6 +1821,7 @@ namespace Kappa
                         }
 
                         label2.Text = Guild;
+                        int RUN = m.Read2Byte(MATION_CHECK);
 
                         int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                         int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
@@ -1837,7 +1838,6 @@ namespace Kappa
 
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
-                            int RUN = m.Read2Byte(MATION_CHECK);
                             Console.WriteLine($"{RUN}");
                         }
 
