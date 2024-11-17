@@ -1686,7 +1686,6 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetPlayerAsync();
-                    Task.Delay(1); // Adjust the delay as needed
                 }
             }
             catch (Exception ex)
@@ -1749,33 +1748,17 @@ namespace Kappa
 
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
-            var radarForm = new Form3(this);
-            radarForm.Show();
-        }
-        public async Task<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)[]> GetPlayerAsyncRadar()
-        {
-            return await GetPlayerAsync(); // Replace this with your actual logic
         }
 
-        public (float X, float Y, float Z) GetMyPosition()
+        private async Task GetPlayerAsync()
         {
-            // Replace with your actual logic to fetch player's position
-            float myX = m.ReadFloat(CurrentX);
-            float myY = m.ReadFloat(CurrentY);
-            float myZ = m.ReadFloat(CurrentZ);  
-            return (myX, myY, myZ);
-        }
-
-        public async Task<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)[]> GetPlayerAsync()
-        {
-            var players = new List<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)>();
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
             try
             {
                 string Guild = "";
                 string NAMEGET = "";
-                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");    
+                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
                 float closestDistance = float.MaxValue;
@@ -1806,18 +1789,21 @@ namespace Kappa
                             listView11.Items.Add(new ListViewItem(row));
                         }
                     }
-                    players.Add((mobDetails.X, mobDetails.Y, mobDetails.Z, mobDetails.ID, mobDetails.HP, Guild, NAMEGET));
 
-                    // Track the closest player logic, but only update radar if necessary
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
                         distance_mon < closestDistance &&
-                        !Guild.Contains("Sumrit") &&
+                        !Guild.Contains(Guildselected) &&
                         !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
-                         
+
                     {
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
+                    }
+                    else
+                    {
+                        GETPlAYERID = 0;
+                        SendID = 0;
                     }
 
                     curr = m.GetCode($"{curr:X},8");
@@ -1846,6 +1832,7 @@ namespace Kappa
 
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                         {
+                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
                             m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
                             m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
 
@@ -1853,10 +1840,10 @@ namespace Kappa
 
                             int RUN = m.Read2Byte(MATION_CHECK);
                             Console.WriteLine($"{RUN}");
-                            if (RUN == 1)
-                            {
-                                m.WriteMemory(MATION_CHECK, "int", "3");
-                            }
+                            //if (RUN == 1)
+                            //{
+                            //    m.WriteMemory(MATION_CHECK, "int", "3");
+                            //}
                         }
 
                         await Task.Delay(0);
@@ -1867,10 +1854,6 @@ namespace Kappa
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
-
-            var myPosition = GetMyPosition();
-            players.Add((myPosition.X, myPosition.Y, myPosition.Z, -1, 100, "", "")); // Add your own position with no guild or name
-            return players.ToArray();
         }
         private bool IsNameInListView12(string name)
         {
@@ -1894,7 +1877,7 @@ namespace Kappa
             return false;
         }
 
-        private async Task<(float X, float Y, float Z, int ID)> ReadPlayerDetailsAsync(UIntPtr data)
+        private async Task<(float X, float Y, float Z, int ID,int HP)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
             {
@@ -1903,17 +1886,20 @@ namespace Kappa
                 UIntPtr mob_Y = m.GetCode($"{data:X},14");
                 UIntPtr mob_Z = m.GetCode($"{data:X},18");
                 UIntPtr PlayerID = m.GetCode($"{data:X},28C");
+                UIntPtr PlayerHP = m.GetCode($"{data:X},284");
                 float Player_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float Player_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float Player_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
                 int Player_ID = await Task.Run(() => m.ReadInt(PlayerID.ToString("x")));
-                return (Player_X, Player_Y, Player_Z, Player_ID);
+                int Player_HP = await Task.Run(() => m.ReadInt(PlayerHP.ToString("x")));
+
+                return (Player_X, Player_Y, Player_Z, Player_ID, Player_HP);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0, 0);
+                return (0, 0, 0, 0,0);
             }
         }
 
