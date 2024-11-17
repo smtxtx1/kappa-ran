@@ -3967,7 +3967,7 @@ namespace Kappa
 
         private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            Guildselected = comboBox5.SelectedItem.ToString();
         }
     }
 
