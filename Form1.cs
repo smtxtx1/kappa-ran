@@ -1747,15 +1747,35 @@ namespace Kappa
             }
         }
 
-        private async Task GetPlayerAsync()
+        private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
+            var radarForm = new Form3(this);
+            radarForm.Show();
+        }
+        public async Task<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)[]> GetPlayerAsyncRadar()
+        {
+            return await GetPlayerAsync(); // Replace this with your actual logic
+        }
+
+        public (float X, float Y, float Z) GetMyPosition()
+        {
+            // Replace with your actual logic to fetch player's position
+            float myX = m.ReadFloat(CurrentX);
+            float myY = m.ReadFloat(CurrentY);
+            float myZ = m.ReadFloat(CurrentZ);  
+            return (myX, myY, myZ);
+        }
+
+        public async Task<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)[]> GetPlayerAsync()
+        {
+            var players = new List<(float X, float Y, float Z, int ID, int HP, string Guild, string Name)>();
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
             try
             {
                 string Guild = "";
                 string NAMEGET = "";
-                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
+                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");    
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
                 float closestDistance = float.MaxValue;
@@ -1786,13 +1806,14 @@ namespace Kappa
                             listView11.Items.Add(new ListViewItem(row));
                         }
                     }
+                    players.Add((mobDetails.X, mobDetails.Y, mobDetails.Z, mobDetails.ID, mobDetails.HP, Guild, NAMEGET));
 
+                    // Track the closest player logic, but only update radar if necessary
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
                         distance_mon < closestDistance &&
                         !Guild.Contains(Guildselected) &&
                         !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
-                         
                     {
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
@@ -1845,6 +1866,10 @@ namespace Kappa
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
+
+            var myPosition = GetMyPosition();
+            players.Add((myPosition.X, myPosition.Y, myPosition.Z, -1, 100, "", "")); // Add your own position with no guild or name
+            return players.ToArray();
         }
         private bool IsNameInListView12(string name)
         {
