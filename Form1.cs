@@ -1682,7 +1682,7 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetPlayerAsync();
-                     Task.Delay(1); // Adjust the delay as needed
+                    Task.Delay(1); // Adjust the delay as needed
                 }
             }
             catch (Exception ex)
@@ -1740,56 +1740,56 @@ namespace Kappa
                     // Check and update motion state
                 }
 
-                 Task.Delay(10); // Small delay to avoid excessive CPU usage
+                Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
 
-private async Task GetPlayerAsync()
-{
-    try
-    {
-        string Guild = "";
-        string NAMEGET = "";
-        int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
-        UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
-
-        float myX = m.ReadFloat(CurrentX);
-        float myY = m.ReadFloat(CurrentY);
-        float myZ = m.ReadFloat(CurrentZ);
-        float closestDistance = float.MaxValue;
-
-        List<ListViewItem> newItems = new List<ListViewItem>();
-
-        for (int i = 0; i < globalCrow; i++)
+        private async Task GetPlayerAsync()
         {
-            UIntPtr data = m.GetCode($"{curr:X},0");
-            var mobDetails = await ReadPlayerDetailsAsync(data);
-
-            UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-            UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
-
-            byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), 30);
-            Guild = guildArray != null ? Encoding.GetEncoding(874).GetString(guildArray) : "";
-
-            byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
-            NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
-
-            if (!IsItemAlreadyInList2(NAMEGET))
+            try
             {
-                newItems.Add(new ListViewItem(new[] { NAMEGET, NAMEGET, NAMEGET }));
-            }
+                string Guild = "";
+                string NAMEGET = "";
+                int globalCrow = m.ReadInt("MiniA.exe+7953E0,D6E4");
+                UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
-            float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-            if (distance_mon <= MonDistance &&
-                distance_mon <= closestDistance &&
-                !Guild.Contains("Sumrit") &&
-                !IsNameInListView12(NAMEGET))
-            {
-                if (IsKeyPressed(Keys.X))
+                float myX = m.ReadFloat(CurrentX);
+                float myY = m.ReadFloat(CurrentY);
+                float myZ = m.ReadFloat(CurrentZ);
+                float closestDistance = float.MaxValue;
+
+                List<ListViewItem> newItems = new List<ListViewItem>();
+
+                for (int i = 0; i < globalCrow; i++)
                 {
-                    await HandleKeyLogicAsync(myX, myY, myZ, mobDetails.ID, Guild);
-                }
-                if (IsKeyPressed(Keys.Z))
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+                    var mobDetails = await ReadPlayerDetailsAsync(data);
+
+                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
+
+                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), 30);
+                    Guild = guildArray != null ? Encoding.GetEncoding(874).GetString(guildArray) : "";
+
+                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), 30);
+                    NAMEGET = nameArray != null ? Encoding.GetEncoding(874).GetString(nameArray) : "";
+
+                    if (!IsItemAlreadyInList2(NAMEGET))
+                    {
+                        newItems.Add(new ListViewItem(new[] { NAMEGET, NAMEGET, NAMEGET }));
+                    }
+
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (distance_mon <= MonDistance &&
+                        distance_mon <= closestDistance &&
+                        !Guild.Contains("Sumrit") &&
+                        !IsNameInListView12(NAMEGET))
+                    {
+                        if (IsKeyPressed(Keys.X))
+                        {
+                            await HandleKeyLogicAsync(myX, myY, myZ, mobDetails.ID, Guild);
+                        }
+                        if (IsKeyPressed(Keys.Z))
                         {
                             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
                             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
@@ -1805,19 +1805,19 @@ private async Task GetPlayerAsync()
                         }
                     }
 
-            curr = m.GetCode($"{curr:X},8");
-            if (i % 10 == 0) await Task.Delay(10);
-        }
+                    curr = m.GetCode($"{curr:X},8");
+                    if (i % 10 == 0) await Task.Delay(10);
+                }
 
-        listView11.BeginUpdate();
-        listView11.Items.AddRange(newItems.ToArray());
-        listView11.EndUpdate();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
-    }
-}
+                listView11.BeginUpdate();
+                listView11.Items.AddRange(newItems.ToArray());
+                listView11.EndUpdate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
+            }
+        }
         private bool IsNameInListView12(string name)
         {
             foreach (ListViewItem item in listView12.Items)
@@ -1840,11 +1840,11 @@ private async Task GetPlayerAsync()
             return false;
         }
 
-        private async Task<(float X, float Y, float Z,int ID)> ReadPlayerDetailsAsync(UIntPtr data)
+        private async Task<(float X, float Y, float Z, int ID)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
             {
-                
+
                 UIntPtr mob_X = m.GetCode($"{data:X},10");
                 UIntPtr mob_Y = m.GetCode($"{data:X},14");
                 UIntPtr mob_Z = m.GetCode($"{data:X},18");
@@ -1853,7 +1853,7 @@ private async Task GetPlayerAsync()
                 float Player_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float Player_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
                 int Player_ID = await Task.Run(() => m.ReadInt(PlayerID.ToString("x")));
-                return (Player_X, Player_Y, Player_Z,Player_ID);
+                return (Player_X, Player_Y, Player_Z, Player_ID);
             }
             catch (Exception ex)
             {
@@ -3962,6 +3962,11 @@ private async Task GetPlayerAsync()
                 int num2 = int.Parse(((ComboBoxItem)comboBox4.SelectedItem).Value);
                 m.FreezeValue("00FAFA00", "2bytes", num2.ToString());
             });
+
+        }
+
+        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

@@ -182,6 +182,8 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            groupBox12 = new GroupBox();
+            comboBox5 = new ComboBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox9.SuspendLayout();
@@ -197,6 +199,7 @@
             groupBox11.SuspendLayout();
             groupBox10.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox12.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -213,6 +216,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(groupBox12);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(label3);
             tabPage1.Controls.Add(groupBox9);
@@ -230,7 +234,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(101, 260);
+            label4.Location = new Point(107, 361);
             label4.Name = "label4";
             label4.Size = new Size(19, 21);
             label4.TabIndex = 17;
@@ -240,7 +244,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(6, 260);
+            label3.Location = new Point(12, 361);
             label3.Name = "label3";
             label3.Size = new Size(99, 21);
             label3.TabIndex = 16;
@@ -1411,6 +1415,26 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // groupBox12
+            // 
+            groupBox12.Controls.Add(comboBox5);
+            groupBox12.Location = new Point(6, 263);
+            groupBox12.Name = "groupBox12";
+            groupBox12.Size = new Size(184, 59);
+            groupBox12.TabIndex = 5;
+            groupBox12.TabStop = false;
+            groupBox12.Text = "ชื่อกิล";
+            // 
+            // comboBox5
+            // 
+            comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox5.FormattingEnabled = true;
+            comboBox5.Location = new Point(6, 22);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(158, 23);
+            comboBox5.TabIndex = 1;
+            comboBox5.SelectedIndexChanged += comboBox5_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1452,6 +1476,7 @@
             groupBox10.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            groupBox12.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1610,5 +1635,7 @@
         private Button button20;
         private Label label5;
         private Label label6;
+        private GroupBox groupBox12;
+        private ComboBox comboBox5;
     }
 }
