@@ -259,6 +259,9 @@ namespace Kappa
 
         public string TARGET_SKILL = "00FF38A0,325C"; //MiniA.exe+793E74
 
+        public string TARGET_RING_CHECK = "00FF38A0,4008"; //
+
+
         public string TARGET_RING = "00FF38A0,400C"; //
 
         public string MATION_CHECK = "00FF38A0,30FC";
@@ -1711,13 +1714,12 @@ namespace Kappa
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
 
-        private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID, string guild)
+        private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID)
         {
             for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
             {
                 if (!IsKeyPressed(Keys.X)) break;
 
-                label2.Text = guild;
                 int runState = m.Read2Byte(MATION_CHECK);
                 if (runState == 1)
                 {
@@ -1788,7 +1790,7 @@ namespace Kappa
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (distance_mon <= MonDistance &&
                         distance_mon < closestDistance &&
-                        !Guild.Contains("Sumrit") &&
+                        !Guild.Contains(Guildselected) &&
                         !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
                          
                     {

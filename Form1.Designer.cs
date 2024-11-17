@@ -32,6 +32,8 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox12 = new GroupBox();
+            button21 = new Button();
+            textBox9 = new TextBox();
             label4 = new Label();
             label3 = new Label();
             groupBox9 = new GroupBox();
@@ -183,8 +185,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            textBox9 = new TextBox();
-            button21 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -241,6 +241,23 @@
             groupBox12.TabIndex = 5;
             groupBox12.TabStop = false;
             groupBox12.Text = "ชื่อกิล";
+            // 
+            // button21
+            // 
+            button21.Location = new Point(119, 22);
+            button21.Name = "button21";
+            button21.Size = new Size(59, 23);
+            button21.TabIndex = 4;
+            button21.Text = "ยืนยัน";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click;
+            // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(6, 22);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(107, 23);
+            textBox9.TabIndex = 0;
             // 
             // label4
             // 
@@ -1426,23 +1443,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new Point(6, 22);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(107, 23);
-            textBox9.TabIndex = 0;
-            // 
-            // button21
-            // 
-            button21.Location = new Point(119, 22);
-            button21.Name = "button21";
-            button21.Size = new Size(59, 23);
-            button21.TabIndex = 4;
-            button21.Text = "ยืนยัน";
-            button21.UseVisualStyleBackColor = true;
-            button21.Click += button21_Click;
             // 
             // Form1
             // 
