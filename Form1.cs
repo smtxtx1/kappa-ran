@@ -1789,7 +1789,8 @@ namespace Kappa
                     if (distance_mon <= MonDistance &&
                         distance_mon < closestDistance &&
                         !Guild.Contains("Sumrit") &&
-                        !IsNameInListView12(NAMEGET))
+                        !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
+                         
                     {
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
@@ -1865,7 +1866,7 @@ namespace Kappa
             return false;
         }
 
-        private async Task<(float X, float Y, float Z, int ID)> ReadPlayerDetailsAsync(UIntPtr data)
+        private async Task<(float X, float Y, float Z, int ID, int HP)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
             {
@@ -1874,17 +1875,19 @@ namespace Kappa
                 UIntPtr mob_Y = m.GetCode($"{data:X},14");
                 UIntPtr mob_Z = m.GetCode($"{data:X},18");
                 UIntPtr PlayerID = m.GetCode($"{data:X},28C");
+                UIntPtr PlayerHP = m.GetCode($"{data:X},284");
                 float Player_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float Player_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float Player_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
                 int Player_ID = await Task.Run(() => m.ReadInt(PlayerID.ToString("x")));
-                return (Player_X, Player_Y, Player_Z, Player_ID);
+                int Player_HP = await Task.Run(() => m.ReadInt(PlayerHP.ToString("x")));
+                return (Player_X, Player_Y, Player_Z, Player_ID, Player_HP);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0, 0);
+                return (0, 0, 0, 0, 0);
             }
         }
 
