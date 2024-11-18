@@ -4000,8 +4000,9 @@ namespace Kappa
 
         }
 
-        private void button21_Click(object sender, EventArgs e)
+        private async void button21_Click(object sender, EventArgs e)
         {
+           await StartMonitoringPlayerAsync();
             Guildselected = textBox9.Text;
             textBox9.Enabled = false;
         }
