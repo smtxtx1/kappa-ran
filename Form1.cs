@@ -565,7 +565,7 @@ namespace Kappa
             }
 
             YourCallingMethod();
-            await StartMonitoringPlayerAsync();
+            
 
 
         }
@@ -4002,9 +4002,10 @@ namespace Kappa
 
         private async void button21_Click(object sender, EventArgs e)
         {
-           await StartMonitoringPlayerAsync();
+            
             Guildselected = textBox9.Text;
             textBox9.Enabled = false;
+            await StartMonitoringPlayerAsync();
         }
     }
 
