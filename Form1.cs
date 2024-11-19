@@ -1713,42 +1713,7 @@ namespace Kappa
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
 
-        private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID)
-        {
-            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
-            {
-                if (!IsKeyPressed(Keys.X)) break;
 
-                int runState = m.Read2Byte(MATION_CHECK);
-                if (runState == 1)
-                {
-                    m.WriteMemory(MATION_CHECK, "int", "3");
-                }
-
-                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
-
-                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
-                {
-                    // Write player's position
-                    m.WriteMemory($"{TARGET_RING}", "int", playerID.ToString());
-                    m.WriteMemory($"{TARGET_SKILL}", "int", playerID.ToString());
-                    m.WriteMemory($"{CurrentX}", "float", myX.ToString());
-                    m.WriteMemory($"{CurrentY}", "float", myY.ToString());
-                    m.WriteMemory($"{CurrentZ}", "float", myZ.ToString());
-
-                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-
-                    // Check and update motion state
-                }
-
-                Task.Delay(10); // Small delay to avoid excessive CPU usage
-            }
-        }
-
-        private void buttonOpenRadar_Click(object sender, EventArgs e)
-        {
-        }
 
         private async Task GetPlayerAsync()
         {
@@ -1896,6 +1861,41 @@ namespace Kappa
 
                 return (0, 0, 0, 0,0);
             }
+        }
+        private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID)
+        {
+            for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+            {
+                if (!IsKeyPressed(Keys.X)) break;
+
+                int runState = m.Read2Byte(MATION_CHECK);
+                if (runState == 1)
+                {
+                    m.WriteMemory(MATION_CHECK, "int", "3");
+                }
+
+                int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                {
+                    // Write player's position
+                    m.WriteMemory($"{TARGET_RING}", "int", playerID.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", playerID.ToString());
+                    m.WriteMemory($"{CurrentX}", "float", myX.ToString());
+                    m.WriteMemory($"{CurrentY}", "float", myY.ToString());
+                    m.WriteMemory($"{CurrentZ}", "float", myZ.ToString());
+
+                    PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+
+                    // Check and update motion state
+                }
+
+                Task.Delay(10); // Small delay to avoid excessive CPU usage
+            }
+        }
+        private void buttonOpenRadar_Click(object sender, EventArgs e)
+        {
         }
 
         private async Task GetMonstersAsync()
