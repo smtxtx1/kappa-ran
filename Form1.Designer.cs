@@ -185,7 +185,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            button22 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -218,7 +217,6 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
-            tabPage1.Controls.Add(button22);
             tabPage1.Controls.Add(groupBox12);
             tabPage1.Controls.Add(label4);
             tabPage1.Controls.Add(label3);
@@ -1446,16 +1444,6 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // button22
-            // 
-            button22.Location = new Point(207, 273);
-            button22.Name = "button22";
-            button22.Size = new Size(75, 23);
-            button22.TabIndex = 18;
-            button22.Text = "button22";
-            button22.UseVisualStyleBackColor = true;
-            button22.Click += buttonOpenRadar_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1660,6 +1648,5 @@
         private GroupBox groupBox12;
         private Button button21;
         private TextBox textBox9;
-        private Button button22;
     }
 }
