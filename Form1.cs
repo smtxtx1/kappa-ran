@@ -565,7 +565,6 @@ namespace Kappa
             }
 
             YourCallingMethod();
-            await  StartMonitoringPlayerAsync();
 
 
         }
