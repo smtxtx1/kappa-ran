@@ -1900,7 +1900,7 @@ namespace Kappa
                     // Check and update motion state
                 }
 
-                Task.Delay(10); // Small delay to avoid excessive CPU usage
+             //   Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
         private void buttonOpenRadar_Click(object sender, EventArgs e)
@@ -2546,7 +2546,7 @@ namespace Kappa
             m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
             m.WriteMemory(prevskill2_adr, "byte", skill2.ToString("x"));
             m.WriteMemory(forceattack_adr, "int", "5");
-            Task.Delay(10);
+            Task.Delay(0);
         }
 
         private void PerformSkill(int skill1, int skill2)
