@@ -431,7 +431,7 @@ namespace Kappa
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("1", false, true);
             IEnumerable<long> AoB_Scan_LB = await m.AoBScan("0f b7 ? ? ? ? ? 89 44 ? ? db 44 ? ? 89 4c ? ? da 44", false, true);
 
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7F 44 01 0F 85 6? 01 00 00", false, true);
