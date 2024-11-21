@@ -1716,6 +1716,8 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
+
+            bool Attacknow = false;
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
             try
@@ -1777,9 +1779,16 @@ namespace Kappa
 
                 if (IsKeyPressed(Keys.X))
                 {
+                    Attacknow = true;
+                }
+                else
+                {
+                    Attacknow = false;
+                }
+                if (Attacknow) {
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
-                        if (!IsKeyPressed(Keys.X))
+                        if (!Attacknow)
                         {
                             break;
                         }
@@ -1807,6 +1816,7 @@ namespace Kappa
 
                         await Task.Delay(0);
                     }
+
                 }
             }
             catch (Exception ex)
