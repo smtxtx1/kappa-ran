@@ -566,7 +566,6 @@ namespace Kappa
 
             YourCallingMethod();
 
-            await StartMonitoringMonstersAsync();
         }
         public void RunActive()
         {
@@ -824,6 +823,8 @@ namespace Kappa
 
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
+            await StartMonitoringMonstersAsync();
+
             MonsterAlloc();
             while (!backgroundWorker1.CancellationPending)
             {
