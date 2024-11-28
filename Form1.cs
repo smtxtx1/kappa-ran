@@ -823,7 +823,6 @@ namespace Kappa
 
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            await StartMonitoringMonstersAsync();
 
             MonsterAlloc();
             while (!backgroundWorker1.CancellationPending)
@@ -2669,9 +2668,15 @@ namespace Kappa
 
         }
 
-        private void checkBox13_CheckedChanged(object sender, EventArgs e)
+        private async void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
             DisplayAlloc();
+            await StartMonitoringMonstersAsync();
+            if (!checkBox13.Checked)
+            {
+                StopMonitoringMonsters();
+                
+            }
 
             if (checkBox13.Checked)
             {
