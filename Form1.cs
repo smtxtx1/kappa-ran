@@ -566,7 +566,7 @@ namespace Kappa
 
             YourCallingMethod();
 
-
+            await StartMonitoringMonstersAsync();
         }
         public void RunActive()
         {
