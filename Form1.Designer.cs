@@ -185,6 +185,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            button22 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -1217,6 +1218,7 @@
             // tabPage5
             // 
             tabPage5.BackColor = Color.DimGray;
+            tabPage5.Controls.Add(button22);
             tabPage5.Controls.Add(button18);
             tabPage5.Controls.Add(button17);
             tabPage5.Controls.Add(textBox7);
@@ -1444,6 +1446,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // button22
+            // 
+            button22.Location = new Point(6, 354);
+            button22.Name = "button22";
+            button22.Size = new Size(75, 26);
+            button22.TabIndex = 23;
+            button22.Text = "Clear";
+            button22.UseVisualStyleBackColor = true;
+            button22.Click += button22_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1648,5 +1660,6 @@
         private GroupBox groupBox12;
         private Button button21;
         private TextBox textBox9;
+        private Button button22;
     }
 }

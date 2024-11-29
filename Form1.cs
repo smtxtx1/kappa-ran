@@ -1785,7 +1785,8 @@ namespace Kappa
                 {
                     Attacknow = false;
                 }
-                if (Attacknow) {
+                if (Attacknow)
+                {
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
                         if (!Attacknow)
@@ -1846,7 +1847,7 @@ namespace Kappa
             return false;
         }
 
-        private async Task<(float X, float Y, float Z, int ID,int HP)> ReadPlayerDetailsAsync(UIntPtr data)
+        private async Task<(float X, float Y, float Z, int ID, int HP)> ReadPlayerDetailsAsync(UIntPtr data)
         {
             try
             {
@@ -1868,7 +1869,7 @@ namespace Kappa
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0, 0,0);
+                return (0, 0, 0, 0, 0);
             }
         }
         private async Task HandleKeyLogicAsync(float myX, float myY, float myZ, int playerID)
@@ -1900,7 +1901,7 @@ namespace Kappa
                     // Check and update motion state
                 }
 
-             //   Task.Delay(10); // Small delay to avoid excessive CPU usage
+                //   Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
         private void buttonOpenRadar_Click(object sender, EventArgs e)
@@ -2675,7 +2676,7 @@ namespace Kappa
             if (!checkBox13.Checked)
             {
                 StopMonitoringMonsters();
-                
+
             }
 
             if (checkBox13.Checked)
@@ -4015,12 +4016,17 @@ namespace Kappa
 
         }
 
-        private async void button21_Click(object sender, EventArgs e)
+        private void button21_Click(object sender, EventArgs e)
         {
-            
+
             Guildselected = textBox9.Text;
             textBox9.Enabled = false;
-            await StartMonitoringPlayerAsync();
+            StartMonitoringPlayerAsync();
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            listView11.Items.Clear();
         }
     }
 
