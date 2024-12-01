@@ -1799,7 +1799,7 @@ namespace Kappa
                     ResNOW = false;
                 }
 
-                if (ResNOW)
+                if (ResNOW && SendRES != 0)
                 {
                     m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
                     m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
@@ -1822,11 +1822,11 @@ namespace Kappa
                 {
                     Attacknow = false;
                 }
-                if (Attacknow)
+                if (Attacknow && SendID != 0)
                 {
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
-                        if (!Attacknow)
+                        if (!Attacknow && SendID == 0)
                         {
                             break;
                         }
