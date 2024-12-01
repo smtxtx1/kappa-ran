@@ -1811,8 +1811,8 @@ namespace Kappa
                 if (ResNOW)
                 {
                     m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                    m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
-                    m.WriteMemory($"{TARGET_SKILL}", "int", SendRES.ToString());
+                    m.WriteMemory($"{TARGET_RING}", "int", Res_Player.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", Res_Player.ToString());
                     m.WriteMemory(actioncheck, "int", "0");
                     m.WriteMemory(prevskill1_adr, "byte", "E");
                     m.WriteMemory(prevskill2_adr, "byte", "F");
