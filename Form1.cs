@@ -1814,9 +1814,10 @@ namespace Kappa
                     m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
                     m.WriteMemory($"{TARGET_SKILL}", "int", SendRES.ToString());
                     m.WriteMemory(actioncheck, "int", "0");
+                    m.WriteMemory(prevskill1_adr, "byte", "E");
+                    m.WriteMemory(prevskill2_adr, "byte", "F");
                     m.WriteMemory(forceattack_adr, "int", "5");
-                    m.WriteMemory(prevskill1_adr, "byte", "14");
-                    m.WriteMemory(prevskill2_adr, "byte", "15");
+
                     Task.Delay(1);
 
                 }
