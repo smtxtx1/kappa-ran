@@ -1720,6 +1720,8 @@ namespace Kappa
             bool Attacknow = false;
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
+            int SendRES = 0; // ID to send for targeting
+
             try
             {
                 string Guild = "";
@@ -1728,7 +1730,7 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7953E0,D6E8");
 
                 float closestDistance = float.MaxValue;
-
+                float closestDistancePlayer = float.MaxValue;
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
@@ -1766,10 +1768,14 @@ namespace Kappa
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
                     }
+
                     if (distance_mon <= MonDistance && distance_mon < closestDistance && Guild.Contains(Guildselected) && mobDetails.HP < 50)
                     {
+                        closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
+                        
                     }
+                    
 
                     curr = m.GetCode($"{curr:X},8");
                     await Task.Delay(0);
@@ -1779,6 +1785,10 @@ namespace Kappa
                 if (closestDistance <= MonDistance)
                 {
                     SendID = GETPlAYERID;
+                }
+                if (closestDistancePlayer <= MonDistance && Guild.Contains(Guildselected))
+                {
+                    SendRES = Res_Player;
                 }
 
                 if (IsKeyPressed(Keys.X))
@@ -1801,13 +1811,14 @@ namespace Kappa
                 if (ResNOW)
                 {
                     m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                    m.WriteMemory($"{TARGET_RING}", "int", Res_Player.ToString());
-                    m.WriteMemory($"{TARGET_SKILL}", "int", Res_Player.ToString());
-
+                    m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", SendRES.ToString());
                     m.WriteMemory(actioncheck, "int", "0");
                     m.WriteMemory(prevskill1_adr, "byte", "14");
                     m.WriteMemory(prevskill2_adr, "byte", "15");
                     m.WriteMemory(forceattack_adr, "int", "5");
+                    Task.Delay(1);
+
                 }
                 if (Attacknow)
                 {
@@ -1839,7 +1850,7 @@ namespace Kappa
                             Console.WriteLine($"{RUN}");
                         }
 
-                        await Task.Delay(01);
+                         Task.Delay(1);
                     }
 
                 }
