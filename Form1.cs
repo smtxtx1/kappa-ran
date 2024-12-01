@@ -1769,7 +1769,7 @@ namespace Kappa
                         GETPlAYERID = mobDetails.ID;
                     }
 
-                    if (distance_mon <= MonDistance && distance_mon < closestDistance && Guild.Contains(Guildselected) && mobDetails.HP < 50)
+                    if (distance_mon <= MonDistance && distance_mon < closestDistance && Guild.Contains(Guildselected) && mobDetails.HP > 50)
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
