@@ -1769,7 +1769,7 @@ namespace Kappa
                         GETPlAYERID = mobDetails.ID;
                     }
 
-                    if (distance_mon <= MonDistance && distance_mon < closestDistance && Guild.Contains(Guildselected) && mobDetails.HP > 50)
+                    if (distance_mon <= MonDistance && distance_mon < closestDistancePlayer && Guild.Contains(Guildselected) && mobDetails.HP > 50)
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
@@ -1811,8 +1811,8 @@ namespace Kappa
                 if (ResNOW)
                 {
                     m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                    m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
-                    m.WriteMemory($"{TARGET_SKILL}", "int", SendRES.ToString());
+                    m.WriteMemory($"{TARGET_RING}", "int", Res_Player.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", Res_Player.ToString());
                     m.WriteMemory(actioncheck, "int", "0");
                     m.WriteMemory(prevskill1_adr, "byte", "E");
                     m.WriteMemory(prevskill2_adr, "byte", "F");
