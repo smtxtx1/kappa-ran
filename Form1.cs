@@ -1712,7 +1712,7 @@ namespace Kappa
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
 
-        public int Res_Player = 0;
+
 
         private async Task GetPlayerAsync()
         {
@@ -1721,7 +1721,7 @@ namespace Kappa
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
             int SendRES = 0; // ID to send for targeting
-
+            int Res_Player = 0;
             try
             {
                 string Guild = "";
@@ -1769,7 +1769,7 @@ namespace Kappa
                         GETPlAYERID = mobDetails.ID;
                     }
 
-                    if (distance_mon <= MonDistance  && Guild.Contains(Guildselected) && mobDetails.HP > 50)
+                    if (distance_mon <= MonDistance && distance_mon < closestDistance && Guild.Contains(Guildselected) && mobDetails.HP > 50)
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
@@ -1786,7 +1786,7 @@ namespace Kappa
                 {
                     SendID = GETPlAYERID;
                 }
-                if (Guild.Contains(Guildselected))
+                if (closestDistancePlayer <= MonDistance && Guild.Contains(Guildselected))
                 {
                     SendRES = Res_Player;
                 }
