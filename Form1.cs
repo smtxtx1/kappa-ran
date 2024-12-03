@@ -259,14 +259,14 @@ namespace Kappa
 
         public string TARGET_SKILL = "00FF38A0,325C"; //MiniA.exe+793E74
 
-        public string TARGET_RING_CHECK = "00FF38A0,4008"; //
+        public string TARGET_RING_CHECK = "00FF38A0,4078"; //
 
 
-        public string TARGET_RING = "00FF38A0,400C"; //
+        public string TARGET_RING = "00FF38A0,407C"; //
 
         public string MATION_CHECK = "00FF38A0,30FC";
 
-        public string SKILL_TIME = "00FF38A0,3270";
+        public string SKILL_TIME = "00FF38A0,32C4";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
