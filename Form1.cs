@@ -2709,7 +2709,6 @@ namespace Kappa
         private async void checkBox13_CheckedChanged(object sender, EventArgs e)
         {
             DisplayAlloc();
-            await StartMonitoringMonstersAsync();
             if (!checkBox13.Checked)
             {
                 StopMonitoringMonsters();
@@ -2718,6 +2717,8 @@ namespace Kappa
 
             if (checkBox13.Checked)
             {
+                StartMonitoringMonstersAsync();
+
                 backgroundWorker6.RunWorkerAsync();
             }
             else
@@ -3312,7 +3313,7 @@ namespace Kappa
             button6.Enabled = false;
             button7.Enabled = true;
 
-
+            StartMonitoringMonstersAsync();
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
