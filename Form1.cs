@@ -253,11 +253,11 @@ namespace Kappa
 
         public string prevskill2_adr = "00FF38A0,319E";
 
-        public string forceattack_adr = "00FF38A0,3244";
+        public string forceattack_adr = "00FF38A0,3298";
 
-        public string actioncheck = "00FF38A0,3258";
+        public string actioncheck = "00FF38A0,32AC";
 
-        public string TARGET_SKILL = "00FF38A0,325C"; //MiniA.exe+793E74
+        public string TARGET_SKILL = "00FF38A0,32B0"; //MiniA.exe+793E74
 
         public string TARGET_RING_CHECK = "00FF38A0,4078"; //
 
@@ -451,7 +451,7 @@ namespace Kappa
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("8b 86 ? ? ? ? 81 c6 ? ? ? ? 52", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 ??", false, true);
-            var AoB_Scan_ATKBP = await m.AoBScan("74 82 8D BE 00 30 00 00", false, true);
+            var AoB_Scan_ATKBP = await m.AoBScan("74 ? 8d be ? ? ? ? 8b c7", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("74 58 55 55", false, true);
             var AoB_Scan_ANTICHAT = await m.AoBScan("C7 86 94 01 00 00 00 00 00 41", false, true);
             var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
