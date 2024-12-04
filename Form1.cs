@@ -259,10 +259,10 @@ namespace Kappa
 
         public string TARGET_SKILL = "00FF38A0,32B0"; //MiniA.exe+793E74
 
-        public string TARGET_RING_CHECK = "00FF38A0,4078"; //
+        public string TARGET_RING_CHECK = "00FF38A0,4060"; //
 
 
-        public string TARGET_RING = "00FF38A0,407C"; //
+        public string TARGET_RING = "00FF38A0,4064"; //
 
         public string MATION_CHECK = "00FF38A0,30FC";
 

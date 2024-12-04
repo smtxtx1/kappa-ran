@@ -242,7 +242,6 @@
             groupBox12.TabIndex = 5;
             groupBox12.TabStop = false;
             groupBox12.Text = "ชื่อกิล";
-            groupBox12.Visible = false;
             // 
             // button21
             // 
