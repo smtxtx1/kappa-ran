@@ -158,6 +158,7 @@
             button6 = new Button();
             checkBox6 = new CheckBox();
             tabPage5 = new TabPage();
+            button22 = new Button();
             button18 = new Button();
             button17 = new Button();
             textBox7 = new TextBox();
@@ -185,7 +186,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            button22 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -242,6 +242,7 @@
             groupBox12.TabIndex = 5;
             groupBox12.TabStop = false;
             groupBox12.Text = "ชื่อกิล";
+            groupBox12.Visible = false;
             // 
             // button21
             // 
@@ -1232,6 +1233,16 @@
             tabPage5.TabIndex = 2;
             tabPage5.Text = "item settings";
             // 
+            // button22
+            // 
+            button22.Location = new Point(6, 354);
+            button22.Name = "button22";
+            button22.Size = new Size(75, 26);
+            button22.TabIndex = 23;
+            button22.Text = "Clear";
+            button22.UseVisualStyleBackColor = true;
+            button22.Click += button22_Click;
+            // 
             // button18
             // 
             button18.Location = new Point(277, 164);
@@ -1445,16 +1456,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // button22
-            // 
-            button22.Location = new Point(6, 354);
-            button22.Name = "button22";
-            button22.Size = new Size(75, 26);
-            button22.TabIndex = 23;
-            button22.Text = "Clear";
-            button22.UseVisualStyleBackColor = true;
-            button22.Click += button22_Click;
             // 
             // Form1
             // 
