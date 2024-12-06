@@ -1778,7 +1778,6 @@ namespace Kappa
 
 
                     curr = m.GetCode($"{curr:X},8");
-                    await Task.Delay(0);
                 }
 
                 // Assign the closest player ID if found
@@ -1852,11 +1851,14 @@ namespace Kappa
                             Console.WriteLine($"{RUN}");
                         }
 
-                         Task.Delay(1);
+                        await Task.Delay(1);
                     }
 
                 }
+                await Task.Delay(0);
             }
+                                
+
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
