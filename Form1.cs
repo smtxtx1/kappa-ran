@@ -1991,6 +1991,7 @@ namespace Kappa
                     MonsterHP_FromGetMonster = 0;
                     distance_FromGetMonster = float.MaxValue;
                 }
+                await Task.Delay(10);
             }
             catch (Exception ex)
             {
