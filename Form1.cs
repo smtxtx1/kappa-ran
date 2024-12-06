@@ -1855,7 +1855,7 @@ namespace Kappa
                     }
 
                 }
-                await Task.Delay(0);
+                await Task.Delay(10);
             }
                                 
 
