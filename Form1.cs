@@ -446,7 +446,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
 
-            //66 8B 4F 1E 33 D2 66 8B 57 1C
+            var AoB_Scan_SABUD = await m.AoBScan("e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 54 ? ? 55 57 52 50 8b ce e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 4f", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("8b 86 ? ? ? ? 81 c6 ? ? ? ? 52", false, true);
@@ -464,7 +464,7 @@ namespace Kappa
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
-
+            long AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
