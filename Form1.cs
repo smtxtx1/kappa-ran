@@ -1869,7 +1869,7 @@ namespace Kappa
             foreach (ListViewItem item in listView12.Items)
             {
                 // Check the item's main text
-                if (name.Contains(item.Text))
+                if (item.Text.Contains(name))
                 {
                     return true;
                 }
@@ -1877,7 +1877,7 @@ namespace Kappa
                 // Check all subitems
                 foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
                 {
-                    if (name.Contains(subItem.Text))
+                    if (subItem.Text.Contains(name))
                     {
                         return true;
                     }
