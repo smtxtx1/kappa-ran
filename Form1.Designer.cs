@@ -31,9 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
-            groupBox12 = new GroupBox();
-            button21 = new Button();
-            textBox9 = new TextBox();
             label4 = new Label();
             label3 = new Label();
             groupBox9 = new GroupBox();
@@ -186,9 +183,16 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            groupBox12 = new GroupBox();
+            checkBox38 = new CheckBox();
+            checkBox37 = new CheckBox();
+            textBox11 = new TextBox();
+            checkBox36 = new CheckBox();
+            button21 = new Button();
+            button23 = new Button();
+            textBox9 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
-            groupBox12.SuspendLayout();
             groupBox9.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -202,6 +206,7 @@
             groupBox11.SuspendLayout();
             groupBox10.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox12.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -231,34 +236,6 @@
             tabPage1.Size = new Size(394, 397);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
-            // 
-            // groupBox12
-            // 
-            groupBox12.Controls.Add(button21);
-            groupBox12.Controls.Add(textBox9);
-            groupBox12.Location = new Point(6, 263);
-            groupBox12.Name = "groupBox12";
-            groupBox12.Size = new Size(184, 59);
-            groupBox12.TabIndex = 5;
-            groupBox12.TabStop = false;
-            groupBox12.Text = "ชื่อกิล";
-            // 
-            // button21
-            // 
-            button21.Location = new Point(119, 22);
-            button21.Name = "button21";
-            button21.Size = new Size(59, 23);
-            button21.TabIndex = 4;
-            button21.Text = "ยืนยัน";
-            button21.UseVisualStyleBackColor = true;
-            button21.Click += button21_Click;
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new Point(6, 22);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(107, 23);
-            textBox9.TabIndex = 0;
             // 
             // label4
             // 
@@ -1456,6 +1433,89 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // groupBox12
+            // 
+            groupBox12.Controls.Add(checkBox38);
+            groupBox12.Controls.Add(checkBox37);
+            groupBox12.Controls.Add(textBox11);
+            groupBox12.Controls.Add(checkBox36);
+            groupBox12.Controls.Add(button21);
+            groupBox12.Controls.Add(button23);
+            groupBox12.Controls.Add(textBox9);
+            groupBox12.Location = new Point(212, 263);
+            groupBox12.Name = "groupBox12";
+            groupBox12.Size = new Size(176, 107);
+            groupBox12.TabIndex = 19;
+            groupBox12.TabStop = false;
+            groupBox12.Text = "Gm Alert";
+            // 
+            // checkBox38
+            // 
+            checkBox38.AutoSize = true;
+            checkBox38.Location = new Point(91, 49);
+            checkBox38.Name = "checkBox38";
+            checkBox38.Size = new Size(60, 19);
+            checkBox38.TabIndex = 9;
+            checkBox38.Text = "ล็อคเป้า";
+            checkBox38.UseVisualStyleBackColor = true;
+            checkBox38.Visible = false;
+            // 
+            // checkBox37
+            // 
+            checkBox37.AutoSize = true;
+            checkBox37.Location = new Point(91, 32);
+            checkBox37.Name = "checkBox37";
+            checkBox37.Size = new Size(66, 19);
+            checkBox37.TabIndex = 8;
+            checkBox37.Text = "แจ้งเตือน";
+            checkBox37.UseVisualStyleBackColor = true;
+            // 
+            // textBox11
+            // 
+            textBox11.Location = new Point(27, 46);
+            textBox11.Name = "textBox11";
+            textBox11.Size = new Size(58, 23);
+            textBox11.TabIndex = 7;
+            textBox11.Text = "Webhook";
+            textBox11.TextAlign = HorizontalAlignment.Center;
+            // 
+            // checkBox36
+            // 
+            checkBox36.AutoSize = true;
+            checkBox36.Location = new Point(91, 16);
+            checkBox36.Name = "checkBox36";
+            checkBox36.Size = new Size(62, 19);
+            checkBox36.TabIndex = 6;
+            checkBox36.Text = "ออกเกม";
+            checkBox36.UseVisualStyleBackColor = true;
+            // 
+            // button21
+            // 
+            button21.Location = new Point(99, 74);
+            button21.Name = "button21";
+            button21.Size = new Size(47, 23);
+            button21.TabIndex = 5;
+            button21.Text = "Stop";
+            button21.UseVisualStyleBackColor = true;
+            // 
+            // button23
+            // 
+            button23.Location = new Point(27, 74);
+            button23.Name = "button23";
+            button23.Size = new Size(49, 23);
+            button23.TabIndex = 4;
+            button23.Text = "Start";
+            button23.UseVisualStyleBackColor = true;
+            // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(27, 17);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(58, 23);
+            textBox9.TabIndex = 0;
+            textBox9.Text = "อะไรก็ได้";
+            textBox9.TextAlign = HorizontalAlignment.Center;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1475,8 +1535,6 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
-            groupBox12.ResumeLayout(false);
-            groupBox12.PerformLayout();
             groupBox9.ResumeLayout(false);
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
@@ -1499,6 +1557,8 @@
             groupBox10.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            groupBox12.ResumeLayout(false);
+            groupBox12.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1657,9 +1717,14 @@
         private Button button20;
         private Label label5;
         private Label label6;
-        private GroupBox groupBox12;
-        private Button button21;
-        private TextBox textBox9;
         private Button button22;
+        private GroupBox groupBox12;
+        private CheckBox checkBox38;
+        private CheckBox checkBox37;
+        private TextBox textBox11;
+        private CheckBox checkBox36;
+        private Button button21;
+        private Button button23;
+        private TextBox textBox9;
     }
 }
