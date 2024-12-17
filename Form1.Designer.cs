@@ -262,7 +262,6 @@
             checkBox38.TabIndex = 9;
             checkBox38.Text = "ล็อคเป้า";
             checkBox38.UseVisualStyleBackColor = true;
-            checkBox38.Visible = false;
             // 
             // checkBox37
             // 
