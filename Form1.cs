@@ -1659,6 +1659,8 @@ namespace Kappa
         }
 
         private CancellationTokenSource monitoringCts;
+        private CancellationTokenSource monitoringCtsPlayer;
+
         private async Task StartMonitoringMonstersAsync()
         {
             monitoringCts = new CancellationTokenSource();
