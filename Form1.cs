@@ -1646,8 +1646,6 @@ namespace Kappa
         private void StopMonitoringPlayer()
         {
             textBox11.Enabled = true;
-            button22.Enabled = false;
-            button21.Enabled = true;
             monitoringCtsPlayer?.Cancel();
         }
 
@@ -4141,10 +4139,6 @@ namespace Kappa
 
         private void button21_Click(object sender, EventArgs e)
         {
-
-            Guildselected = textBox9.Text;
-            textBox9.Enabled = false;
-            StartMonitoringPlayerAsync();
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -4154,20 +4148,30 @@ namespace Kappa
 
         private void button23_Click(object sender, EventArgs e)
         {
-            textBox11.Enabled = false;
-            button21.Enabled = false;
-            button22.Enabled = true;
-            listView11.Items.Clear();
-            SaveUrlWebhook(textBox11.Text);
-            Guildselected = textBox9.Text;
-            textBox9.Enabled = false;
-            StartMonitoringPlayerAsync();
-
         }
 
         private void button21_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void BTN_START_Click(object sender, EventArgs e)
+        {
+
+
+            Guildselected = textBox9.Text;
+            textBox9.Enabled = false;
+            BTN_START.Enabled = false;
+            BTN_STOP.Enabled = true;
+            StartMonitoringPlayerAsync();
+
+        }
+
+        private void BTN_STOP_Click(object sender, EventArgs e)
+        {
+            BTN_START.Enabled = true;
+            BTN_STOP.Enabled = false;
+            StopMonitoringPlayer();
         }
     }
 

@@ -36,8 +36,8 @@
             checkBox37 = new CheckBox();
             textBox11 = new TextBox();
             checkBox36 = new CheckBox();
-            button21 = new Button();
-            button23 = new Button();
+            BTN_STOP = new Button();
+            BTN_START = new Button();
             textBox9 = new TextBox();
             label4 = new Label();
             label3 = new Label();
@@ -243,8 +243,8 @@
             groupBox12.Controls.Add(checkBox37);
             groupBox12.Controls.Add(textBox11);
             groupBox12.Controls.Add(checkBox36);
-            groupBox12.Controls.Add(button21);
-            groupBox12.Controls.Add(button23);
+            groupBox12.Controls.Add(BTN_STOP);
+            groupBox12.Controls.Add(BTN_START);
             groupBox12.Controls.Add(textBox9);
             groupBox12.Location = new Point(212, 263);
             groupBox12.Name = "groupBox12";
@@ -293,25 +293,25 @@
             checkBox36.Text = "ออกเกม";
             checkBox36.UseVisualStyleBackColor = true;
             // 
-            // button21
+            // BTN_STOP
             // 
-            button21.Location = new Point(99, 74);
-            button21.Name = "button21";
-            button21.Size = new Size(47, 23);
-            button21.TabIndex = 5;
-            button21.Text = "Stop";
-            button21.UseVisualStyleBackColor = true;
-            button21.Click += button23_Click;
+            BTN_STOP.Location = new Point(99, 74);
+            BTN_STOP.Name = "BTN_STOP";
+            BTN_STOP.Size = new Size(47, 23);
+            BTN_STOP.TabIndex = 5;
+            BTN_STOP.Text = "Stop";
+            BTN_STOP.UseVisualStyleBackColor = true;
+            BTN_STOP.Click += BTN_STOP_Click;
             // 
-            // button23
+            // BTN_START
             // 
-            button23.Location = new Point(27, 74);
-            button23.Name = "button23";
-            button23.Size = new Size(49, 23);
-            button23.TabIndex = 4;
-            button23.Text = "Start";
-            button23.UseVisualStyleBackColor = true;
-            button23.Click += button21_Click;
+            BTN_START.Location = new Point(27, 74);
+            BTN_START.Name = "BTN_START";
+            BTN_START.Size = new Size(49, 23);
+            BTN_START.TabIndex = 4;
+            BTN_START.Text = "Start";
+            BTN_START.UseVisualStyleBackColor = true;
+            BTN_START.Click += BTN_START_Click;
             // 
             // textBox9
             // 
@@ -1725,8 +1725,8 @@
         private CheckBox checkBox37;
         private TextBox textBox11;
         private CheckBox checkBox36;
-        private Button button21;
-        private Button button23;
+        private Button BTN_STOP;
+        private Button BTN_START;
         private TextBox textBox9;
     }
 }
