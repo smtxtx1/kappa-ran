@@ -3359,6 +3359,31 @@ namespace Kappa
                 // MessageBox.Show("Failed to send webhook.");
             }
         }
+        private async void GMAlert()
+        {
+            //  saveID = m.ReadString(IDadr);
+            string value = ReadKeyFromFile();
+
+            var payload = new
+            {
+                avatar_url = "https://playserver.in.th/user_image/server_icon/2043139_1132176446.gif",
+                username = ServerName,
+                content = $"ชื่อตัวละคร:{label1.Text}\nพบเจอGM: {GMFOUND}\nที่จอ{selectedProcessId}\nKEY: {value}\n "
+
+            };
+
+            // Call the SendWebhookAsync function
+            bool success = await WebhookSender.SendWebhookAsync(UrlAlert, payload);
+
+            if (success)
+            {
+                //   MessageBox.Show("Webhook sent successfully!");
+            }
+            else
+            {
+                //    MessageBox.Show("Failed to send webhook.");
+            }
+        }
 
 
         private void checkBox20_CheckedChanged(object sender, EventArgs e)
