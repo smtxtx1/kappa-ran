@@ -301,6 +301,7 @@
             button21.TabIndex = 5;
             button21.Text = "Stop";
             button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click_1;
             // 
             // button23
             // 
