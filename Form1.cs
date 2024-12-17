@@ -1740,18 +1740,19 @@ namespace Kappa
                 string NAMEGET = "";
                 int globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
-                UIntPtr data = m.GetCode($"{curr:X},0");
-                var mobDetails = await ReadPlayerDetailsAsync(data);
-                UIntPtr PlayerID = m.GetCode($"{data:X},28C");
-
-                // Read Guild and Player Name
-                UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
-                UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
 
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
                 for (int i = 0; i < globalCrow; i++)
                 {
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+                    var mobDetails = await ReadPlayerDetailsAsync(data);
+                    UIntPtr PlayerID = m.GetCode($"{data:X},28C");
+
+                    // Read Guild and Player Name
+                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
+
                     int num = 30;
                     byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
                     if (guildArray != null)
@@ -1787,6 +1788,49 @@ namespace Kappa
                         Res_Player = mobDetails.ID;
                         
                     }
+                    if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked || mobDetails.GMc > 1 && checkBox37.Checked)
+                    {
+                        try
+                        {
+
+                            Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n {mobDetails.GMc}");
+                            GMFOUND = NAMEGET;
+                            GMAlert();
+                            if (checkBox36.Checked)
+                            {
+                                Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                                processToTerminate.Kill();
+                                processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                                MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            }
+                            FoundGm = true;
+                            StopMonitoringPlayer();
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+
+                    if (IsNameInListView12(NAMEGET) && checkBox36.Checked)
+                    {
+                        try
+                        {
+                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                            processToTerminate.Kill();
+                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            StopMonitoringPlayer();
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        }
+                    }
 
 
                     curr = m.GetCode($"{curr:X},8");
@@ -1821,49 +1865,6 @@ namespace Kappa
                     m.WriteMemory(forceattack_adr, "int", "5");
                     Task.Delay(1);
 
-                }
-                if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked || mobDetails.GMc > 1 && checkBox37.Checked)
-                {
-                    try
-                    {
-
-                        Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n {mobDetails.GMc}");
-                        GMFOUND = NAMEGET;
-                        GMAlert();
-                        if (checkBox36.Checked)
-                        {
-                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
-                            processToTerminate.Kill();
-                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
-                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        }
-                        FoundGm = true;
-                        StopMonitoringPlayer();
-
-
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-                }
-
-                if (IsNameInListView12(NAMEGET) && checkBox36.Checked)
-                {
-                    try
-                    {
-                        Process processToTerminate = Process.GetProcessById(selectedProcessId);
-                        processToTerminate.Kill();
-                        processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
-                        MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        StopMonitoringPlayer();
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        break;
-                    }
                 }
 
 
