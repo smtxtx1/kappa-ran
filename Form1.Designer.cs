@@ -311,7 +311,7 @@
             button23.TabIndex = 4;
             button23.Text = "Start";
             button23.UseVisualStyleBackColor = true;
-            button23.Click += button23_Click;
+            button23.Click += button21_Click;
             // 
             // textBox9
             // 
