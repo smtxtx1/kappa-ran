@@ -1645,7 +1645,8 @@ namespace Kappa
         }
         private void StopMonitoringPlayer()
         {
-            textBox11.Enabled = true;
+            BTN_START.Enabled = true;
+            BTN_STOP.Enabled = false;
             monitoringCtsPlayer?.Cancel();
         }
 
