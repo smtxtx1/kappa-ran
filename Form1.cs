@@ -4147,8 +4147,17 @@ namespace Kappa
             listView11.Items.Clear();
         }
 
-        private void button23_Click(object sender, EventArgs e)
+        private void SaveUrlWebhook(string key)
         {
+            string path = "urlwebhook.txt";
+            try
+            {
+                File.WriteAllText(path, key);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving the key: " + ex.Message);
+            }
         }
 
         private void button21_Click_1(object sender, EventArgs e)
