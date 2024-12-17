@@ -3351,6 +3351,22 @@ namespace Kappa
             }
             return null;
         }
+        public string ReadWebhook()
+        {
+            string path = "urlwebhook.txt";
+            if (File.Exists(path))
+            {
+                try
+                {
+                    return File.ReadAllText(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error reading the key: " + ex.Message);
+                }
+            }
+            return null;
+        }
 
 
         public string webhookUrl = "https://discord.com/api/webhooks/1299969140152602635/2uSYRdtTXQm56hDex2R7MVXvx7JPQZY30lJu0bGCaOWt_vMIkermqlUg_eiu-j2GDDvq";
