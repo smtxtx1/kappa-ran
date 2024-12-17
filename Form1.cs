@@ -3332,7 +3332,7 @@ namespace Kappa
         }
 
 
-        public string webhookUrl = "https://discord.com/api/webhooks/1302915928463380540/iseftQejvpr6TLl-uDTmZs7AKEg4U75QAry-rxF6mKqt0lO7-f0rs4mRv6EU6DAXg84j";
+        public string webhookUrl = "https://discord.com/api/webhooks/1299969140152602635/2uSYRdtTXQm56hDex2R7MVXvx7JPQZY30lJu0bGCaOWt_vMIkermqlUg_eiu-j2GDDvq";
         public string UrlAlert = "";
 
         private async void YourCallingMethod()
