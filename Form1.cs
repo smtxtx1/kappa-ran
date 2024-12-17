@@ -1787,7 +1787,7 @@ namespace Kappa
                         Res_Player = mobDetails.ID;
 
                     }
-                    if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked)
+                    if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
                         try
                         {
@@ -1813,7 +1813,7 @@ namespace Kappa
                         }
                     }
 
-                    if (IsNameInListView12(NAMEGET) && checkBox36.Checked)
+                    if (IsNameInListView12_GM(NAMEGET) && checkBox36.Checked)
                     {
                         try
                         {
@@ -1919,6 +1919,21 @@ namespace Kappa
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
         }
+        private bool IsNameInListView12_GM(string name)
+        {
+            // Iterate through each item in listView12
+            foreach (ListViewItem item in listView12.Items)
+            {
+                if (name.Contains(item.SubItems[2].Text))
+                {
+                    Console.WriteLine(name);
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private bool IsNameInListView12(string name)
         {
             foreach (ListViewItem item in listView12.Items)
