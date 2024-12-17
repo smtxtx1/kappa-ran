@@ -1681,10 +1681,10 @@ namespace Kappa
         }
         private async Task StartMonitoringPlayerAsync()
         {
-            monitoringCts = new CancellationTokenSource();
+            monitoringCtsPlayer = new CancellationTokenSource();
             try
             {
-                while (!monitoringCts.Token.IsCancellationRequested)
+                while (!monitoringCtsPlayer.Token.IsCancellationRequested)
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetPlayerAsync();
@@ -1693,7 +1693,7 @@ namespace Kappa
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
-                // StopMonitoringMonsters(); // Ensure stopping on exception
+                StopMonitoringMonsters(); // Ensure stopping on exception
             }
         }
 
