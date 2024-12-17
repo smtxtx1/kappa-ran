@@ -4171,6 +4171,7 @@ namespace Kappa
 
             Guildselected = textBox9.Text;
             textBox9.Enabled = false;
+            SaveUrlWebhook(textBox11.Text);
             BTN_START.Enabled = false;
             BTN_STOP.Enabled = true;
             StartMonitoringPlayerAsync();
