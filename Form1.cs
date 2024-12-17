@@ -1851,7 +1851,7 @@ namespace Kappa
                 {
                     SendRES = Res_Player;
                 }
-                if (IsKeyPressed(Keys.Z))
+                if (IsKeyPressed(Keys.Z) && checkBox38.Checked)
                 {
                     ResNOW = true;
                 }
@@ -1875,7 +1875,7 @@ namespace Kappa
 
 
 
-                if (IsKeyPressed(Keys.X))
+                if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
                     Attacknow = true;
                 }
