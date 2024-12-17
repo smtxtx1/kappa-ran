@@ -24,6 +24,7 @@ using Microsoft.VisualBasic.Devices;
 using System.Windows.Forms;
 using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Kappa
 {
@@ -1807,10 +1808,53 @@ namespace Kappa
                     m.WriteMemory(prevskill1_adr, "byte", "E");
                     m.WriteMemory(prevskill2_adr, "byte", "F");
                     m.WriteMemory(forceattack_adr, "int", "5");
-
                     Task.Delay(1);
 
                 }
+                if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked || mobDetails.GMc > 1 && checkBox37.Checked)
+                {
+                    try
+                    {
+
+                        Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n {mobDetails.GMc}");
+                        GMFOUND = NAMEGET;
+                        GMAlert();
+                        if (checkBox36.Checked)
+                        {
+                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                            processToTerminate.Kill();
+                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        FoundGm = true;
+                        StopMonitoringPlayer();
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+
+                if (IsNameInListView12(NAMEGET) && checkBox36.Checked)
+                {
+                    try
+                    {
+                        Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                        processToTerminate.Kill();
+                        processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                        MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        StopMonitoringPlayer();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+                    }
+                }
+
 
 
                 if (IsKeyPressed(Keys.X))
