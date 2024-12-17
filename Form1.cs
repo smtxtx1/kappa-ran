@@ -1786,7 +1786,7 @@ namespace Kappa
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
-                        
+
                     }
                     if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
@@ -1913,7 +1913,7 @@ namespace Kappa
                 }
                 await Task.Delay(10);
             }
-                                
+
 
             catch (Exception ex)
             {
@@ -4150,6 +4150,11 @@ namespace Kappa
         private void button22_Click(object sender, EventArgs e)
         {
             listView11.Items.Clear();
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
