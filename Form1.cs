@@ -4170,6 +4170,7 @@ namespace Kappa
 
         private void BTN_STOP_Click(object sender, EventArgs e)
         {
+            textBox9.Enabled = true;
             BTN_START.Enabled = true;
             BTN_STOP.Enabled = false;
             StopMonitoringPlayer();
