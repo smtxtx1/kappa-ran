@@ -1745,11 +1745,11 @@ namespace Kappa
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadPlayerDetailsAsync(data);
+                    UIntPtr PlayerID = m.GetCode($"{data:X},28C");
 
                     // Read Guild and Player Name
                     UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
                     UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
-                    UIntPtr PlayerID = m.GetCode($"{data:X},28C");
                     int num = 30;
                     byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
                     if (guildArray != null)
