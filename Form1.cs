@@ -1738,7 +1738,7 @@ namespace Kappa
             {
                 string Guild = "";
                 string NAMEGET = "";
-                int globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
+                globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
 
                 float closestDistance = float.MaxValue;
