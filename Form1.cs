@@ -1643,6 +1643,13 @@ namespace Kappa
             string contents = JsonConvert.SerializeObject(list, Formatting.Indented);
             File.WriteAllText(fileName, contents);
         }
+        private void StopMonitoringPlayer()
+        {
+            textBox11.Enabled = true;
+            button22.Enabled = false;
+            button21.Enabled = true;
+            monitoringCtsPlayer?.Cancel();
+        }
 
         private void BrowseButton_Click(object sender, EventArgs e)
         {
