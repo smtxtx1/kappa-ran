@@ -350,6 +350,13 @@ namespace Kappa
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string value = ReadWebhook();
+            if (!string.IsNullOrEmpty(value))
+            {
+                textBox11.Text = value;
+                UrlAlert = value;
+            }
+
             label4.Text = Expirydaysleft().ToString();
             LoadListView12FromJSON(listView12, "ITEM_COLLECT.json");
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
