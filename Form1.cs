@@ -1788,12 +1788,12 @@ namespace Kappa
                         Res_Player = mobDetails.ID;
                         
                     }
-                    if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked || mobDetails.GMc > 1 && checkBox37.Checked)
+                    if (IsNameInListView12(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
                         try
                         {
 
-                            Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n {mobDetails.GMc}");
+                            Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n");
                             GMFOUND = NAMEGET;
                             GMAlert();
                             if (checkBox36.Checked)
