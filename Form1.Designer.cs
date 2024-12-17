@@ -295,7 +295,7 @@
             // 
             // BTN_STOP
             // 
-            BTN_STOP.Location = new Point(99, 74);
+            BTN_STOP.Location = new Point(93, 74);
             BTN_STOP.Name = "BTN_STOP";
             BTN_STOP.Size = new Size(47, 23);
             BTN_STOP.TabIndex = 5;
