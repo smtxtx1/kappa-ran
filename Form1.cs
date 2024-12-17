@@ -4154,6 +4154,14 @@ namespace Kappa
 
         private void button23_Click(object sender, EventArgs e)
         {
+            textBox11.Enabled = false;
+            button23.Enabled = false;
+            button22.Enabled = true;
+            listView11.Items.Clear();
+            SaveUrlWebhook(textBox11.Text);
+            Guildselected = textBox9.Text;
+            textBox9.Enabled = false;
+            StartMonitoringPlayerAsync();
 
         }
 
