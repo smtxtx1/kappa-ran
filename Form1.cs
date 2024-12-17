@@ -1722,7 +1722,7 @@ namespace Kappa
             return (GetAsyncKeyState(key) & 0x8000) != 0;
         }
 
-
+        public string GMFOUND = "";
 
         private async Task GetPlayerAsync()
         {
