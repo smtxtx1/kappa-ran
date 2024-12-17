@@ -1726,12 +1726,14 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
+            bool FoundGm = false;
             bool ResNOW = false;
             bool Attacknow = false;
             int GETPlAYERID = 0; // Closest Player ID
             int SendID = 0; // ID to send for targeting
             int SendRES = 0; // ID to send for targeting
             int Res_Player = 0;
+            int globalCrow = int.MaxValue;
             try
             {
                 string Guild = "";
