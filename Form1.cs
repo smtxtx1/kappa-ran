@@ -2296,14 +2296,14 @@ namespace Kappa
                     RunDeActive();
                     if (checkBox25.Checked)
                     {
-                        m.WriteMemory("031F37EA", "byte", "63");
+                        m.WriteMemory("02FD3DA2", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("031F37EA", "byte", "01");
+                        m.WriteMemory("02FD3DA2", "byte", "01");
                         Thread.Sleep(2000);
 
-                        m.WriteMemory("031F37EB", "byte", "63");
+                        m.WriteMemory("02FD3DA3", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("031F37EB", "byte", "01");
+                        m.WriteMemory("02FD3DA3", "byte", "01");
 
 
                     }
