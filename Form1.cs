@@ -3513,6 +3513,8 @@ namespace Kappa
 
         private void button13_Click(object sender, EventArgs e)
         {
+            _Inject_Fpet();
+            _INJECT_FPET = true;
 
         }
 
