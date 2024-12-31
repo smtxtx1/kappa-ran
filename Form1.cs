@@ -499,6 +499,7 @@ namespace Kappa
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
+            FASTPET_ADR_RESULT = AOB_FastPET.ToString("x");
 
             DELAYPOT_ADR_RESULT = AOB_DELAYPOT.ToString("x");
             GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
