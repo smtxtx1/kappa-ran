@@ -4247,6 +4247,7 @@ namespace Kappa
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
+            m.WriteMemory("00FE1000", "float", hScrollBar1.Value.ToString());
 
         }
     }
