@@ -638,6 +638,18 @@ namespace Kappa
         public int SKILLPET_ADR_GET_BUFF = 0;
         //SKILLPET_ADR_GET_BUFF
         public int SKILLPET_ADR_RESULT2 = 0;
+        public bool _INJECT_FPET = false;
+        public int FASTPET_ADR_RESULT2 = 0;
+
+        public void _Inject_Fpet()
+        {
+            if (!_INJECT_FPET)
+            {
+                byte[] freezebytesX = { 0xA1, 0x00, 0x10, 0xFE, 0x00, 0x89, 0x86, 0x60, 0x01, 0x00, 0x00 };
+                FASTPET_ADR_RESULT2 = CodeCave.CreateCodeCave(freezebytesX, FASTPET_ADR_RESULT, FASTPET_ADR_RESULT2, 6, 100, m);//Input address to create codecave
+            }
+
+        }
 
         public void INJECT_PET()
         {
