@@ -476,6 +476,8 @@ namespace Kappa
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
+            AOB_FastPET = AoB_Scan_FastPet.FirstOrDefault();
+
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
