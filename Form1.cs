@@ -1877,7 +1877,7 @@ namespace Kappa
 
                 if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
-                    Console.WriteLine("X Is Working");
+                    
                     Attacknow = true;
                 }
                 else
@@ -1886,13 +1886,14 @@ namespace Kappa
                 }
                 if (Attacknow && SendID != 0)
                 {
+                    Console.WriteLine("X Is Working");
+
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
                         if (!Attacknow && SendID == 0)
                         {
                             break;
                         }
-
                         label2.Text = Guild;
                         int RUN = m.Read2Byte(MATION_CHECK);
 
