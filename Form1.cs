@@ -465,7 +465,7 @@ namespace Kappa
             var AoB_Scan_ANTIDELAY = await m.AoBScan("0F 84 ?? ?? 00 00 F6 84 ? ? 2A 00 00 10", false, true);
             var AoB_Scan_DelayPot = await m.AoBScan("7A ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e", false, true);
             var AoB_Scan_SKILLPET = await m.AoBScan("66 8B 4F 1E 33 D2 66 8B 57 1C", false, true);
-            //74 ? b8 ? ? ? ? 5e 83 c4 ? c2 ? ? 8b 8e
+            var AoB_Scan_FastPet = await m.AoBScan("89 86 ? ? ? ? 8a c1", false, true);
             var AoB_Scan_GETBUFF = await m.AoBScan("8b 16 3b d5 74 ? 33 c0", false, true);
             var AoB_Scan_GET_SKILL_LIST = await m.AoBScan("8B BC B8 ?? ?? 00 00 89", false, true); // LINE 731
             long AOB_DELAYPOT = AoB_Scan_DelayPot.FirstOrDefault();
