@@ -191,6 +191,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            hScrollBar1 = new HScrollBar();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -344,18 +345,19 @@
             // 
             // groupBox9
             // 
+            groupBox9.Controls.Add(hScrollBar1);
             groupBox9.Controls.Add(button13);
             groupBox9.Controls.Add(comboBox4);
             groupBox9.Location = new Point(6, 198);
             groupBox9.Name = "groupBox9";
-            groupBox9.Size = new Size(184, 59);
+            groupBox9.Size = new Size(184, 82);
             groupBox9.TabIndex = 4;
             groupBox9.TabStop = false;
             groupBox9.Text = "Pet Skills";
             // 
             // button13
             // 
-            button13.Location = new Point(119, 21);
+            button13.Location = new Point(116, 47);
             button13.Name = "button13";
             button13.Size = new Size(59, 23);
             button13.TabIndex = 3;
@@ -1518,6 +1520,15 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // hScrollBar1
+            // 
+            hScrollBar1.Location = new Point(6, 48);
+            hScrollBar1.Maximum = 500;
+            hScrollBar1.Name = "hScrollBar1";
+            hScrollBar1.Size = new Size(107, 22);
+            hScrollBar1.TabIndex = 5;
+            hScrollBar1.Scroll += hScrollBar1_Scroll;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1728,5 +1739,6 @@
         private Button BTN_STOP;
         private Button BTN_START;
         private TextBox textBox9;
+        private HScrollBar hScrollBar1;
     }
 }

@@ -578,8 +578,8 @@ namespace Kappa
                 SetWindowText(windowHandle, this.Text);
             }
 
-           
-           // YourCallingMethod();
+
+            // YourCallingMethod();
 
         }
         public void RunActive()
@@ -777,7 +777,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-         //   YourCallingMethod();
+            //   YourCallingMethod();
         }
 
 
@@ -1896,7 +1896,7 @@ namespace Kappa
 
                 if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
-                    
+
                     Attacknow = true;
                 }
                 else
@@ -4243,6 +4243,11 @@ namespace Kappa
             BTN_START.Enabled = true;
             BTN_STOP.Enabled = false;
             StopMonitoringPlayer();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+
         }
     }
 
