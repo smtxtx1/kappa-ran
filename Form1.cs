@@ -109,7 +109,10 @@ namespace Kappa
         public long AOB_ANTICB;
         public long AOB_ANTICHAT;
         public long AOB_LONGBUFF;
+        public long AOB_FastPET;
 
+
+        public string FASTPET_ADR_RESULT;
         public string Guildselected;
         public string SKILLPET_ADR_RESULT;
         public string LONGBUFF_ADR_RESUT;
