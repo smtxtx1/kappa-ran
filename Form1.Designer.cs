@@ -42,6 +42,7 @@
             label4 = new Label();
             label3 = new Label();
             groupBox9 = new GroupBox();
+            hScrollBar1 = new HScrollBar();
             button13 = new Button();
             comboBox4 = new ComboBox();
             groupBox4 = new GroupBox();
@@ -191,7 +192,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            hScrollBar1 = new HScrollBar();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -253,7 +253,6 @@
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
-            groupBox12.Visible = false;
             // 
             // checkBox38
             // 
@@ -354,6 +353,15 @@
             groupBox9.TabIndex = 4;
             groupBox9.TabStop = false;
             groupBox9.Text = "Pet Skills";
+            // 
+            // hScrollBar1
+            // 
+            hScrollBar1.Location = new Point(6, 48);
+            hScrollBar1.Maximum = 500;
+            hScrollBar1.Name = "hScrollBar1";
+            hScrollBar1.Size = new Size(107, 22);
+            hScrollBar1.TabIndex = 5;
+            hScrollBar1.Scroll += hScrollBar1_Scroll;
             // 
             // button13
             // 
@@ -1519,15 +1527,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // hScrollBar1
-            // 
-            hScrollBar1.Location = new Point(6, 48);
-            hScrollBar1.Maximum = 500;
-            hScrollBar1.Name = "hScrollBar1";
-            hScrollBar1.Size = new Size(107, 22);
-            hScrollBar1.TabIndex = 5;
-            hScrollBar1.Scroll += hScrollBar1_Scroll;
             // 
             // Form1
             // 
