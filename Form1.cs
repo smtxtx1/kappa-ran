@@ -1877,6 +1877,7 @@ namespace Kappa
 
                 if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
+                    Console.WriteLine("X Is Working");
                     Attacknow = true;
                 }
                 else
