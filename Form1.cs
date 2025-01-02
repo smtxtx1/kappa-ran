@@ -961,7 +961,7 @@ namespace Kappa
 
         public async void Getback()
         {
-            if (checkBox35.Checked)
+            if (checkBox35.Checked )
             {
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
