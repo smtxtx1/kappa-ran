@@ -1051,7 +1051,7 @@ namespace Kappa
                                 m.WriteMemory(actioncheck, "int", "0");
                                 m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
                                 m.WriteMemory(forceattack_adr, "int", "5");
-                                while (m.ReadInt(MATION_CHECK) == 3)
+                               if (m.ReadInt(MATION_CHECK) == 3)
                                 {
                                     Console.WriteLine("Buffering");
                                     await Task.Delay(1000);
@@ -2632,6 +2632,7 @@ namespace Kappa
 
                 for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
+                    int MATION = m.ReadInt(MATION_CHECK);
                     m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                     m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
                     TARGET_RINGS = m.ReadInt(TARGET_RING);
@@ -2649,6 +2650,7 @@ namespace Kappa
                     {
                         if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
                         {
+                            
                             TARGET_RINGS = m.ReadInt(TARGET_RING);
                             monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
@@ -2658,8 +2660,14 @@ namespace Kappa
                             }
 
                             PerformSkill(idskilltype_test1, idskilltype_test2);
-
                         }
+
+                        if (MATION == 0)
+                        {
+                            MoveWhileAttacking();
+                            await Task.Delay(100);
+                        }
+
                     }
 
                     await Task.Delay(100);
