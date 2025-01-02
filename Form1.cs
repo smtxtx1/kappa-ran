@@ -966,7 +966,12 @@ namespace Kappa
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
 
-                // แสดงเวลาเริ่มต้นใน Console
+                m.WriteMemory("02FD3DA2", "byte", "63");
+                Thread.Sleep(100);
+                m.WriteMemory("02FD3DA2", "byte", "01");
+                Thread.Sleep(2000);
+
+
                 Console.WriteLine($"เริ่มต้นเวลา: {startTime}");
 
                 // แปลงค่าจาก textBox5.Text เป็นจำนวนเต็ม (นาที)
@@ -977,6 +982,10 @@ namespace Kappa
 
                     // แสดงเวลาอีกครั้งหลังจากรอครบ
                     DateTime endTime = DateTime.Now;
+                    m.WriteMemory("02FD3DA3", "byte", "63");
+                    Thread.Sleep(100);
+                    m.WriteMemory("02FD3DA3", "byte", "01");
+
                     Console.WriteLine($"เวลาปัจจุบันหลังจากผ่านไป {minutesToWait} นาที: {endTime}");
                 }
                 else
