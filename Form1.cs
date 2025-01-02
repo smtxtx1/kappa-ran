@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Kappa
 {
@@ -2664,9 +2665,6 @@ namespace Kappa
 
                         if (MATION == 0) // if can't hit will move
                         {
-                            Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
-                            Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
-                            Console.WriteLine($"Can Attack: {MATION != 0}");
 
                             label6.Text = "Unable to attack. Retrying...";
                             await Task.Delay(100);
@@ -2698,6 +2696,10 @@ namespace Kappa
         }
         private void PerformSkillPlayer(int skill1, int skill2)
         {
+            Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
+            Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
+            Console.WriteLine($"Can Attack: {MATION != 0}");
+
 
             m.WriteMemory(actioncheck, "int", "0");
             m.WriteMemory(prevskill1_adr, "byte", skill1.ToString("x"));
