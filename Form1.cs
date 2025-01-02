@@ -2597,7 +2597,7 @@ namespace Kappa
             m.WriteMemory(getadr + "+4", "float", newX.ToString());
             m.WriteMemory(getadr + "+C", "float", myY.ToString()); // Y-coordinate stays the same
             m.WriteMemory(getadr + "+14", "float", newZ.ToString());
-
+            label6.Text = "MoveWhileAttacking";
             // Perform the movement
             RunActive();
             await Task.Delay(100); // Delay to simulate the move duration
@@ -2664,6 +2664,7 @@ namespace Kappa
 
                         if (MATION == 0)
                         {
+                            await Task.Delay(100);
                             MoveWhileAttacking();
                             await Task.Delay(100);
                         }
