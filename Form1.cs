@@ -2662,11 +2662,16 @@ namespace Kappa
                             PerformSkill(idskilltype_test1, idskilltype_test2);
                         }
 
-                        if (MATION == 0)
+                        if (MATION == 0) // if can't hit will move
                         {
+                            Console.WriteLine("Unable to attack. Retrying...");
                             await Task.Delay(100);
-                            MoveWhileAttacking();
-                            await Task.Delay(100);
+                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+                            if (MATION == 0)
+                            {
+                                MoveWhileAttacking();
+                                await Task.Delay(100);
+                            }
                         }
 
                     }
