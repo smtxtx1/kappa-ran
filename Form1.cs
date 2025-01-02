@@ -1947,6 +1947,7 @@ namespace Kappa
                 {
 
                     Attacknow = true;
+
                 }
                 else
                 {
@@ -1954,7 +1955,6 @@ namespace Kappa
                 }
                 if (Attacknow && SendID != 0)
                 {
-                    Console.WriteLine("X Is Working");
 
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
@@ -1973,10 +1973,10 @@ namespace Kappa
                             m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
                             m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
                             m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
-                            //if (RUN == 1)
-                            //{
-                            //    m.WriteMemory(MATION_CHECK, "int", "3");
-                            //}
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
 
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
@@ -2016,7 +2016,7 @@ namespace Kappa
             foreach (ListViewItem item in listView12.Items)
             {
                 // Check the item's main text
-                if (name.Contains(item.Text))
+                if (item.Text.Contains(name))
                 {
                     return true;
                 }
@@ -2024,7 +2024,7 @@ namespace Kappa
                 // Check all subitems
                 foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
                 {
-                    if (name.Contains(subItem.Text))
+                    if (subItem.Text.Contains(name))
                     {
                         return true;
                     }
