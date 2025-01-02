@@ -959,7 +959,33 @@ namespace Kappa
             }
         }
 
+        public async void Getback()
+        {
+            if (checkBox35.Checked)
+            {
+                // เก็บเวลาปัจจุบัน
+                DateTime startTime = DateTime.Now;
 
+                // แสดงเวลาเริ่มต้นใน Console
+                Console.WriteLine($"เริ่มต้นเวลา: {startTime}");
+
+                // แปลงค่าจาก textBox5.Text เป็นจำนวนเต็ม (นาที)
+                if (int.TryParse(textBox5.Text, out int minutesToWait))
+                {
+                    // รอเป็นเวลาจำนวนที่กำหนด (ในหน่วยมิลลิวินาที)
+                    await Task.Delay(minutesToWait * 60 * 1000);
+
+                    // แสดงเวลาอีกครั้งหลังจากรอครบ
+                    DateTime endTime = DateTime.Now;
+                    Console.WriteLine($"เวลาปัจจุบันหลังจากผ่านไป {minutesToWait} นาที: {endTime}");
+                }
+                else
+                {
+                    // หาก textBox5.Text ไม่ใช่ค่าตัวเลข
+                    Console.WriteLine("กรุณาใส่ค่าจำนวนเต็มที่ถูกต้องใน textBox5");
+                }
+            }
+        }
 
         public int frenzzy_tar;
 
@@ -987,7 +1013,7 @@ namespace Kappa
             //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
             //Console.WriteLine("Offset2:" + num_test);
 
-            for (int j = -0xB00; j <= 0x0; j += 0xB0)
+            for (int j = -0xB00; j <= 0x0; j += 0xB0) 
             {
                 if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {

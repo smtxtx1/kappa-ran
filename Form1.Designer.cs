@@ -192,6 +192,8 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox35 = new CheckBox();
+            textBox10 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -240,6 +242,8 @@
             // 
             // groupBox12
             // 
+            groupBox12.Controls.Add(textBox10);
+            groupBox12.Controls.Add(checkBox35);
             groupBox12.Controls.Add(checkBox38);
             groupBox12.Controls.Add(checkBox37);
             groupBox12.Controls.Add(textBox11);
@@ -247,9 +251,9 @@
             groupBox12.Controls.Add(BTN_STOP);
             groupBox12.Controls.Add(BTN_START);
             groupBox12.Controls.Add(textBox9);
-            groupBox12.Location = new Point(212, 263);
+            groupBox12.Location = new Point(196, 263);
             groupBox12.Name = "groupBox12";
-            groupBox12.Size = new Size(176, 107);
+            groupBox12.Size = new Size(192, 107);
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
@@ -257,7 +261,7 @@
             // checkBox38
             // 
             checkBox38.AutoSize = true;
-            checkBox38.Location = new Point(91, 49);
+            checkBox38.Location = new Point(67, 51);
             checkBox38.Name = "checkBox38";
             checkBox38.Size = new Size(60, 19);
             checkBox38.TabIndex = 9;
@@ -267,7 +271,7 @@
             // checkBox37
             // 
             checkBox37.AutoSize = true;
-            checkBox37.Location = new Point(91, 32);
+            checkBox37.Location = new Point(67, 34);
             checkBox37.Name = "checkBox37";
             checkBox37.Size = new Size(66, 19);
             checkBox37.TabIndex = 8;
@@ -276,7 +280,7 @@
             // 
             // textBox11
             // 
-            textBox11.Location = new Point(27, 46);
+            textBox11.Location = new Point(7, 47);
             textBox11.Name = "textBox11";
             textBox11.Size = new Size(58, 23);
             textBox11.TabIndex = 7;
@@ -286,7 +290,7 @@
             // checkBox36
             // 
             checkBox36.AutoSize = true;
-            checkBox36.Location = new Point(91, 16);
+            checkBox36.Location = new Point(67, 18);
             checkBox36.Name = "checkBox36";
             checkBox36.Size = new Size(62, 19);
             checkBox36.TabIndex = 6;
@@ -295,7 +299,7 @@
             // 
             // BTN_STOP
             // 
-            BTN_STOP.Location = new Point(93, 74);
+            BTN_STOP.Location = new Point(73, 75);
             BTN_STOP.Name = "BTN_STOP";
             BTN_STOP.Size = new Size(47, 23);
             BTN_STOP.TabIndex = 5;
@@ -305,7 +309,7 @@
             // 
             // BTN_START
             // 
-            BTN_START.Location = new Point(27, 74);
+            BTN_START.Location = new Point(7, 75);
             BTN_START.Name = "BTN_START";
             BTN_START.Size = new Size(49, 23);
             BTN_START.TabIndex = 4;
@@ -315,7 +319,7 @@
             // 
             // textBox9
             // 
-            textBox9.Location = new Point(27, 17);
+            textBox9.Location = new Point(7, 18);
             textBox9.Name = "textBox9";
             textBox9.Size = new Size(58, 23);
             textBox9.TabIndex = 0;
@@ -500,6 +504,7 @@
             textBox8.Size = new Size(57, 19);
             textBox8.TabIndex = 22;
             textBox8.Text = "-0.4";
+            textBox8.TextAlign = HorizontalAlignment.Center;
             // 
             // checkBox19
             // 
@@ -575,6 +580,7 @@
             textBox6.Size = new Size(57, 19);
             textBox6.TabIndex = 14;
             textBox6.Text = "4800";
+            textBox6.TextAlign = HorizontalAlignment.Center;
             // 
             // checkBox12
             // 
@@ -661,6 +667,7 @@
             textBox2.Size = new Size(57, 19);
             textBox2.TabIndex = 7;
             textBox2.Text = "40";
+            textBox2.TextAlign = HorizontalAlignment.Center;
             textBox2.TextChanged += textBox2_TextChanged;
             // 
             // textBox3
@@ -671,6 +678,7 @@
             textBox3.Size = new Size(57, 19);
             textBox3.TabIndex = 8;
             textBox3.Text = "30";
+            textBox3.TextAlign = HorizontalAlignment.Center;
             textBox3.TextChanged += textBox3_TextChanged;
             // 
             // groupBox2
@@ -1093,6 +1101,7 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(43, 18);
             textBox4.TabIndex = 11;
+            textBox4.TextAlign = HorizontalAlignment.Center;
             // 
             // textBox1
             // 
@@ -1101,6 +1110,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(43, 18);
             textBox1.TabIndex = 10;
+            textBox1.TextAlign = HorizontalAlignment.Center;
             // 
             // checkBox15
             // 
@@ -1528,6 +1538,26 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox35
+            // 
+            checkBox35.AutoSize = true;
+            checkBox35.Location = new Point(130, 39);
+            checkBox35.Name = "checkBox35";
+            checkBox35.Size = new Size(60, 19);
+            checkBox35.TabIndex = 10;
+            checkBox35.Text = "เด้งบัตร";
+            checkBox35.UseVisualStyleBackColor = true;
+            // 
+            // textBox10
+            // 
+            textBox10.Location = new Point(131, 18);
+            textBox10.Multiline = true;
+            textBox10.Name = "textBox10";
+            textBox10.Size = new Size(53, 19);
+            textBox10.TabIndex = 29;
+            textBox10.Text = "5";
+            textBox10.TextAlign = HorizontalAlignment.Center;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1739,5 +1769,7 @@
         private Button BTN_START;
         private TextBox textBox9;
         private HScrollBar hScrollBar1;
+        private TextBox textBox10;
+        private CheckBox checkBox35;
     }
 }
