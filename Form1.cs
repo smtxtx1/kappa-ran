@@ -2606,9 +2606,9 @@ namespace Kappa
             float newZ = myZ + zOffset;
 
             // Write new coordinates
-            m.WriteMemory(getadr + "+4", "float", newX.ToString());
-            m.WriteMemory(getadr + "+C", "float", myY.ToString()); // Y-coordinate stays the same
-            m.WriteMemory(getadr + "+14", "float", newZ.ToString());
+            m.WriteMemory(getadr + "+4", "float", X_fromGetMonster.ToString());
+            m.WriteMemory(getadr + "+C", "float", Y_fromGetMonster.ToString()); // Y-coordinate stays the same
+            m.WriteMemory(getadr + "+14", "float",Z_fromGetMonster.ToString());
             label6.Text = "MoveWhileAttacking";
             // Perform the movement
             RunActive();
