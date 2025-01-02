@@ -1737,6 +1737,9 @@ namespace Kappa
         public uint MonsterID_FromGetMonster = 0;
         public uint MonsterHP_FromGetMonster = 0;
         public float distance_FromGetMonster = 0;
+        public float X_fromGetMonster = 0;
+        public float Y_fromGetMonster = 0;
+        public float Z_fromGetMonster = 0;
         public UIntPtr mob_HP;
         public UIntPtr closestMonsterHP_ADR;
         [DllImport("user32.dll")]
@@ -2055,7 +2058,9 @@ namespace Kappa
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
                 uint closestMonsterHP = 0;
-
+                float closest_X = 0;
+                float closest_Y = 0;
+                float closest_Z = 0;
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
@@ -2065,6 +2070,9 @@ namespace Kappa
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
+                        closest_X = mobDetails.X;
+                        closest_Y = mobDetails.Y;
+                        closest_Z = mobDetails.Z;
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.HP;
@@ -2080,6 +2088,10 @@ namespace Kappa
                 {
                     MonsterID_FromGetMonster = closestMonsterID;
                     MonsterHP_FromGetMonster = closestMonsterHP;
+                    X_fromGetMonster = closest_X;
+                    Y_fromGetMonster = closest_Y;
+                    Z_fromGetMonster = closest_Z;
+
                     distance_FromGetMonster = closestDistance;
                 }
                 else if (closestDistance > MonDistance)
@@ -2675,6 +2687,7 @@ namespace Kappa
                             {
                                 MoveWhileAttacking();
                                 await Task.Delay(100);
+                                break;
                             }
                         }
 
