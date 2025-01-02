@@ -970,7 +970,7 @@ namespace Kappa
                 Console.WriteLine($"เริ่มต้นเวลา: {startTime}");
 
                 // แปลงค่าจาก textBox5.Text เป็นจำนวนเต็ม (นาที)
-                if (int.TryParse(textBox5.Text, out int minutesToWait))
+                if (int.TryParse(textBox10.Text, out int minutesToWait))
                 {
                     // รอเป็นเวลาจำนวนที่กำหนด (ในหน่วยมิลลิวินาที)
                     await Task.Delay(minutesToWait * 60 * 1000);
@@ -982,7 +982,7 @@ namespace Kappa
                 else
                 {
                     // หาก textBox5.Text ไม่ใช่ค่าตัวเลข
-                    Console.WriteLine("กรุณาใส่ค่าจำนวนเต็มที่ถูกต้องใน textBox5");
+                    Console.WriteLine("กรุณาใส่ค่าจำนวนเต็มที่ถูกต้องใน textBox10");
                 }
             }
         }
@@ -1841,6 +1841,17 @@ namespace Kappa
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
 
+                    }
+                    if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox35.Checked)
+                    {
+                        try
+                        {
+                            Getback();
+                        }
+                        catch(Exception ex)
+                        {
+
+                        }
                     }
                     if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
