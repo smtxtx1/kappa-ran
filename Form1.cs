@@ -2664,7 +2664,11 @@ namespace Kappa
 
                         if (MATION == 0) // if can't hit will move
                         {
-                            Console.WriteLine("Unable to attack. Retrying...");
+                            Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
+                            Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
+                            Console.WriteLine($"Can Attack: {MATION != 0}");
+
+                            label6.Text = "Unable to attack. Retrying...";
                             await Task.Delay(100);
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             if (MATION == 0)
