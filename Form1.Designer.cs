@@ -82,56 +82,97 @@
             label1 = new Label();
             comboBox1 = new ComboBox();
             tabPage2 = new TabPage();
-            listView6 = new ListView();
-            columnHeader21 = new ColumnHeader();
-            columnHeader22 = new ColumnHeader();
-            columnHeader23 = new ColumnHeader();
-            columnHeader24 = new ColumnHeader();
-            listView10 = new ListView();
-            columnHeader37 = new ColumnHeader();
-            columnHeader38 = new ColumnHeader();
-            columnHeader39 = new ColumnHeader();
-            columnHeader40 = new ColumnHeader();
-            listView8 = new ListView();
-            columnHeader29 = new ColumnHeader();
-            columnHeader30 = new ColumnHeader();
-            columnHeader31 = new ColumnHeader();
-            columnHeader32 = new ColumnHeader();
-            listView9 = new ListView();
-            columnHeader33 = new ColumnHeader();
-            columnHeader34 = new ColumnHeader();
-            columnHeader35 = new ColumnHeader();
-            columnHeader36 = new ColumnHeader();
-            listView7 = new ListView();
-            columnHeader25 = new ColumnHeader();
-            columnHeader26 = new ColumnHeader();
-            columnHeader27 = new ColumnHeader();
-            columnHeader28 = new ColumnHeader();
-            listView5 = new ListView();
-            columnHeader17 = new ColumnHeader();
-            columnHeader18 = new ColumnHeader();
-            columnHeader19 = new ColumnHeader();
-            columnHeader20 = new ColumnHeader();
-            listView4 = new ListView();
-            columnHeader13 = new ColumnHeader();
-            columnHeader14 = new ColumnHeader();
-            columnHeader15 = new ColumnHeader();
-            columnHeader16 = new ColumnHeader();
-            listView3 = new ListView();
-            columnHeader9 = new ColumnHeader();
-            columnHeader10 = new ColumnHeader();
-            columnHeader11 = new ColumnHeader();
-            columnHeader12 = new ColumnHeader();
-            listView2 = new ListView();
-            columnHeader5 = new ColumnHeader();
-            columnHeader6 = new ColumnHeader();
-            columnHeader7 = new ColumnHeader();
-            columnHeader8 = new ColumnHeader();
+            groupBox13 = new GroupBox();
+            listView20 = new ListView();
+            columnHeader75 = new ColumnHeader();
+            columnHeader76 = new ColumnHeader();
+            columnHeader77 = new ColumnHeader();
+            columnHeader78 = new ColumnHeader();
+            listView19 = new ListView();
+            columnHeader71 = new ColumnHeader();
+            columnHeader72 = new ColumnHeader();
+            columnHeader73 = new ColumnHeader();
+            columnHeader74 = new ColumnHeader();
+            listView18 = new ListView();
+            columnHeader67 = new ColumnHeader();
+            columnHeader68 = new ColumnHeader();
+            columnHeader69 = new ColumnHeader();
+            columnHeader70 = new ColumnHeader();
+            listView17 = new ListView();
+            columnHeader63 = new ColumnHeader();
+            columnHeader64 = new ColumnHeader();
+            columnHeader65 = new ColumnHeader();
+            columnHeader66 = new ColumnHeader();
+            listView16 = new ListView();
+            columnHeader59 = new ColumnHeader();
+            columnHeader60 = new ColumnHeader();
+            columnHeader61 = new ColumnHeader();
+            columnHeader62 = new ColumnHeader();
+            listView15 = new ListView();
+            columnHeader55 = new ColumnHeader();
+            columnHeader56 = new ColumnHeader();
+            columnHeader57 = new ColumnHeader();
+            columnHeader58 = new ColumnHeader();
+            listView14 = new ListView();
+            columnHeader51 = new ColumnHeader();
+            columnHeader52 = new ColumnHeader();
+            columnHeader53 = new ColumnHeader();
+            columnHeader54 = new ColumnHeader();
+            listView13 = new ListView();
+            columnHeader47 = new ColumnHeader();
+            columnHeader48 = new ColumnHeader();
+            columnHeader49 = new ColumnHeader();
+            columnHeader50 = new ColumnHeader();
             listView1 = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
+            listView6 = new ListView();
+            columnHeader21 = new ColumnHeader();
+            columnHeader22 = new ColumnHeader();
+            columnHeader23 = new ColumnHeader();
+            columnHeader24 = new ColumnHeader();
+            listView2 = new ListView();
+            columnHeader5 = new ColumnHeader();
+            columnHeader6 = new ColumnHeader();
+            columnHeader7 = new ColumnHeader();
+            columnHeader8 = new ColumnHeader();
+            listView10 = new ListView();
+            columnHeader37 = new ColumnHeader();
+            columnHeader38 = new ColumnHeader();
+            columnHeader39 = new ColumnHeader();
+            columnHeader40 = new ColumnHeader();
+            listView3 = new ListView();
+            columnHeader9 = new ColumnHeader();
+            columnHeader10 = new ColumnHeader();
+            columnHeader11 = new ColumnHeader();
+            columnHeader12 = new ColumnHeader();
+            listView8 = new ListView();
+            columnHeader29 = new ColumnHeader();
+            columnHeader30 = new ColumnHeader();
+            columnHeader31 = new ColumnHeader();
+            columnHeader32 = new ColumnHeader();
+            listView4 = new ListView();
+            columnHeader13 = new ColumnHeader();
+            columnHeader14 = new ColumnHeader();
+            columnHeader15 = new ColumnHeader();
+            columnHeader16 = new ColumnHeader();
+            listView9 = new ListView();
+            columnHeader33 = new ColumnHeader();
+            columnHeader34 = new ColumnHeader();
+            columnHeader35 = new ColumnHeader();
+            columnHeader36 = new ColumnHeader();
+            listView5 = new ListView();
+            columnHeader17 = new ColumnHeader();
+            columnHeader18 = new ColumnHeader();
+            columnHeader19 = new ColumnHeader();
+            columnHeader20 = new ColumnHeader();
+            listView7 = new ListView();
+            columnHeader25 = new ColumnHeader();
+            columnHeader26 = new ColumnHeader();
+            columnHeader27 = new ColumnHeader();
+            columnHeader28 = new ColumnHeader();
             groupBox8 = new GroupBox();
             btnClearAll = new Button();
             button3 = new Button();
@@ -143,6 +184,7 @@
             button9 = new Button();
             button8 = new Button();
             groupBox7 = new GroupBox();
+            checkBox39 = new CheckBox();
             checkBox31 = new CheckBox();
             checkBox26 = new CheckBox();
             checkBox25 = new CheckBox();
@@ -194,47 +236,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            groupBox13 = new GroupBox();
-            listView13 = new ListView();
-            columnHeader47 = new ColumnHeader();
-            columnHeader48 = new ColumnHeader();
-            columnHeader49 = new ColumnHeader();
-            columnHeader50 = new ColumnHeader();
-            listView14 = new ListView();
-            columnHeader51 = new ColumnHeader();
-            columnHeader52 = new ColumnHeader();
-            columnHeader53 = new ColumnHeader();
-            columnHeader54 = new ColumnHeader();
-            listView15 = new ListView();
-            columnHeader55 = new ColumnHeader();
-            columnHeader56 = new ColumnHeader();
-            columnHeader57 = new ColumnHeader();
-            columnHeader58 = new ColumnHeader();
-            listView16 = new ListView();
-            columnHeader59 = new ColumnHeader();
-            columnHeader60 = new ColumnHeader();
-            columnHeader61 = new ColumnHeader();
-            columnHeader62 = new ColumnHeader();
-            listView17 = new ListView();
-            columnHeader63 = new ColumnHeader();
-            columnHeader64 = new ColumnHeader();
-            columnHeader65 = new ColumnHeader();
-            columnHeader66 = new ColumnHeader();
-            listView18 = new ListView();
-            columnHeader67 = new ColumnHeader();
-            columnHeader68 = new ColumnHeader();
-            columnHeader69 = new ColumnHeader();
-            columnHeader70 = new ColumnHeader();
-            listView19 = new ListView();
-            columnHeader71 = new ColumnHeader();
-            columnHeader72 = new ColumnHeader();
-            columnHeader73 = new ColumnHeader();
-            columnHeader74 = new ColumnHeader();
-            listView20 = new ListView();
-            columnHeader75 = new ColumnHeader();
-            columnHeader76 = new ColumnHeader();
-            columnHeader77 = new ColumnHeader();
-            columnHeader78 = new ColumnHeader();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -243,6 +244,7 @@
             groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             tabPage2.SuspendLayout();
+            groupBox13.SuspendLayout();
             groupBox8.SuspendLayout();
             groupBox7.SuspendLayout();
             groupBox6.SuspendLayout();
@@ -251,7 +253,6 @@
             groupBox11.SuspendLayout();
             groupBox10.SuspendLayout();
             groupBox3.SuspendLayout();
-            groupBox13.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -278,7 +279,7 @@
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(394, 397);
+            tabPage1.Size = new Size(394, 394);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Main";
             // 
@@ -853,131 +854,144 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Settings";
             // 
-            // listView6
+            // groupBox13
             // 
-            listView6.BackColor = SystemColors.InactiveCaptionText;
-            listView6.Columns.AddRange(new ColumnHeader[] { columnHeader21, columnHeader22, columnHeader23, columnHeader24 });
-            listView6.ForeColor = SystemColors.InactiveBorder;
-            listView6.GridLines = true;
-            listView6.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView6.Location = new Point(311, 22);
-            listView6.Name = "listView6";
-            listView6.Size = new Size(55, 59);
-            listView6.TabIndex = 20;
-            listView6.UseCompatibleStateImageBehavior = false;
-            listView6.View = View.Details;
+            groupBox13.Controls.Add(listView20);
+            groupBox13.Controls.Add(listView19);
+            groupBox13.Controls.Add(listView18);
+            groupBox13.Controls.Add(listView17);
+            groupBox13.Controls.Add(listView16);
+            groupBox13.Controls.Add(listView15);
+            groupBox13.Controls.Add(listView14);
+            groupBox13.Controls.Add(listView13);
+            groupBox13.Controls.Add(listView1);
+            groupBox13.Controls.Add(listView6);
+            groupBox13.Controls.Add(listView2);
+            groupBox13.Controls.Add(listView10);
+            groupBox13.Controls.Add(listView3);
+            groupBox13.Controls.Add(listView8);
+            groupBox13.Controls.Add(listView4);
+            groupBox13.Controls.Add(listView9);
+            groupBox13.Controls.Add(listView5);
+            groupBox13.Controls.Add(listView7);
+            groupBox13.Location = new Point(6, 189);
+            groupBox13.Name = "groupBox13";
+            groupBox13.Size = new Size(382, 198);
+            groupBox13.TabIndex = 21;
+            groupBox13.TabStop = false;
+            groupBox13.Text = "groupBox13";
             // 
-            // listView10
+            // listView20
             // 
-            listView10.BackColor = SystemColors.InactiveCaptionText;
-            listView10.Columns.AddRange(new ColumnHeader[] { columnHeader37, columnHeader38, columnHeader39, columnHeader40 });
-            listView10.ForeColor = SystemColors.InactiveBorder;
-            listView10.GridLines = true;
-            listView10.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView10.Location = new Point(188, 87);
-            listView10.Name = "listView10";
-            listView10.Size = new Size(55, 59);
-            listView10.TabIndex = 16;
-            listView10.UseCompatibleStateImageBehavior = false;
-            listView10.View = View.Details;
+            listView20.BackColor = SystemColors.InactiveCaptionText;
+            listView20.Columns.AddRange(new ColumnHeader[] { columnHeader75, columnHeader76, columnHeader77, columnHeader78 });
+            listView20.ForeColor = SystemColors.InactiveBorder;
+            listView20.GridLines = true;
+            listView20.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView20.Location = new Point(311, 152);
+            listView20.Name = "listView20";
+            listView20.Size = new Size(55, 59);
+            listView20.TabIndex = 28;
+            listView20.UseCompatibleStateImageBehavior = false;
+            listView20.View = View.Details;
             // 
-            // listView8
+            // listView19
             // 
-            listView8.BackColor = SystemColors.InactiveCaptionText;
-            listView8.Columns.AddRange(new ColumnHeader[] { columnHeader29, columnHeader30, columnHeader31, columnHeader32 });
-            listView8.ForeColor = SystemColors.InactiveBorder;
-            listView8.GridLines = true;
-            listView8.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView8.Location = new Point(67, 87);
-            listView8.Name = "listView8";
-            listView8.Size = new Size(55, 59);
-            listView8.TabIndex = 18;
-            listView8.UseCompatibleStateImageBehavior = false;
-            listView8.View = View.Details;
+            listView19.BackColor = SystemColors.InactiveCaptionText;
+            listView19.Columns.AddRange(new ColumnHeader[] { columnHeader71, columnHeader72, columnHeader73, columnHeader74 });
+            listView19.ForeColor = SystemColors.InactiveBorder;
+            listView19.GridLines = true;
+            listView19.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView19.Location = new Point(250, 152);
+            listView19.Name = "listView19";
+            listView19.Size = new Size(55, 59);
+            listView19.TabIndex = 27;
+            listView19.UseCompatibleStateImageBehavior = false;
+            listView19.View = View.Details;
             // 
-            // listView9
+            // listView18
             // 
-            listView9.BackColor = SystemColors.InactiveCaptionText;
-            listView9.Columns.AddRange(new ColumnHeader[] { columnHeader33, columnHeader34, columnHeader35, columnHeader36 });
-            listView9.ForeColor = SystemColors.InactiveBorder;
-            listView9.GridLines = true;
-            listView9.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView9.Location = new Point(127, 87);
-            listView9.Name = "listView9";
-            listView9.Size = new Size(55, 59);
-            listView9.TabIndex = 17;
-            listView9.UseCompatibleStateImageBehavior = false;
-            listView9.View = View.Details;
+            listView18.BackColor = SystemColors.InactiveCaptionText;
+            listView18.Columns.AddRange(new ColumnHeader[] { columnHeader67, columnHeader68, columnHeader69, columnHeader70 });
+            listView18.ForeColor = SystemColors.InactiveBorder;
+            listView18.GridLines = true;
+            listView18.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView18.Location = new Point(188, 152);
+            listView18.Name = "listView18";
+            listView18.Size = new Size(55, 59);
+            listView18.TabIndex = 26;
+            listView18.UseCompatibleStateImageBehavior = false;
+            listView18.View = View.Details;
             // 
-            // listView7
+            // listView17
             // 
-            listView7.BackColor = SystemColors.InactiveCaptionText;
-            listView7.Columns.AddRange(new ColumnHeader[] { columnHeader25, columnHeader26, columnHeader27, columnHeader28 });
-            listView7.ForeColor = SystemColors.InactiveBorder;
-            listView7.GridLines = true;
-            listView7.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView7.Location = new Point(6, 87);
-            listView7.Name = "listView7";
-            listView7.Size = new Size(55, 59);
-            listView7.TabIndex = 19;
-            listView7.UseCompatibleStateImageBehavior = false;
-            listView7.View = View.Details;
+            listView17.BackColor = SystemColors.InactiveCaptionText;
+            listView17.Columns.AddRange(new ColumnHeader[] { columnHeader63, columnHeader64, columnHeader65, columnHeader66 });
+            listView17.ForeColor = SystemColors.InactiveBorder;
+            listView17.GridLines = true;
+            listView17.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView17.Location = new Point(127, 152);
+            listView17.Name = "listView17";
+            listView17.Size = new Size(55, 59);
+            listView17.TabIndex = 25;
+            listView17.UseCompatibleStateImageBehavior = false;
+            listView17.View = View.Details;
             // 
-            // listView5
+            // listView16
             // 
-            listView5.BackColor = SystemColors.InactiveCaptionText;
-            listView5.Columns.AddRange(new ColumnHeader[] { columnHeader17, columnHeader18, columnHeader19, columnHeader20 });
-            listView5.ForeColor = SystemColors.InactiveBorder;
-            listView5.GridLines = true;
-            listView5.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView5.Location = new Point(250, 22);
-            listView5.Name = "listView5";
-            listView5.Size = new Size(55, 59);
-            listView5.TabIndex = 15;
-            listView5.UseCompatibleStateImageBehavior = false;
-            listView5.View = View.Details;
+            listView16.BackColor = SystemColors.InactiveCaptionText;
+            listView16.Columns.AddRange(new ColumnHeader[] { columnHeader59, columnHeader60, columnHeader61, columnHeader62 });
+            listView16.ForeColor = SystemColors.InactiveBorder;
+            listView16.GridLines = true;
+            listView16.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView16.Location = new Point(67, 152);
+            listView16.Name = "listView16";
+            listView16.Size = new Size(55, 59);
+            listView16.TabIndex = 24;
+            listView16.UseCompatibleStateImageBehavior = false;
+            listView16.View = View.Details;
             // 
-            // listView4
+            // listView15
             // 
-            listView4.BackColor = SystemColors.InactiveCaptionText;
-            listView4.Columns.AddRange(new ColumnHeader[] { columnHeader13, columnHeader14, columnHeader15, columnHeader16 });
-            listView4.ForeColor = SystemColors.InactiveBorder;
-            listView4.GridLines = true;
-            listView4.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView4.Location = new Point(189, 22);
-            listView4.Name = "listView4";
-            listView4.Size = new Size(55, 59);
-            listView4.TabIndex = 13;
-            listView4.UseCompatibleStateImageBehavior = false;
-            listView4.View = View.Details;
+            listView15.BackColor = SystemColors.InactiveCaptionText;
+            listView15.Columns.AddRange(new ColumnHeader[] { columnHeader55, columnHeader56, columnHeader57, columnHeader58 });
+            listView15.ForeColor = SystemColors.InactiveBorder;
+            listView15.GridLines = true;
+            listView15.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView15.Location = new Point(6, 152);
+            listView15.Name = "listView15";
+            listView15.Size = new Size(55, 59);
+            listView15.TabIndex = 23;
+            listView15.UseCompatibleStateImageBehavior = false;
+            listView15.View = View.Details;
             // 
-            // listView3
+            // listView14
             // 
-            listView3.BackColor = SystemColors.InactiveCaptionText;
-            listView3.Columns.AddRange(new ColumnHeader[] { columnHeader9, columnHeader10, columnHeader11, columnHeader12 });
-            listView3.ForeColor = SystemColors.InactiveBorder;
-            listView3.GridLines = true;
-            listView3.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView3.Location = new Point(128, 22);
-            listView3.Name = "listView3";
-            listView3.Size = new Size(55, 59);
-            listView3.TabIndex = 14;
-            listView3.UseCompatibleStateImageBehavior = false;
-            listView3.View = View.Details;
+            listView14.BackColor = SystemColors.InactiveCaptionText;
+            listView14.Columns.AddRange(new ColumnHeader[] { columnHeader51, columnHeader52, columnHeader53, columnHeader54 });
+            listView14.ForeColor = SystemColors.InactiveBorder;
+            listView14.GridLines = true;
+            listView14.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView14.Location = new Point(312, 87);
+            listView14.Name = "listView14";
+            listView14.Size = new Size(55, 59);
+            listView14.TabIndex = 22;
+            listView14.UseCompatibleStateImageBehavior = false;
+            listView14.View = View.Details;
             // 
-            // listView2
+            // listView13
             // 
-            listView2.BackColor = SystemColors.InactiveCaptionText;
-            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader5, columnHeader6, columnHeader7, columnHeader8 });
-            listView2.ForeColor = SystemColors.InactiveBorder;
-            listView2.GridLines = true;
-            listView2.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView2.Location = new Point(67, 22);
-            listView2.Name = "listView2";
-            listView2.Size = new Size(55, 59);
-            listView2.TabIndex = 12;
-            listView2.UseCompatibleStateImageBehavior = false;
-            listView2.View = View.Details;
+            listView13.BackColor = SystemColors.InactiveCaptionText;
+            listView13.Columns.AddRange(new ColumnHeader[] { columnHeader47, columnHeader48, columnHeader49, columnHeader50 });
+            listView13.ForeColor = SystemColors.InactiveBorder;
+            listView13.GridLines = true;
+            listView13.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView13.Location = new Point(250, 87);
+            listView13.Name = "listView13";
+            listView13.Size = new Size(55, 59);
+            listView13.TabIndex = 21;
+            listView13.UseCompatibleStateImageBehavior = false;
+            listView13.View = View.Details;
             // 
             // listView1
             // 
@@ -993,6 +1007,132 @@
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = View.Details;
             // 
+            // listView6
+            // 
+            listView6.BackColor = SystemColors.InactiveCaptionText;
+            listView6.Columns.AddRange(new ColumnHeader[] { columnHeader21, columnHeader22, columnHeader23, columnHeader24 });
+            listView6.ForeColor = SystemColors.InactiveBorder;
+            listView6.GridLines = true;
+            listView6.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView6.Location = new Point(311, 22);
+            listView6.Name = "listView6";
+            listView6.Size = new Size(55, 59);
+            listView6.TabIndex = 20;
+            listView6.UseCompatibleStateImageBehavior = false;
+            listView6.View = View.Details;
+            // 
+            // listView2
+            // 
+            listView2.BackColor = SystemColors.InactiveCaptionText;
+            listView2.Columns.AddRange(new ColumnHeader[] { columnHeader5, columnHeader6, columnHeader7, columnHeader8 });
+            listView2.ForeColor = SystemColors.InactiveBorder;
+            listView2.GridLines = true;
+            listView2.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView2.Location = new Point(67, 22);
+            listView2.Name = "listView2";
+            listView2.Size = new Size(55, 59);
+            listView2.TabIndex = 12;
+            listView2.UseCompatibleStateImageBehavior = false;
+            listView2.View = View.Details;
+            // 
+            // listView10
+            // 
+            listView10.BackColor = SystemColors.InactiveCaptionText;
+            listView10.Columns.AddRange(new ColumnHeader[] { columnHeader37, columnHeader38, columnHeader39, columnHeader40 });
+            listView10.ForeColor = SystemColors.InactiveBorder;
+            listView10.GridLines = true;
+            listView10.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView10.Location = new Point(188, 87);
+            listView10.Name = "listView10";
+            listView10.Size = new Size(55, 59);
+            listView10.TabIndex = 16;
+            listView10.UseCompatibleStateImageBehavior = false;
+            listView10.View = View.Details;
+            // 
+            // listView3
+            // 
+            listView3.BackColor = SystemColors.InactiveCaptionText;
+            listView3.Columns.AddRange(new ColumnHeader[] { columnHeader9, columnHeader10, columnHeader11, columnHeader12 });
+            listView3.ForeColor = SystemColors.InactiveBorder;
+            listView3.GridLines = true;
+            listView3.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView3.Location = new Point(128, 22);
+            listView3.Name = "listView3";
+            listView3.Size = new Size(55, 59);
+            listView3.TabIndex = 14;
+            listView3.UseCompatibleStateImageBehavior = false;
+            listView3.View = View.Details;
+            // 
+            // listView8
+            // 
+            listView8.BackColor = SystemColors.InactiveCaptionText;
+            listView8.Columns.AddRange(new ColumnHeader[] { columnHeader29, columnHeader30, columnHeader31, columnHeader32 });
+            listView8.ForeColor = SystemColors.InactiveBorder;
+            listView8.GridLines = true;
+            listView8.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView8.Location = new Point(67, 87);
+            listView8.Name = "listView8";
+            listView8.Size = new Size(55, 59);
+            listView8.TabIndex = 18;
+            listView8.UseCompatibleStateImageBehavior = false;
+            listView8.View = View.Details;
+            // 
+            // listView4
+            // 
+            listView4.BackColor = SystemColors.InactiveCaptionText;
+            listView4.Columns.AddRange(new ColumnHeader[] { columnHeader13, columnHeader14, columnHeader15, columnHeader16 });
+            listView4.ForeColor = SystemColors.InactiveBorder;
+            listView4.GridLines = true;
+            listView4.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView4.Location = new Point(189, 22);
+            listView4.Name = "listView4";
+            listView4.Size = new Size(55, 59);
+            listView4.TabIndex = 13;
+            listView4.UseCompatibleStateImageBehavior = false;
+            listView4.View = View.Details;
+            // 
+            // listView9
+            // 
+            listView9.BackColor = SystemColors.InactiveCaptionText;
+            listView9.Columns.AddRange(new ColumnHeader[] { columnHeader33, columnHeader34, columnHeader35, columnHeader36 });
+            listView9.ForeColor = SystemColors.InactiveBorder;
+            listView9.GridLines = true;
+            listView9.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView9.Location = new Point(127, 87);
+            listView9.Name = "listView9";
+            listView9.Size = new Size(55, 59);
+            listView9.TabIndex = 17;
+            listView9.UseCompatibleStateImageBehavior = false;
+            listView9.View = View.Details;
+            // 
+            // listView5
+            // 
+            listView5.BackColor = SystemColors.InactiveCaptionText;
+            listView5.Columns.AddRange(new ColumnHeader[] { columnHeader17, columnHeader18, columnHeader19, columnHeader20 });
+            listView5.ForeColor = SystemColors.InactiveBorder;
+            listView5.GridLines = true;
+            listView5.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView5.Location = new Point(250, 22);
+            listView5.Name = "listView5";
+            listView5.Size = new Size(55, 59);
+            listView5.TabIndex = 15;
+            listView5.UseCompatibleStateImageBehavior = false;
+            listView5.View = View.Details;
+            // 
+            // listView7
+            // 
+            listView7.BackColor = SystemColors.InactiveCaptionText;
+            listView7.Columns.AddRange(new ColumnHeader[] { columnHeader25, columnHeader26, columnHeader27, columnHeader28 });
+            listView7.ForeColor = SystemColors.InactiveBorder;
+            listView7.GridLines = true;
+            listView7.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            listView7.Location = new Point(6, 87);
+            listView7.Name = "listView7";
+            listView7.Size = new Size(55, 59);
+            listView7.TabIndex = 19;
+            listView7.UseCompatibleStateImageBehavior = false;
+            listView7.View = View.Details;
+            // 
             // groupBox8
             // 
             groupBox8.Controls.Add(btnClearAll);
@@ -1004,7 +1144,7 @@
             groupBox8.Controls.Add(button10);
             groupBox8.Controls.Add(button9);
             groupBox8.Controls.Add(button8);
-            groupBox8.Location = new Point(6, 112);
+            groupBox8.Location = new Point(6, 121);
             groupBox8.Name = "groupBox8";
             groupBox8.Size = new Size(382, 71);
             groupBox8.TabIndex = 10;
@@ -1102,6 +1242,7 @@
             // 
             // groupBox7
             // 
+            groupBox7.Controls.Add(checkBox39);
             groupBox7.Controls.Add(checkBox31);
             groupBox7.Controls.Add(checkBox26);
             groupBox7.Controls.Add(checkBox25);
@@ -1112,10 +1253,20 @@
             groupBox7.Controls.Add(checkBox14);
             groupBox7.Location = new Point(96, 0);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(136, 111);
+            groupBox7.Size = new Size(136, 121);
             groupBox7.TabIndex = 9;
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
+            // 
+            // checkBox39
+            // 
+            checkBox39.AutoSize = true;
+            checkBox39.Location = new Point(6, 96);
+            checkBox39.Name = "checkBox39";
+            checkBox39.Size = new Size(42, 19);
+            checkBox39.TabIndex = 15;
+            checkBox39.Text = "HR";
+            checkBox39.UseVisualStyleBackColor = true;
             // 
             // checkBox31
             // 
@@ -1204,7 +1355,7 @@
             groupBox6.Controls.Add(checkBox7);
             groupBox6.Location = new Point(6, 6);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(84, 100);
+            groupBox6.Size = new Size(84, 105);
             groupBox6.TabIndex = 8;
             groupBox6.TabStop = false;
             groupBox6.Text = "Follow Lead";
@@ -1363,7 +1514,7 @@
             tabPage5.Location = new Point(4, 24);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(394, 397);
+            tabPage5.Size = new Size(394, 394);
             tabPage5.TabIndex = 2;
             tabPage5.Text = "item settings";
             // 
@@ -1591,145 +1742,6 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // groupBox13
-            // 
-            groupBox13.Controls.Add(listView20);
-            groupBox13.Controls.Add(listView19);
-            groupBox13.Controls.Add(listView18);
-            groupBox13.Controls.Add(listView17);
-            groupBox13.Controls.Add(listView16);
-            groupBox13.Controls.Add(listView15);
-            groupBox13.Controls.Add(listView14);
-            groupBox13.Controls.Add(listView13);
-            groupBox13.Controls.Add(listView1);
-            groupBox13.Controls.Add(listView6);
-            groupBox13.Controls.Add(listView2);
-            groupBox13.Controls.Add(listView10);
-            groupBox13.Controls.Add(listView3);
-            groupBox13.Controls.Add(listView8);
-            groupBox13.Controls.Add(listView4);
-            groupBox13.Controls.Add(listView9);
-            groupBox13.Controls.Add(listView5);
-            groupBox13.Controls.Add(listView7);
-            groupBox13.Location = new Point(6, 189);
-            groupBox13.Name = "groupBox13";
-            groupBox13.Size = new Size(382, 198);
-            groupBox13.TabIndex = 21;
-            groupBox13.TabStop = false;
-            groupBox13.Text = "groupBox13";
-            // 
-            // listView13
-            // 
-            listView13.BackColor = SystemColors.InactiveCaptionText;
-            listView13.Columns.AddRange(new ColumnHeader[] { columnHeader47, columnHeader48, columnHeader49, columnHeader50 });
-            listView13.ForeColor = SystemColors.InactiveBorder;
-            listView13.GridLines = true;
-            listView13.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView13.Location = new Point(250, 87);
-            listView13.Name = "listView13";
-            listView13.Size = new Size(55, 59);
-            listView13.TabIndex = 21;
-            listView13.UseCompatibleStateImageBehavior = false;
-            listView13.View = View.Details;
-            // 
-            // listView14
-            // 
-            listView14.BackColor = SystemColors.InactiveCaptionText;
-            listView14.Columns.AddRange(new ColumnHeader[] { columnHeader51, columnHeader52, columnHeader53, columnHeader54 });
-            listView14.ForeColor = SystemColors.InactiveBorder;
-            listView14.GridLines = true;
-            listView14.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView14.Location = new Point(312, 87);
-            listView14.Name = "listView14";
-            listView14.Size = new Size(55, 59);
-            listView14.TabIndex = 22;
-            listView14.UseCompatibleStateImageBehavior = false;
-            listView14.View = View.Details;
-            // 
-            // listView15
-            // 
-            listView15.BackColor = SystemColors.InactiveCaptionText;
-            listView15.Columns.AddRange(new ColumnHeader[] { columnHeader55, columnHeader56, columnHeader57, columnHeader58 });
-            listView15.ForeColor = SystemColors.InactiveBorder;
-            listView15.GridLines = true;
-            listView15.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView15.Location = new Point(6, 152);
-            listView15.Name = "listView15";
-            listView15.Size = new Size(55, 59);
-            listView15.TabIndex = 23;
-            listView15.UseCompatibleStateImageBehavior = false;
-            listView15.View = View.Details;
-            // 
-            // listView16
-            // 
-            listView16.BackColor = SystemColors.InactiveCaptionText;
-            listView16.Columns.AddRange(new ColumnHeader[] { columnHeader59, columnHeader60, columnHeader61, columnHeader62 });
-            listView16.ForeColor = SystemColors.InactiveBorder;
-            listView16.GridLines = true;
-            listView16.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView16.Location = new Point(67, 152);
-            listView16.Name = "listView16";
-            listView16.Size = new Size(55, 59);
-            listView16.TabIndex = 24;
-            listView16.UseCompatibleStateImageBehavior = false;
-            listView16.View = View.Details;
-            // 
-            // listView17
-            // 
-            listView17.BackColor = SystemColors.InactiveCaptionText;
-            listView17.Columns.AddRange(new ColumnHeader[] { columnHeader63, columnHeader64, columnHeader65, columnHeader66 });
-            listView17.ForeColor = SystemColors.InactiveBorder;
-            listView17.GridLines = true;
-            listView17.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView17.Location = new Point(127, 152);
-            listView17.Name = "listView17";
-            listView17.Size = new Size(55, 59);
-            listView17.TabIndex = 25;
-            listView17.UseCompatibleStateImageBehavior = false;
-            listView17.View = View.Details;
-            // 
-            // listView18
-            // 
-            listView18.BackColor = SystemColors.InactiveCaptionText;
-            listView18.Columns.AddRange(new ColumnHeader[] { columnHeader67, columnHeader68, columnHeader69, columnHeader70 });
-            listView18.ForeColor = SystemColors.InactiveBorder;
-            listView18.GridLines = true;
-            listView18.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView18.Location = new Point(188, 152);
-            listView18.Name = "listView18";
-            listView18.Size = new Size(55, 59);
-            listView18.TabIndex = 26;
-            listView18.UseCompatibleStateImageBehavior = false;
-            listView18.View = View.Details;
-            // 
-            // listView19
-            // 
-            listView19.BackColor = SystemColors.InactiveCaptionText;
-            listView19.Columns.AddRange(new ColumnHeader[] { columnHeader71, columnHeader72, columnHeader73, columnHeader74 });
-            listView19.ForeColor = SystemColors.InactiveBorder;
-            listView19.GridLines = true;
-            listView19.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView19.Location = new Point(250, 152);
-            listView19.Name = "listView19";
-            listView19.Size = new Size(55, 59);
-            listView19.TabIndex = 27;
-            listView19.UseCompatibleStateImageBehavior = false;
-            listView19.View = View.Details;
-            // 
-            // listView20
-            // 
-            listView20.BackColor = SystemColors.InactiveCaptionText;
-            listView20.Columns.AddRange(new ColumnHeader[] { columnHeader75, columnHeader76, columnHeader77, columnHeader78 });
-            listView20.ForeColor = SystemColors.InactiveBorder;
-            listView20.GridLines = true;
-            listView20.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-            listView20.Location = new Point(311, 152);
-            listView20.Name = "listView20";
-            listView20.Size = new Size(55, 59);
-            listView20.TabIndex = 28;
-            listView20.UseCompatibleStateImageBehavior = false;
-            listView20.View = View.Details;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1759,6 +1771,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             tabPage2.ResumeLayout(false);
+            groupBox13.ResumeLayout(false);
             groupBox8.ResumeLayout(false);
             groupBox8.PerformLayout();
             groupBox7.ResumeLayout(false);
@@ -1773,7 +1786,6 @@
             groupBox10.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
-            groupBox13.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1985,5 +1997,6 @@
         private ColumnHeader columnHeader48;
         private ColumnHeader columnHeader49;
         private ColumnHeader columnHeader50;
+        private CheckBox checkBox39;
     }
 }
