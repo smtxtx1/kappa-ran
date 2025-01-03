@@ -3508,8 +3508,8 @@ namespace Kappa
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
-                DisplayAlloc();
-                MonsterAlloc();
+               // DisplayAlloc();
+               // MonsterAlloc();
                 backgroundWorker2.RunWorkerAsync();
             }
         }
