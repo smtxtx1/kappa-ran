@@ -32,6 +32,8 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox12 = new GroupBox();
+            textBox10 = new TextBox();
+            checkBox35 = new CheckBox();
             checkBox38 = new CheckBox();
             checkBox37 = new CheckBox();
             textBox11 = new TextBox();
@@ -192,8 +194,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox35 = new CheckBox();
-            textBox10 = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -257,6 +257,26 @@
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
+            // 
+            // textBox10
+            // 
+            textBox10.Location = new Point(131, 18);
+            textBox10.Multiline = true;
+            textBox10.Name = "textBox10";
+            textBox10.Size = new Size(53, 19);
+            textBox10.TabIndex = 29;
+            textBox10.Text = "5";
+            textBox10.TextAlign = HorizontalAlignment.Center;
+            // 
+            // checkBox35
+            // 
+            checkBox35.AutoSize = true;
+            checkBox35.Location = new Point(130, 39);
+            checkBox35.Name = "checkBox35";
+            checkBox35.Size = new Size(60, 19);
+            checkBox35.TabIndex = 10;
+            checkBox35.Text = "เด้งบัตร";
+            checkBox35.UseVisualStyleBackColor = true;
             // 
             // checkBox38
             // 
@@ -1059,7 +1079,7 @@
             groupBox7.Controls.Add(checkBox14);
             groupBox7.Location = new Point(96, 0);
             groupBox7.Name = "groupBox7";
-            groupBox7.Size = new Size(136, 106);
+            groupBox7.Size = new Size(136, 111);
             groupBox7.TabIndex = 9;
             groupBox7.TabStop = false;
             groupBox7.Text = "Tracing";
@@ -1537,26 +1557,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox35
-            // 
-            checkBox35.AutoSize = true;
-            checkBox35.Location = new Point(130, 39);
-            checkBox35.Name = "checkBox35";
-            checkBox35.Size = new Size(60, 19);
-            checkBox35.TabIndex = 10;
-            checkBox35.Text = "เด้งบัตร";
-            checkBox35.UseVisualStyleBackColor = true;
-            // 
-            // textBox10
-            // 
-            textBox10.Location = new Point(131, 18);
-            textBox10.Multiline = true;
-            textBox10.Name = "textBox10";
-            textBox10.Size = new Size(53, 19);
-            textBox10.TabIndex = 29;
-            textBox10.Text = "5";
-            textBox10.TextAlign = HorizontalAlignment.Center;
             // 
             // Form1
             // 
