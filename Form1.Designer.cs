@@ -1263,9 +1263,9 @@
             checkBox39.AutoSize = true;
             checkBox39.Location = new Point(6, 96);
             checkBox39.Name = "checkBox39";
-            checkBox39.Size = new Size(42, 19);
+            checkBox39.Size = new Size(74, 19);
             checkBox39.TabIndex = 15;
-            checkBox39.Text = "HR";
+            checkBox39.Text = "กันติดขอบ";
             checkBox39.UseVisualStyleBackColor = true;
             // 
             // checkBox31

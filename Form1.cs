@@ -877,7 +877,7 @@ namespace Kappa
     {
         listView1, listView2, listView3, listView4, listView5,
         listView6, listView7, listView8, listView9, listView10,
-        listView11, listView12, listView13, listView14, listView15,
+        listView13, listView14, listView15,
         listView16, listView17, listView18, listView19, listView20
     };
 
