@@ -872,169 +872,44 @@ namespace Kappa
 
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-
             MonsterAlloc();
+            List<ListView> listViews = new()
+    {
+        listView1, listView2, listView3, listView4, listView5,
+        listView6, listView7, listView8, listView9, listView10,
+        listView11, listView12, listView13, listView14, listView15,
+        listView16, listView17, listView18, listView19, listView20
+    };
+
             while (!backgroundWorker1.CancellationPending)
             {
                 try
                 {
                     RunActive();
-                    await UpdateListViewItemsAsync(listView1);
-
-                    if (listView2.Items.Count > 0)
+                    foreach (var listView in listViews)
                     {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView2);
+                        if (listView.Items.Count > 0)
+                        {
+                            await UpdateListViewItemsAsync(listView);
+                            RunActive(); // Ensure it's called for each listView update
+                        }
                     }
-                    if (listView3.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView3);
-
-                    }
-                    if (listView4.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView4);
-
-                    }
-                    if (listView5.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView5);
-
-                    }
-                    if (listView6.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView6);
-
-                    }
-                    if (listView7.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView7);
-
-                    }
-                    if (listView8.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView8);
-
-                    }
-                    if (listView9.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView9);
-
-                    }
-                    if (listView10.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView10);
-
-                    }
-                    if (listView11.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView11);
-
-                    }
-                    if (listView12.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView12);
-
-                    }
-                    if (listView13.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView13);
-
-                    }
-                    if (listView14.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView14);
-
-                    }
-                    if (listView15.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView15);
-
-                    }
-                    if (listView16.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView16);
-
-                    }
-                    if (listView17.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView17);
-
-                    }
-                    if (listView18.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView18);
-
-                    }
-                    if (listView19.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView19);
-
-                    }
-                    if (listView20.Items.Count > 0)
-                    {
-                        RunActive();
-
-                        await UpdateListViewItemsAsync(listView20);
-
-                    }
-
-
 
                     if (backgroundWorker1.CancellationPending)
                     {
                         RunDeActive();
-
                         break;
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Exception in UpdateListViewItemsAsync: " + ex.Message);
+                    Console.WriteLine($"Exception in UpdateListViewItemsAsync: {ex.Message}");
                 }
+
                 await Task.Delay(10);
             }
-            m.UnfreezeValue(CurrentX);
-            m.UnfreezeValue(CurrentY);
-            m.UnfreezeValue(CurrentZ);
-            m.UnfreezeValue(LeftClick);
-            m.UnfreezeValue(AltButton);
-            m.WriteMemory(AltButton, "byte", "01");
+
+            // Unfreeze values and reset AltButton
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
