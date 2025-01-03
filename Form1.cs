@@ -943,6 +943,77 @@ namespace Kappa
                         await UpdateListViewItemsAsync(listView10);
 
                     }
+                    if (listView11.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView11);
+
+                    }
+                    if (listView12.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView12);
+
+                    }
+                    if (listView13.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView13);
+
+                    }
+                    if (listView14.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView14);
+
+                    }
+                    if (listView15.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView15);
+
+                    }
+                    if (listView16.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView16);
+
+                    }
+                    if (listView17.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView17);
+
+                    }
+                    if (listView18.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView18);
+
+                    }
+                    if (listView19.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView19);
+
+                    }
+                    if (listView20.Items.Count > 0)
+                    {
+                        RunActive();
+
+                        await UpdateListViewItemsAsync(listView20);
+
+                    }
+
 
 
                     if (backgroundWorker1.CancellationPending)
