@@ -2551,6 +2551,7 @@ namespace Kappa
                 Console.WriteLine("Exception in UpdateListViewItemsAsync: " + ex.Message);
             }
         }
+
         static List<int> check_id_mon = new List<int>();
         string base_mon = "00000000";
 
