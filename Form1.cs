@@ -1064,7 +1064,7 @@ namespace Kappa
             {
                 int checkStatus = m.Read2Byte(MATION_CHECK);
                 float skillTime = m.ReadFloat(SKILL_TIME);
-                Console.WriteLine($"USINGSKILL:{checkStatus}{skillTime}");
+                Console.WriteLine($"USINGSKILL: {checkStatus}, F{skillTime}");
 
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
@@ -1075,20 +1075,25 @@ namespace Kappa
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
 
-                if (checkStatus != 3 && checkStatus == 0)
+                while (checkStatus != 3 && checkStatus == 0)
                 {
                     label6.Text = $"{checkStatus}";
                     label6.ForeColor = Color.Green;
 
                     m.WriteMemory(forceattack_adr, "int", "5");
                     await Task.Delay(1500);
-                    if (checkStatus == 3 && skillTime > 1f)
+                    checkStatus = m.Read2Byte(MATION_CHECK);
+                    skillTime = m.ReadFloat(SKILL_TIME);
+                    Console.WriteLine($"WHILE1: {checkStatus}, F{skillTime}");
+                    m.WriteMemory(forceattack_adr, "int", "5");
+
+                    if (checkStatus == 3 && skillTime > 2f)
                     {
-                        await Task.Delay(100);
                         checkStatus = m.Read2Byte(MATION_CHECK);
                         skillTime = m.ReadFloat(SKILL_TIME);
+                        await Task.Delay(1500);
 
-                        Console.WriteLine($"USINGSKILL:{checkStatus}");
+                        Console.WriteLine($"USINGSKILLxxxxx:{checkStatus}");
                         while (checkStatus != 0 && checkStatus != 1)
                         {
                             checkStatus = m.Read2Byte(MATION_CHECK);
@@ -1102,9 +1107,9 @@ namespace Kappa
 
                                 break;
                             }
-
+                            break;
                         }
-                        break;
+                        
                     }
                     await Task.Delay(100);
 
@@ -1112,29 +1117,29 @@ namespace Kappa
 
 
                 // Handle skill if it's not already in the list
-                if (!buffList.Contains(num7))
-                {
-                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
-                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                    m.Read2Byte(k.ToString("x"));
-                    m.Read2Byte(num5.ToString("x"));
+                //if (!buffList.Contains(num7))
+                //{
+                //    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                //    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+                //    m.Read2Byte(k.ToString("x"));
+                //    m.Read2Byte(num5.ToString("x"));
 
-                    await WaitForActionCompletionAsync();
+                //    await WaitForActionCompletionAsync();
 
-                    // Process frenzy targets if available
-                    if (frenzzy_tarList.Count > 0)
-                    {
-                        foreach (int frenzzyTar in frenzzy_tarList)
-                        {
-                            Console.WriteLine($"Buffering To {frenzzyTar}");
+                //    Process frenzy targets if available
+                //    if (frenzzy_tarList.Count > 0)
+                //        {
+                //            foreach (int frenzzyTar in frenzzy_tarList)
+                //            {
+                //                Console.WriteLine($"Buffering To {frenzzyTar}");
 
-                            if (frenzzyTar != -1)
-                            {
-                                await BuffTargetAsync(frenzzyTar);
-                            }
-                        }
-                    }
-                }
+                //                if (frenzzyTar != -1)
+                //                {
+                //                    await BuffTargetAsync(frenzzyTar);
+                //                }
+                //            }
+                //        }
+                //}
 
                 // Remove the skill from the list if it's already there
                 if (buffList.Contains(num7))
