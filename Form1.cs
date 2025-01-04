@@ -1922,36 +1922,36 @@ namespace Kappa
 
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
-                        if (!IsKeyPressed(Keys.X)) break;
-
-                        int runState = m.Read2Byte(MATION_CHECK);
-                        if (runState == 1)
+                        if (!Attacknow && SendID == 0)
                         {
-                            m.WriteMemory(MATION_CHECK, "int", "3");
+                            break;
                         }
+                        label2.Text = Guild;
+                        int RUN = m.Read2Byte(MATION_CHECK);
 
                         int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                         int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                         {
-                            // Write player's position
-                            m.WriteMemory($"{TARGET_RING}", "int", playerID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", playerID.ToString());
-                            m.WriteMemory($"{CurrentX}", "float", myX.ToString());
-                            m.WriteMemory($"{CurrentY}", "float", myY.ToString());
-                            m.WriteMemory($"{CurrentZ}", "float", myZ.ToString());
-
+                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-
-                            // Check and break if MATION_CHECK is not 3
-                            if (m.ReadInt(MATION_CHECK) != 3)
+                            if (RUN != 3)
                             {
                                 break;
                             }
+
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
+
+                            Console.WriteLine($"{RUN}");
                         }
 
-                        // Task.Delay(10); // Small delay to avoid excessive CPU usage
+                        await Task.Delay(1);
                     }
 
                 }
