@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using System.Net.NetworkInformation;
 
 namespace Kappa
 {
@@ -1899,8 +1900,30 @@ namespace Kappa
                     bool skillUsed = false; // Flag to track if a skill has been used
                     float SKILL_TIM = m.ReadFloat(SKILL_TIME);
 
+                    List<Tuple<int, int>> skillList = new List<Tuple<int, int>>(); // List to hold pairs of skill IDs
+
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
+                        // Read the skill IDs for the current iteration and add them to the list if they are valid
+                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                        {
+                            skillList.Add(Tuple.Create(idskilltype_test1, idskilltype_test2)); // Add valid skill pairs to the list
+                        }
+                    }
+                    int i4 = 0x9A4;
+                    if (i4 == 0x9A4 && i4 <= 0x9C8)
+                    {
+
+                    }
+                    // Iterate over the skillList to use each skill
+                    foreach (var skill in skillList)
+                    {
+                        int idskilltype_test1 = skill.Item1;
+                        int idskilltype_test2 = skill.Item2;
+
                         // Check if attack action is stopped or no valid ID to target
                         if (!Attacknow || SendID == 0)
                         {
@@ -1911,43 +1934,36 @@ namespace Kappa
 
                         int RUN = m.Read2Byte(MATION_CHECK);  // Read current state of running (whether skills are ready)
 
-                        // Read skill IDs for the current iteration
-                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+                        // Attempt to use the skill
+                        m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                        m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                        m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                        PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+                        SKILL_TIM = m.ReadFloat(SKILL_TIME);  // Get the remaining time for the skill
 
-                        // Check if the skill IDs are valid (not 255, meaning no skill)
-                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                        // Check if the skill usage was successful
+                        if (RUN == 3 && SKILL_TIM > 0 && !skillUsed)  // If the skill is running and hasn't been used yet
                         {
-                            // Attempt to use the skill
-                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
-                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-                            SKILL_TIM = m.ReadFloat(SKILL_TIME);
-                            // Check if the skill usage was successful
-                            if (RUN == 3 && RUN != 1 && RUN != 0 && SKILL_TIM > 0 && !skillUsed)  // Check if skill used and flag is not set
-                            {
-                                skillUsed = true;  // Set the flag to true to prevent skipping again
-                                await Task.Delay(1);
-                                continue;
-                            }
-                            else if (RUN != 3 || SKILL_TIM <= 0) // If skill not used or not in running state
-                            {
-                                skillUsed = false;  // Reset the flag so it can be used for the next skill
-                                break;
-                            }
-
-                            // Update RUN state if necessary (assuming we want to set it to "running" after using a skill)
-                            if (RUN == 1)
-                            {
-                                m.WriteMemory(MATION_CHECK, "int", "3");  // Set RUN state to 3 (skills are running)
-                            }
-
-                            Console.WriteLine($"Using Skill: {idskilltype_test1}, {idskilltype_test2} | RUN: {RUN}");
+                            skillUsed = true;  // Mark the skill as used
+                            await Task.Delay(1);  // Wait a bit before checking again
+                            continue;  // Stay on the current skill iteration until the skill is no longer running
+                        }
+                        else if (RUN != 3 || SKILL_TIM <= 0) // If skill is not running or has finished using
+                        {
+                            skillUsed = false;  // Reset the flag for the next skill
+                                                // No need to increment i3 because we are using a list of skill pairs
                         }
 
-                        await Task.Delay(1);  // Short delay between each check
+                        // Update RUN state if necessary
+                        if (RUN == 1)
+                        {
+                            m.WriteMemory(MATION_CHECK, "int", "3");  // Set RUN state to 3 (skills are running)
+                        }
+
+                        Console.WriteLine($"Using Skill: {idskilltype_test1}, {idskilltype_test2} | RUN: {RUN}");
                     }
+
+                    await Task.Delay(1);  // Short delay between each check to avoid high CPU usage
                 }
 
                 await Task.Delay(10);
