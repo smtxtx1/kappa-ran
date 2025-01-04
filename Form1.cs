@@ -1062,6 +1062,9 @@ namespace Kappa
             // Process skills in the specified range
             for (int k = 0xA1C; k <= 0xA40; k += 0x04)
             {
+                int checkStatus = m.Read2Byte(MATION_CHECK);
+                float skillTime = m.ReadFloat(SKILL_TIME);
+
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
                     continue;
@@ -1071,10 +1074,8 @@ namespace Kappa
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
 
-                while (m.ReadInt(MATION_CHECK) != 3)
+                if (checkStatus != 3)
                 {
-                    int checkStatus = m.ReadInt(MATION_CHECK);
-                    float skillTime = m.ReadFloat(SKILL_TIME);
                     await Task.Delay(100);
                     m.WriteMemory(forceattack_adr, "int", "5");
                     label6.Text = $"{checkStatus}";
@@ -1083,13 +1084,13 @@ namespace Kappa
                     if (checkStatus == 3 && skillTime > 0.1f)
                     {
                         await Task.Delay(100);
-                        checkStatus = m.ReadInt(MATION_CHECK);
+                        checkStatus = m.Read2Byte(MATION_CHECK);
                         skillTime = m.ReadFloat(SKILL_TIME);
 
                         Console.WriteLine($"USINGSKILL:{checkStatus}");
                         while (checkStatus != 0 && checkStatus != 1)
                         {
-                            checkStatus = m.ReadInt(MATION_CHECK);
+                            checkStatus = m.Read2Byte(MATION_CHECK);
                             skillTime = m.ReadFloat(SKILL_TIME);
 
                             await Task.Delay(100);
