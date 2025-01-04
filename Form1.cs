@@ -1074,7 +1074,12 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                if (remainingBuffList.Contains(num7) || buffList.Contains(num7))
+                if (buffList.Contains(num7))
+                {
+                    buffList.Remove(num7);
+
+                }
+                if (!remainingBuffList.Contains(num7) || !buffList.Contains(num7))
                 {
                     while (checkStatus != 3 && checkStatus == 0)
                     {
@@ -1092,7 +1097,7 @@ namespace Kappa
                         Console.WriteLine($"WHILE1: {checkStatus}, F{skillTime}");
                         m.WriteMemory(forceattack_adr, "int", "5");
 
-                        if (checkStatus == 3 && skillTime > 2f)
+                        if (checkStatus == 3 && skillTime > 1f)
                         {
                             checkStatus = m.Read2Byte(MATION_CHECK);
                             skillTime = m.ReadFloat(SKILL_TIME);
@@ -1122,6 +1127,12 @@ namespace Kappa
                         remainingBuffList.Remove(num7);
 
                     }
+                    if (buffList.Contains(num7))
+                    {
+                        buffList.Remove(num7);
+
+                    }
+
 
                 }
 
