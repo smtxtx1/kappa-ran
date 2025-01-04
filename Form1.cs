@@ -1938,12 +1938,7 @@ namespace Kappa
                             m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
                             m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-                            if (RUN != 3)
-                            {
-                                break;
-                            }
-
-                            if (RUN == 1)
+                            if (RUN == 1 && checkBox40.Checked)
                             {
                                 m.WriteMemory(MATION_CHECK, "int", "3");
                             }

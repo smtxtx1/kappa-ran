@@ -236,6 +236,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox40 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -285,6 +286,7 @@
             // 
             // groupBox12
             // 
+            groupBox12.Controls.Add(checkBox40);
             groupBox12.Controls.Add(textBox10);
             groupBox12.Controls.Add(checkBox35);
             groupBox12.Controls.Add(checkBox38);
@@ -1742,6 +1744,16 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // checkBox40
+            // 
+            checkBox40.AutoSize = true;
+            checkBox40.Location = new Point(130, 59);
+            checkBox40.Name = "checkBox40";
+            checkBox40.Size = new Size(57, 19);
+            checkBox40.TabIndex = 30;
+            checkBox40.Text = "ล็อคขา";
+            checkBox40.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1998,5 +2010,6 @@
         private ColumnHeader columnHeader49;
         private ColumnHeader columnHeader50;
         private CheckBox checkBox39;
+        private CheckBox checkBox40;
     }
 }
