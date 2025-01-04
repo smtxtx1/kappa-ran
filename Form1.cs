@@ -1924,7 +1924,7 @@ namespace Kappa
                                 await Task.Delay(1); // Wait a bit before rechecking
                                 continue;
                             }
-                            else if (RUN != 3 && RUN == 1 && RUN == 0 && SKILL_TIM == 0)
+                            else if (RUN != 3 && RUN > 0 && SKILL_TIM == 0)
                             {
 
                             }
