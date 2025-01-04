@@ -1761,6 +1761,7 @@ namespace Kappa
             int SendRES = 0; // ID to send for targeting
             int Res_Player = 0;
             int globalCrow = int.MaxValue;
+
             try
             {
                 string Guild = "";
@@ -1770,6 +1771,10 @@ namespace Kappa
 
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
+
+                List<(int SkillType1, int SkillType2)> validSkills = new List<(int, int)>();
+
+                // Loop to gather information about mobs and valid skills
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
@@ -1798,12 +1803,10 @@ namespace Kappa
                         }
                     }
 
+                    // Calculate distance to mob/player
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (distance_mon <= MonDistance &&
-                        distance_mon < closestDistance &&
-                        !Guild.Contains(Guildselected) &&
-                        !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
-
+                    if (distance_mon <= MonDistance && distance_mon < closestDistance &&
+                        !Guild.Contains(Guildselected) && !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
                     {
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
@@ -1813,24 +1816,22 @@ namespace Kappa
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
-
                     }
+
+                    // Handle GM actions
                     if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox35.Checked)
                     {
                         try
                         {
                             Getback();
                         }
-                        catch(Exception ex)
-                        {
-
-                        }
+                        catch { }
                     }
+
                     if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
                         try
                         {
-
                             Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n");
                             GMFOUND = NAMEGET;
                             GMAlert();
@@ -1840,36 +1841,12 @@ namespace Kappa
                                 processToTerminate.Kill();
                                 processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
                                 MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             }
                             FoundGm = true;
                             StopMonitoringPlayer();
-
-
                         }
-                        catch (Exception ex)
-                        {
-                        }
+                        catch { }
                     }
-
-                    if (IsNameInListView12_GM(NAMEGET) && checkBox36.Checked)
-                    {
-                        try
-                        {
-                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
-                            processToTerminate.Kill();
-                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
-                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            StopMonitoringPlayer();
-                            break;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            break;
-                        }
-                    }
-
 
                     curr = m.GetCode($"{curr:X},8");
                 }
@@ -1883,6 +1860,8 @@ namespace Kappa
                 {
                     SendRES = Res_Player;
                 }
+
+                // Handle resurrection if the Z key is pressed
                 if (IsKeyPressed(Keys.Z) && checkBox38.Checked)
                 {
                     ResNOW = true;
@@ -1901,28 +1880,25 @@ namespace Kappa
                     m.WriteMemory(prevskill1_adr, "byte", "E");
                     m.WriteMemory(prevskill2_adr, "byte", "F");
                     m.WriteMemory(forceattack_adr, "int", "5");
-                    Task.Delay(1);
-
+                    await Task.Delay(1);
                 }
 
-
-
+                // Handle attack action when X key is pressed
                 if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
-
                     Attacknow = true;
-
                 }
                 else
                 {
                     Attacknow = false;
                 }
+
                 if (Attacknow && SendID != 0)
                 {
-
+                    // Loop through skills and execute based on RUN state
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
-                        if (!Attacknow && SendID == 0)
+                        if (!Attacknow || SendID == 0)
                         {
                             break;
                         }
@@ -1942,7 +1918,8 @@ namespace Kappa
                             m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
                             m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-                            if (RUN != 3)
+
+                            if (RUN != 3 && RUN != 1)
                             {
                                 await Task.Delay(1); // Wait a bit before rechecking
                                 i3 -= 4; // Decrement i3 to retry the current skill ID
@@ -1950,8 +1927,6 @@ namespace Kappa
                             }
 
                             // Proceed to use the skill
-
-                            // Update RUN state if necessary
                             if (RUN == 1)
                             {
                                 m.WriteMemory(MATION_CHECK, "int", "3");
@@ -1962,12 +1937,10 @@ namespace Kappa
 
                         await Task.Delay(1);
                     }
-
                 }
+
                 await Task.Delay(10);
             }
-
-
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
