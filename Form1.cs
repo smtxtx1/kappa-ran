@@ -1107,10 +1107,11 @@ namespace Kappa
 
                                 break;
                             }
-                            break;
                         }
                         
                     }
+                    break;
+
                     await Task.Delay(100);
 
                 }
