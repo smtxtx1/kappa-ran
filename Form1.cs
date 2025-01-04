@@ -1086,7 +1086,7 @@ namespace Kappa
                         m.Read2Byte($"00FE2000,{num5.ToString("x")}");
 
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        await Task.Delay(1000);
+                        await Task.Delay(1500);
                         checkStatus = m.Read2Byte(MATION_CHECK);
                         skillTime = m.ReadFloat(SKILL_TIME);
                         Console.WriteLine($"WHILE1: {checkStatus}, F{skillTime}");
@@ -1097,6 +1097,8 @@ namespace Kappa
                             checkStatus = m.Read2Byte(MATION_CHECK);
                             skillTime = m.ReadFloat(SKILL_TIME);
                             Console.WriteLine($"USINGSKILLxxxxx:{checkStatus}");
+                            m.WriteMemory(forceattack_adr, "int", "9");
+
                             while (checkStatus != 0 && checkStatus != 1)
                             {
 
