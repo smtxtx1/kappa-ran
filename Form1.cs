@@ -1095,13 +1095,10 @@ namespace Kappa
                     {
                         checkStatus = m.Read2Byte(MATION_CHECK);
                         skillTime = m.ReadFloat(SKILL_TIME);
-                        await Task.Delay(1500);
-
                         Console.WriteLine($"USINGSKILLxxxxx:{checkStatus}");
                         while (checkStatus != 0 && checkStatus != 1)
                         {
 
-                            await Task.Delay(100);
                             checkStatus = m.Read2Byte(MATION_CHECK);
                             skillTime = m.ReadFloat(SKILL_TIME);
 
