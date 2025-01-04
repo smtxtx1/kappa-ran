@@ -25,7 +25,6 @@ using System.Windows.Forms;
 using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using System.Net.NetworkInformation;
 
 namespace Kappa
 {
@@ -1009,6 +1008,8 @@ namespace Kappa
                     list.Add(item2);
                 }
             }
+            //for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+
             for (int k = 0xA1C; k <= 0xA40; k += 0x04)
             {
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
@@ -1760,7 +1761,6 @@ namespace Kappa
             int SendRES = 0; // ID to send for targeting
             int Res_Player = 0;
             int globalCrow = int.MaxValue;
-
             try
             {
                 string Guild = "";
@@ -1770,10 +1770,6 @@ namespace Kappa
 
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
-
-                List<(int SkillType1, int SkillType2)> validSkills = new List<(int, int)>();
-
-                // Loop to gather information about mobs and valid skills
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
@@ -1802,10 +1798,12 @@ namespace Kappa
                         }
                     }
 
-                    // Calculate distance to mob/player
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (distance_mon <= MonDistance && distance_mon < closestDistance &&
-                        !Guild.Contains(Guildselected) && !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
+                    if (distance_mon <= MonDistance &&
+                        distance_mon < closestDistance &&
+                        !Guild.Contains(Guildselected) &&
+                        !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
+
                     {
                         closestDistance = distance_mon;
                         GETPlAYERID = mobDetails.ID;
@@ -1815,22 +1813,24 @@ namespace Kappa
                     {
                         closestDistancePlayer = distance_mon;
                         Res_Player = mobDetails.ID;
-                    }
 
-                    // Handle GM actions
+                    }
                     if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox35.Checked)
                     {
                         try
                         {
                             Getback();
                         }
-                        catch { }
-                    }
+                        catch(Exception ex)
+                        {
 
+                        }
+                    }
                     if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox37.Checked)
                     {
                         try
                         {
+
                             Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n");
                             GMFOUND = NAMEGET;
                             GMAlert();
@@ -1840,12 +1840,36 @@ namespace Kappa
                                 processToTerminate.Kill();
                                 processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
                                 MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                             }
                             FoundGm = true;
                             StopMonitoringPlayer();
+
+
                         }
-                        catch { }
+                        catch (Exception ex)
+                        {
+                        }
                     }
+
+                    if (IsNameInListView12_GM(NAMEGET) && checkBox36.Checked)
+                    {
+                        try
+                        {
+                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                            processToTerminate.Kill();
+                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            StopMonitoringPlayer();
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            break;
+                        }
+                    }
+
 
                     curr = m.GetCode($"{curr:X},8");
                 }
@@ -1859,8 +1883,6 @@ namespace Kappa
                 {
                     SendRES = Res_Player;
                 }
-
-                // Handle resurrection if the Z key is pressed
                 if (IsKeyPressed(Keys.Z) && checkBox38.Checked)
                 {
                     ResNOW = true;
@@ -1879,93 +1901,64 @@ namespace Kappa
                     m.WriteMemory(prevskill1_adr, "byte", "E");
                     m.WriteMemory(prevskill2_adr, "byte", "F");
                     m.WriteMemory(forceattack_adr, "int", "5");
-                    await Task.Delay(1);
+                    Task.Delay(1);
+
                 }
 
-                // Handle attack action when X key is pressed
+
+
                 if (IsKeyPressed(Keys.X) && checkBox38.Checked)
                 {
+
                     Attacknow = true;
+
                 }
                 else
                 {
                     Attacknow = false;
                 }
-
                 if (Attacknow && SendID != 0)
                 {
-                    // Loop through skills and execute based on RUN state
-                    bool skillUsed = false; // Flag to track if a skill has been used
-                    float SKILL_TIM = m.ReadFloat(SKILL_TIME);
-
-                    List<Tuple<int, int>> skillList = new List<Tuple<int, int>>(); // List to hold pairs of skill IDs
 
                     for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                     {
-                        // Read the skill IDs for the current iteration and add them to the list if they are valid
+                        if (!Attacknow && SendID == 0)
+                        {
+                            break;
+                        }
+                        label2.Text = Guild;
+                        int RUN = m.Read2Byte(MATION_CHECK);
+
                         int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                         int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                         {
-                            skillList.Add(Tuple.Create(idskilltype_test1, idskilltype_test2)); // Add valid skill pairs to the list
-                        }
-                    }
-                    int i4 = 0x9A4;
-                    if (i4 == 0x9A4 && i4 <= 0x9C8)
-                    {
+                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+                            if (RUN != 3)
+                            {
+                                break;
+                            }
 
-                    }
-                    // Iterate over the skillList to use each skill
-                    foreach (var skill in skillList)
-                    {
-                        int idskilltype_test1 = skill.Item1;
-                        int idskilltype_test2 = skill.Item2;
+                            if (RUN == 1)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
 
-                        // Check if attack action is stopped or no valid ID to target
-                        if (!Attacknow || SendID == 0)
-                        {
-                            break;  // Break out of loop if attack is not active or no valid player to target
+                            Console.WriteLine($"{RUN}");
                         }
 
-                        label2.Text = Guild;
-
-                        int RUN = m.Read2Byte(MATION_CHECK);  // Read current state of running (whether skills are ready)
-
-                        // Attempt to use the skill
-                        m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                        m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
-                        m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
-                        PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-                        SKILL_TIM = m.ReadFloat(SKILL_TIME);  // Get the remaining time for the skill
-
-                        // Check if the skill usage was successful
-                        if (RUN == 3 && SKILL_TIM > 0 && !skillUsed)  // If the skill is running and hasn't been used yet
-                        {
-                            skillUsed = true;  // Mark the skill as used
-                            await Task.Delay(1);  // Wait a bit before checking again
-                            continue;  // Stay on the current skill iteration until the skill is no longer running
-                        }
-                        else if (RUN != 3 || SKILL_TIM <= 0) // If skill is not running or has finished using
-                        {
-                            skillUsed = false;  // Reset the flag for the next skill
-                                                // No need to increment i3 because we are using a list of skill pairs
-                        }
-
-                        // Update RUN state if necessary
-                        if (RUN == 1)
-                        {
-                            m.WriteMemory(MATION_CHECK, "int", "3");  // Set RUN state to 3 (skills are running)
-                        }
-
-                        Console.WriteLine($"Using Skill: {idskilltype_test1}, {idskilltype_test2} | RUN: {RUN}");
+                        await Task.Delay(1);
                     }
 
-                    await Task.Delay(1);  // Short delay between each check to avoid high CPU usage
                 }
-
                 await Task.Delay(10);
             }
+
+
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
