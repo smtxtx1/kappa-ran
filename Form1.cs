@@ -1054,12 +1054,16 @@ namespace Kappa
                 }
                 else if (item3 >= 50f && remainingBuffList.Contains(item2))
                 {
-
+                    remainingBuffList.Remove(item2);
                 }
 
                 if (!buffList.Contains(item2))
                 {
                     buffList.Add(item2);
+                }
+                else
+                {
+                    buffList.Remove(item2);
                 }
             }
 
