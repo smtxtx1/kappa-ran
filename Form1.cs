@@ -374,8 +374,6 @@ namespace Kappa
             comboBox3.Items.Add("listView8");
             comboBox3.Items.Add("listView9");
             comboBox3.Items.Add("listView10");
-            comboBox3.Items.Add("listView11");
-            comboBox3.Items.Add("listView12");
             comboBox3.Items.Add("listView13");
             comboBox3.Items.Add("listView14");
             comboBox3.Items.Add("listView15");
@@ -395,16 +393,14 @@ namespace Kappa
             listViewDictionary.Add("listView8", listView8);
             listViewDictionary.Add("listView9", listView9);
             listViewDictionary.Add("listView10", listView10);
-            listViewDictionary.Add("listView11", listView10);
-            listViewDictionary.Add("listView12", listView10);
-            listViewDictionary.Add("listView13", listView10);
-            listViewDictionary.Add("listView14", listView10);
-            listViewDictionary.Add("listView15", listView10);
-            listViewDictionary.Add("listView16", listView10);
-            listViewDictionary.Add("listView17", listView10);
-            listViewDictionary.Add("listView18", listView10);
-            listViewDictionary.Add("listView19", listView10);
-            listViewDictionary.Add("listView20", listView10);
+            listViewDictionary.Add("listView13", listView13);
+            listViewDictionary.Add("listView14", listView14);
+            listViewDictionary.Add("listView15", listView15);
+            listViewDictionary.Add("listView16", listView16);
+            listViewDictionary.Add("listView17", listView17);
+            listViewDictionary.Add("listView18", listView18);
+            listViewDictionary.Add("listView19", listView19);
+            listViewDictionary.Add("listView20", listView20);
 
             comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
             foreach (KeyValuePair<string, string> itemDescription in itemDescriptions)
