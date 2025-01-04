@@ -1074,7 +1074,7 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                if (remainingBuffList.Contains(num7))
+                if (remainingBuffList.Contains(num7) || buffList.Contains(num7))
                 {
                     while (checkStatus != 3 && checkStatus == 0)
                     {
