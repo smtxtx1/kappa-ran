@@ -1824,7 +1824,11 @@ namespace Kappa
                 string NAMEGET = "";
                 globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
+                if(globalCrow > 0)
+                {
+                    Getback();
 
+                }
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
                 for (int i = 0; i < globalCrow; i++)
