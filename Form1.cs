@@ -1064,6 +1064,7 @@ namespace Kappa
             {
                 int checkStatus = m.Read2Byte(MATION_CHECK);
                 float skillTime = m.ReadFloat(SKILL_TIME);
+                Console.WriteLine($"USINGSKILL:{checkStatus}{skillTime}");
 
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
                 {
@@ -1074,14 +1075,14 @@ namespace Kappa
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
 
-                if (checkStatus != 3)
+                if (checkStatus != 3 && checkStatus == 0)
                 {
-                    await Task.Delay(100);
-                    m.WriteMemory(forceattack_adr, "int", "5");
                     label6.Text = $"{checkStatus}";
                     label6.ForeColor = Color.Green;
 
-                    if (checkStatus == 3 && skillTime > 0.1f)
+                    m.WriteMemory(forceattack_adr, "int", "5");
+                    await Task.Delay(1500);
+                    if (checkStatus == 3 && skillTime > 1f)
                     {
                         await Task.Delay(100);
                         checkStatus = m.Read2Byte(MATION_CHECK);
