@@ -1081,6 +1081,8 @@ namespace Kappa
                     label6.ForeColor = Color.Green;
                     m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
+                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
+                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
 
                     m.WriteMemory(forceattack_adr, "int", "5");
                     await Task.Delay(1500);
@@ -1098,10 +1100,10 @@ namespace Kappa
                         Console.WriteLine($"USINGSKILLxxxxx:{checkStatus}");
                         while (checkStatus != 0 && checkStatus != 1)
                         {
-                            checkStatus = m.Read2Byte(MATION_CHECK);
-                            skillTime = m.ReadFloat(SKILL_TIME);
 
                             await Task.Delay(100);
+                            checkStatus = m.Read2Byte(MATION_CHECK);
+                            skillTime = m.ReadFloat(SKILL_TIME);
 
                             if (checkStatus == 0)
                             {
