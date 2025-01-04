@@ -1922,8 +1922,11 @@ namespace Kappa
                             if (RUN == 3 && RUN != 1 && RUN != 0 && SKILL_TIM > 0) 
                             {
                                 await Task.Delay(1); // Wait a bit before rechecking
-                                i3 -= 4; // Decrement i3 to retry the current skill ID
-                                break;
+                                continue;
+                            }
+                            else if (RUN != 3 && RUN == 1 && RUN == 0 && SKILL_TIM == 0)
+                            {
+
                             }
 
                             // Proceed to use the skill
