@@ -1079,6 +1079,8 @@ namespace Kappa
                 {
                     label6.Text = $"{checkStatus}";
                     label6.ForeColor = Color.Green;
+                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
+                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
 
                     m.WriteMemory(forceattack_adr, "int", "5");
                     await Task.Delay(1500);
