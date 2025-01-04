@@ -1074,11 +1074,21 @@ namespace Kappa
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    if (m.ReadInt(MATION_CHECK) != 3)
+                    while (m.ReadInt(MATION_CHECK) != 3)
                     {
+                        int CHHECK = m.ReadInt(MATION_CHECK);
+                        float SKILL_TIMEs = m.ReadFloat(SKILL_TIME);
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(1500);
-                        m.WriteMemory(forceattack_adr, "int", "9");
+                        await Task.Delay(100);
+                        if (CHHECK == 3 && SKILL_TIMEs > 0.1f)
+                        {
+                           await Task.Delay(100);
+                            if(CHHECK == 0)
+                            {
+                                break;
+
+                            }
+                        }
 
                     }
                     if (frenzzy_tarList.Count > 0)
