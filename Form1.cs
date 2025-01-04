@@ -1119,12 +1119,12 @@ namespace Kappa
                         await Task.Delay(100);
 
                     }
-                    if (remainingBuffList.Contains(num7))
+                    foreach (remainingBuffList.Contains(num7))
                     {
                         remainingBuffList.Remove(num7);
 
                     }
-                    if (buffList.Contains(num7))
+                    foreach (buffList.Contains(num7))
                     {
                         buffList.Remove(num7);
 
