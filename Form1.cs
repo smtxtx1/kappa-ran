@@ -2049,10 +2049,14 @@ namespace Kappa
 
                     PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
 
-                    // Check and update motion state
+                    // Check and break if MATION_CHECK is not 3
+                    if (m.ReadInt(MATION_CHECK) != 3)
+                    {
+                        break;
+                    }
                 }
 
-                //   Task.Delay(10); // Small delay to avoid excessive CPU usage
+                // Task.Delay(10); // Small delay to avoid excessive CPU usage
             }
         }
         private void buttonOpenRadar_Click(object sender, EventArgs e)
