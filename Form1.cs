@@ -962,54 +962,84 @@ namespace Kappa
 
         public int frenzzy_tar;
 
+        private async Task WaitForActionCompletionAsync()
+        {
+            while (m.ReadInt(MATION_CHECK) != 3)
+            {
+                int checkStatus = m.ReadInt(MATION_CHECK);
+                float skillTime = m.ReadFloat(SKILL_TIME);
+                m.WriteMemory(forceattack_adr, "int", "5");
+                await Task.Delay(100);
+
+                if (checkStatus == 3 && skillTime > 0.1f)
+                {
+                    await Task.Delay(100);
+                    if (checkStatus == 0)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+
+        private async Task BuffTargetAsync(int targetSkill)
+        {
+            m.WriteMemory(actioncheck, "int", "0");
+            m.WriteMemory(TARGET_SKILL, "int", targetSkill.ToString());
+            m.WriteMemory(forceattack_adr, "int", "5");
+
+            // Wait until the action completes
+            while (m.ReadInt(MATION_CHECK) == 3)
+            {
+                Console.WriteLine("Buffering");
+                await Task.Delay(1000);
+            }
+
+            m.WriteMemory(forceattack_adr, "int", "9");
+        }
+
         private async Task Autobuff()
         {
-
-            // 66 81 7D F0 FF FF aob for buff 
-            // 8B BC B8 6C 09 00 00
-
             label6.Text = "Buffing";
             label6.ForeColor = Color.Green;
             await Task.Delay(1);
-            List<int> list = new List<int>();
-            List<int> listREMAIN = new List<int>();
-            if (list.Count == 5)
+
+            List<int> buffList = new List<int>();
+            List<int> remainingBuffList = new List<int>();
+
+            // Clear buffList if it reaches size 5
+            if (buffList.Count == 5)
             {
-                list.Clear();
+                buffList.Clear();
             }
 
-            //string OffsetSKill = i3.ToString("x");
-            ////    
-
-            //int idskilltype_test1 = m.ReadByte($"00FE2000,{OffsetSKill}");
-            //int num_test = i3 + 0x02;
-            //int idskilltype_test2 = m.ReadByte($"00FE2000,{num_test.ToString("x")}");
-            //Console.WriteLine("Offset2:" + num_test);
-
-            for (int j = -0xB00; j <= 0x0; j += 0xB0) 
+            // Scan through buffer items
+            for (int j = -0xB00; j <= 0x0; j += 0xB0)
             {
                 if (m.Read2Byte($"00FE3000,{j.ToString("x")}") == 65535)
                 {
                     continue;
                 }
-                string OffsetBuff = j.ToString("x");
+
+                string offsetBuff = j.ToString("x");
                 int num4 = j + 0x02;
-                int SkillRemain = j + 0x8;
-                int item = m.Read2Byte($"00FE3000,{j.ToString("x")}");
+                int skillRemain = j + 0x8;
+                int item = m.Read2Byte($"00FE3000,{offsetBuff}");
                 int item2 = m.Read2Byte($"00FE3000,{num4.ToString("x")}");
-                float item3 = m.ReadFloat($"00FE3000,{SkillRemain.ToString("x")}");
-                //  Console.WriteLine($"MYBUFF: {item},{item2}\nBuffRemain: {item3}");
-                if (item3 <= 50f && !listREMAIN.Contains(item2))
+                float item3 = m.ReadFloat($"00FE3000,{skillRemain.ToString("x")}");
+
+                if (item3 <= 50f && !remainingBuffList.Contains(item2))
                 {
-                    listREMAIN.Add(item2);
+                    remainingBuffList.Add(item2);
                 }
-                if (!list.Contains(item2))
+
+                if (!buffList.Contains(item2))
                 {
-                    list.Add(item2);
+                    buffList.Add(item2);
                 }
             }
-            //for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
 
+            // Process skills in the specified range
             for (int k = 0xA1C; k <= 0xA40; k += 0x04)
             {
                 if (m.Read2Byte($"00FE2000,{k.ToString("x")}") == 65535)
@@ -1020,110 +1050,40 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                //  Console.WriteLine($"F4 Skills: {num6},{num7}");
 
-                if (listREMAIN.Contains(num7))
+                await WaitForActionCompletionAsync();
+
+                // Handle skill if it's not already in the list
+                if (!buffList.Contains(num7))
                 {
-                    m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
-                    m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
-                    m.Read2Byte($"00FE2000,{k.ToString("x")}");
-                    m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                    if (m.ReadInt(MATION_CHECK) != 3)
-                    {
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        Thread.Sleep(1500);
-                        m.WriteMemory(forceattack_adr, "int", "9");
-
-
-                    }
-                    if (frenzzy_tarList.Count > 0)
-                    {
-
-                        for (int i = 0; i < frenzzy_tarList.Count; i++)
-                        {
-                            int frenzzy_tar = frenzzy_tarList[i];
-
-                            Console.WriteLine($"Buffering To {frenzzy_tar}");
-
-                            if (frenzzy_tar != -1)
-                            {
-                                m.WriteMemory(actioncheck, "int", "0");
-                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                                m.WriteMemory(forceattack_adr, "int", "5");
-                               if (m.ReadInt(MATION_CHECK) == 3)
-                                {
-                                    Console.WriteLine("Buffering");
-                                    await Task.Delay(1000);
-                                }
-
-                                m.WriteMemory(forceattack_adr, "int", "9");
-                            }
-                        }
-                    }
-                    if (listREMAIN.Contains(num7))
-                    {
-                        listREMAIN.Remove(num7);
-
-                    }
-
-                }
-                if (!list.Contains(num7))
-                {
-
                     m.WriteMemory(prevskill1_adr, "byte", num6.ToString("x"));
                     m.WriteMemory(prevskill2_adr, "byte", num7.ToString("x"));
                     m.Read2Byte(k.ToString("x"));
                     m.Read2Byte(num5.ToString("x"));
-                    while (m.ReadInt(MATION_CHECK) != 3)
-                    {
-                        int CHHECK = m.ReadInt(MATION_CHECK);
-                        float SKILL_TIMEs = m.ReadFloat(SKILL_TIME);
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        await Task.Delay(100);
-                        if (CHHECK == 3 && SKILL_TIMEs > 0.1f)
-                        {
-                           await Task.Delay(100);
-                            if(CHHECK == 0)
-                            {
-                                break;
 
-                            }
-                        }
+                    await WaitForActionCompletionAsync();
 
-                    }
+                    // Process frenzy targets if available
                     if (frenzzy_tarList.Count > 0)
                     {
-
-                        for (int i = 0; i < frenzzy_tarList.Count; i++)
+                        foreach (int frenzzyTar in frenzzy_tarList)
                         {
-                            int frenzzy_tar = frenzzy_tarList[i];
+                            Console.WriteLine($"Buffering To {frenzzyTar}");
 
-                            Console.WriteLine($"Buffering To {frenzzy_tar}");
-
-                            if (frenzzy_tar != -1)
+                            if (frenzzyTar != -1)
                             {
-                                m.WriteMemory(actioncheck, "int", "0");
-                                m.WriteMemory(TARGET_SKILL, "int", frenzzy_tar.ToString());
-                                m.WriteMemory(forceattack_adr, "int", "5");
-                                while (m.ReadInt(MATION_CHECK) == 3)
-                                {
-                                    Console.WriteLine("Buffering");
-                                    await Task.Delay(1000);
-                                }
-                                m.WriteMemory(forceattack_adr, "int", "9");
+                                await BuffTargetAsync(frenzzyTar);
                             }
                         }
                     }
-
                 }
-                if (list.Contains(num7))
+
+                // Remove the skill from the list if it's already there
+                if (buffList.Contains(num7))
                 {
-                    list.Remove(num7);
-
+                    buffList.Remove(num7);
                 }
-
             }
-
         }
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
