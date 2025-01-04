@@ -1926,12 +1926,16 @@ namespace Kappa
                         {
                             break;
                         }
+
                         label2.Text = Guild;
+
                         int RUN = m.Read2Byte(MATION_CHECK);
 
+                        // Read skill IDs for the current iteration
                         int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                         int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
+                        // Check if skill IDs are valid
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
                         {
                             m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
@@ -1940,15 +1944,20 @@ namespace Kappa
                             PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
                             if (RUN != 3)
                             {
-                                break;
+                                await Task.Delay(1); // Wait a bit before rechecking
+                                i3 -= 4; // Decrement i3 to retry the current skill ID
+                                continue;
                             }
 
+                            // Proceed to use the skill
+
+                            // Update RUN state if necessary
                             if (RUN == 1)
                             {
                                 m.WriteMemory(MATION_CHECK, "int", "3");
                             }
 
-                            Console.WriteLine($"{RUN}");
+                            Console.WriteLine($"Using Skill: {idskilltype_test1}, {idskilltype_test2} | RUN: {RUN}");
                         }
 
                         await Task.Delay(1);
