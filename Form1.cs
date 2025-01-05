@@ -2754,7 +2754,7 @@ namespace Kappa
                             if (MATION == 0 && checkBox39.Checked)
                             {
                                 MoveWhileAttacking();
-                                await Task.Delay(1500);
+                                await Task.Delay(500);
                                 break;
                             }
                         }
