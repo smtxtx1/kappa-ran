@@ -923,7 +923,7 @@ namespace Kappa
             }
         }
 
-        public async void Getback(int globalcrow)
+        private async Task Getback(int globalcrow)
         {
             if (checkBox35.Checked || globalcrow > 0)
             {
@@ -1826,8 +1826,7 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
                 if (globalCrow > 0)
                 {
-                    Getback(globalCrow);
-
+                    await Getback(globalCrow);
                 }
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
