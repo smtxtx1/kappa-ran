@@ -1090,7 +1090,6 @@ namespace Kappa
                         checkStatus = m.Read2Byte(MATION_CHECK);
                         skillTime = m.ReadFloat(SKILL_TIME);
                         Console.WriteLine($"WHILE1: {checkStatus}, F{skillTime}");
-                        m.WriteMemory(forceattack_adr, "int", "5");
 
                         if (checkStatus == 3 && skillTime > 1f)
                         {
