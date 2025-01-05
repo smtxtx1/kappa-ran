@@ -2750,7 +2750,6 @@ namespace Kappa
                         {
 
                             label6.Text = "Unable to attack. Retrying...";
-                            await Task.Delay(1500);
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             if (MATION == 0 && checkBox39.Checked)
                             {
