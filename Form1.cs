@@ -1128,6 +1128,9 @@ namespace Kappa
 
                 if (!buffList.Contains(num7))
                 {
+                    checkStatus = m.Read2Byte(MATION_CHECK);
+                    skillTime = m.ReadFloat(SKILL_TIME);
+
                     while (checkStatus != 3 && checkStatus == 0)
                     {
                         label6.Text = $"{checkStatus}";
