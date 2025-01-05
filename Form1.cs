@@ -1171,10 +1171,6 @@ namespace Kappa
                         await Task.Delay(100);
 
                     }
-                    if (buffList.Contains(num7))
-                    {
-                        buffList.Remove(num7);
-                    }
 
                 }
 
