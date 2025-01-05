@@ -2754,9 +2754,8 @@ namespace Kappa
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             if (MATION == 0 && checkBox39.Checked)
                             {
-                                await Task.Delay(300);
                                 MoveWhileAttacking();
-                                await Task.Delay(100);
+                                await Task.Delay(1500);
                                 break;
                             }
                         }
