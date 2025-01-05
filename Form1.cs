@@ -923,9 +923,9 @@ namespace Kappa
             }
         }
 
-        public async void Getback()
+        public async void Getback(int globalcrow)
         {
-            if (checkBox35.Checked )
+            if (checkBox35.Checked || globalcrow > 0)
             {
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
@@ -1824,9 +1824,9 @@ namespace Kappa
                 string NAMEGET = "";
                 globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
-                if(globalCrow > 0)
+                if (globalCrow > 0)
                 {
-                    Getback();
+                    Getback(globalCrow);
 
                 }
                 float closestDistance = float.MaxValue;
@@ -1880,7 +1880,7 @@ namespace Kappa
                     {
                         try
                         {
-                            Getback();
+                            Getback(0);
                         }
                         catch(Exception ex)
                         {
