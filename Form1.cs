@@ -1074,7 +1074,7 @@ namespace Kappa
                 int num5 = k + 0x02;
                 int num6 = m.Read2Byte($"00FE2000,{k.ToString("x")}");
                 int num7 = m.Read2Byte($"00FE2000,{num5.ToString("x")}");
-                if (!remainingBuffList.Contains(num7) || !buffList.Contains(num7))
+                if (!remainingBuffList.Contains(num7))
                 {
                     while (checkStatus != 3 && checkStatus == 0)
                     {
@@ -1122,11 +1122,6 @@ namespace Kappa
                     if (remainingBuffList.Contains(num7))
                     {
                         remainingBuffList.Remove(num7);
-                    }
-
-                    if (buffList.Contains(num7))
-                    {
-                        buffList.Remove(num7);
                     }
 
                 }
@@ -2796,6 +2791,7 @@ namespace Kappa
 
                             PerformSkill(idskilltype_test1, idskilltype_test2);
                         }
+                        MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
 
                         if (MATION == 0) // if can't hit will move
                         {
@@ -2804,8 +2800,9 @@ namespace Kappa
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             if (MATION == 0 && checkBox39.Checked)
                             {
-                                MoveWhileAttacking();
-                                await Task.Delay(500);
+                             await MoveWhileAttacking();
+                                PerformSkill(idskilltype_test1, idskilltype_test2);
+
                                 break;
                             }
                         }
