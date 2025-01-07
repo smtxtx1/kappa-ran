@@ -2800,8 +2800,6 @@ namespace Kappa
                                 MoveWhileAttacking();
                                 await Task.Delay(100);
                                 PerformSkill(idskilltype_test1, idskilltype_test2);
-
-                                break;
                             }
                         }
 
