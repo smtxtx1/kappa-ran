@@ -311,7 +311,7 @@
             // checkBox40
             // 
             checkBox40.AutoSize = true;
-            checkBox40.Location = new Point(130, 59);
+            checkBox40.Location = new Point(8, 76);
             checkBox40.Name = "checkBox40";
             checkBox40.Size = new Size(57, 19);
             checkBox40.TabIndex = 30;
@@ -331,7 +331,7 @@
             // checkBox35
             // 
             checkBox35.AutoSize = true;
-            checkBox35.Location = new Point(130, 39);
+            checkBox35.Location = new Point(67, 53);
             checkBox35.Name = "checkBox35";
             checkBox35.Size = new Size(60, 19);
             checkBox35.TabIndex = 10;
@@ -341,7 +341,7 @@
             // checkBox38
             // 
             checkBox38.AutoSize = true;
-            checkBox38.Location = new Point(67, 51);
+            checkBox38.Location = new Point(63, 76);
             checkBox38.Name = "checkBox38";
             checkBox38.Size = new Size(60, 19);
             checkBox38.TabIndex = 9;
@@ -351,7 +351,7 @@
             // checkBox37
             // 
             checkBox37.AutoSize = true;
-            checkBox37.Location = new Point(67, 34);
+            checkBox37.Location = new Point(67, 35);
             checkBox37.Name = "checkBox37";
             checkBox37.Size = new Size(66, 19);
             checkBox37.TabIndex = 8;
@@ -379,7 +379,7 @@
             // 
             // BTN_STOP
             // 
-            BTN_STOP.Location = new Point(73, 75);
+            BTN_STOP.Location = new Point(61, 100);
             BTN_STOP.Name = "BTN_STOP";
             BTN_STOP.Size = new Size(47, 23);
             BTN_STOP.TabIndex = 5;
@@ -389,7 +389,7 @@
             // 
             // BTN_START
             // 
-            BTN_START.Location = new Point(7, 75);
+            BTN_START.Location = new Point(6, 100);
             BTN_START.Name = "BTN_START";
             BTN_START.Size = new Size(49, 23);
             BTN_START.TabIndex = 4;
@@ -431,7 +431,7 @@
             groupBox9.Controls.Add(hScrollBar1);
             groupBox9.Controls.Add(button13);
             groupBox9.Controls.Add(comboBox4);
-            groupBox9.Location = new Point(6, 198);
+            groupBox9.Location = new Point(6, 185);
             groupBox9.Name = "groupBox9";
             groupBox9.Size = new Size(184, 82);
             groupBox9.TabIndex = 4;
@@ -766,7 +766,7 @@
             groupBox2.Controls.Add(button2);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(comboBox2);
-            groupBox2.Location = new Point(6, 102);
+            groupBox2.Location = new Point(6, 95);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(184, 90);
             groupBox2.TabIndex = 3;
