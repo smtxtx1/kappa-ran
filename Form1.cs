@@ -4249,6 +4249,8 @@ namespace Kappa
         public UIntPtr Mob_HP { get => Mob_HP2; set => Mob_HP2 = value; }
         public UIntPtr Mob_HP1 { get => Mob_HP2; set => Mob_HP2 = value; }
         public UIntPtr Mob_HP2 { get => mob_HP; set => mob_HP = value; }
+        public bool _Inject_SuperCut = false;
+
         public byte cutvalue = 0x01;
         public string getadr_supcut;
         public void SuperCut()
