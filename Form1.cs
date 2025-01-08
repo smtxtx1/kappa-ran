@@ -95,7 +95,7 @@ namespace Kappa
         public long AOB_GETBUFF;
         public long AOB_GETSKILL_LIST;
 
-
+        public long AOB_SPCUT;
         public long AOB_DRONE;
         public long AOB_ASPD;
         public long AOB_CUTAM;
