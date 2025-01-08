@@ -340,6 +340,7 @@ namespace Kappa
         private IntPtr allocate_adr_Nolimit2;
         private IntPtr allocate_adr_SKILL_LIST;
         private IntPtr allocate_adr_BUFF;
+        private IntPtr allocate_adr_SP_CUT;
 
         public string Expirydaysleft()
         {
