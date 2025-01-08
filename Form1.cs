@@ -2798,8 +2798,9 @@ namespace Kappa
                             if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked)
                             {
                                 MoveWhileAttacking();
-                                await Task.Delay(100);
                             }
+                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+
                             PerformSkill(idskilltype_test1, idskilltype_test2);
 
                         }
