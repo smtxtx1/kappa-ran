@@ -150,6 +150,8 @@ namespace Kappa
         public string SUPERPOT_ADR_RESULT;
         public string SUPERPOT_ADR_RESULT2;
         public string DRONE_ADR_RESULT;
+        public string SPCUT_ADR_RESULT;
+
 
         private Dictionary<string, string> itemDescriptions = new Dictionary<string, string>
     {
