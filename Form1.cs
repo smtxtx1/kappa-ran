@@ -1849,14 +1849,14 @@ namespace Kappa
         public string GMFOUND = "";
         private async void BossAlertWebhook(string BossText)
         {
-            saveID = m.ReadString(IDadr);
+            int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
             string value = ReadKeyFromFile();
 
             var payload = new
             {
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
-                content = $"{BossText}"
+                content = $"เวลาบอสตายและแมพ\n{BossText},วิในเกม\n{InnerTime}"
                 
 
             };
@@ -1878,7 +1878,7 @@ namespace Kappa
         {
             int num = 666;
             byte[] BossAlert = m.ReadBytes("00FD4232,0", num);
-            if (BossAlert != null)
+            if (BossAlert != null && BossAlert != BossAlert)
             {
                 string @string = Encoding.GetEncoding(874).GetString(BossAlert);
                 BossAlertWebhook(@string);
