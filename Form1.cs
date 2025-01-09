@@ -4579,7 +4579,7 @@ namespace Kappa
 
         private void button21_Click_2(object sender, EventArgs e)
         {
-            BossAlertWebhook("ทดสอบ");
+            BossAlertWebhook("ทดสอบ","เทส");
 
             StartBossAlert();
         }
