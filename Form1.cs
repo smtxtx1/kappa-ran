@@ -1861,7 +1861,7 @@ namespace Kappa
                 
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
-                content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime}\n"
+                content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime} วิโดยละเอียด{resultss}\n"
                 
 
             };
