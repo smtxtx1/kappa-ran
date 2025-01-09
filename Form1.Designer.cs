@@ -32,6 +32,7 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox12 = new GroupBox();
+            button21 = new Button();
             checkBox40 = new CheckBox();
             textBox10 = new TextBox();
             checkBox35 = new CheckBox();
@@ -239,7 +240,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            button21 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -311,6 +311,16 @@
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
+            // 
+            // button21
+            // 
+            button21.Location = new Point(114, 100);
+            button21.Name = "button21";
+            button21.Size = new Size(49, 23);
+            button21.TabIndex = 31;
+            button21.Text = "Boss";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click_2;
             // 
             // checkBox40
             // 
@@ -546,6 +556,7 @@
             checkBox41.TabIndex = 33;
             checkBox41.Text = "Super Cut";
             checkBox41.UseVisualStyleBackColor = true;
+            checkBox41.CheckedChanged += checkBox41_CheckedChanged;
             // 
             // textBox12
             // 
@@ -1784,16 +1795,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // button21
-            // 
-            button21.Location = new Point(114, 100);
-            button21.Name = "button21";
-            button21.Size = new Size(49, 23);
-            button21.TabIndex = 31;
-            button21.Text = "Boss";
-            button21.UseVisualStyleBackColor = true;
-            button21.Click += button21_Click_2;
             // 
             // Form1
             // 

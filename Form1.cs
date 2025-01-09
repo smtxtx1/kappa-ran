@@ -4580,6 +4580,14 @@ namespace Kappa
 
             StartBossAlert();
         }
+
+        private void checkBox41_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox41.Checked)
+            {
+                SuperCut();
+            }
+        }
     }
 
 }
