@@ -1868,7 +1868,7 @@ namespace Kappa
 
         public string GMFOUND = "";
         public string WebhookBossDied = "https://discord.com/api/webhooks/1326736041796698112/vWqXPa_GeqzahFnx7NvXsthTABqcl37ZbSdBREZ2ZkhAcYqac2qKHo32ab9-X9pvZiRh";
-        private async void BossAlertWebhook(string BossText)
+        private async void BossAlertWebhook(string BossText,string BossMap)
         {
             float calculateInnerTime = m.ReadFloat("031D9F78");
             float resultss = calculateInnerTime / 60;
@@ -1889,10 +1889,11 @@ namespace Kappa
                 color = 16711680, // Red color in decimal format
                 fields = new[]
                 {
-                    new { name = "📛 Boss Name", value = BossText, inline = false },
-                    new { name = "🕒 Death Time", value = startTime.ToString("HH:mm:ss"), inline = false },
-                    new { name = "🕹 In-Game Time", value = $"{InnerTime} seconds", inline = true },
-                    new { name = "⏳ Detailed Time", value = $"{resultss:F2} minutes", inline = true }
+                    new { name = "📛 ชื่อบอส", value = BossText, inline = false },
+                    new { name = "📛 แมพ", value = BossMap, inline = false },
+                    new { name = "🕒 เวลาบอสตาย", value = startTime.ToString("HH:mm:ss"), inline = false },
+                    new { name = "🕹 วิในเกม", value = $"{InnerTime} seconds", inline = true },
+                    new { name = "⏳ วิในเกมโดยละเอียด", value = $"{resultss:F2}", inline = true }
                 },
                 footer = new
                 {
@@ -1917,24 +1918,26 @@ namespace Kappa
             }
         }
 
-        private string previousString = string.Empty; // Declare a variable to store the previous value
-
+        private string previousStringBossName = string.Empty; // Declare a variable to store the previous value
+        private string previousStringBossMap = string.Empty; // Declare a variable to store the previous value
         private async Task GetBossDied()
         {
-            int num = 120;
-            byte[] BossAlert = m.ReadBytes("00FD4232,0", num);
-            if (BossAlert != null)
-            {
-                string @string = Encoding.GetEncoding(874).GetString(BossAlert);
-                if (!string.Equals(@string, previousString, StringComparison.Ordinal)) // Compare with the previous value
-                {
-                    if (@string.Contains("หัวหน้าศัตรู"))
-                    {
-                        BossAlertWebhook(@string);
-                    }
+            int num = 32;
+            byte[] BossName = m.ReadBytes("00FD4132,0", num);
+            byte[] BossMap = m.ReadBytes("00FD4332,0", num);
 
-                    previousString = @string; // Update the previous value
+            if (BossName != null)
+            {
+                string @string = Encoding.GetEncoding(874).GetString(BossName);
+                string @stringName = Encoding.GetEncoding(874).GetString(BossName);
+
+                if (!string.Equals(@string, previousStringBossName, StringComparison.Ordinal) || !string.Equals(@stringName, previousStringBossName, StringComparison.Ordinal)) // Compare with the previous value
+                {
+                    BossAlertWebhook(@string, @stringName);
+                    previousStringBossName = @string;
+                    previousStringBossMap = @stringName;
                 }
+
                 await Task.Delay(100); // Ensure this is awaited
             }
             try
