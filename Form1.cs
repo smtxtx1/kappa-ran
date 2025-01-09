@@ -1847,7 +1847,51 @@ namespace Kappa
         }
 
         public string GMFOUND = "";
+        private async void BossAlertWebhook(string BossText)
+        {
+            saveID = m.ReadString(IDadr);
+            string value = ReadKeyFromFile();
 
+            var payload = new
+            {
+                avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
+                username = ServerName,
+                content = $"{BossText}"
+                
+
+            };
+
+            // Call the SendWebhookAsync function
+            bool success = await WebhookSender.SendWebhookAsync(webhookUrl, payload);
+
+            if (success)
+            {
+                // MessageBox.Show("Webhook sent successfully!");
+            }
+            else
+            {
+                // MessageBox.Show("Failed to send webhook.");
+            }
+        }
+
+        private async Task GetBossDied()
+        {
+            int num = 666;
+            byte[] BossAlert = m.ReadBytes("00FD4232,0", num);
+            if (BossAlert != null)
+            {
+                string @string = Encoding.GetEncoding(874).GetString(BossAlert);
+                BossAlertWebhook(@string);
+            }
+            try
+            {
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
         private async Task GetPlayerAsync()
         {
             bool FoundGm = false;
