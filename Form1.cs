@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
+using Microsoft.VisualBasic;
 
 namespace Kappa
 {
@@ -1866,7 +1867,7 @@ namespace Kappa
         }
 
         public string GMFOUND = "";
-        public string WebhookBossDied = "https://discord.com/api/webhooks/1326709429487276123/dx_LIW2q6JFXxsRvp3xcro1B74rRdpOHPpYfHVmCY2bLH7PewIm9Ldr9iNRtxdTLHsQr";
+        public string WebhookBossDied = "https://discord.com/api/webhooks/1326736041796698112/vWqXPa_GeqzahFnx7NvXsthTABqcl37ZbSdBREZ2ZkhAcYqac2qKHo32ab9-X9pvZiRh";
         private async void BossAlertWebhook(string BossText)
         {
             float calculateInnerTime = m.ReadFloat("031D9F78");
@@ -1889,7 +1890,7 @@ namespace Kappa
                 fields = new[]
                 {
                     new { name = "📛 Boss Name", value = BossText, inline = false },
-                    new { name = "🕒 Death Time", value = startTime.ToString("yyyy-MM-dd HH:mm:ss"), inline = false },
+                    new { name = "🕒 Death Time", value = startTime.ToString("HH:mm:ss"), inline = false },
                     new { name = "🕹 In-Game Time", value = $"{InnerTime} seconds", inline = true },
                     new { name = "⏳ Detailed Time", value = $"{resultss:F2} minutes", inline = true }
                 },
@@ -4575,6 +4576,8 @@ namespace Kappa
 
         private void button21_Click_2(object sender, EventArgs e)
         {
+            BossAlertWebhook("ทดสอบ");
+
             StartBossAlert();
         }
     }
