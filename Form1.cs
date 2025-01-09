@@ -1850,6 +1850,7 @@ namespace Kappa
         public string WebhookBossDied = "";
         private async void BossAlertWebhook(string BossText)
         {
+            float calculateInnerTime = m.ReadFloat("031D9F78");
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
             string value = ReadKeyFromFile();
             DateTime startTime = DateTime.Now;
