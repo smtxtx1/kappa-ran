@@ -1869,20 +1869,38 @@ namespace Kappa
         public string WebhookBossDied = "https://discord.com/api/webhooks/1326709429487276123/dx_LIW2q6JFXxsRvp3xcro1B74rRdpOHPpYfHVmCY2bLH7PewIm9Ldr9iNRtxdTLHsQr";
         private async void BossAlertWebhook(string BossText)
         {
-
             float calculateInnerTime = m.ReadFloat("031D9F78");
             float resultss = calculateInnerTime / 60;
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
             string value = ReadKeyFromFile();
             DateTime startTime = DateTime.Now;
+
             var payload = new
             {
-
-                avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
-                content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime} วิโดยละเอียด{resultss}\n"
-
-
+                avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
+                embeds = new[]
+                {
+            new
+            {
+                title = "🛑 Boss Alert",
+                description = "A boss has been defeated!",
+                color = 16711680, // Red color in decimal format
+                fields = new[]
+                {
+                    new { name = "📛 Boss Name", value = BossText, inline = false },
+                    new { name = "🕒 Death Time", value = startTime.ToString("yyyy-MM-dd HH:mm:ss"), inline = false },
+                    new { name = "🕹 In-Game Time", value = $"{InnerTime} seconds", inline = true },
+                    new { name = "⏳ Detailed Time", value = $"{resultss:F2} minutes", inline = true }
+                },
+                footer = new
+                {
+                    text = "Boss Alert System",
+                    icon_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif"
+                },
+                timestamp = startTime.ToString("o") // ISO 8601 format for timestamp
+            }
+        }
             };
 
             // Call the SendWebhookAsync function
@@ -1898,6 +1916,8 @@ namespace Kappa
             }
         }
 
+        private string previousString = string.Empty; // Declare a variable to store the previous value
+
         private async Task GetBossDied()
         {
             int num = 120;
@@ -1905,12 +1925,16 @@ namespace Kappa
             if (BossAlert != null)
             {
                 string @string = Encoding.GetEncoding(874).GetString(BossAlert);
-                if (@string.Contains("หัวหน้าศัตรู"))
+                if (!string.Equals(@string, previousString, StringComparison.Ordinal)) // Compare with the previous value
                 {
-                    BossAlertWebhook(@string);
+                    if (@string.Contains("หัวหน้าศัตรู"))
+                    {
+                        BossAlertWebhook(@string);
+                    }
 
+                    previousString = @string; // Update the previous value
                 }
-                Task.Delay(100);
+                await Task.Delay(100); // Ensure this is awaited
             }
             try
             {
