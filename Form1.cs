@@ -1847,6 +1847,7 @@ namespace Kappa
         }
 
         public string GMFOUND = "";
+        public string WebhookBossDied = "";
         private async void BossAlertWebhook(string BossText)
         {
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
