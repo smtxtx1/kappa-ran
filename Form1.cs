@@ -1929,9 +1929,9 @@ namespace Kappa
             if (BossName != null)
             {
                 string @string = Encoding.GetEncoding(874).GetString(BossName);
-                string @stringName = Encoding.GetEncoding(874).GetString(BossName);
+                string @stringName = Encoding.GetEncoding(874).GetString(BossMap);
 
-                if (!string.Equals(@string, previousStringBossName, StringComparison.Ordinal) || !string.Equals(@stringName, previousStringBossName, StringComparison.Ordinal)) // Compare with the previous value
+                if (!string.Equals(@string, previousStringBossName, StringComparison.Ordinal) || !string.Equals(@stringName, previousStringBossMap, StringComparison.Ordinal)) // Compare with the previous value
                 {
                     BossAlertWebhook(@string, @stringName);
                     previousStringBossName = @string;
