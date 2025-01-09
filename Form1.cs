@@ -1852,12 +1852,12 @@ namespace Kappa
         {
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
             string value = ReadKeyFromFile();
-
+            DateTime startTime = DateTime.Now;
             var payload = new
             {
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
-                content = $"ชื่อบอส: {BossText}\nวิในเกม{InnerTime}\n"
+                content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime}\n"
                 
 
             };
