@@ -1857,13 +1857,13 @@ namespace Kappa
             {
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
-                content = $"เวลาบอสตายและแมพ\n{BossText},วิในเกม\n{InnerTime}"
+                content = $"ชื่อบอส: {BossText}\nวิในเกม{InnerTime}\n"
                 
 
             };
 
             // Call the SendWebhookAsync function
-            bool success = await WebhookSender.SendWebhookAsync(webhookUrl, payload);
+            bool success = await WebhookSender.SendWebhookAsync(WebhookBossDied, payload);
 
             if (success)
             {
