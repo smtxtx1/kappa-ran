@@ -1850,12 +1850,15 @@ namespace Kappa
         public string WebhookBossDied = "";
         private async void BossAlertWebhook(string BossText)
         {
+            
             float calculateInnerTime = m.ReadFloat("031D9F78");
+            float resultss = calculateInnerTime / 60;
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
             string value = ReadKeyFromFile();
             DateTime startTime = DateTime.Now;
             var payload = new
             {
+                
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
                 content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime}\n"
