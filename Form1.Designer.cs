@@ -52,6 +52,8 @@
             button13 = new Button();
             comboBox4 = new ComboBox();
             groupBox4 = new GroupBox();
+            checkBox41 = new CheckBox();
+            textBox12 = new TextBox();
             checkBox32 = new CheckBox();
             checkBox28 = new CheckBox();
             checkBox24 = new CheckBox();
@@ -237,8 +239,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox41 = new CheckBox();
-            textBox12 = new TextBox();
+            button21 = new Button();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -293,6 +294,7 @@
             // 
             // groupBox12
             // 
+            groupBox12.Controls.Add(button21);
             groupBox12.Controls.Add(checkBox40);
             groupBox12.Controls.Add(textBox10);
             groupBox12.Controls.Add(checkBox35);
@@ -534,6 +536,26 @@
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
+            // 
+            // checkBox41
+            // 
+            checkBox41.AutoSize = true;
+            checkBox41.Location = new Point(6, 96);
+            checkBox41.Name = "checkBox41";
+            checkBox41.Size = new Size(78, 19);
+            checkBox41.TabIndex = 33;
+            checkBox41.Text = "Super Cut";
+            checkBox41.UseVisualStyleBackColor = true;
+            // 
+            // textBox12
+            // 
+            textBox12.Location = new Point(105, 96);
+            textBox12.Multiline = true;
+            textBox12.Name = "textBox12";
+            textBox12.Size = new Size(57, 19);
+            textBox12.TabIndex = 34;
+            textBox12.Text = "1";
+            textBox12.TextAlign = HorizontalAlignment.Center;
             // 
             // checkBox32
             // 
@@ -1763,25 +1785,15 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // checkBox41
+            // button21
             // 
-            checkBox41.AutoSize = true;
-            checkBox41.Location = new Point(6, 96);
-            checkBox41.Name = "checkBox41";
-            checkBox41.Size = new Size(78, 19);
-            checkBox41.TabIndex = 33;
-            checkBox41.Text = "Super Cut";
-            checkBox41.UseVisualStyleBackColor = true;
-            // 
-            // textBox12
-            // 
-            textBox12.Location = new Point(105, 96);
-            textBox12.Multiline = true;
-            textBox12.Name = "textBox12";
-            textBox12.Size = new Size(57, 19);
-            textBox12.TabIndex = 34;
-            textBox12.Text = "1";
-            textBox12.TextAlign = HorizontalAlignment.Center;
+            button21.Location = new Point(114, 100);
+            button21.Name = "button21";
+            button21.Size = new Size(49, 23);
+            button21.TabIndex = 31;
+            button21.Text = "Boss";
+            button21.UseVisualStyleBackColor = true;
+            button21.Click += button21_Click_2;
             // 
             // Form1
             // 
@@ -2042,5 +2054,6 @@
         private CheckBox checkBox40;
         private CheckBox checkBox41;
         private TextBox textBox12;
+        private Button button21;
     }
 }

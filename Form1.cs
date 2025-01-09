@@ -994,11 +994,11 @@ namespace Kappa
 
                         if (checkStatus == 0)
                         {
-                                                Console.WriteLine($"Breaking:{checkStatus}");
+                            Console.WriteLine($"Breaking:{checkStatus}");
 
                             break;
                         }
-                        
+
                     }
                     break;
                 }
@@ -1788,7 +1788,7 @@ namespace Kappa
 
         private CancellationTokenSource monitoringCts;
         private CancellationTokenSource monitoringCtsPlayer;
-
+        private CancellationTokenSource bossalertCts;
         private async Task StartMonitoringMonstersAsync()
         {
             monitoringCts = new CancellationTokenSource();
@@ -1807,6 +1807,25 @@ namespace Kappa
                 // StopMonitoringMonsters(); // Ensure stopping on exception
             }
         }
+        private async Task StartBossAlert()
+        {
+            bossalertCts = new CancellationTokenSource();
+            try
+            {
+                while (!bossalertCts.Token.IsCancellationRequested)
+                {
+                    //   label2.Text = MonDistance.ToString();
+                    await GetBossDied();
+                    await Task.Delay(100); // Adjust the delay as needed
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
+                // StopMonitoringMonsters(); // Ensure stopping on exception
+            }
+        }
+
         private async Task StartMonitoringPlayerAsync()
         {
             monitoringCtsPlayer = new CancellationTokenSource();
@@ -1847,10 +1866,10 @@ namespace Kappa
         }
 
         public string GMFOUND = "";
-        public string WebhookBossDied = "";
+        public string WebhookBossDied = "https://discord.com/api/webhooks/1326709429487276123/dx_LIW2q6JFXxsRvp3xcro1B74rRdpOHPpYfHVmCY2bLH7PewIm9Ldr9iNRtxdTLHsQr";
         private async void BossAlertWebhook(string BossText)
         {
-            
+
             float calculateInnerTime = m.ReadFloat("031D9F78");
             float resultss = calculateInnerTime / 60;
             int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
@@ -1858,11 +1877,11 @@ namespace Kappa
             DateTime startTime = DateTime.Now;
             var payload = new
             {
-                
+
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
                 username = ServerName,
                 content = $"ชื่อบอส: {BossText}เวลาที่ตาย: {startTime}\nวิในเกม{InnerTime} วิโดยละเอียด{resultss}\n"
-                
+
 
             };
 
@@ -1881,18 +1900,23 @@ namespace Kappa
 
         private async Task GetBossDied()
         {
-            int num = 666;
+            int num = 120;
             byte[] BossAlert = m.ReadBytes("00FD4232,0", num);
-            if (BossAlert != null && BossAlert != BossAlert)
+            if (BossAlert != null)
             {
                 string @string = Encoding.GetEncoding(874).GetString(BossAlert);
-                BossAlertWebhook(@string);
+                if (@string.Contains("หัวหน้าศัตรู"))
+                {
+                    BossAlertWebhook(@string);
+
+                }
+                Task.Delay(100);
             }
             try
             {
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -1973,7 +1997,7 @@ namespace Kappa
                         {
                             Getback(0);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
 
                         }
@@ -2774,7 +2798,7 @@ namespace Kappa
             // Write new coordinates
             m.WriteMemory(getadr + "+4", "float", X_fromGetMonster.ToString());
             m.WriteMemory(getadr + "+C", "float", Y_fromGetMonster.ToString()); // Y-coordinate stays the same
-            m.WriteMemory(getadr + "+14", "float",Z_fromGetMonster.ToString());
+            m.WriteMemory(getadr + "+14", "float", Z_fromGetMonster.ToString());
             label6.Text = "MoveWhileAttacking";
             // Perform the movement
             RunActive();
@@ -2828,7 +2852,7 @@ namespace Kappa
                     {
                         if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
                         {
-                            
+
                             TARGET_RINGS = m.ReadInt(TARGET_RING);
                             monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
@@ -3655,8 +3679,8 @@ namespace Kappa
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
-               // DisplayAlloc();
-               // MonsterAlloc();
+                // DisplayAlloc();
+                // MonsterAlloc();
                 backgroundWorker2.RunWorkerAsync();
             }
         }
@@ -4523,6 +4547,11 @@ namespace Kappa
         {
             m.WriteMemory("00FE1000", "float", hScrollBar1.Value.ToString());
 
+        }
+
+        private void button21_Click_2(object sender, EventArgs e)
+        {
+            StartBossAlert();
         }
     }
 
