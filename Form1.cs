@@ -1966,11 +1966,29 @@ namespace Kappa
                 globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
                 bool PressedBackCard = false;
-                if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
+                if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked )
                 {
                     PressedBackCard = true;
                     await Getback(globalCrow);
                     PressedBackCard = false;
+                }
+                if (globalCrow > 0 && checkBox36.Checked)
+                {
+                    try
+                    {
+                        Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                        processToTerminate.Kill();
+                        processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                        MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        StopMonitoringPlayer();
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                       
+                    }
+
                 }
                 float closestDistance = float.MaxValue;
                 float closestDistancePlayer = float.MaxValue;
