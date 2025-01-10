@@ -1972,7 +1972,7 @@ namespace Kappa
                     await Getback(globalCrow);
                     PressedBackCard = false;
                 }
-                if (globalCrow > 0 && checkBox36.Checked)
+                if (globalCrow > 0 && checkBox42.Checked)
                 {
                     try
                     {
