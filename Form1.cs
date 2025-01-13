@@ -1409,7 +1409,7 @@ namespace Kappa
                 float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
 
                 // Check conditions to follow
-                if (mationCheck == 1)
+                if (mationCheck != 3)
                 {
                     // Only write memory if position has changed
                     if (followXnew != previousX || followZnew != previousZ)
