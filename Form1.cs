@@ -1398,70 +1398,56 @@ namespace Kappa
                 int mainSK2 = mem.Read2Byte(Skilluse2_adr);
                 int target = mem.ReadInt(TARGET_RING);
                 int mationCheck = mem.ReadInt(MATION_CHECK);
-                int actiontarget = mem.ReadInt(actioncheck);
                 int RClick_CHECK = mem.ReadByte("02FD4F91");
                 int Space_CHECK = mem.ReadByte("02FD4DBD");
                 int ACTION_MAIN = mem.Read2Byte(actioncheck);
 
-                Console.WriteLine($"{mationCheck}");
+                Console.WriteLine($"Mation Check: {mationCheck}");
 
-                float followXnew = currentX + ((float)rand.NextDouble() - 6.5f) * 2.0f * 6.1f;
-                float followZnew = currentZ + ((float)rand.NextDouble() - 6.5f) * 2.0f * 6.1f;
-
-                // Check conditions to follow
-                if (mationCheck != 3 && mationCheck != 0)
+                // If leader is using a skill, interrupt and replicate the skill
+                if (mationCheck == 3)
                 {
-                    // Only write memory if position has changed
-                        m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
-                        m.WriteMemory(getadr + "+C", "float", currentY.ToString());
-                        m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
-
-                        RunActive();
-                        previousX = followXnew;
-                        previousZ = followZnew;
-
-                        Task.Delay(1); // Small delay for smoother movement
-                        RunDeActive();
-
-                        // Handle spacebar action
-                        if (mem.ReadByte(Spacebar) != 1)
-                        {
-                            m.WriteMemory(Spacebar, "byte", "63");
-                            Task.Delay(10);
-                            m.WriteMemory(Spacebar, "byte", "01");
-                        }
-
-                    await Task.Delay(0); // Wait before the next iteration
-                }
-                if (checkBox8.Checked && mationCheck != 1)
-                {
-                    if (RClick_CHECK != 1)
+                    Console.WriteLine("Leader is using a skill. Interrupting movement...");
+                    if (mainSK1 > 0 || mainSK2 > 0) // Ensure valid skills are available
                     {
-                        if (mainSK2 == 9)
-                        {
-                            // await Task.Delay(1500); // Simulate delay for special condition
-                        }
-
-                        m.WriteMemory(TARGET_SKILL, "int", target.ToString());
-                        m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString());
-                        m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
-                        m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
-                        m.WriteMemory(forceattack_adr, "int", "5");
-                        RClick_CHECK = mem.ReadInt("02FD4F91");
-                        mainSK1 = mem.ReadByte(prevskill1_adr);
-                        mainSK2 = mem.ReadByte(prevskill2_adr);
-                        target = mem.ReadInt(TARGET_RING);
-                        ACTION_MAIN = mem.Read2Byte(actioncheck);
-
+                        m.WriteMemory(TARGET_SKILL, "int", target.ToString()); // Target the same as leader
+                        m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
+                        m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
+                        m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x")); // Skill 2
+                        m.WriteMemory(forceattack_adr, "int", "5"); // Force attack
                     }
-
-                    // Store current position for the next iteration
-                    previousX = currentX;
-                    previousZ = currentZ;
+                    Task.Delay(0); // Continue to the next loop iteration after skill usage
+                    continue; // Skip further logic and wait for the next iteration
                 }
 
-                // Perform any cleanup or final actions outside the loop
-                await Task.Delay(0);
+                // Perform movement logic if not attacking
+                if (mationCheck != 0)
+                {
+                    float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 1.1f;
+                    float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 1.1f;
+
+                    // Update position only if needed
+                    m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
+                    m.WriteMemory(getadr + "+C", "float", currentY.ToString());
+                    m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
+
+                    RunActive();
+                    RunDeActive();
+
+                    // Handle spacebar action
+                    if (mem.ReadByte(Spacebar) != 1)
+                    {
+                        m.WriteMemory(Spacebar, "byte", "63");
+                        await Task.Delay(10);
+                        m.WriteMemory(Spacebar, "byte", "01");
+                    }
+                }
+
+                // Store the current position for the next iteration
+                previousX = currentX;
+                previousZ = currentZ;
+
+                await Task.Delay(0); // Minimal delay
             }
         }
         private void button3_Click(object sender, EventArgs e)
