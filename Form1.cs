@@ -680,11 +680,12 @@ namespace Kappa
             {
                 // Original bytes to freeze (with space for the offset at the end)
                 byte[] freezebytesX = { 0xE8, 0x00, 0x00, 0x00, 0x00 }; // E8 is the opcode for CALL
+                int SUBB = (int)AOB_SABUD2 - ((int)allocate_adr_aoe + freezebytesX.Length + 0); ;
+
+                BitConverter.GetBytes(SUBB).CopyTo(freezebytesX, 1);
 
                 // Create a code cave and obtain the address for SBUD_ADR_GET
                 SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, freezebytesX.Length, 100, m);
-                int SUBB = (int)SBUD_ADR_GET - ((int)AOB_SABUD2 + freezebytesX.Length - 1);
-                BitConverter.GetBytes(SUBB).CopyTo(freezebytesX, 1);
             }
         }
 
