@@ -111,7 +111,7 @@ namespace Kappa
         public long AOB_ANTICHAT;
         public long AOB_LONGBUFF;
         public long AOB_FastPET;
-
+        public long AOB_SABUD2;
 
         public string FASTPET_ADR_RESULT;
         public string Guildselected;
@@ -502,7 +502,7 @@ namespace Kappa
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             long AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
-            long AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
+            AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
@@ -512,6 +512,7 @@ namespace Kappa
             string SaBUDtest = AOB_SABUD2.ToString("x");
             byte [] SabudByte = m.ReadBytes(SaBUDtest,5);
             ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
+            MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
@@ -670,6 +671,22 @@ namespace Kappa
         public int SKILLPET_ADR_RESULT2 = 0;
         public bool _INJECT_FPET = false;
         public int FASTPET_ADR_RESULT2 = 0;
+        public bool Sabud_ = false;
+        public int SBUD_ADR_GET = 0;
+        public void _Inject_SBUD()
+        {
+            if (!Sabud_)
+            {
+                byte[] freezebytesX = { 0xE8, 0xCB, 0xB1, 0xDB, 0xF5 };
+                SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, 6, 100, m);//Input address to create codecave
+                int jumpOffset = (int)AOB_SABUD2 - ((int)allocate_adr + freezebytesX.Length + 0);
+                BitConverter.GetBytes(jumpOffset).CopyTo(freezebytesX, freezebytesX.Length - 4);
+
+                //AOB_SABUD2
+            }
+
+        }
+
 
         public void _Inject_Fpet()
         {
