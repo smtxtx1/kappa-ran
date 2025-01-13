@@ -113,6 +113,7 @@ namespace Kappa
         public long AOB_LONGBUFF;
         public long AOB_FastPET;
         public long AOB_SABUD2;
+        public long AOB_SABUD;
 
         public string FASTPET_ADR_RESULT;
         public string Guildselected;
@@ -502,7 +503,7 @@ namespace Kappa
             AOB_GETBUFF = AoB_Scan_GETBUFF.FirstOrDefault();
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
-            long AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
+            AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
             AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
@@ -689,29 +690,16 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xFF, 0x86, 0x70, 0x30, 0x00, 0x00,
-                    0x83, 0xBE, 0x70, 0x30, 0x00, 0x00, cutvalue,
-                    0x74, 0x09,
-                    0x0F, 0x1F, 0x40, 0x00,
-                    0xE9, 0x5F, 0x35, 0xA4, 0xD7,
-                    0xC7, 0x05, 0x8C, 0xA2, 0xB9, 0x00, 0x00, 0x00, 0x00, 0x00,
-                    0xE9, 0x50, 0x35, 0xA4, 0xD7
+                    0xE8,0xCB,0xB1,0xFA,0xDD,
+                    0xE9,0x2F,0xCD,0xFA,0xDD
                 };
 
                 // Calculate offsets dynamically
-                int jumpOffset1 = (int)(allocate_adr_SABUD + 0x18) - ((int)allocate_adr_SABUD + 15); // Offset for `je`, relative to next instruction
-                int jumpOffset2 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SABUD + 24);          // Offset for the first `jmp`, relative to next instruction
-                int jumpOffset3 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SABUD + 39);          // Offset for the second `jmp`, relative to next instruction
+                int jumpOffset2 = (int)(AOB_SABUD2) - ((int)allocate_adr_SABUD + 0);          // Offset for the first `jmp`, relative to next instruction
 
                 // Update the jump offsets in the assembly code
-                assemblyCode[14] = (byte)((sbyte)jumpOffset1); // Signed byte for `je` (short jump)
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); // Place the offset for the first `jmp`
-                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 35); // Place the offset for the second `jmp`
-                                                                             // assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); 
 
-                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
-
-                // Write the initial assembly code to the allocated address
                 m.WriteMemory(allocate_adr_SABUD.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
 
@@ -724,10 +712,10 @@ namespace Kappa
                     };
 
                 // Calculate the jump offset for the second jmp instruction
-                int jmpOffset3 = (int)allocate_adr_SABUD - ((int)AOB_SPCUT + jmpCodemy.Length - 1);
+                int jmpOffset3 = (int)allocate_adr_SABUD - ((int)AOB_SABUD2 + jmpCodemy.Length - 1);
                 BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory(SPCUT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+                m.WriteMemory(SABUDWRITE_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
             }
         }
