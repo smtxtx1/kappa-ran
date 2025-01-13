@@ -1416,7 +1416,7 @@ namespace Kappa
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x")); // Skill 2
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        if (mationCheck == 1)
+                        if (m.ReadInt(MATION_CHECK) == 1)
                         {
                             m.WriteMemory(MATION_CHECK, "int", "3");
                         }
