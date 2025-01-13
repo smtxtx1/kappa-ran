@@ -2915,7 +2915,7 @@ namespace Kappa
                         }
                         MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
 
-                        if (MATION == 0 && MATION != 1 && MATION != 3) // if can't hit will move
+                        if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked) // if can't hit will move
                         {
 
                             label6.Text = "Unable to attack. Retrying...";
