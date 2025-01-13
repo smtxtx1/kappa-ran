@@ -683,7 +683,7 @@ namespace Kappa
 
                 // Create a code cave and obtain the address for SBUD_ADR_GET
                 SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, freezebytesX.Length, 100, m);
-                int jmpOffset2 = (int)SBUD_ADR_GET - ((int)AOB_AOE + freezebytesX.Length);
+                int jmpOffset2 = (int)SBUD_ADR_GET - ((int)AOB_SABUD2 + freezebytesX.Length);
 
                 BitConverter.GetBytes(jmpOffset2).CopyTo(freezebytesX, 1); // Copy after the CALL opcode (E8)
             }
