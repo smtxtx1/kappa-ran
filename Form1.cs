@@ -1415,9 +1415,14 @@ namespace Kappa
                         m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x")); // Skill 2
-                        m.WriteMemory(forceattack_adr, "int", "5"); // Force attack
+                        m.WriteMemory(forceattack_adr, "int", "5");
+                        if (mationCheck == 1)
+                        {
+                            m.WriteMemory(MATION_CHECK, "int", "3");
+                        }
+
                     }
-                    m.WriteMemory(MATION_CHECK, "int", "3");
+
                     Task.Delay(0); // Continue to the next loop iteration after skill usage
                     continue; // Skip further logic and wait for the next iteration
                 }
@@ -1425,8 +1430,8 @@ namespace Kappa
                 // Perform movement logic if not attacking
                 if (mationCheck != 0)
                 {
-                    float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 1.1f;
-                    float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 1.1f;
+                    float followXnew = currentX + ((float)rand.NextDouble() - 1.5f) * 2.0f * 1.1f;
+                    float followZnew = currentZ + ((float)rand.NextDouble() - 10.5f) * 2.0f * 1.1f;
 
                     // Update position only if needed
                     m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
