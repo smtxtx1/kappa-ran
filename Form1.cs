@@ -1405,15 +1405,13 @@ namespace Kappa
 
                 Console.WriteLine($"{mationCheck}");
 
-                float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
-                float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
+                float followXnew = currentX + ((float)rand.NextDouble() - 6.5f) * 2.0f * 6.1f;
+                float followZnew = currentZ + ((float)rand.NextDouble() - 6.5f) * 2.0f * 6.1f;
 
                 // Check conditions to follow
                 if (mationCheck != 3 && mationCheck != 0)
                 {
                     // Only write memory if position has changed
-                    if (followXnew != previousX || followZnew != previousZ)
-                    {
                         m.WriteMemory(getadr + "+4", "float", followXnew.ToString());
                         m.WriteMemory(getadr + "+C", "float", currentY.ToString());
                         m.WriteMemory(getadr + "+14", "float", followZnew.ToString());
@@ -1432,7 +1430,6 @@ namespace Kappa
                             await Task.Delay(10);
                             m.WriteMemory(Spacebar, "byte", "01");
                         }
-                    }
 
                     await Task.Delay(0); // Wait before the next iteration
                 }
