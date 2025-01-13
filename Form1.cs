@@ -500,12 +500,13 @@ namespace Kappa
             AOB_GETSKILL_LIST = AoB_Scan_GET_SKILL_LIST.FirstOrDefault();
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             long AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
+            long AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_FastPET = AoB_Scan_FastPet.FirstOrDefault();
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
-
+            string SaBUDtest = AOB_SABUD2.ToString("x");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
