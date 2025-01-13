@@ -221,7 +221,7 @@ namespace Kappa
         public string gotoY = "00FF38A0,3030";
 
         public string gotoZ = "00FF38A0,3034";
-        public string Convert = "default";
+        public string ConvertSabud = "default";
         /// <summary>
         /// POSITION END
         /// </summary>
@@ -509,7 +509,7 @@ namespace Kappa
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
             string SaBUDtest = AOB_SABUD2.ToString("x");
             byte [] SabudByte = m.ReadBytes(SaBUDtest,5);
-            Convert = BitConverter.ToString(SabudByte).Replace("-", " ");
+            ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
