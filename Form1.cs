@@ -1420,14 +1420,14 @@ namespace Kappa
                         previousX = followXnew;
                         previousZ = followZnew;
 
-                        await Task.Delay(1); // Small delay for smoother movement
+                        Task.Delay(1); // Small delay for smoother movement
                         RunDeActive();
 
                         // Handle spacebar action
                         if (mem.ReadByte(Spacebar) != 1)
                         {
                             m.WriteMemory(Spacebar, "byte", "63");
-                            await Task.Delay(10);
+                            Task.Delay(10);
                             m.WriteMemory(Spacebar, "byte", "01");
                         }
 
