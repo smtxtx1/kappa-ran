@@ -1963,8 +1963,8 @@ namespace Kappa
             {
                 string Guild = "";
                 string NAMEGET = "";
-                globalCrow = m.ReadInt("MiniA.exe+7963E0,D6E4");
-                UIntPtr curr = m.GetCode("MiniA.exe+7963E0,D6E8");
+                globalCrow = m.ReadInt("MiniA.exe+7973E0,D6E4");
+                UIntPtr curr = m.GetCode("MiniA.exe+7973E0,D6E8");
                 bool PressedBackCard = false;
                 if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked )
                 {
@@ -2287,8 +2287,8 @@ namespace Kappa
         {
             try
             {
-                int globalCrow = m.ReadInt("MiniA.exe+7963E0,A7EC");
-                UIntPtr curr = m.GetCode("MiniA.exe+7963E0,A7F0");
+                int globalCrow = m.ReadInt("MiniA.exe+7973E0,A7EC");
+                UIntPtr curr = m.GetCode("MiniA.exe+7973E0,A7F0");
 
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
