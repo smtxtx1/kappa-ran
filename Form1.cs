@@ -1411,8 +1411,6 @@ namespace Kappa
                     if (mainSK1 >= 0 || mainSK2 >= 0) // Ensure valid skills are available
                     {
                         m.WriteMemory(MATION_CHECK, "int", "0");
-                        Task.Delay(0); // Continue to the next loop iteration after skill usage
-
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString()); // Target the same as leader
                         m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
