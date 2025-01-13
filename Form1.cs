@@ -4379,9 +4379,10 @@ namespace Kappa
         public string getadr_supcut;
         public void SuperCut()
         {
-            
+            MessageBox.Show("SSSSS");
             if (!_Inject_SuperCut)
             {
+                
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_SP_CUT = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
@@ -4607,7 +4608,7 @@ namespace Kappa
 
         private void checkBox41_CheckedChanged(object sender, EventArgs e)
         {
-                SuperCut();
+          SuperCut();
         }
     }
 
