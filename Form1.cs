@@ -221,6 +221,7 @@ namespace Kappa
         public string gotoY = "00FF38A0,3030";
 
         public string gotoZ = "00FF38A0,3034";
+        public string Convert = "default";
         /// <summary>
         /// POSITION END
         /// </summary>
