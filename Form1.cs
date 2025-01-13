@@ -26,6 +26,7 @@ using static KeyAuth.api;
 using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using Microsoft.VisualBasic;
+using System.Buffers;
 
 namespace Kappa
 {
@@ -677,15 +678,17 @@ namespace Kappa
         {
             if (!Sabud_)
             {
-                byte[] freezebytesX = { 0xE8, 0xCB, 0xB1, 0xDB, 0xF5 };
-                SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, 6, 100, m);//Input address to create codecave
-                int jumpOffset = (int)AOB_SABUD2 - ((int)allocate_adr + freezebytesX.Length + 0);
-                BitConverter.GetBytes(jumpOffset).CopyTo(freezebytesX, freezebytesX.Length - 4);
+                // Original bytes to freeze (with space for the offset at the end)
+                byte[] freezebytesX = { 0xE8, 0x00, 0x00, 0x00, 0x00 }; // E8 is the opcode for CALL
 
-                //AOB_SABUD2
+                // Create a code cave and obtain the address for SBUD_ADR_GET
+                SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, freezebytesX.Length, 100, m);
+                int jmpOffset2 = (int)SBUD_ADR_GET - ((int)AOB_AOE + freezebytesX.Length);
+
+                BitConverter.GetBytes(jmpOffset2).CopyTo(freezebytesX, 1); // Copy after the CALL opcode (E8)
             }
-
         }
+
 
 
         public void _Inject_Fpet()
@@ -3814,8 +3817,8 @@ namespace Kappa
 
         private void checkBox23_CheckedChanged(object sender, EventArgs e)
         {
-            m.WriteMemory(SABUDWRITE_ADR_RESULT, "bytes", ConvertSabud);
-        }
+            _Inject_SBUD();
+         }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
         {
