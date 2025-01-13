@@ -485,7 +485,7 @@ namespace Kappa
             var AoB_Scan_SuperCUT = await m.AoBScan("ff 86 ? ? ? ? 3b bb", false, true);
             //e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 47 ? 2b c2
             var AoB_Scan_SABUD = await m.AoBScan("e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 54 ? ? 55 57 52 50 8b ce e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 4f", false, true);
-            var AoB_Scan_SABUD2 = await m.AoBScan("e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 47 ? 2b c2", false, true);
+            var AoB_Scan_SABUD2 = await m.AoBScan("83 ec ? 0f b7 ? ? ? 53 6b c0 ? 8b 5c", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
             var AoB_Scan_LOCALPLAYER = await m.AoBScan("8b 86 ? ? ? ? 81 c6 ? ? ? ? 52", false, true);
