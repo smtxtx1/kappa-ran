@@ -1409,7 +1409,7 @@ namespace Kappa
                 float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
 
                 // Check conditions to follow
-                if (mationCheck != 3)
+                if (mationCheck != 3 && mationCheck != 0)
                 {
                     // Only write memory if position has changed
                     if (followXnew != previousX || followZnew != previousZ)
@@ -1436,7 +1436,7 @@ namespace Kappa
 
                     await Task.Delay(0); // Wait before the next iteration
                 }
-                else if (checkBox8.Checked && mationCheck != 1)
+                if (checkBox8.Checked && mationCheck != 1)
                 {
                     if (RClick_CHECK != 1)
                     {
