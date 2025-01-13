@@ -1391,22 +1391,25 @@ namespace Kappa
 
             while (!followLeaderCancellationTokenSource.Token.IsCancellationRequested)
             {
-                // Read current coordinates and other necessary values once at the start of the loop
-                float currentX = mem.ReadFloat(CurrentX);
-                float currentY = mem.ReadFloat(CurrentY);
-                float currentZ = mem.ReadFloat(CurrentZ);
-                int mainSK1 = mem.Read2Byte(prevskill1_adr);
-                int mainSK2 = mem.Read2Byte(prevskill2_adr);
+                float currentX = mem.ReadFloat(gotoX);
+                float currentY = mem.ReadFloat(gotoY);
+                float currentZ = mem.ReadFloat(gotoZ);
+                int mainSK1 = mem.Read2Byte(Skilluse1_adr);
+                int mainSK2 = mem.Read2Byte(Skilluse2_adr);
                 int target = mem.ReadInt(TARGET_RING);
                 int mationCheck = mem.ReadInt(MATION_CHECK);
                 int actiontarget = mem.ReadInt(actioncheck);
+                int RClick_CHECK = mem.ReadByte("034E4631");
+                int Space_CHECK = mem.ReadByte("034E445D");
+                int ACTION_MAIN = mem.Read2Byte(actioncheck);
 
-                // Calculate new follow positions
+                Console.WriteLine($"{mationCheck}");
+
                 float followXnew = currentX + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
                 float followZnew = currentZ + ((float)rand.NextDouble() - 0.5f) * 2.0f * 0.1f;
 
                 // Check conditions to follow
-                if (mationCheck == 1 && mationCheck != 3)
+                if (mationCheck == 1)
                 {
                     // Only write memory if position has changed
                     if (followXnew != previousX || followZnew != previousZ)
@@ -1419,7 +1422,7 @@ namespace Kappa
                         previousX = followXnew;
                         previousZ = followZnew;
 
-                        await Task.Delay(10); // Small delay for smoother movement
+                        await Task.Delay(1); // Small delay for smoother movement
                         RunDeActive();
 
                         // Handle spacebar action
@@ -1431,28 +1434,28 @@ namespace Kappa
                         }
                     }
 
-                    await Task.Delay(10); // Wait before the next iteration
+                    await Task.Delay(0); // Wait before the next iteration
                 }
                 else if (checkBox8.Checked && mationCheck != 1)
                 {
-                    mainSK1 = mem.ReadByte(prevskill1_adr);
-                    mainSK2 = mem.ReadByte(prevskill2_adr);
-                    target = mem.ReadInt(TARGET_RING);
-
-                    if (mationCheck == 3)
+                    if (RClick_CHECK != 1)
                     {
                         if (mainSK2 == 9)
                         {
-                            await Task.Delay(1500); // Simulate delay for special condition
+                            // await Task.Delay(1500); // Simulate delay for special condition
                         }
 
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString());
-                        m.WriteMemory(actioncheck, "int", actiontarget.ToString());
+                        m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString());
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
+                        RClick_CHECK = mem.ReadInt("031F8A39");
+                        mainSK1 = mem.ReadByte(prevskill1_adr);
+                        mainSK2 = mem.ReadByte(prevskill2_adr);
+                        target = mem.ReadInt(TARGET_RING);
+                        ACTION_MAIN = mem.Read2Byte(actioncheck);
 
-                        await Task.Delay(10); // Wait before the next iteration
                     }
 
                     // Store current position for the next iteration
@@ -1461,7 +1464,7 @@ namespace Kappa
                 }
 
                 // Perform any cleanup or final actions outside the loop
-                await Task.Delay(10);
+                await Task.Delay(0);
             }
         }
         private void button3_Click(object sender, EventArgs e)
