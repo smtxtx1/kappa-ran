@@ -347,7 +347,7 @@ namespace Kappa
         private IntPtr allocate_adr_SKILL_LIST;
         private IntPtr allocate_adr_BUFF;
         private IntPtr allocate_adr_SP_CUT;
-
+        private IntPtr allocate_adr_SABUD;
         public string Expirydaysleft()
         {
             Login.KeyAuthApp.check();
@@ -674,18 +674,61 @@ namespace Kappa
         public int FASTPET_ADR_RESULT2 = 0;
         public bool Sabud_ = false;
         public int SBUD_ADR_GET = 0;
+        
         public void _Inject_SBUD()
         {
             if (!Sabud_)
             {
-                // Original bytes to freeze (with space for the offset at the end)
-                byte[] freezebytesX = { 0xE8, 0x00, 0x00, 0x00, 0x00 }; // E8 is the opcode for CALL
-                int SUBB = (int)AOB_SABUD2 - ((int)SBUD_ADR_GET + freezebytesX.Length + 0); ;
 
-                BitConverter.GetBytes(SUBB).CopyTo(freezebytesX, 1);
+                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                allocate_adr_SABUD = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
 
-                // Create a code cave and obtain the address for SBUD_ADR_GET
-                SBUD_ADR_GET = CodeCave.CreateCodeCave(freezebytesX, SABUDWRITE_ADR_RESULT, SBUD_ADR_GET, freezebytesX.Length, 100, m);
+                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+                // Assembly code for fstp dword ptr [esp+38]
+                byte[] assemblyCode = new byte[]
+                {
+                    0xFF, 0x86, 0x70, 0x30, 0x00, 0x00,
+                    0x83, 0xBE, 0x70, 0x30, 0x00, 0x00, cutvalue,
+                    0x74, 0x09,
+                    0x0F, 0x1F, 0x40, 0x00,
+                    0xE9, 0x5F, 0x35, 0xA4, 0xD7,
+                    0xC7, 0x05, 0x8C, 0xA2, 0xB9, 0x00, 0x00, 0x00, 0x00, 0x00,
+                    0xE9, 0x50, 0x35, 0xA4, 0xD7
+                };
+
+                // Calculate offsets dynamically
+                int jumpOffset1 = (int)(allocate_adr_SABUD + 0x18) - ((int)allocate_adr_SABUD + 15); // Offset for `je`, relative to next instruction
+                int jumpOffset2 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SABUD + 24);          // Offset for the first `jmp`, relative to next instruction
+                int jumpOffset3 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SABUD + 39);          // Offset for the second `jmp`, relative to next instruction
+
+                // Update the jump offsets in the assembly code
+                assemblyCode[14] = (byte)((sbyte)jumpOffset1); // Signed byte for `je` (short jump)
+                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); // Place the offset for the first `jmp`
+                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 35); // Place the offset for the second `jmp`
+                                                                             // assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+
+                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
+
+                // Write the initial assembly code to the allocated address
+                m.WriteMemory(allocate_adr_SABUD.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+
+
+
+                // Assembly code for jmp to allocate_adr with nop 2
+                jmpCodemy = new byte[]
+    {
+                    0xE9, 0x00, 0x00, 0x00, 0x00,
+                    0x90
+                    };
+
+                // Calculate the jump offset for the second jmp instruction
+                int jmpOffset3 = (int)allocate_adr_SABUD - ((int)AOB_SPCUT + jmpCodemy.Length - 1);
+                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+
+                m.WriteMemory(SPCUT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
+
             }
         }
 
