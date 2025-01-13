@@ -702,8 +702,8 @@ namespace Kappa
                 // Assembly code to write into the allocated memory
                 byte[] assemblyCode = new byte[]
                 {
-            0xE8, 0x00, 0x00, 0x00, 0x00, // CALL with offset to be calculated
-            0xE9, 0x00, 0x00, 0x00, 0x00  // JMP with offset to be calculated
+                  0xE8, 0x00, 0x00, 0x00, 0x00, // CALL with offset to be calculated
+                  0xE9, 0x00, 0x00, 0x00, 0x00  // JMP with offset to be calculated
                 };
 
                 // Calculate the offset for the CALL instruction
@@ -712,7 +712,7 @@ namespace Kappa
                 BitConverter.GetBytes(callOffset).CopyTo(assemblyCode, 1);
 
                 // Calculate the offset for the JMP instruction
-                int jmpBackAddress = callTargetAddress + 5; // Return to the next instruction after CALL
+                int jmpBackAddress = (int)AOB_SABUD + 6; // Return to the next instruction after CALL
                 int jmpOffset = jmpBackAddress - ((int)allocate_adr_SABUD + assemblyCode.Length);
                 BitConverter.GetBytes(jmpOffset).CopyTo(assemblyCode, 6);
 
@@ -722,12 +722,11 @@ namespace Kappa
                 // Assembly code to redirect to the allocated memory
                 byte[] jmpCode = new byte[]
                 {
-            0xE9, 0x00, 0x00, 0x00, 0x00, // JMP with offset to be calculated
-            0x90                           // NOP for alignment
+                0xE9, 0x00, 0x00, 0x00, 0x00 // JMP with offset to be calculated 
                 };
 
                 // Calculate the jump offset for the redirection
-                int jmpToAllocatedMemoryOffset = (int)allocate_adr_SABUD - ((int)AOB_SABUD + jmpCode.Length);
+                int jmpToAllocatedMemoryOffset = (int)allocate_adr_SABUD - ((int)AOB_SABUD + jmpCode.Length - 0);
                 BitConverter.GetBytes(jmpToAllocatedMemoryOffset).CopyTo(jmpCode, 1);
 
                 // Write the jump redirection code
