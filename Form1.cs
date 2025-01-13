@@ -269,6 +269,7 @@ namespace Kappa
 
         public string TARGET_RING_CHECK = "00FF38A0,4060"; //
 
+        public string SABUDWRITE_ADR_RESULT = "default";
 
         public string TARGET_RING = "00FF38A0,4064"; //
 
@@ -507,6 +508,7 @@ namespace Kappa
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_FastPET = AoB_Scan_FastPet.FirstOrDefault();
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
+            
             string SaBUDtest = AOB_SABUD2.ToString("x");
             byte [] SabudByte = m.ReadBytes(SaBUDtest,5);
             ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
@@ -530,6 +532,7 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+            SABUDWRITE_ADR_RESULT = AOB_SABUD.ToString("x");
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
             FASTPET_ADR_RESULT = AOB_FastPET.ToString("x");
             SPCUT_ADR_RESULT = AOB_SPCUT.ToString("x");
@@ -3794,8 +3797,7 @@ namespace Kappa
 
         private void checkBox23_CheckedChanged(object sender, EventArgs e)
         {
-            FixedSkill();
-            _Inject_FixedSkill = !_Inject_FixedSkill;
+            m.WriteMemory(SABUDWRITE_ADR_RESULT, "bytes", ConvertSabud);
         }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
