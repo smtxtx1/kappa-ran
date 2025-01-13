@@ -32,6 +32,7 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox12 = new GroupBox();
+            checkBox42 = new CheckBox();
             button21 = new Button();
             checkBox40 = new CheckBox();
             textBox10 = new TextBox();
@@ -240,7 +241,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox42 = new CheckBox();
+            groupBox14 = new GroupBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -258,6 +259,7 @@
             groupBox11.SuspendLayout();
             groupBox10.SuspendLayout();
             groupBox3.SuspendLayout();
+            groupBox14.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -274,6 +276,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.DimGray;
+            tabPage1.Controls.Add(groupBox14);
             tabPage1.Controls.Add(groupBox12);
             tabPage1.Controls.Add(checkBox30);
             tabPage1.Controls.Add(label4);
@@ -307,12 +310,22 @@
             groupBox12.Controls.Add(BTN_STOP);
             groupBox12.Controls.Add(BTN_START);
             groupBox12.Controls.Add(textBox9);
-            groupBox12.Location = new Point(193, 231);
+            groupBox12.Location = new Point(196, 231);
             groupBox12.Name = "groupBox12";
             groupBox12.Size = new Size(198, 129);
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
+            // 
+            // checkBox42
+            // 
+            checkBox42.AutoSize = true;
+            checkBox42.Location = new Point(126, 18);
+            checkBox42.Name = "checkBox42";
+            checkBox42.Size = new Size(69, 19);
+            checkBox42.TabIndex = 32;
+            checkBox42.Text = "เจอคนหนี";
+            checkBox42.UseVisualStyleBackColor = true;
             // 
             // button21
             // 
@@ -521,13 +534,10 @@
             // 
             // groupBox4
             // 
-            groupBox4.Controls.Add(checkBox41);
-            groupBox4.Controls.Add(textBox12);
             groupBox4.Controls.Add(checkBox32);
             groupBox4.Controls.Add(checkBox28);
             groupBox4.Controls.Add(checkBox24);
             groupBox4.Controls.Add(textBox8);
-            groupBox4.Controls.Add(checkBox23);
             groupBox4.Controls.Add(checkBox21);
             groupBox4.Controls.Add(checkBox18);
             groupBox4.Controls.Add(checkBox17);
@@ -544,7 +554,7 @@
             groupBox4.Controls.Add(textBox3);
             groupBox4.Location = new Point(212, 6);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(176, 224);
+            groupBox4.Size = new Size(176, 206);
             groupBox4.TabIndex = 15;
             groupBox4.TabStop = false;
             groupBox4.Text = "Misc";
@@ -552,7 +562,7 @@
             // checkBox41
             // 
             checkBox41.AutoSize = true;
-            checkBox41.Location = new Point(6, 96);
+            checkBox41.Location = new Point(6, 22);
             checkBox41.Name = "checkBox41";
             checkBox41.Size = new Size(78, 19);
             checkBox41.TabIndex = 33;
@@ -562,7 +572,7 @@
             // 
             // textBox12
             // 
-            textBox12.Location = new Point(105, 96);
+            textBox12.Location = new Point(105, 22);
             textBox12.Multiline = true;
             textBox12.Name = "textBox12";
             textBox12.Size = new Size(57, 19);
@@ -573,7 +583,7 @@
             // checkBox32
             // 
             checkBox32.AutoSize = true;
-            checkBox32.Location = new Point(94, 158);
+            checkBox32.Location = new Point(94, 139);
             checkBox32.Name = "checkBox32";
             checkBox32.Size = new Size(81, 19);
             checkBox32.TabIndex = 28;
@@ -584,7 +594,7 @@
             // checkBox28
             // 
             checkBox28.AutoSize = true;
-            checkBox28.Location = new Point(94, 200);
+            checkBox28.Location = new Point(94, 160);
             checkBox28.Name = "checkBox28";
             checkBox28.Size = new Size(69, 19);
             checkBox28.TabIndex = 24;
@@ -616,7 +626,7 @@
             // checkBox23
             // 
             checkBox23.AutoSize = true;
-            checkBox23.Location = new Point(94, 176);
+            checkBox23.Location = new Point(6, 47);
             checkBox23.Name = "checkBox23";
             checkBox23.Size = new Size(72, 19);
             checkBox23.TabIndex = 20;
@@ -638,7 +648,7 @@
             // checkBox18
             // 
             checkBox18.AutoSize = true;
-            checkBox18.Location = new Point(94, 139);
+            checkBox18.Location = new Point(94, 120);
             checkBox18.Name = "checkBox18";
             checkBox18.Size = new Size(66, 19);
             checkBox18.TabIndex = 16;
@@ -649,7 +659,7 @@
             // checkBox17
             // 
             checkBox17.AutoSize = true;
-            checkBox17.Location = new Point(94, 119);
+            checkBox17.Location = new Point(94, 100);
             checkBox17.Name = "checkBox17";
             checkBox17.Size = new Size(76, 19);
             checkBox17.TabIndex = 15;
@@ -681,7 +691,7 @@
             // checkBox12
             // 
             checkBox12.AutoSize = true;
-            checkBox12.Location = new Point(7, 200);
+            checkBox12.Location = new Point(6, 176);
             checkBox12.Name = "checkBox12";
             checkBox12.Size = new Size(79, 19);
             checkBox12.TabIndex = 12;
@@ -692,7 +702,7 @@
             // checkBox11
             // 
             checkBox11.AutoSize = true;
-            checkBox11.Location = new Point(7, 180);
+            checkBox11.Location = new Point(6, 156);
             checkBox11.Name = "checkBox11";
             checkBox11.Size = new Size(61, 19);
             checkBox11.TabIndex = 11;
@@ -703,7 +713,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(7, 161);
+            checkBox1.Location = new Point(6, 137);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(58, 19);
             checkBox1.TabIndex = 3;
@@ -725,7 +735,7 @@
             // checkBox5
             // 
             checkBox5.AutoSize = true;
-            checkBox5.Location = new Point(7, 140);
+            checkBox5.Location = new Point(6, 116);
             checkBox5.Name = "checkBox5";
             checkBox5.Size = new Size(78, 19);
             checkBox5.TabIndex = 10;
@@ -747,7 +757,7 @@
             // checkBox4
             // 
             checkBox4.AutoSize = true;
-            checkBox4.Location = new Point(7, 119);
+            checkBox4.Location = new Point(6, 95);
             checkBox4.Name = "checkBox4";
             checkBox4.Size = new Size(77, 19);
             checkBox4.TabIndex = 9;
@@ -1798,15 +1808,17 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
-            // checkBox42
+            // groupBox14
             // 
-            checkBox42.AutoSize = true;
-            checkBox42.Location = new Point(126, 18);
-            checkBox42.Name = "checkBox42";
-            checkBox42.Size = new Size(69, 19);
-            checkBox42.TabIndex = 32;
-            checkBox42.Text = "เจอคนหนี";
-            checkBox42.UseVisualStyleBackColor = true;
+            groupBox14.Controls.Add(checkBox41);
+            groupBox14.Controls.Add(textBox12);
+            groupBox14.Controls.Add(checkBox23);
+            groupBox14.Location = new Point(6, 273);
+            groupBox14.Name = "groupBox14";
+            groupBox14.Size = new Size(184, 87);
+            groupBox14.TabIndex = 28;
+            groupBox14.TabStop = false;
+            groupBox14.Text = "groupBox14";
             // 
             // Form1
             // 
@@ -1852,6 +1864,8 @@
             groupBox10.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            groupBox14.ResumeLayout(false);
+            groupBox14.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2069,5 +2083,6 @@
         private TextBox textBox12;
         private Button button21;
         private CheckBox checkBox42;
+        private GroupBox groupBox14;
     }
 }
