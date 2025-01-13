@@ -527,7 +527,7 @@ namespace Kappa
             //
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
             FASTPET_ADR_RESULT = AOB_FastPET.ToString("x");
-
+            SPCUT_ADR_RESULT = AOB_SPCUT.ToString("x");
             DELAYPOT_ADR_RESULT = AOB_DELAYPOT.ToString("x");
             GETSKILL_LIST_ADR_RESULT = AOB_GETSKILL_LIST.ToString("x");
             string ANTIDELAY_ADR_RESULT = AOB_ANTIDELAY.ToString("x");
@@ -1868,7 +1868,7 @@ namespace Kappa
 
         public string GMFOUND = "";
         public string WebhookBossDied = "https://discord.com/api/webhooks/1326736041796698112/vWqXPa_GeqzahFnx7NvXsthTABqcl37ZbSdBREZ2ZkhAcYqac2qKHo32ab9-X9pvZiRh";
-        private async void BossAlertWebhook(string BossText,string BossMap)
+        private async void BossAlertWebhook(string BossText, string BossMap)
         {
             float calculateInnerTime = m.ReadFloat("031DAF78");
             float resultss = calculateInnerTime / 60;
@@ -1966,7 +1966,7 @@ namespace Kappa
                 globalCrow = m.ReadInt("MiniA.exe+7973E0,D6E4");
                 UIntPtr curr = m.GetCode("MiniA.exe+7973E0,D6E8");
                 bool PressedBackCard = false;
-                if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked )
+                if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
                 {
                     PressedBackCard = true;
                     await Getback(globalCrow);
@@ -1981,12 +1981,12 @@ namespace Kappa
                         processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
                         MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         StopMonitoringPlayer();
-                        
+
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                       
+
                     }
 
                 }
@@ -4378,18 +4378,16 @@ namespace Kappa
         public string getadr_supcut;
         public void SuperCut()
         {
-            if (!_Inject_SuperCut)
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            allocate_adr_SP_CUT = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+            getadr_supcut = allocate_adr_SP_CUT.ToString("x");
+
+            IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
+
+            // Assembly code for fstp dword ptr [esp+38]
+            byte[] assemblyCode = new byte[]
             {
-                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
-                allocate_adr_SP_CUT = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
-                getadr_supcut = allocate_adr_SP_CUT.ToString("x");
-
-                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-
-                // Assembly code for fstp dword ptr [esp+38]
-                byte[] assemblyCode = new byte[]
-                {
                     0xFF, 0x86, 0x70, 0x30, 0x00, 0x00,
                     0x83, 0xBE, 0x70, 0x30, 0x00, 0x00, cutvalue,
                     0x74, 0x09,
@@ -4397,58 +4395,42 @@ namespace Kappa
                     0xE9, 0x5F, 0x35, 0xA4, 0xD7,
                     0xC7, 0x05, 0x8C, 0xA2, 0xB9, 0x00, 0x00, 0x00, 0x00, 0x00,
                     0xE9, 0x50, 0x35, 0xA4, 0xD7
-                };
+            };
 
-                // Calculate offsets dynamically
-                int jumpOffset1 = (int)(allocate_adr_SP_CUT + 0x18) - ((int)allocate_adr_SP_CUT + 15); // Offset for `je`, relative to next instruction
-                int jumpOffset2 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SP_CUT + 24);          // Offset for the first `jmp`, relative to next instruction
-                int jumpOffset3 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SP_CUT + 39);          // Offset for the second `jmp`, relative to next instruction
+            // Calculate offsets dynamically
+            int jumpOffset1 = (int)(allocate_adr_SP_CUT + 0x18) - ((int)allocate_adr_SP_CUT + 15); // Offset for `je`, relative to next instruction
+            int jumpOffset2 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SP_CUT + 24);          // Offset for the first `jmp`, relative to next instruction
+            int jumpOffset3 = (int)(AOB_SPCUT + 0x06) - ((int)allocate_adr_SP_CUT + 39);          // Offset for the second `jmp`, relative to next instruction
 
-                // Update the jump offsets in the assembly code
-                assemblyCode[14] = (byte)((sbyte)jumpOffset1); // Signed byte for `je` (short jump)
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); // Place the offset for the first `jmp`
-                BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 35); // Place the offset for the second `jmp`
-                                                                             // assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
+            // Update the jump offsets in the assembly code
+            assemblyCode[14] = (byte)((sbyte)jumpOffset1); // Signed byte for `je` (short jump)
+            BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); // Place the offset for the first `jmp`
+            BitConverter.GetBytes(jumpOffset3).CopyTo(assemblyCode, 35); // Place the offset for the second `jmp`
+                                                                         // assemblyCode[28] = (byte)(jumpOffset4 & 0xFF); // Short jump offset for `EB`, which only takes 1 byte
 
-                // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
+            // Now you can write 'assemblyCode' to the allocated memory and proceed with the injection
 
-                // Write the initial assembly code to the allocated address
-                m.WriteMemory(allocate_adr_SP_CUT.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
+            // Write the initial assembly code to the allocated address
+            m.WriteMemory(allocate_adr_SP_CUT.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
 
 
-                // Assembly code for jmp to allocate_adr with nop 2
-                jmpCodemy = new byte[]
+            // Assembly code for jmp to allocate_adr with nop 2
+            jmpCodemy = new byte[]
 {
                     0xE9, 0x00, 0x00, 0x00, 0x00,
                     0x90
-                    };
+                };
 
-                // Calculate the jump offset for the second jmp instruction
-                int jmpOffset3 = (int)allocate_adr_SP_CUT - ((int)AOB_SPCUT + jmpCodemy.Length - 1);
-                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
+            // Calculate the jump offset for the second jmp instruction
+            int jmpOffset3 = (int)allocate_adr_SP_CUT - ((int)AOB_SPCUT + jmpCodemy.Length - 1);
+            BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
 
-                m.WriteMemory(SPCUT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
-
-            }
-            else
-            {
-
-                if (allocate_adr_SP_CUT != IntPtr.Zero)
-                {
-                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-                    VirtualFreeEx(processHandle, allocate_adr_SP_CUT, 0, 0x8000);
-                    allocate_adr_SP_CUT = IntPtr.Zero;
-                }
-
-                // Restore the original code
-                m.WriteMemory(SPCUT_ADR_RESULT, "bytes", "FF 86 34 24 00 00 3B 9F 0C 01");
-
-
-
-            }
+            m.WriteMemory(SPCUT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
         }
+    
+        
 
         public void FixedSkill()
         {
@@ -4604,10 +4586,7 @@ namespace Kappa
 
         private void checkBox41_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox41.Checked)
-            {
                 SuperCut();
-            }
         }
     }
 
