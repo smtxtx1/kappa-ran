@@ -4379,7 +4379,6 @@ namespace Kappa
         public string getadr_supcut;
         public void SuperCut()
         {
-            MessageBox.Show("SSSSS");
             if (!_Inject_SuperCut)
             {
                 
@@ -4608,7 +4607,17 @@ namespace Kappa
 
         private void checkBox41_CheckedChanged(object sender, EventArgs e)
         {
-          SuperCut();
+            if (checkBox41.Checked)
+            {
+                SuperCut();
+                _Inject_SuperCut = true;
+            }
+            else
+            {
+                SuperCut();
+                _Inject_SuperCut = false;
+
+            }
         }
     }
 
