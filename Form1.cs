@@ -242,7 +242,7 @@ namespace Kappa
 
         public string AltButton = "031F3804";
 
-        public string Spacebar = "031F3804+1";
+        public string Spacebar = "02FD4DBD";
 
         public string RightArrow = "031F3899";
 
@@ -1399,8 +1399,8 @@ namespace Kappa
                 int target = mem.ReadInt(TARGET_RING);
                 int mationCheck = mem.ReadInt(MATION_CHECK);
                 int actiontarget = mem.ReadInt(actioncheck);
-                int RClick_CHECK = mem.ReadByte("034E4631");
-                int Space_CHECK = mem.ReadByte("034E445D");
+                int RClick_CHECK = mem.ReadByte("02FD4F91");
+                int Space_CHECK = mem.ReadByte("02FD4DBD");
                 int ACTION_MAIN = mem.Read2Byte(actioncheck);
 
                 Console.WriteLine($"{mationCheck}");
@@ -1450,7 +1450,7 @@ namespace Kappa
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x"));
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x"));
                         m.WriteMemory(forceattack_adr, "int", "5");
-                        RClick_CHECK = mem.ReadInt("031F8A39");
+                        RClick_CHECK = mem.ReadInt("02FD4F91");
                         mainSK1 = mem.ReadByte(prevskill1_adr);
                         mainSK2 = mem.ReadByte(prevskill2_adr);
                         target = mem.ReadInt(TARGET_RING);
