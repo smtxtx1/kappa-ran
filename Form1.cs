@@ -1400,7 +1400,7 @@ namespace Kappa
                 int mationCheck = mem.ReadInt(MATION_CHECK);
                 int RClick_CHECK = mem.ReadByte("02FD4F91");
                 int Space_CHECK = mem.ReadByte("02FD4DBD");
-                int ACTION_MAIN = mem.Read2Byte(actioncheck);
+                int ACTION_MAIN = mem.Read2Byte(TARGET_RING_CHECK);
 
                 Console.WriteLine($"Mation Check: {mationCheck}");
 
@@ -1408,7 +1408,7 @@ namespace Kappa
                 if (mationCheck == 3)
                 {
                     Console.WriteLine("Leader is using a skill. Interrupting movement...");
-                    if (mainSK1 > 0 || mainSK2 > 0) // Ensure valid skills are available
+                    if (mainSK1 >= 0 || mainSK2 >= 0) // Ensure valid skills are available
                     {
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString()); // Target the same as leader
                         m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
