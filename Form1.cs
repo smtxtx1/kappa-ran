@@ -712,7 +712,7 @@ namespace Kappa
                 BitConverter.GetBytes(callOffset).CopyTo(assemblyCode, 1);
 
                 // Calculate the offset for the JMP instruction
-                int jmpBackAddress = (int)AOB_SABUD + 6; // Return to the next instruction after CALL
+                int jmpBackAddress = (int)AOB_SABUD + 5; // Return to the next instruction after CALL
                 int jmpOffset = jmpBackAddress - ((int)allocate_adr_SABUD + assemblyCode.Length);
                 BitConverter.GetBytes(jmpOffset).CopyTo(assemblyCode, 6);
 
