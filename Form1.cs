@@ -4379,6 +4379,7 @@ namespace Kappa
         public string getadr_supcut;
         public void SuperCut()
         {
+            
             if (!_Inject_SuperCut)
             {
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
