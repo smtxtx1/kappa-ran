@@ -605,8 +605,6 @@ namespace Kappa
 
                 SetWindowText(windowHandle, this.Text);
             }
-            MessageBox.Show($"{SaBUDtest} Read = {Convert}");
-
             YourCallingMethod();
 
         }
