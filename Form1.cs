@@ -675,48 +675,65 @@ namespace Kappa
         public int FASTPET_ADR_RESULT2 = 0;
         public bool Sabud_ = false;
         public int SBUD_ADR_GET = 0;
-        
+
         public void _Inject_SBUD()
         {
             if (!Sabud_)
             {
-
+                // Open the process for memory manipulation
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
-                Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+                if (processHandle == IntPtr.Zero)
+                {
+                    Console.WriteLine("Failed to open process.");
+                    return;
+                }
+
+                Process processById = Process.GetProcessById(selectedProcessId);
+                IntPtr baseModuleAddress = processById.MainModule.BaseAddress;
+
+                // Allocate memory in the target process
                 allocate_adr_SABUD = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
+                if (allocate_adr_SABUD == IntPtr.Zero)
+                {
+                    Console.WriteLine("Failed to allocate memory in the process.");
+                    return;
+                }
 
-                IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
-
-                // Assembly code for fstp dword ptr [esp+38]
+                // Assembly code to write into the allocated memory
                 byte[] assemblyCode = new byte[]
                 {
-                    0xE8,0xCB,0xB1,0xFA,0xDD,
-                    0xE9,0x2F,0xCD,0xFA,0xDD
+            0xE8, 0x00, 0x00, 0x00, 0x00, // CALL with offset to be calculated
+            0xE9, 0x00, 0x00, 0x00, 0x00  // JMP with offset to be calculated
                 };
 
-                // Calculate offsets dynamically
-                int jumpOffset2 = (int)(AOB_SABUD2) - ((int)allocate_adr_SABUD + 0);          // Offset for the first `jmp`, relative to next instruction
+                // Calculate the offset for the CALL instruction
+                int callTargetAddress = (int)AOB_SABUD2;
+                int callOffset = callTargetAddress - ((int)allocate_adr_SABUD + 5); // Instruction length for CALL is 5 bytes
+                BitConverter.GetBytes(callOffset).CopyTo(assemblyCode, 1);
 
-                // Update the jump offsets in the assembly code
-                BitConverter.GetBytes(jumpOffset2).CopyTo(assemblyCode, 20); 
+                // Calculate the offset for the JMP instruction
+                int jmpBackAddress = callTargetAddress + 5; // Return to the next instruction after CALL
+                int jmpOffset = jmpBackAddress - ((int)allocate_adr_SABUD + assemblyCode.Length);
+                BitConverter.GetBytes(jmpOffset).CopyTo(assemblyCode, 6);
 
+                // Write the assembly code to the allocated memory
                 m.WriteMemory(allocate_adr_SABUD.ToString("X"), "bytes", BitConverter.ToString(assemblyCode).Replace('-', ' '));
 
+                // Assembly code to redirect to the allocated memory
+                byte[] jmpCode = new byte[]
+                {
+            0xE9, 0x00, 0x00, 0x00, 0x00, // JMP with offset to be calculated
+            0x90                           // NOP for alignment
+                };
 
+                // Calculate the jump offset for the redirection
+                int jmpToAllocatedMemoryOffset = (int)allocate_adr_SABUD - ((int)AOB_SABUD + jmpCode.Length);
+                BitConverter.GetBytes(jmpToAllocatedMemoryOffset).CopyTo(jmpCode, 1);
 
-                // Assembly code for jmp to allocate_adr with nop 2
-                jmpCodemy = new byte[]
-    {
-                    0xE9, 0x00, 0x00, 0x00, 0x00,
-                    0x90
-                    };
+                // Write the jump redirection code
+                m.WriteMemory(SABUDWRITE_ADR_RESULT, "bytes", BitConverter.ToString(jmpCode).Replace('-', ' '));
 
-                // Calculate the jump offset for the second jmp instruction
-                int jmpOffset3 = (int)allocate_adr_SABUD - ((int)AOB_SABUD2 + jmpCodemy.Length - 1);
-                BitConverter.GetBytes(jmpOffset3).CopyTo(jmpCodemy, 1);  // Offset is from the next instruction (E9), not the beginning
-
-                m.WriteMemory(SABUDWRITE_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
-
+                Console.WriteLine("Injection completed successfully.");
             }
         }
 
