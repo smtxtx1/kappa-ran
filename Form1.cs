@@ -1870,9 +1870,9 @@ namespace Kappa
         public string WebhookBossDied = "https://discord.com/api/webhooks/1326736041796698112/vWqXPa_GeqzahFnx7NvXsthTABqcl37ZbSdBREZ2ZkhAcYqac2qKHo32ab9-X9pvZiRh";
         private async void BossAlertWebhook(string BossText,string BossMap)
         {
-            float calculateInnerTime = m.ReadFloat("031D9F78");
+            float calculateInnerTime = m.ReadFloat("031DAF78");
             float resultss = calculateInnerTime / 60;
-            int InnerTime = m.ReadInt("MiniA.exe+46A74F8");
+            int InnerTime = m.ReadInt("MiniA.exe+46A84F8");
             string value = ReadKeyFromFile();
             DateTime startTime = DateTime.Now;
 
