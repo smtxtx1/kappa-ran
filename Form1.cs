@@ -1410,13 +1410,14 @@ namespace Kappa
                     Console.WriteLine("Leader is using a skill. Interrupting movement...");
                     if (mainSK1 >= 0 || mainSK2 >= 0) // Ensure valid skills are available
                     {
-                        m.WriteMemory(MATION_CHECK, "int", "0");
+                        
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString()); // Target the same as leader
                         m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
                         m.WriteMemory(prevskill2_adr, "byte", mainSK2.ToString("x")); // Skill 2
                         m.WriteMemory(forceattack_adr, "int", "5"); // Force attack
                     }
+                    m.WriteMemory(MATION_CHECK, "int", "3");
                     Task.Delay(0); // Continue to the next loop iteration after skill usage
                     continue; // Skip further logic and wait for the next iteration
                 }
