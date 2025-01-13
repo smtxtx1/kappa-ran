@@ -680,7 +680,7 @@ namespace Kappa
             {
                 // Original bytes to freeze (with space for the offset at the end)
                 byte[] freezebytesX = { 0xE8, 0x00, 0x00, 0x00, 0x00 }; // E8 is the opcode for CALL
-                int SUBB = (int)AOB_SABUD2 - ((int)allocate_adr_aoe + freezebytesX.Length + 0); ;
+                int SUBB = (int)AOB_SABUD2 - ((int)SBUD_ADR_GET + freezebytesX.Length + 0); ;
 
                 BitConverter.GetBytes(SUBB).CopyTo(freezebytesX, 1);
 
