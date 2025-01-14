@@ -1405,7 +1405,7 @@ namespace Kappa
                 Console.WriteLine($"Mation Check: {mationCheck}");
 
                 // If leader is using a skill, interrupt and replicate the skill
-                if (mationCheck == 3 && RClick_CHECK != 1)
+                if (mationCheck == 3)
                 {
                     Console.WriteLine("Leader is using a skill. Interrupting movement...");
                     if (mainSK1 >= 0 || mainSK2 >= 0) // Ensure valid skills are available
