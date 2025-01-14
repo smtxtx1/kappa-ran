@@ -1428,7 +1428,7 @@ namespace Kappa
                 }
 
                 // Perform movement logic if not attacking
-                if (mationCheck != 0)
+                if (mationCheck != 0 && mationCheck != 3)
                 {
                     float followXnew = currentX + ((float)rand.NextDouble() - 1.5f) * 2.0f * 1.1f;
                     float followZnew = currentZ + ((float)rand.NextDouble() - 10.5f) * 2.0f * 1.1f;
