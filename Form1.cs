@@ -96,6 +96,8 @@ namespace Kappa
         public long AOB_HT2;
         public long AOB_GETBUFF;
         public long AOB_GETSKILL_LIST;
+        public long AOB_SKILLFIX02;
+        public long AOB_SKILLFIX00;
 
         public long AOB_SPCUT;
         public long AOB_DRONE;
@@ -505,6 +507,7 @@ namespace Kappa
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
             AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
+            
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
@@ -512,7 +515,12 @@ namespace Kappa
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
             
             string SaBUDtest = AOB_SABUD2.ToString("x");
-            byte [] SabudByte = m.ReadBytes(SaBUDtest,5);
+            string FIX02 = (AOB_SABUD2 + 0x25B).ToString("x");
+            string FIX00 = (AOB_SABUD2 + 0x318).ToString("x");
+            m.WriteMemory(FIX02, "byte", "02");
+            m.WriteMemory(FIX00, "byte", "00");
+
+            byte[] SabudByte = m.ReadBytes(SaBUDtest,5);
             ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
             MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
