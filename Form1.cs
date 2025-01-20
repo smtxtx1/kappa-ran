@@ -1018,9 +1018,9 @@ namespace Kappa
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
 
-                m.WriteMemory("02FD4DA2", "byte", "63");
+                m.WriteMemory("02FD5DFA", "byte", "63");
                 Thread.Sleep(100);
-                m.WriteMemory("02FD4DA2", "byte", "01");
+                m.WriteMemory("02FD5DFA", "byte", "01");
                 Thread.Sleep(2000);
 
 
@@ -1034,9 +1034,9 @@ namespace Kappa
 
                     // แสดงเวลาอีกครั้งหลังจากรอครบ
                     DateTime endTime = DateTime.Now;
-                    m.WriteMemory("02FD4DA3", "byte", "63");
+                    m.WriteMemory("02FD5DFB", "byte", "63");
                     Thread.Sleep(100);
-                    m.WriteMemory("02FD4DA3", "byte", "01");
+                    m.WriteMemory("02FD5DFB", "byte", "01");
 
                     Console.WriteLine($"เวลาปัจจุบันหลังจากผ่านไป {minutesToWait} นาที: {endTime}");
                 }
@@ -2639,14 +2639,14 @@ namespace Kappa
                     RunDeActive();
                     if (checkBox25.Checked)
                     {
-                        m.WriteMemory("02FD4DA2", "byte", "63");
+                        m.WriteMemory("02FD5DFA", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("02FD4DA2", "byte", "01");
+                        m.WriteMemory("02FD5DFA", "byte", "01");
                         Thread.Sleep(2000);
 
-                        m.WriteMemory("02FD4DA3", "byte", "63");
+                        m.WriteMemory("02FD5DFB", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("02FD4DA3", "byte", "01");
+                        m.WriteMemory("02FD5DFB", "byte", "01");
 
 
                     }
