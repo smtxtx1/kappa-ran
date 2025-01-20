@@ -329,6 +329,7 @@
             textBox12.TabIndex = 34;
             textBox12.Text = "1";
             textBox12.TextAlign = HorizontalAlignment.Center;
+            textBox12.TextChanged += textBox12_TextChanged;
             // 
             // checkBox23
             // 

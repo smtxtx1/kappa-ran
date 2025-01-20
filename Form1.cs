@@ -507,20 +507,20 @@ namespace Kappa
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
             AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
-            
+
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
             AOB_ANTICHAT = AoB_Scan_ANTICHAT.FirstOrDefault();
             AOB_FastPET = AoB_Scan_FastPet.FirstOrDefault();
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
-            
+
             string SaBUDtest = AOB_SABUD2.ToString("x");
             string FIX02 = (AOB_SABUD2 + 0x25B).ToString("x");
             string FIX00 = (AOB_SABUD2 + 0x318).ToString("x");
             m.WriteMemory(FIX02, "byte", "02");
             m.WriteMemory(FIX00, "byte", "00");
 
-            byte[] SabudByte = m.ReadBytes(SaBUDtest,5);
+            byte[] SabudByte = m.ReadBytes(SaBUDtest, 5);
             ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
             MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
@@ -620,7 +620,7 @@ namespace Kappa
 
                 SetWindowText(windowHandle, this.Text);
             }
-            YourCallingMethod();
+            //  YourCallingMethod();
 
         }
         public void RunActive()
@@ -883,7 +883,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-            YourCallingMethod();
+            //YourCallingMethod();
         }
 
 
@@ -1418,7 +1418,7 @@ namespace Kappa
                     Console.WriteLine("Leader is using a skill. Interrupting movement...");
                     if (mainSK1 >= 0 || mainSK2 >= 0) // Ensure valid skills are available
                     {
-                        
+
                         m.WriteMemory(TARGET_SKILL, "int", target.ToString()); // Target the same as leader
                         m.WriteMemory(actioncheck, "int", ACTION_MAIN.ToString()); // Replicate leader's action
                         m.WriteMemory(prevskill1_adr, "byte", mainSK1.ToString("x")); // Skill 1
@@ -1436,7 +1436,7 @@ namespace Kappa
                 }
 
                 // Perform movement logic if not attacking
-                if (mationCheck != 0 )
+                if (mationCheck != 0)
                 {
                     float followXnew = currentX + ((float)rand.NextDouble() - 1.5f) * 2.0f * 1.1f;
                     float followZnew = currentZ + ((float)rand.NextDouble() - 10.5f) * 2.0f * 1.1f;
@@ -3873,7 +3873,7 @@ namespace Kappa
         private void checkBox23_CheckedChanged(object sender, EventArgs e)
         {
             _Inject_SBUD();
-         }
+        }
 
         private void backgroundWorker5_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -4461,7 +4461,7 @@ namespace Kappa
         {
             if (!_Inject_SuperCut)
             {
-                
+
                 IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_SP_CUT = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
@@ -4513,7 +4513,7 @@ namespace Kappa
                 m.WriteMemory(SPCUT_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
             }
-            else 
+            else
             {
                 if (allocate_adr_SP_CUT != IntPtr.Zero)
                 {
@@ -4530,8 +4530,8 @@ namespace Kappa
 
 
         }
-    
-        
+
+
 
         public void FixedSkill()
         {
@@ -4680,7 +4680,7 @@ namespace Kappa
 
         private void button21_Click_2(object sender, EventArgs e)
         {
-            BossAlertWebhook("ทดสอบ","เทส");
+            BossAlertWebhook("ทดสอบ", "เทส");
 
             StartBossAlert();
         }
@@ -4698,6 +4698,11 @@ namespace Kappa
                 _Inject_SuperCut = false;
 
             }
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            cutvalue = Convert.ToByte(textBox12.Text, 16);
         }
     }
 
