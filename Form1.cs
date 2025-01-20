@@ -2639,6 +2639,10 @@ namespace Kappa
                     RunDeActive();
                     if (checkBox25.Checked)
                     {
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+
                         m.WriteMemory("02FD5DFA", "byte", "63");
                         Thread.Sleep(100);
                         m.WriteMemory("02FD5DFA", "byte", "01");
@@ -2647,6 +2651,9 @@ namespace Kappa
                         m.WriteMemory("02FD5DFB", "byte", "63");
                         Thread.Sleep(100);
                         m.WriteMemory("02FD5DFB", "byte", "01");
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
 
 
                     }
