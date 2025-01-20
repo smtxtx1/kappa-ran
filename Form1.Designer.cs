@@ -307,7 +307,6 @@
             groupBox14.TabIndex = 28;
             groupBox14.TabStop = false;
             groupBox14.Text = "groupBox14";
-            groupBox14.Visible = false;
             // 
             // checkBox41
             // 
@@ -362,7 +361,6 @@
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
-            groupBox12.Visible = false;
             // 
             // checkBox42
             // 
@@ -1348,7 +1346,6 @@
             checkBox39.TabIndex = 15;
             checkBox39.Text = "กันติดขอบ";
             checkBox39.UseVisualStyleBackColor = true;
-            checkBox39.Visible = false;
             // 
             // checkBox31
             // 
