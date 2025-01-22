@@ -1148,7 +1148,7 @@ namespace Kappa
             }
 
             // Process skills in the specified range
-            for (int k = 0xA1C; k <= 0xA40; k += 0x04)
+            for (int k = 0x5F6C; k <= 0x5F90; k += 0x04)
             {
                 int checkStatus = m.Read2Byte(MATION_CHECK);
                 float skillTime = m.ReadFloat(SKILL_TIME);
