@@ -787,7 +787,7 @@ namespace Kappa
         {
             if (!_INJECT_GET_SKILL)
             {//A3 00 20 FE 00 8B BC B8 A4 09 00 00
-                byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0xA4, 0x09, 0x00, 0x00 };
+                byte[] freezebytesX = { 0xA3, 0x00, 0x20, 0xFE, 0x00, 0x8B, 0xBC, 0xB8, 0xFC, 0x5E, 0x00, 0x00 };
                 SKILLPET_ADR_GET_SKILL = CodeCave.CreateCodeCave(freezebytesX, GETSKILL_LIST_ADR_RESULT, SKILLPET_ADR_GET_SKILL, 7, 100, m);//Input address to create codecave
                 _INJECT_GET_SKILL = true;
 
