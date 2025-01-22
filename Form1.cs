@@ -579,12 +579,12 @@ namespace Kappa
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             MessageBox.Show("All Done");
-       //     m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
-        //    m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-        //    m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
-         //   m.WriteMemory("00FD0012", "float", "-1");
-         //   m.WriteMemory("00FAA000", "float", "4800");
-         //   m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
+          m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
+            m.WriteMemory("00FD0012", "float", "-1");
+            m.WriteMemory("00FAA000", "float", "4800");
+            m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
           //  m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
             _INJECT_LCP_();
             Thread.Sleep(1000);
@@ -2435,11 +2435,11 @@ namespace Kappa
         {
             try
             {
-                UIntPtr mobID = m.GetCode($"{data:X},17A4");
-                UIntPtr mob_X = m.GetCode($"{data:X},1678");
-                UIntPtr mob_Y = m.GetCode($"{data:X},167C");
-                UIntPtr mob_Z = m.GetCode($"{data:X},1680");
-                mob_HP = m.GetCode($"{data:X},1618");
+                UIntPtr mobID = m.GetCode($"{data:X},C18");
+                UIntPtr mob_X = m.GetCode($"{data:X},AEC");
+                UIntPtr mob_Y = m.GetCode($"{data:X},AF0");
+                UIntPtr mob_Z = m.GetCode($"{data:X},AF4");
+                mob_HP = m.GetCode($"{data:X},A90");
 
                 uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
                 float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
