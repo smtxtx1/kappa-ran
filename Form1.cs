@@ -558,10 +558,11 @@ namespace Kappa
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
             RUN2_ADR_RESULT = (AOB_RUN + 0x08).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xA).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0x5A).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0x10).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0x90).ToString("x");
             RUN5_ADR_RESULT = (AOB_RUN + 0xBF4).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xBFD).ToString("x");
+            Console.WriteLine($"{RUN2_ADR_RESULT},{RUN3_ADR_RESULT},{RUN4_ADR_RESULT},{RUN5_ADR_RESULT},{RUN6_ADR_RESULT}");
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             LONGBUFF_ADR_RESUT = (AOB_LONGBUFF + 0x03).ToString("x");
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
@@ -625,8 +626,8 @@ namespace Kappa
         public void RunActive()
         {
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "EB");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
