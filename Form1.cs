@@ -1148,7 +1148,7 @@ namespace Kappa
             }
 
             // Process skills in the specified range
-            for (int k = 0x5F6C; k <= 0x5F90; k += 0x04)
+            for (int k = 0xA1C; k <= 0xA40; k += 0x04)
             {
                 int checkStatus = m.Read2Byte(MATION_CHECK);
                 float skillTime = m.ReadFloat(SKILL_TIME);
@@ -2960,7 +2960,7 @@ namespace Kappa
 
                 }
 
-                for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
+                for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
                 {
                     int MATION = m.ReadInt(MATION_CHECK);
                     m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
