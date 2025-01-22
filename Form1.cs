@@ -627,9 +627,9 @@ namespace Kappa
             m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
             m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "eb");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
             m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
         }
