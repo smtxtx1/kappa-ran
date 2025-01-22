@@ -2652,10 +2652,14 @@ namespace Kappa
                     }
                     RunDeActive();
                     if (checkBox25.Checked)
-                    {
-                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                    {            
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+    
+
+                      
 
                         m.WriteMemory("02FD5DFA", "byte", "63");
                         Thread.Sleep(100);
@@ -2665,9 +2669,11 @@ namespace Kappa
                         m.WriteMemory("02FD5DFB", "byte", "63");
                         Thread.Sleep(100);
                         m.WriteMemory("02FD5DFB", "byte", "01");
-                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
-                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
 
 
                     }
@@ -2695,9 +2701,10 @@ namespace Kappa
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", originalcode_Path);
                             for (int u2 = 0; u2 < j; u2++)
                             {
-                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+                                m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                                 m.WriteMemory("02FD5E15", "byte", "63");
                                 await Task.Delay(5);
@@ -2711,9 +2718,11 @@ namespace Kappa
                                 await Task.Delay(5);
                                 m.WriteMemory("02FD5E15", "byte", "01");
                                 await Task.Delay(5);
-                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
-                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+                                m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+                                m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+                                m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
+
                             }
                             m.WriteMemory(PATH_ADR_RESULT, "bytes", BitConverter.ToString(jmpCodemy).Replace('-', ' '));
 
@@ -2732,9 +2741,10 @@ namespace Kappa
 
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
-                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+                                    m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                                     m.WriteMemory("02FD5E15", "byte", "63");
                                     await Task.Delay(5);
@@ -2748,9 +2758,10 @@ namespace Kappa
                                     await Task.Delay(5);
                                     m.WriteMemory("02FD5E15", "byte", "01");
                                     await Task.Delay(5);
-                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
-                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
+                                    m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+                                    m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+                                    m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
                                     Console.WriteLine($"Looting{u2} < {j}");
 
                                 }
