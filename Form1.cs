@@ -71,7 +71,7 @@ namespace Kappa
         private Mem mem = new Mem();
 
         // public string Drone_adr = "MiniA.exe+2E49A60";
-        public string ServerName = "Ran Cafe";
+        public string ServerName = "Ran SaiYo";
 
         public string FastZoom = "0324BA7C";
 
@@ -79,7 +79,7 @@ namespace Kappa
 
         public string LongRange_adr = "";
 
-        public string NameAdr = "00FF38A0,2B0";
+        public string NameAdr = "00FF38A0,58";
 
 
         public string selectedFilePath;
@@ -210,21 +210,21 @@ namespace Kappa
         /// POSITION 
         /// </summary>
 
-        public string CurrentX = "00FF38A0,2FE8";
+        public string CurrentX = "00FF38A0,77D8";
 
-        public string CurrentY = "00FF38A0,2FEC";
+        public string CurrentY = "00FF38A0,77DC";
 
-        public string CurrentZ = "00FF38A0,2FF0";
+        public string CurrentZ = "00FF38A0,77E0";
 
         public string ZoomAdr = "";
 
         public string AngleAdr = "";
 
-        public string gotoX = "00FF38A0,302C";
+        public string gotoX = "00FF38A0,781C";
 
-        public string gotoY = "00FF38A0,3030";
+        public string gotoY = "00FF38A0,7820";
 
-        public string gotoZ = "00FF38A0,3034";
+        public string gotoZ = "00FF38A0,7824";
         public string ConvertSabud = "default";
         /// <summary>
         /// POSITION END
@@ -257,29 +257,29 @@ namespace Kappa
         /// </summary>
         /// 
 
-        public string Skilluse1_adr = "00FF38A0,3198";
+        public string Skilluse1_adr = "00FF38A0,7970";
 
-        public string Skilluse2_adr = "00FF38A0,319A";
+        public string Skilluse2_adr = "00FF38A0,7972";
 
-        public string prevskill1_adr = "00FF38A0,319C";
+        public string prevskill1_adr = "00FF38A0,7974";
 
-        public string prevskill2_adr = "00FF38A0,319E";
+        public string prevskill2_adr = "00FF38A0,7976";
 
-        public string forceattack_adr = "00FF38A0,3298";
+        public string forceattack_adr = "00FF38A0,7A70";
 
-        public string actioncheck = "00FF38A0,32AC";
+        public string actioncheck = "00FF38A0,7A84";
 
-        public string TARGET_SKILL = "00FF38A0,32B0"; //MiniA.exe+793E74
+        public string TARGET_SKILL = "00FF38A0,7A88"; //MiniA.exe+793E74
 
-        public string TARGET_RING_CHECK = "00FF38A0,4060"; //
+        public string TARGET_RING_CHECK = "00FF38A0,8850"; //
 
         public string SABUDWRITE_ADR_RESULT = "default";
 
-        public string TARGET_RING = "00FF38A0,4064"; //
+        public string TARGET_RING = "00FF38A0,8854"; //
 
-        public string MATION_CHECK = "00FF38A0,30FC";
+        public string MATION_CHECK = "00FF38A0,78D4";
 
-        public string SKILL_TIME = "00FF38A0,32C4";
+        public string SKILL_TIME = "00FF38A0,7A9C";
 
         public string PATH2_ADR_RESULT;
         /// <summary>
@@ -489,7 +489,7 @@ namespace Kappa
             var AoB_Scan_SABUD2 = await m.AoBScan("83 ec ? 0f b7 ? ? ? 53 6b c0 ? 8b 5c", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
             var AoB_Scan_ITEMDROP = await m.AoBScan("8B 96 B8 03 00 00", false, true);
-            var AoB_Scan_LOCALPLAYER = await m.AoBScan("8b 86 ? ? ? ? 81 c6 ? ? ? ? 52", false, true);
+            var AoB_Scan_LOCALPLAYER = await m.AoBScan("66 39 ? ? ? ? ? 75 ? 66 8b ? ? ? ? ? 66 89", false, true);
             var AoB_Scan_AntiSlide = await m.AoBScan("38 ?? ?? ?? 00 00 74 ?? 8B 96 ??", false, true);
             var AoB_Scan_ATKBP = await m.AoBScan("74 ? 8d be ? ? ? ? 8b c7", false, true);
             var AoB_Scan_ANTICB = await m.AoBScan("74 58 55 55", false, true);
@@ -514,14 +514,14 @@ namespace Kappa
             AOB_SPCUT = AoB_Scan_SuperCUT.FirstOrDefault();
 
             string SaBUDtest = AOB_SABUD2.ToString("x");
-            string FIX02 = (AOB_SABUD2 + 0x25B).ToString("x");
-            string FIX00 = (AOB_SABUD2 + 0x318).ToString("x");
-            m.WriteMemory(FIX02, "byte", "02");
-            m.WriteMemory(FIX00, "byte", "00");
+        //    string FIX02 = (AOB_SABUD2 + 0x25B).ToString("x");
+        //    string FIX00 = (AOB_SABUD2 + 0x318).ToString("x");
+        //    m.WriteMemory(FIX02, "byte", "02");
+       //     m.WriteMemory(FIX00, "byte", "00");
 
-            byte[] SabudByte = m.ReadBytes(SaBUDtest, 5);
-            ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
-            MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
+         //   byte[] SabudByte = m.ReadBytes(SaBUDtest, 5);
+         //   ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
+        //    MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
@@ -579,14 +579,14 @@ namespace Kappa
             PATH_ADR_RESULT = AOB_PATH.ToString("x");
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             MessageBox.Show("All Done");
-            m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
-            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
-            m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
-            m.WriteMemory("00FD0012", "float", "-1");
-            m.WriteMemory("00FAA000", "float", "4800");
-            m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
-            LOCALPLAYER_ALLOC();
+       //     m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
+        //    m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+        //    m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
+         //   m.WriteMemory("00FD0012", "float", "-1");
+         //   m.WriteMemory("00FAA000", "float", "4800");
+         //   m.WriteMemory(ATKBP_ADR_RESULT, "bytes", "90 90");
+          //  m.WriteMemory(ANTIDELAY_ADR_RESULT, "bytes", "E9 94 49 00 00 90");
+            _INJECT_LCP_();
             Thread.Sleep(1000);
             int num = 20;
 
@@ -674,6 +674,7 @@ namespace Kappa
         public bool _INJECT_GET_SKILL = false;
         public bool _INJECT_GET_BUFF = false;
         public bool _INJECT_PET = false;
+        public bool _INJECT_LCP = false;
         public int SKILLPET_ADR_GET_SKILL = 0;
         public int SKILLPET_ADR_GET_BUFF = 0;
         //SKILLPET_ADR_GET_BUFF
@@ -682,6 +683,9 @@ namespace Kappa
         public int FASTPET_ADR_RESULT2 = 0;
         public bool Sabud_ = false;
         public int SBUD_ADR_GET = 0;
+        public int LCP_ADR_RESULT2;
+
+
 
         public void _Inject_SBUD()
         {
@@ -744,6 +748,14 @@ namespace Kappa
         }
 
 
+        public void _INJECT_LCP_()
+        {
+            if (!_INJECT_LCP)
+            {
+                byte[] freezebytesX = { 0x89, 0x2D, 0xA0, 0x38, 0xFF, 0x00, 0x66, 0x39, 0xBD, 0xC8, 0x87, 0x00, 0x00 };
+                LCP_ADR_RESULT2 = CodeCave.CreateCodeCave(freezebytesX, LOCALPLAYER_ADR_RESULT, LCP_ADR_RESULT2, 7, 100, m);
+            }
+        }
 
         public void _Inject_Fpet()
         {
