@@ -794,6 +794,7 @@ namespace Kappa
             }
             else
             {
+             
                 _INJECT_GET_SKILL = false;
 
             }
