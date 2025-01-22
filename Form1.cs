@@ -620,7 +620,7 @@ namespace Kappa
 
                 SetWindowText(windowHandle, this.Text);
             }
-            //  YourCallingMethod();
+              YourCallingMethod();
 
         }
         public void RunActive()
@@ -898,7 +898,7 @@ namespace Kappa
                 string @string = Encoding.GetEncoding(874).GetString(array);
                 label1.Text = @string + " " + comboBox1.Text;
             }
-            //YourCallingMethod();
+            YourCallingMethod();
         }
 
 
