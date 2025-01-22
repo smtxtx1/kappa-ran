@@ -482,7 +482,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ? 39 ae ? ? ? ? 75 ? 39 ae", false, true);
-            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
+            IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("c7 81 80 01 00 00 ? ? ? ? 89 44", false, true);
             var AoB_Scan_SuperCUT = await m.AoBScan("ff 86 ? ? ? ? 3b bb", false, true);
             //e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 47 ? 2b c2
             var AoB_Scan_SABUD = await m.AoBScan("e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 54 ? ? 55 57 52 50 8b ce e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 4f", false, true);
