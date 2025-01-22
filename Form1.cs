@@ -470,7 +470,7 @@ namespace Kappa
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
-            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 14 FF 52 10", false, true);
+            IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 44 FF 50 10 85 C0 74 36 D9 85 EC 78 00 00", false, true);
             IEnumerable<long> AoB_Scan_LB = await m.AoBScan("0f b7 ? ? ? ? ? 66 8b ? ? 89 44 ? ? 66 89 ? ? ? ? ? db 44 ? ? 66 8b ? ? 89 4c ? ? 66 89 ? ? ? ? ? da 44 ? ? 66 8b ? ? 66 89 ? ? ? ? ? 66 8b ? ? 66 89 ? ? ? ? ? 66 8b ? ? 66 89 ? ? ? ? ? 89 5c", false, true);
             IEnumerable<long> AoB_Scan_BA = await m.AoBScan("83 7f 44 ? 0f 85 ? ? ? ? 83 7f 5c", false, true);
             IEnumerable<long> AoB_Scan_PATH = await m.AoBScan("39 5C 24 28 74 ??", false, true);
@@ -926,7 +926,7 @@ namespace Kappa
                 // Assembly code for fstp dword ptr [esp+38]
                 byte[] assemblyCode = new byte[]
                 {
-                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x14, 0xFF, 0x52, 0x10,
+                    0xD8, 0x25, 0x00, 0x10, 0xFF, 0x00, 0xD9, 0x5C, 0x24, 0x44, 0xFF, 0x50, 0x10,
                     0xE9, 0x00, 0x00, 0x00, 0x00  // jmp 0x00000000 (to be replaced later)
                 };
                 //004DF357
