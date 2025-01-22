@@ -20,12 +20,11 @@ namespace LOGIN
 
         private string verssion = "1.1";
         public static api KeyAuthApp = new api(
-            name: "TESTER", // App name
+            name: "RAN-SAIYO", // App name
             ownerid: "zbtz7lqHV9", // Account ID
-            version: "1.1"
-
-        );
-        private IContainer components;
+            version: "1.0" // Application version. Used for automatic downloads see video here https://www.youtube.com/watch?v=kW195PLCBKs
+                           //path: @"Your_Path_Here" // (OPTIONAL) see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
+        ); private IContainer components;
 
         private TextBox key;
 
