@@ -1033,7 +1033,7 @@ namespace Kappa
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
                         m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
                         m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
                         m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
@@ -1055,7 +1055,7 @@ namespace Kappa
                     // รอเป็นเวลาจำนวนที่กำหนด (ในหน่วยมิลลิวินาที)
                     await Task.Delay(minutesToWait * 60 * 1000);
                         m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
                         m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
                         m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
@@ -2671,7 +2671,7 @@ namespace Kappa
                     if (checkBox25.Checked)
                     {            
                         m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
                         m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
                         m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
     
@@ -2719,7 +2719,7 @@ namespace Kappa
                             for (int u2 = 0; u2 < j; u2++)
                             {
                                 m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                                m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
                                 m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
                                 m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
@@ -2759,7 +2759,7 @@ namespace Kappa
                                 for (int u2 = 0; u2 < j; u2++)
                                 {
                                     m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
-                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                                    m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90");
                                     m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
                                     m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
