@@ -481,7 +481,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
-            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("74 28 55 E8 ?? ?? ?? 00 8B C8", false, true);
+            IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ? 39 ae ? ? ? ? 75 ? 39 ae", false, true);
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("C7 81 C0 01 00 00 00 00 A0 40", false, true);
             var AoB_Scan_SuperCUT = await m.AoBScan("ff 86 ? ? ? ? 3b bb", false, true);
             //e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 47 ? 2b c2
@@ -624,22 +624,24 @@ namespace Kappa
         }
         public void RunActive()
         {
-            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "EB");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 90 90 90 90");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "eb");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
         }
 
         public void RunDeActive()
         {
-            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "0F 84 A6 02 00 00");
-            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "0F 85 F1 00 00 00");
-            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "74");
-            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "74 7d");
+            m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+            m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+            m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+            m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
+            m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
+            m.WriteMemory(RUN6_ADR_RESULT, "bytes", "74 69");
 
             //m.WriteMemory(RUN5_ADR_RESULT, "bytes", "0F 85 E5 00 00 00");
 
