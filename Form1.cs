@@ -478,7 +478,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_WallHack = await m.AoBScan("74 23 8B 4C 24 34", false, true);
             IEnumerable<long> AoB_Scan_HitTru = await m.AoBScan("0f 84 ? ? ? ? 83 f8 ? 0f 84 ? ? ? ? f6 84 24 4c 01 00 00", false, true);
             IEnumerable<long> Aob_Scan_ASPD = await m.AoBScan("?? 0D ?? ?? ?? 00 8D 46 10 52 8B 54", false, true);
-            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("8B 96 CC 00 00 00 89 96 D0 00 00 00", false, true);
+            IEnumerable<long> AoB_Scan_Drone = await m.AoBScan("75 ? 6a ? e8 ? ? ? ? 8b c8 e8 ? ? ? ? d9 86", false, true);
             IEnumerable<long> AoB_Scan_CutAnimate = await m.AoBScan("D8 4C 24 10 8B CE", false, true);
             IEnumerable<long> AoB_Scan_ANTI_AFK = await m.AoBScan("d8 1d ? ? ? ? df e0 f6 c4 ? 7a ? 68 ? ? ? ? c7 81", false, true);
             IEnumerable<long> AoB_Scan_RUN = await m.AoBScan("75 ? 39 ae ? ? ? ? 75 ? 39 ae", false, true);
@@ -570,7 +570,7 @@ namespace Kappa
             ANTIAFK_ADR_RESULT = (AOB_ANTIAFK + 0x02).ToString("x");
             CUTAM_ADR_RESULT = AOB_CUTAM.ToString("x");
             ASPD_ADR_RESULT = (AOB_ASPD + 0x02).ToString("x");
-            DRONE_ADR_RESULT = (AOB_DRONE - 0xB).ToString("x");
+            DRONE_ADR_RESULT = AOB_DRONE.ToString("x");
             HT_ADR_RESULT = AOB_HT.ToString("x");
             WH_ADR_RESULT = AOB_WH.ToString("x");
             SUPERPOT_ADR_RESULT = AOB_Superpot.ToString("x");
