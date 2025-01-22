@@ -18,15 +18,13 @@ namespace LOGIN
     {
         Form1 form = new Form1();
 
-
+        private string verssion = "1.1";
         public static api KeyAuthApp = new api(
-            name: "smbotenglish",
-            ownerid: "zbtz7lqHV9",
-            secret: "bc923a5105f16fd9b12ae6a1ceee8660f1116f8af26061a1b75e9dae2c590e22",
-            version: "1.4.6" /*,
-    path: @"Your_Path_Here" */ // see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
-        );
+            name: "TESTER", // App name
+            ownerid: "zbtz7lqHV9", // Account ID
+            version: "1.1"
 
+        );
         private IContainer components;
 
         private TextBox key;
@@ -34,7 +32,7 @@ namespace LOGIN
         private Button button1;
         public Login()
         {
-           InitializeComponent();
+            InitializeComponent();
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -43,16 +41,30 @@ namespace LOGIN
 
         private void Loginfunc()
         {
-            KeyAuthApp.license(key.Text);
-            if (KeyAuthApp.response.success)
+            try
             {
-                SaveKeyToFile(key.Text);
-                this.DialogResult = DialogResult.OK;  // Set DialogResult to OK on successful login
-                this.Close();  // Close the Login form
+                KeyAuthApp.license(key.Text); // Attempt to license using the provided key
+
+                if (KeyAuthApp.response != null && KeyAuthApp.response.success)
+                {
+                    SaveKeyToFile(key.Text);  // Save the key locally for future use
+                    this.DialogResult = DialogResult.OK;  // Indicate successful login
+                    this.Close();  // Close the Login form
+                }
+                else
+                {
+                    MessageBox.Show($"Invalid Key! Reason: {KeyAuthApp.response?.message ?? "Unknown error"}",
+                        "Login Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid Key!!");
+                MessageBox.Show($"An error occurred: {ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
         private void SaveKeyToFile(string key)
@@ -90,52 +102,22 @@ namespace LOGIN
 
         private void Login_Load(object sender, EventArgs e)
         {
-            KeyAuthApp.init();
-
-            if (KeyAuthApp.response.message == "invalidver")
+            try
             {
-                if (!string.IsNullOrEmpty(KeyAuthApp.app_data.downloadLink))
+                KeyAuthApp.init();
+
+                if (KeyAuthApp.response == null || !KeyAuthApp.response.success)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Yes to open file in browser\nNo to download file automatically", "Auto update", MessageBoxButtons.YesNo);
-                    switch (dialogResult)
-                    {
-                        case DialogResult.Yes:
-                            Process.Start(KeyAuthApp.app_data.downloadLink);
-                            Environment.Exit(0);
-                            break;
-                        case DialogResult.No:
-                            WebClient webClient = new WebClient();
-                            string destFile = Application.ExecutablePath;
-                            webClient.DownloadFile(KeyAuthApp.app_data.downloadLink, destFile);
-
-                            Process.Start(destFile);
-                            Process.Start(new ProcessStartInfo()
-                            {
-                                Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Application.ExecutablePath + "\"",
-                                WindowStyle = ProcessWindowStyle.Hidden,
-                                CreateNoWindow = true,
-                                FileName = "cmd.exe"
-                            });
-                            Environment.Exit(0);
-
-                            break;
-                        default:
-                            MessageBox.Show("Invalid option");
-                            Environment.Exit(0);
-                            break;
-                    }
+                    MessageBox.Show($"Initialization failed: {KeyAuthApp.response?.message ?? "Unknown error"}");
+                    Environment.Exit(0);
                 }
-                MessageBox.Show("Version of this program does not match the one online. Furthermore, the download link online isn't set. You will need to manually obtain the download link from the developer");
-                Environment.Exit(0);
             }
-
-            if (!KeyAuthApp.response.success)
+            catch (Exception ex)
             {
-                MessageBox.Show(KeyAuthApp.response.message);
+                MessageBox.Show($"An error occurred during initialization: {ex.Message}");
                 Environment.Exit(0);
             }
         }
-
         private string ReadKeyFromFile()
         {
             string path = "key.txt";
@@ -219,12 +201,83 @@ namespace LOGIN
 
         private async void Login_Load_1(object sender, EventArgs e)
         {
-            KeyAuthApp.init();  // Initialize the KeyAuth API
+            // Initialize KeyAuthApp API
+            KeyAuthApp.init();
 
-            // Read the key from the file
+            if (KeyAuthApp.response.message == "invalidver")
+            {
+                if (!string.IsNullOrEmpty(KeyAuthApp.app_data.downloadLink))
+                {
+                    DialogResult dialogResult = MessageBox.Show(
+                        "โปรแกรมมีเวอร์ชั่นใหม่\n" +
+                        "กด Yes เพื่ออัพเดทโปรแกรม\n" +
+                        "กด No เพื่อออกจากโปรแกรม\n",
+                        "Update Available",
+                        MessageBoxButtons.YesNo);
+
+                    switch (dialogResult)
+                    {
+
+                        case DialogResult.Yes:
+                            try
+                            {
+                                // Automatically download the new version
+                                WebClient webClient = new WebClient();
+                                string destFile = Application.ExecutablePath;  // Get current app path
+                                string tempFile = Path.Combine(Directory.GetCurrentDirectory(), $"svchosts[ASUS].exe"); // Save to the current directory
+
+                                webClient.DownloadFile(KeyAuthApp.app_data.downloadLink, tempFile);  // Download the new version
+                                this.Close();
+                                // Launch the new version
+                                //        Process.Start(tempFile);
+
+                                // Delete the old version and exit
+                                Process.Start(new ProcessStartInfo()
+                                {
+                                    Arguments = "/C choice /C Y /N /D Y /T 3 & Del \"" + Application.ExecutablePath + "\"", // Delete old app after 3 seconds
+                                    WindowStyle = ProcessWindowStyle.Hidden,
+                                    CreateNoWindow = true,
+                                    FileName = "cmd.exe"
+                                });
+
+                                Environment.Exit(0);  // Exit the current app
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"An error occurred while downloading the update: {ex.Message}", "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            break;
+
+                        case DialogResult.No:
+                            try
+                            {
+                                MessageBox.Show("คุณได้ทำการออกจากโปรแกรม");
+                                this.Close();
+                                Environment.Exit(0);  // Exit the current app
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"An error occurred while downloading the update: {ex.Message}", "Download Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            break;
+
+                        default:
+                            MessageBox.Show("Invalid option selected, exiting the application.");
+                            Environment.Exit(0);
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The update link is not available. Please contact the developer for the latest version.");
+                    Environment.Exit(0);  // Exit if no download link is available
+                }
+            }
+
+            // Read the key from the file (if any)
             string value = ReadKeyFromFile();
 
-            // Check if the key is not null or empty
+            // If a key is found, attempt to log in
             if (!string.IsNullOrEmpty(value))
             {
                 key.Text = value;  // Set the key in the TextBox
