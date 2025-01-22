@@ -1031,11 +1031,19 @@ namespace Kappa
             {
                 // เก็บเวลาปัจจุบัน
                 DateTime startTime = DateTime.Now;
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                 m.WriteMemory("02FD5DFA", "byte", "63");
                 Thread.Sleep(100);
                 m.WriteMemory("02FD5DFA", "byte", "01");
                 Thread.Sleep(2000);
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
 
 
                 Console.WriteLine($"เริ่มต้นเวลา: {startTime}");
@@ -1045,12 +1053,20 @@ namespace Kappa
                 {
                     // รอเป็นเวลาจำนวนที่กำหนด (ในหน่วยมิลลิวินาที)
                     await Task.Delay(minutesToWait * 60 * 1000);
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "90 90");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "90 90 ");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "eb");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
 
                     // แสดงเวลาอีกครั้งหลังจากรอครบ
                     DateTime endTime = DateTime.Now;
                     m.WriteMemory("02FD5DFB", "byte", "63");
                     Thread.Sleep(100);
                     m.WriteMemory("02FD5DFB", "byte", "01");
+                        m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
+                        m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
+                        m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
+                        m.WriteMemory(RUN4_ADR_RESULT, "bytes", "0F 84 42 02 00 00");
 
                     Console.WriteLine($"เวลาปัจจุบันหลังจากผ่านไป {minutesToWait} นาที: {endTime}");
                 }
