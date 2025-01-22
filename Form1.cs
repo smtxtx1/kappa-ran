@@ -580,7 +580,7 @@ namespace Kappa
             PATH2_ADR_RESULT = (AOB_PATH + 0x27).ToString("x");
             MessageBox.Show("All Done");
             m.WriteMemory(ASPD_ADR_RESULT, "bytes", "00 A0 FA 00");
-          m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
+            m.WriteMemory(ANTIAFK_ADR_RESULT, "bytes", "12 00 FD 00");
             m.WriteMemory(LONGBUFF_ADR_RESUT, "bytes", "00 66 FF 00");
             m.WriteMemory("00FD0012", "float", "-1");
             m.WriteMemory("00FAA000", "float", "4800");
@@ -630,7 +630,7 @@ namespace Kappa
             m.WriteMemory(RUN4_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN5_ADR_RESULT, "bytes", "90 90 90 90 90 90");
             m.WriteMemory(RUN6_ADR_RESULT, "bytes", "90 90");
-            m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
+          //  m.WriteMemory(PATH2_ADR_RESULT, "bytes", "eb");
 
         }
 
