@@ -557,11 +557,11 @@ namespace Kappa
             LOCALPLAYER_ADR_RESULT = AOB_LOCALPLAYER.ToString("x");
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
-            RUN2_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0xEFE).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0xF07).ToString("x");
-            RUN5_ADR_RESULT = (AOB_RUN + 0xF7B).ToString("x");
-            RUN6_ADR_RESULT = (AOB_RUN + 0x83).ToString("x");
+            RUN2_ADR_RESULT = (AOB_RUN + 0x08).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0x10).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0x90).ToString("x");
+            RUN5_ADR_RESULT = (AOB_RUN + 0xBF4).ToString("x");
+            RUN6_ADR_RESULT = (AOB_RUN + 0xBFD).ToString("x");
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
             LONGBUFF_ADR_RESUT = (AOB_LONGBUFF + 0x03).ToString("x");
             ANTISLIDE_ADR_RESULT = (AOB_ANTISLIDE + 0x22).ToString("x");
