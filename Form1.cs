@@ -558,8 +558,8 @@ namespace Kappa
             ITEMDROP_ADR_RESULT = AOB_ITEMDROP.ToString("x");
             RUN1_ADR_RESULT = AOB_RUN.ToString("x");
             RUN2_ADR_RESULT = (AOB_RUN + 0x08).ToString("x");
-            RUN3_ADR_RESULT = (AOB_RUN + 0x10).ToString("x");
-            RUN4_ADR_RESULT = (AOB_RUN + 0x90).ToString("x");
+            RUN3_ADR_RESULT = (AOB_RUN + 0xA).ToString("x");
+            RUN4_ADR_RESULT = (AOB_RUN + 0x5A).ToString("x");
             RUN5_ADR_RESULT = (AOB_RUN + 0xBF4).ToString("x");
             RUN6_ADR_RESULT = (AOB_RUN + 0xBFD).ToString("x");
             GETBUFF_ADR_RESULT = AOB_GETBUFF.ToString("x");
