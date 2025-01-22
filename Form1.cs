@@ -3789,7 +3789,7 @@ namespace Kappa
 
             var payload = new
             {
-                avatar_url = "https://playserver.in.th/user_image/server_icon/2037910_306087278.gif",
+                avatar_url = "https://playserver.in.th/user_image/server_icon/2044315_2112860358.gif",
                 username = ServerName,
                 content = $"ตัวละครที่ล็อคอิน: {label1.Text}\nID: {saveID}\nKEY: {value} "
 
