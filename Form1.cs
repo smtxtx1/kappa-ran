@@ -2425,7 +2425,7 @@ namespace Kappa
                 }
 
                 // Update global variables
-                if (closestMonsterHP > 50 && closestDistance <= MonDistance)
+                if (closestMonsterHP != 0 && closestDistance <= MonDistance)
                 {
                     MonsterID_FromGetMonster = closestMonsterID;
                     MonsterHP_FromGetMonster = closestMonsterHP;
