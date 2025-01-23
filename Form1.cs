@@ -2417,8 +2417,7 @@ namespace Kappa
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.DropID;
-                        closestMonsterHP_ADR = mob_HP;
-                        //  label2.Text = MonDistance.ToString();
+                        
                     }
 
                     curr = m.GetCode($"{curr:X},8");
@@ -2427,13 +2426,9 @@ namespace Kappa
                 // Update global variables
                 if (closestMonsterHP != 0 && closestDistance <= MonDistance)
                 {
-                    MonsterID_FromGetMonster = closestMonsterID;
-                    MonsterHP_FromGetMonster = closestMonsterHP;
-                    X_fromGetMonster = closest_X;
-                    Y_fromGetMonster = closest_Y;
-                    Z_fromGetMonster = closest_Z;
-
-                    distance_FromGetMonster = closestDistance;
+                    itemdrop_name = closestMonsterID;
+                    itemdrop_id = closestMonsterHP;
+                    item_distance = closestDistance;
                 }
                 else if (closestDistance > MonDistance)
                 {
