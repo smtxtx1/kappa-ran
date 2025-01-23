@@ -2518,7 +2518,7 @@ namespace Kappa
                 UIntPtr mob_X = m.GetCode($"{data:X},20");
                 UIntPtr mob_Y = m.GetCode($"{data:X},24");
                 UIntPtr mob_Z = m.GetCode($"{data:X},28");
-                UIntPtr drop_ID = m.GetCode($"{data:X},28");
+                UIntPtr drop_ID = m.GetCode($"{data:X},1C");
                 uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
                 float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
