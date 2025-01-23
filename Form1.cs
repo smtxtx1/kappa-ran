@@ -2390,7 +2390,7 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
-        private async Task<(uint itemName, uint itemId, float itemDistance)> GetItemAsync()
+        private async Task<(int itemName, uint itemId, float itemDistance)> GetItemAsync()
         {
             try
             {
@@ -2398,7 +2398,7 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
 
                 float closestDistance = float.MaxValue;
-                uint closestMonsterID = 0;
+                int closestMonsterID = 0;
                 uint closestMonsterHP = 0;
                 float closest_X = 0;
                 float closest_Y = 0;
@@ -2499,7 +2499,7 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
-        private async Task<(uint ID, float X, float Y, float Z, uint DropID)> ReadItemsDetailsAsync(UIntPtr data)
+        private async Task<(int ID, float X, float Y, float Z, uint DropID)> ReadItemsDetailsAsync(UIntPtr data)
         {
             try
             {
@@ -2508,7 +2508,7 @@ namespace Kappa
                 UIntPtr mob_Y = m.GetCode($"{data:X},24");
                 UIntPtr mob_Z = m.GetCode($"{data:X},28");
                 UIntPtr drop_ID = m.GetCode($"{data:X},1C");
-                uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
+                int mobValue = await Task.Run(() => m.Read2Byte(mobID.ToString("X")));
                 float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
