@@ -291,9 +291,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00FF38A0,87C8";
+        public string HpFreeze_1 = "00FF38A0,7524";
 
-        public string HpFreeze_2 = "00FF38A0,87CC";
+        public string HpFreeze_2 = "00FF38A0,7578";
 
         public string Antislide = "004324D8";
 
@@ -1330,8 +1330,8 @@ namespace Kappa
         {
             if (checkBox5.Checked)
             {
-                m.FreezeValue(HpFreeze_1, "2bytes", "999");
-                m.FreezeValue(HpFreeze_2, "2bytes", "65535");
+                m.FreezeValue(HpFreeze_1, "float", "999");
+                m.FreezeValue(HpFreeze_2, "float", "65535");
             }
             else
             {
