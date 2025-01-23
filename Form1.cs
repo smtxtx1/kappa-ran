@@ -2406,7 +2406,7 @@ namespace Kappa
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     // Reading data pointers
-                    var mobDetails = await ReadMonsterDetailsAsync(data);
+                    var mobDetails = await ReadItemsDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
