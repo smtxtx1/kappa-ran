@@ -291,9 +291,9 @@ namespace Kappa
         public string Superpot3 = "007757F4";
 
 
-        public string HpFreeze_1 = "00FF38A0,390";
+        public string HpFreeze_1 = "00FF38A0,87C8";
 
-        public string HpFreeze_2 = "00FF38A0,394";
+        public string HpFreeze_2 = "00FF38A0,87CC";
 
         public string Antislide = "004324D8";
 
