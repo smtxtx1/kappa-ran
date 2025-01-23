@@ -4063,7 +4063,7 @@ namespace Kappa
             allocate_adr_Nolimit2 = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox28.Checked)
             {
-                m.FreezeValue("00fd4567,140", "int", "0");
+                m.FreezeValue("00fd4567,114", "int", "0");
                 IntPtr baseModuleadr = ProcessbyID.MainModule.BaseAddress;
 
                 // Assembly code for fstp dword ptr [esp+38]
