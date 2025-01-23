@@ -223,7 +223,7 @@ namespace LOGIN
                                 // Automatically download the new version
                                 WebClient webClient = new WebClient();
                                 string destFile = Application.ExecutablePath;  // Get current app path
-                                string tempFile = Path.Combine(Directory.GetCurrentDirectory(), $"svchosts[ASUS].exe"); // Save to the current directory
+                                string tempFile = Path.Combine(Directory.GetCurrentDirectory(), $"svchosts[SAIYOลบวงเล็บ].exe"); // Save to the current directory
 
                                 webClient.DownloadFile(KeyAuthApp.app_data.downloadLink, tempFile);  // Download the new version
                                 this.Close();
