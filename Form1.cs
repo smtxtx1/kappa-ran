@@ -4074,7 +4074,7 @@ namespace Kappa
                 };
                 //004DF357
                 // Calculate the jump offset for the first jmp instruction
-                int jumpOffset = (int)AOB_NOLIMIT + 0x33 + 0x06 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
+                int jumpOffset = (int)AOB_NOLIMIT + 0x34 + 0x06 - ((int)allocate_adr_Nolimit2 + assemblyCode.Length + 0);
                 BitConverter.GetBytes(jumpOffset).CopyTo(assemblyCode, assemblyCode.Length - 4);
 
                 // Write the initial assembly code to the allocated address
