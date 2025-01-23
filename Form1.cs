@@ -2409,14 +2409,14 @@ namespace Kappa
                     var mobDetails = await ReadItemsDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
+                    if (mobDetails.DropID != 0 && distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
                         closest_X = mobDetails.X;
                         closest_Y = mobDetails.Y;
                         closest_Z = mobDetails.Z;
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
-                        closestMonsterHP = mobDetails.HP;
+                        closestMonsterHP = mobDetails.DropID;
                         closestMonsterHP_ADR = mob_HP;
                         //  label2.Text = MonDistance.ToString();
                     }
@@ -2470,7 +2470,7 @@ namespace Kappa
                     var mobDetails = await ReadMonsterDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
+                    if (mobDetails.&& distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
                         closest_X = mobDetails.X;
                         closest_Y = mobDetails.Y;
@@ -2510,7 +2510,7 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
-        private async Task<(uint ID, float X, float Y, float Z, uint HP)> ReadItemsDetailsAsync(UIntPtr data)
+        private async Task<(uint ID, float X, float Y, float Z, uint DropID)> ReadItemsDetailsAsync(UIntPtr data)
         {
             try
             {
