@@ -2055,6 +2055,7 @@ namespace Kappa
 
             }
         }
+
         private async Task GetPlayerAsync()
         {
             bool FoundGm = false;
@@ -2387,6 +2388,66 @@ namespace Kappa
         }
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
+        }
+        private async Task GetItemAsync()
+        {
+            try
+            {
+                int globalCrow = m.ReadInt("MiniA.exe+7A8B30,A954");
+                UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,A958");
+
+                float closestDistance = float.MaxValue;
+                uint closestMonsterID = 0;
+                uint closestMonsterHP = 0;
+                float closest_X = 0;
+                float closest_Y = 0;
+                float closest_Z = 0;
+                for (int i = 0; i < globalCrow; i++)
+                {
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+                    // Reading data pointers
+                    var mobDetails = await ReadMonsterDetailsAsync(data);
+
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
+                    {
+                        closest_X = mobDetails.X;
+                        closest_Y = mobDetails.Y;
+                        closest_Z = mobDetails.Z;
+                        closestDistance = distance_mon;
+                        closestMonsterID = mobDetails.ID;
+                        closestMonsterHP = mobDetails.HP;
+                        closestMonsterHP_ADR = mob_HP;
+                        //  label2.Text = MonDistance.ToString();
+                    }
+
+                    curr = m.GetCode($"{curr:X},8");
+                }
+
+                // Update global variables
+                if (closestMonsterHP > 50 && closestDistance <= MonDistance)
+                {
+                    MonsterID_FromGetMonster = closestMonsterID;
+                    MonsterHP_FromGetMonster = closestMonsterHP;
+                    X_fromGetMonster = closest_X;
+                    Y_fromGetMonster = closest_Y;
+                    Z_fromGetMonster = closest_Z;
+
+                    distance_FromGetMonster = closestDistance;
+                }
+                else if (closestDistance > MonDistance)
+                {
+                    // Clear the variables if no monster meets the conditions
+                    MonsterID_FromGetMonster = 0;
+                    MonsterHP_FromGetMonster = 0;
+                    distance_FromGetMonster = float.MaxValue;
+                }
+                await Task.Delay(10);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+            }
         }
 
         private async Task GetMonstersAsync()
