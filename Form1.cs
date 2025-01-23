@@ -2510,6 +2510,30 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
+        private async Task<(uint ID, float X, float Y, float Z, uint HP)> ReadItemsDetailsAsync(UIntPtr data)
+        {
+            try
+            {
+                UIntPtr mobID = m.GetCode($"{data:X},0");
+                UIntPtr mob_X = m.GetCode($"{data:X},20");
+                UIntPtr mob_Y = m.GetCode($"{data:X},24");
+                UIntPtr mob_Z = m.GetCode($"{data:X},28");
+                UIntPtr drop_ID = m.GetCode($"{data:X},28");
+                uint mobValue = await Task.Run(() => m.ReadUInt(mobID.ToString("X")));
+                float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
+                float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
+                float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
+                uint dropValue_ID = await Task.Run(() => m.ReadUInt(drop_ID.ToString("X")));
+
+                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z, dropValue_ID);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading monster details: {ex.Message}");
+
+                return (0, 0, 0, 0, 0);
+            }
+        }
 
         private async Task<(uint ID, float X, float Y, float Z, uint HP)> ReadMonsterDetailsAsync(UIntPtr data)
         {
