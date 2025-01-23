@@ -2389,7 +2389,7 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
-        private async Task GetItemAsync(uint itemdrop_name, uint itemdrop_id, float item_distance)
+        private async Task<(uint itemName, uint itemId, float itemDistance)> GetItemAsync()
         {
             try
             {
@@ -2402,11 +2402,10 @@ namespace Kappa
                 float closest_X = 0;
                 float closest_Y = 0;
                 float closest_Z = 0;
-                
+
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    // Reading data pointers
                     var mobDetails = await ReadItemsDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
@@ -2418,31 +2417,24 @@ namespace Kappa
                         closestDistance = distance_mon;
                         closestMonsterID = mobDetails.ID;
                         closestMonsterHP = mobDetails.DropID;
-                        
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                 }
 
-                // Update global variables
                 if (closestMonsterHP != 0 && closestDistance <= MonDistance)
                 {
-                    itemdrop_name = closestMonsterID;
-                    itemdrop_id = closestMonsterHP;
-                    item_distance = closestDistance;
+                    return (closestMonsterID, closestMonsterHP, closestDistance);
                 }
-                else if (closestDistance > MonDistance)
+                else
                 {
-                    // Clear the variables if no monster meets the conditions
-                    MonsterID_FromGetMonster = 0;
-                    MonsterHP_FromGetMonster = 0;
-                    distance_FromGetMonster = float.MaxValue;
+                    return (0, 0, float.MaxValue);
                 }
-                await Task.Delay(10);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
+                return (0, 0, float.MaxValue);
             }
         }
 
