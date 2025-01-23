@@ -2389,7 +2389,7 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
-        private async Task GetItemAsync()
+        private async Task GetItemAsync(uint itemdrop_name, uint itemdrop_id, float item_distance)
         {
             try
             {
@@ -2402,9 +2402,7 @@ namespace Kappa
                 float closest_X = 0;
                 float closest_Y = 0;
                 float closest_Z = 0;
-                uint itemdrop_name;
-                uint itemdrop_id;
-                float item_distance;
+                
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
