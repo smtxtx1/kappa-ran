@@ -3524,70 +3524,43 @@ namespace Kappa
             string names = m.ReadString(IDadr);
             try
             {
-                if (listView11 != null)
-                {
-                    foreach (ListViewItem item in listView11.Items)
-                    {
+                var (itemName, itemId, itemDistance) = await GetItemAsync();
+
+                string sstringItemname = itemName.ToString();
+
                         bool found = false;
 
                         foreach (ListViewItem item12 in listView12.Items)
                         {
-                            if (item.SubItems[2].Text.Contains(item12.SubItems[2].Text))
+                            if (item12.SubItems[2].Text.Contains(sstringItemname))
                             {
                                 found = true;
                                 break;
                             }
                         }
 
-                        if (found)
+                if (found)
+                {
+                    if (m.ReadInt(MATION_CHECK) != 1)
+                    {
+                        m.WriteMemory(actioncheck, "int", "3");
+                        m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
+                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+
+                        while (m.ReadInt(MATION_CHECK) == 1)
                         {
-                            if (m.ReadInt(MATION_CHECK) != 1)
+                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
+
+                            if (m.ReadInt(MATION_CHECK) == 0)
                             {
-                                m.WriteMemory(actioncheck, "int", "3");
-                                m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
-                                item.Remove();
+                                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
-                                while (m.ReadInt(MATION_CHECK) == 1)
-                                {
-                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
-
-                                    if (m.ReadInt(MATION_CHECK) == 0)
-                                    {
-                                        await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                        await WriteMemoryMultipleTimes(TARGET_SKILL, "int", item.SubItems[1].Text, 3, 50);
-                                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
-
-                                        item.Remove();
-                                        break;
-                                    }
-                                }
+                                break;
                             }
                         }
 
-                        if (item.SubItems[0].Text == "4")
-                        {
-                            m.WriteMemory(TARGET_SKILL, "int", item.SubItems[1].Text);
-                            if (m.ReadInt(MATION_CHECK) != 1)
-                            {
-                                m.WriteMemory(actioncheck, "int", "4");
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", item.SubItems[1].Text, 1, 50);
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
-                                item.Remove();
-
-                                while (m.ReadInt(MATION_CHECK) == 1)
-                                {
-                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 10);
-
-                                    if (m.ReadInt(MATION_CHECK) == 0)
-                                    {
-                                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 2, 50);
-                                        item.Remove();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }
