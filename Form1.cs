@@ -2466,7 +2466,7 @@ namespace Kappa
                     var mobDetails = await ReadMonsterDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (distance_mon <= MonDistance && distance_mon <= closestDistance)
+                    if (mobDetails.HP <= 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
                         closest_X = mobDetails.X;
                         closest_Y = mobDetails.Y;
