@@ -3539,7 +3539,7 @@ namespace Kappa
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int Boxfound = m.ReadInt("MiniA.exe+7B0018");
-                        if (Boxfound != 6 && sstringItemname == comboBox5.SelectedItem?.ToString())
+                        if (Boxfound != (int)comboBox5.SelectedItem? && sstringItemname == "9")
                         {
                             found = true;
                             break;

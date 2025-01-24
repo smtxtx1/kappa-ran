@@ -32,6 +32,7 @@
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
             groupBox14 = new GroupBox();
+            comboBox5 = new ComboBox();
             checkBox41 = new CheckBox();
             textBox12 = new TextBox();
             checkBox23 = new CheckBox();
@@ -242,7 +243,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            comboBox5 = new ComboBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox14.SuspendLayout();
@@ -309,39 +309,50 @@
             groupBox14.TabIndex = 28;
             groupBox14.TabStop = false;
             groupBox14.Text = "เลือกกล่อง";
-            groupBox14.Visible = false;
+            // 
+            // comboBox5
+            // 
+            comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox5.FormattingEnabled = true;
+            comboBox5.Location = new Point(6, 18);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(169, 23);
+            comboBox5.TabIndex = 6;
             // 
             // checkBox41
             // 
             checkBox41.AutoSize = true;
-            checkBox41.Location = new Point(6, 53);
+            checkBox41.Location = new Point(6, 47);
             checkBox41.Name = "checkBox41";
             checkBox41.Size = new Size(78, 19);
             checkBox41.TabIndex = 33;
             checkBox41.Text = "Super Cut";
             checkBox41.UseVisualStyleBackColor = true;
+            checkBox41.Visible = false;
             checkBox41.CheckedChanged += checkBox41_CheckedChanged;
             // 
             // textBox12
             // 
-            textBox12.Location = new Point(105, 53);
+            textBox12.Location = new Point(105, 47);
             textBox12.Multiline = true;
             textBox12.Name = "textBox12";
             textBox12.Size = new Size(57, 19);
             textBox12.TabIndex = 34;
             textBox12.Text = "1";
             textBox12.TextAlign = HorizontalAlignment.Center;
+            textBox12.Visible = false;
             textBox12.TextChanged += textBox12_TextChanged;
             // 
             // checkBox23
             // 
             checkBox23.AutoSize = true;
-            checkBox23.Location = new Point(6, 70);
+            checkBox23.Location = new Point(6, 64);
             checkBox23.Name = "checkBox23";
             checkBox23.Size = new Size(65, 19);
             checkBox23.TabIndex = 20;
             checkBox23.Text = "Fix Skill";
             checkBox23.UseVisualStyleBackColor = true;
+            checkBox23.Visible = false;
             checkBox23.CheckedChanged += checkBox23_CheckedChanged;
             // 
             // groupBox12
@@ -1824,15 +1835,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // comboBox5
-            // 
-            comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox5.FormattingEnabled = true;
-            comboBox5.Location = new Point(6, 18);
-            comboBox5.Name = "comboBox5";
-            comboBox5.Size = new Size(169, 23);
-            comboBox5.TabIndex = 6;
             // 
             // Form1
             // 
