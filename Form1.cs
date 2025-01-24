@@ -2390,53 +2390,36 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
-        private async Task<(int itemName, uint itemId, float itemDistance)> GetItemAsync()
+        private async Task<List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>> GetItemsAsync()
         {
+            var items = new List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>();
+
             try
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
-
-                float closestDistance = float.MaxValue;
-                int closestMonsterID = 0;
-                uint closestMonsterHP = 0;
-                float closest_X = 0;
-                float closest_Y = 0;
-                float closest_Z = 0;
 
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadItemsDetailsAsync(data);
 
-                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
                     if (mobDetails.DropID != 0)
                     {
-                        closest_X = mobDetails.X;
-                        closest_Y = mobDetails.Y;
-                        closest_Z = mobDetails.Z;
-                        closestDistance = distance_mon;
-                        closestMonsterID = mobDetails.ID;
-                        closestMonsterHP = mobDetails.DropID;
+                        float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+
+                        items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                 }
-
-                if (closestMonsterHP != 0)
-                {
-                    return (closestMonsterID, closestMonsterHP, closestDistance);
-                }
-                else
-                {
-                    return (0, 0, float.MaxValue);
-                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
-                return (0, 0, float.MaxValue);
+                Console.WriteLine($"Error in GetItemsAsync: {ex.Message}");
             }
+
+            return items;
         }
 
         private async Task GetMonstersAsync()
@@ -3509,51 +3492,54 @@ namespace Kappa
         private async Task ItemGet()
         {
             string names = m.ReadString(IDadr);
+
             try
             {
-                var (itemName, itemId, itemDistance) = await GetItemAsync();
+                var items = await GetItemsAsync();
 
-                string sstringItemname = itemName.ToString();
-
-                        bool found = false;
-
-                        foreach (ListViewItem item12 in listView12.Items)
-                        {
-                            int Boxfound = m.ReadInt("MiniA.exe+7B0018");
-                            if (Boxfound != 6 && sstringItemname == "9")
-                                {
-                                     found = true;
-                                     break;
-                                }
-                            if (item12.SubItems[2].Text.Contains(sstringItemname))
-                            {
-                                found = true;
-                                break;
-                            }
-                        }
-
-                if (found)
+                foreach (var (itemName, itemId, itemDistance, itemX, itemY, itemZ) in items)
                 {
-                    if (m.ReadInt(MATION_CHECK) != 1)
+                    string sstringItemname = itemName.ToString();
+                    bool found = false;
+
+                    foreach (ListViewItem item12 in listView12.Items)
                     {
-                        m.WriteMemory(actioncheck, "int", "3");
-                        m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
-                        await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
-
-                        while (m.ReadInt(MATION_CHECK) == 1)
+                        int Boxfound = m.ReadInt("MiniA.exe+7B0018");
+                        if (Boxfound != 6 && sstringItemname == "9")
                         {
-                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
-
-                            if (m.ReadInt(MATION_CHECK) == 0)
-                            {
-                                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
-
-                                break;
-                            }
+                            found = true;
+                            break;
                         }
 
+                        if (item12.SubItems[2].Text.Contains(sstringItemname))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (found)
+                    {
+                        if (m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "3");
+                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
+                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+
+                            while (m.ReadInt(MATION_CHECK) == 1)
+                            {
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
+
+                                if (m.ReadInt(MATION_CHECK) == 0)
+                                {
+                                    await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                                    await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
+
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
