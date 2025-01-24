@@ -3026,16 +3026,6 @@ namespace Kappa
             
             Random random = new Random();
 
-            // Randomly decide to add or subtract 20 for myX
-            // Randomly decide to add or subtract 20 for myXget
-            float xOffset = (random.Next(2) == 0) ? rangefix : rangefixminus;
-            float newX = myX + xOffset;
-
-            // Randomly decide to add or subtract 20 for myZ
-            float zOffset = (random.Next(2) == 0) ? rangefix : rangefixminus;
-            float newZ = myZ + zOffset;
-
-            // Write new coordinates
             m.WriteMemory(getadr + "+4", "float", X_fromGetMonster.ToString());
             m.WriteMemory(getadr + "+C", "float", Y_fromGetMonster.ToString()); // Y-coordinate stays the same
             m.WriteMemory(getadr + "+14", "float", Z_fromGetMonster.ToString());
