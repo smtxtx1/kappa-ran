@@ -3546,15 +3546,16 @@ namespace Kappa
                             {
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 500);
 
-                                if (m.ReadInt(MATION_CHECK) == 0)
-                                {
-                                    await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                    await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
-                                    await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
-
-                                    break;
-                                }
                             }
+                            if (m.ReadInt(MATION_CHECK) == 0)
+                            {
+                                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
+
+                                break;
+                            }
+
                         }
                     }
                 }
