@@ -3012,7 +3012,7 @@ namespace Kappa
 
             try
             {
-                // Get the closest monster
+                // Fetch the closest monster
                 var (MonsterID, MonsterHP, Distance, X, Y, Z) = await GetMonstersAsync();
 
                 if (MonsterID == 0)
@@ -3022,48 +3022,98 @@ namespace Kappa
                     return;
                 }
 
-                // Set monster as the target
-                m.WriteMemory(TARGET_SKILL, "int", MonsterID.ToString());
-                m.WriteMemory(TARGET_RING, "int", MonsterID.ToString());
+                // Assign the closest monster details to global variables
+                MonsterID_FromGetMonster = MonsterID;
+                MonsterHP_FromGetMonster = MonsterHP;
+                distance_FromGetMonster = Distance;
+                X_fromGetMonster = X;
+                Y_fromGetMonster = Y;
+                Z_fromGetMonster = Z;
+
+                // Set the target for attack
+                m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+                m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
 
                 while (true)
                 {
                     label6.Text = "Attacking";
                     label6.ForeColor = Color.Red;
 
+                    m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+                    m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+
                     int TARGET_RINGS = m.ReadInt(TARGET_RING);
+                    int TARGET_SKILLS = m.ReadInt(TARGET_SKILL);
                     uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                    // Stop attacking if the monster is out of range or dead
+                    // Check conditions to stop attacking
                     if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
                     {
                         break;
                     }
 
+                    // Iterate through skill slots
                     for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
                     {
                         int MATION = m.ReadInt(MATION_CHECK);
 
-                        if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked) // If can't hit, move closer
+                        m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+                        m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+
+                        TARGET_RINGS = m.ReadInt(TARGET_RING);
+                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
+                        // Check conditions to stop attacking again
+                        if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
                         {
-                            label6.Text = "Unable to attack. Retrying...";
-                            MoveWhileAttacking();
-                            await Task.Delay(100);
-                            continue;
+                            break;
                         }
 
+                        // Read skill types
                         int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
                         int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
-                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP > 70 && Distance <= MonDistance)
+                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= MonDistance)
                         {
-                                PerformSkill(idskilltype_test1, idskilltype_test2);
+                            if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
+                            {
+                                TARGET_RINGS = m.ReadInt(TARGET_RING);
+                                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
+                                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
+                                {
+                                    break;
+                                }
+
+                                Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
+                                Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
+                                Console.WriteLine($"Can Attack: {MATION != 0}");
+                            }
+
+                            // Re-read MATION and retry attack if needed
+                            MATION = m.ReadInt(MATION_CHECK);
+
+                            if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked)
+                            {
+                                label6.Text = "Unable to attack. Retrying...";
+                                MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+                                MoveWhileAttacking();
+                                await Task.Delay(100);
+                            }
                         }
 
-                        await Task.Delay(100);
+                        await Task.Delay(100); // Delay per skill slot
                     }
 
-                    await Task.Delay(200); // Delay between attacks
+                    TARGET_RINGS = m.ReadInt(TARGET_RING);
+                    monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
+                    if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(200); // Delay between attack cycles
                 }
             }
             catch (Exception ex)
@@ -3208,13 +3258,13 @@ namespace Kappa
             DisplayAlloc();
             if (!checkBox13.Checked)
             {
-              //  StopMonitoringMonsters();
+                StopMonitoringMonsters();
 
             }
 
             if (checkBox13.Checked)
             {
-            //    StartMonitoringMonstersAsync();
+              //  StartMonitoringMonstersAsync();
 
                 backgroundWorker6.RunWorkerAsync();
             }
@@ -3857,7 +3907,7 @@ namespace Kappa
             button6.Enabled = false;
             button7.Enabled = true;
 
-        //    StartMonitoringMonstersAsync();
+         //   StartMonitoringMonstersAsync();
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
