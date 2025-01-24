@@ -3059,7 +3059,13 @@ namespace Kappa
 
                     if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                     {
+                        if (checkBox15.Checked)
+                        {
+                            await ItemGet();
+
+                        }
                         break;
+
                     }
 
                     int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
@@ -3075,7 +3081,13 @@ namespace Kappa
 
                             if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                             {
+                                if (checkBox15.Checked)
+                                {
+                                    await ItemGet();
+
+                                }
                                 break;
+
                             }
                             Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
                             Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
