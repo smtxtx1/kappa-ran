@@ -3040,6 +3040,11 @@ namespace Kappa
                 uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
                 if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                 {
+                    if (checkBox15.Checked)
+                    {
+                      await  ItemGet();
+
+                    }
                     break;
 
                 }
