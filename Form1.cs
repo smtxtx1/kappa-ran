@@ -172,6 +172,17 @@ namespace Kappa
         { "10", "Collect Ore" },
         { "11", "Collect Box" }
     };
+        private Dictionary<string, string> itemDescriptions2 = new Dictionary<string, string>
+    {
+        { "1", "Speed Box" },
+        { "2", "Crazy Time Box" },
+        { "3", "Power Up Box" },
+        { "4", "Exp Box" },
+        { "6", "Lucky Box" },
+        { "9,", "Speed Up Max Box" },
+        { "10,", "Madness Time Box" },
+        { "11", "Power Up Max Box" }
+    };
 
 
 
@@ -419,6 +430,14 @@ namespace Kappa
                 comboBox4.Items.Add(new ComboBoxItem(itemDescription.Value, itemDescription.Key));
 
             }
+            foreach (KeyValuePair<string, string> itemDescription2 in itemDescriptions2)
+            {
+
+                comboBox5.Items.Add(new ComboBoxItem(itemDescription2.Value, itemDescription2.Key));
+
+            }
+
+            // itemDescriptions2
 
         }
 
