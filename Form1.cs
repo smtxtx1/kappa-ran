@@ -3527,7 +3527,7 @@ namespace Kappa
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 1000);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 500);
 
                                 if (m.ReadInt(MATION_CHECK) == 0)
                                 {
