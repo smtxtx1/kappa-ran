@@ -242,6 +242,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            comboBox5 = new ComboBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox14.SuspendLayout();
@@ -298,21 +299,22 @@
             // 
             // groupBox14
             // 
+            groupBox14.Controls.Add(comboBox5);
             groupBox14.Controls.Add(checkBox41);
             groupBox14.Controls.Add(textBox12);
             groupBox14.Controls.Add(checkBox23);
             groupBox14.Location = new Point(6, 268);
             groupBox14.Name = "groupBox14";
-            groupBox14.Size = new Size(184, 82);
+            groupBox14.Size = new Size(184, 90);
             groupBox14.TabIndex = 28;
             groupBox14.TabStop = false;
-            groupBox14.Text = "groupBox14";
+            groupBox14.Text = "เลือกกล่อง";
             groupBox14.Visible = false;
             // 
             // checkBox41
             // 
             checkBox41.AutoSize = true;
-            checkBox41.Location = new Point(6, 22);
+            checkBox41.Location = new Point(6, 53);
             checkBox41.Name = "checkBox41";
             checkBox41.Size = new Size(78, 19);
             checkBox41.TabIndex = 33;
@@ -322,7 +324,7 @@
             // 
             // textBox12
             // 
-            textBox12.Location = new Point(105, 22);
+            textBox12.Location = new Point(105, 53);
             textBox12.Multiline = true;
             textBox12.Name = "textBox12";
             textBox12.Size = new Size(57, 19);
@@ -334,7 +336,7 @@
             // checkBox23
             // 
             checkBox23.AutoSize = true;
-            checkBox23.Location = new Point(6, 39);
+            checkBox23.Location = new Point(6, 70);
             checkBox23.Name = "checkBox23";
             checkBox23.Size = new Size(65, 19);
             checkBox23.TabIndex = 20;
@@ -1823,6 +1825,15 @@
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
             // 
+            // comboBox5
+            // 
+            comboBox5.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox5.FormattingEnabled = true;
+            comboBox5.Location = new Point(6, 18);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(169, 23);
+            comboBox5.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2087,5 +2098,6 @@
         private Button button21;
         private CheckBox checkBox42;
         private GroupBox groupBox14;
+        private ComboBox comboBox5;
     }
 }
