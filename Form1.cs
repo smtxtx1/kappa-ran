@@ -2421,46 +2421,65 @@ namespace Kappa
             return items;
         }
 
-        private async Task<(uint MonsterID, uint MonsterHP, float Distance, float X, float Y, float Z)> GetMonstersAsync()
+        private async Task GetMonstersAsync()
         {
-            uint closestMonsterID = 0;
-            uint closestMonsterHP = 0;
-            float closestDistance = float.MaxValue;
-            float closest_X = 0, closest_Y = 0, closest_Z = 0;
-
             try
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,A954");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,A958");
 
+                float closestDistance = float.MaxValue;
+                uint closestMonsterID = 0;
+                uint closestMonsterHP = 0;
+                float closest_X = 0;
+                float closest_Y = 0;
+                float closest_Z = 0;
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
+                    // Reading data pointers
                     var mobDetails = await ReadMonsterDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-
-                    // Update closest monster if this one is better
-                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon < closestDistance)
+                    if (mobDetails.HP > 70 && distance_mon <= MonDistance && distance_mon <= closestDistance)
                     {
-                        closestMonsterID = mobDetails.ID;
-                        closestMonsterHP = mobDetails.HP;
-                        closestDistance = distance_mon;
                         closest_X = mobDetails.X;
                         closest_Y = mobDetails.Y;
                         closest_Z = mobDetails.Z;
+                        closestDistance = distance_mon;
+                        closestMonsterID = mobDetails.ID;
+                        closestMonsterHP = mobDetails.HP;
+                        closestMonsterHP_ADR = mob_HP;
+                        //  label2.Text = MonDistance.ToString();
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                 }
+
+                // Update global variables
+                if (closestMonsterHP > 50 && closestDistance <= MonDistance)
+                {
+                    MonsterID_FromGetMonster = closestMonsterID;
+                    MonsterHP_FromGetMonster = closestMonsterHP;
+                    X_fromGetMonster = closest_X;
+                    Y_fromGetMonster = closest_Y;
+                    Z_fromGetMonster = closest_Z;
+
+                    distance_FromGetMonster = closestDistance;
+                }
+                else if (closestDistance > MonDistance)
+                {
+                    // Clear the variables if no monster meets the conditions
+                    MonsterID_FromGetMonster = 0;
+                    MonsterHP_FromGetMonster = 0;
+                    distance_FromGetMonster = float.MaxValue;
+                }
+                await Task.Delay(10);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in GetMonstersAsync: {ex.Message}");
+                Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
-
-            // Return closest monster or default if none found
-            return (closestMonsterID, closestMonsterHP, closestDistance, closest_X, closest_Y, closest_Z);
         }
         private async Task<(int ID, float X, float Y, float Z, uint DropID)> ReadItemsDetailsAsync(UIntPtr data)
         {
@@ -3007,122 +3026,88 @@ namespace Kappa
         float limitdistance = 8f;
         private async Task AutoSkills2()
         {
-            label6.Text = "Initializing Attack...";
-            label6.ForeColor = Color.Orange;
 
-            try
+            m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
+            m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
+            while (true)
             {
-                // Fetch the closest monster
-                var (MonsterID, MonsterHP, Distance, X, Y, Z) = await GetMonstersAsync();
-
-                if (MonsterID == 0)
-                {
-                    label6.Text = "No monster found.";
-                    label6.ForeColor = Color.Green;
-                    return;
-                }
-
-                // Assign the closest monster details to global variables
-                MonsterID_FromGetMonster = MonsterID;
-                MonsterHP_FromGetMonster = MonsterHP;
-                distance_FromGetMonster = Distance;
-                X_fromGetMonster = X;
-                Y_fromGetMonster = Y;
-                Z_fromGetMonster = Z;
-
-                // Set the target for attack
+                label6.Text = "Attacking";
+                label6.ForeColor = Color.Red;
                 m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                 m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-
-                while (true)
+                int TARGET_RINGS = m.ReadInt(TARGET_RING);
+                int TARGET_SKILLS = m.ReadInt(TARGET_SKILL);
+                uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                 {
-                    label6.Text = "Attacking";
-                    label6.ForeColor = Color.Red;
+                    break;
 
+                }
+
+                for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
+                {
+                    int MATION = m.ReadInt(MATION_CHECK);
                     m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
                     m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-
-                    int TARGET_RINGS = m.ReadInt(TARGET_RING);
-                    int TARGET_SKILLS = m.ReadInt(TARGET_SKILL);
-                    uint monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
-                    // Check conditions to stop attacking
-                    if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
-                    {
-                        break;
-                    }
-
-                    // Iterate through skill slots
-                    for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
-                    {
-                        int MATION = m.ReadInt(MATION_CHECK);
-
-                        m.WriteMemory(TARGET_SKILL, "int", MonsterID_FromGetMonster.ToString());
-                        m.WriteMemory(TARGET_RING, "int", MonsterID_FromGetMonster.ToString());
-
-                        TARGET_RINGS = m.ReadInt(TARGET_RING);
-                        monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
-                        // Check conditions to stop attacking again
-                        if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
-                        {
-                            break;
-                        }
-
-                        // Read skill types
-                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
-
-                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= MonDistance)
-                        {
-                            if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
-                            {
-                                TARGET_RINGS = m.ReadInt(TARGET_RING);
-                                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
-
-                                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
-                                {
-                                    break;
-                                }
-
-                                Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
-                                Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
-                                Console.WriteLine($"Can Attack: {MATION != 0}");
-                            }
-
-                            // Re-read MATION and retry attack if needed
-                            MATION = m.ReadInt(MATION_CHECK);
-
-                            if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked)
-                            {
-                                label6.Text = "Unable to attack. Retrying...";
-                                MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
-                                MoveWhileAttacking();
-                                await Task.Delay(100);
-                            }
-                        }
-
-                        await Task.Delay(100); // Delay per skill slot
-                    }
-
                     TARGET_RINGS = m.ReadInt(TARGET_RING);
                     monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
 
-                    if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGS))
+                    if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                     {
                         break;
                     }
 
-                    await Task.Delay(200); // Delay between attack cycles
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in AutoSkills2: {ex.Message}");
-            }
+                    int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                    int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
 
+                    if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP_FromGetMonster > 70 && distance_FromGetMonster <= MonDistance)
+                    {
+                        if (TARGET_RINGS == MonsterID_FromGetMonster && TARGET_SKILLS == MonsterID_FromGetMonster)
+                        {
+
+                            TARGET_RINGS = m.ReadInt(TARGET_RING);
+                            monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
+                            if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
+                            {
+                                break;
+                            }
+                            Console.WriteLine($"TARGET_RING: {TARGET_RINGS}, TARGET_SKILL: {TARGET_SKILLS}");
+                            Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
+                            Console.WriteLine($"Can Attack: {MATION != 0}");
+
+                            PerformSkill(idskilltype_test1, idskilltype_test2);
+                        }
+                        MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+
+                        if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked) // if can't hit will move
+                        {
+
+                            label6.Text = "Unable to attack. Retrying...";
+                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+                            MoveWhileAttacking();
+                            await Task.Delay(100);
+                            PerformSkill(idskilltype_test1, idskilltype_test2);
+
+                        }
+
+                    }
+
+                    await Task.Delay(100);
+                }
+                TARGET_RINGS = m.ReadInt(TARGET_RING);
+                monsterHP = m.ReadUInt(closestMonsterHP_ADR.ToString("X"));
+
+                if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
+                {
+                    break;
+                }
+                await Task.Delay(200);
+
+            }
             label6.Text = "NONE";
             label6.ForeColor = Color.Green;
+
         }
         private void PerformSkillPlayer(int skill1, int skill2)
         {
@@ -3264,7 +3249,7 @@ namespace Kappa
 
             if (checkBox13.Checked)
             {
-              //  StartMonitoringMonstersAsync();
+                StartMonitoringMonstersAsync();
 
                 backgroundWorker6.RunWorkerAsync();
             }
@@ -3907,7 +3892,7 @@ namespace Kappa
             button6.Enabled = false;
             button7.Enabled = true;
 
-         //   StartMonitoringMonstersAsync();
+            StartMonitoringMonstersAsync();
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
