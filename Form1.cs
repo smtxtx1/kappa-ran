@@ -3023,11 +3023,7 @@ namespace Kappa
             float myX = m.ReadFloat(CurrentX);
             float myY = m.ReadFloat(CurrentY);
             float myZ = m.ReadFloat(CurrentZ);
-
-            rangefix = 5f;
-            rangefixminus = -5f;
-
-            // Create a random generator
+            
             Random random = new Random();
 
             // Randomly decide to add or subtract 20 for myX
