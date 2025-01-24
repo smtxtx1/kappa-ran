@@ -173,17 +173,16 @@ namespace Kappa
         { "11", "Collect Box" }
     };
         private Dictionary<string, string> itemDescriptions2 = new Dictionary<string, string>
-    {
-        { "1", "Speed Box" },
-        { "2", "Crazy Time Box" },
-        { "3", "Power Up Box" },
-        { "4", "Exp Box" },
-        { "6", "Lucky Box" },
-        { "9,", "Speed Up Max Box" },
-        { "10,", "Madness Time Box" },
-        { "11", "Power Up Max Box" }
-    };
-
+{
+    { "1", "Speed Box" },
+    { "2", "Crazy Time Box" },
+    { "3", "Power Up Box" },
+    { "4", "Exp Box" },
+    { "6", "Lucky Box" },
+    { "9", "Speed Up Max Box" },
+    { "10", "Madness Time Box" },
+    { "11", "Power Up Max Box" }
+};
 
 
         //    //            AOE_ADR_RESULT = AOB_AOE.ToString("x");
@@ -3540,7 +3539,7 @@ namespace Kappa
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int Boxfound = m.ReadInt("MiniA.exe+7B0018");
-                        if (Boxfound != 6 && sstringItemname == "9")
+                        if (Boxfound != 6 && sstringItemname == comboBox5.SelectedItem?.ToString())
                         {
                             found = true;
                             break;
