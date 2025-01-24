@@ -3523,7 +3523,7 @@ namespace Kappa
                         {
                             m.WriteMemory(actioncheck, "int", "3");
                             m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
-                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
