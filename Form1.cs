@@ -3533,6 +3533,12 @@ namespace Kappa
 
                         foreach (ListViewItem item12 in listView12.Items)
                         {
+                            int Boxfound = m.ReadInt("MiniA.exe+7B0018");
+                            if (Boxfound != 6)
+                                {
+                                    found = true;
+                                     break;
+                                }
                             if (item12.SubItems[2].Text.Contains(sstringItemname))
                             {
                                 found = true;
