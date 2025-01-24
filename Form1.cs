@@ -3211,13 +3211,13 @@ namespace Kappa
             DisplayAlloc();
             if (!checkBox13.Checked)
             {
-                StopMonitoringMonsters();
+              //  StopMonitoringMonsters();
 
             }
 
             if (checkBox13.Checked)
             {
-                StartMonitoringMonstersAsync();
+            //    StartMonitoringMonstersAsync();
 
                 backgroundWorker6.RunWorkerAsync();
             }
@@ -3860,7 +3860,7 @@ namespace Kappa
             button6.Enabled = false;
             button7.Enabled = true;
 
-            StartMonitoringMonstersAsync();
+        //    StartMonitoringMonstersAsync();
             autoskillsstand = true;
             if (!backgroundWorker2.IsBusy)
             {
