@@ -2410,7 +2410,7 @@ namespace Kappa
                     var mobDetails = await ReadItemsDetailsAsync(data);
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    if (mobDetails.DropID != 0 && distance_mon <= rangefix && distance_mon <= closestDistance)
+                    if (mobDetails.DropID != 0  && distance_mon <= closestDistance)
                     {
                         closest_X = mobDetails.X;
                         closest_Y = mobDetails.Y;
@@ -2423,7 +2423,7 @@ namespace Kappa
                     curr = m.GetCode($"{curr:X},8");
                 }
 
-                if (closestMonsterHP != 0 && closestDistance <= rangefix)
+                if (closestMonsterHP != 0)
                 {
                     return (closestMonsterID, closestMonsterHP, closestDistance);
                 }
