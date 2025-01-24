@@ -3057,10 +3057,7 @@ namespace Kappa
 
                         if (idskilltype_test1 != 255 && idskilltype_test2 != 255 && MonsterHP > 70 && Distance <= MonDistance)
                         {
-                            if (TARGET_RINGS == MonsterID)
-                            {
                                 PerformSkill(idskilltype_test1, idskilltype_test2);
-                            }
                         }
 
                         await Task.Delay(100);
