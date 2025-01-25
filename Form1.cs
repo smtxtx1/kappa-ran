@@ -3581,16 +3581,17 @@ namespace Kappa
                     string sstringItemname = itemName.ToString();
                     bool found = false;
                     Console.WriteLine($"found: {itemfound.Trim('\0')}");
+                    int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
+                    int Boxfound = m.ReadInt("MiniA.exe+7B0018");
+
+                    if (Boxfound != num2 && sstringItemname == "9")
+                    {
+                        found = true;
+                        break;
+                    }
+
                     foreach (ListViewItem item12 in listView12.Items)
                     {
-                        int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
-                        int Boxfound = m.ReadInt("MiniA.exe+7B0018");
-
-                        if (Boxfound != num2 && sstringItemname == "9")
-                        {
-                            found = true;
-                            break;
-                        }
 
                         // Debugging: Log the values being compared
                         Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
