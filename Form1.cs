@@ -2464,7 +2464,6 @@ namespace Kappa
                                 ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                                 listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
                                 listViewItem.SubItems.Add(itemfound); // Add item name
-
                                 listView11.Items.Add(listViewItem);
 
                                 // Assign itemName to itemfound
