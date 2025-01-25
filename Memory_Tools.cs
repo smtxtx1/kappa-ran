@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Capybara_Ran.AI;
 
 namespace Capybara_Ran
 {

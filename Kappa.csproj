@@ -8,7 +8,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>AnyCPU;x86</Platforms>
 		<AssemblyName>svchosts</AssemblyName>
-		<Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-NOAH;NOAH2;RAN-LIBERTY;CAFEx2;Cafex23;RAN-SAIYO</Configurations>
+		<Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-NOAH;NOAH2;RAN-LIBERTY;CAFEx2;Cafex23;RAN-SAIYO;DEBUGSHIYO</Configurations>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
 
