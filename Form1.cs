@@ -2425,7 +2425,10 @@ namespace Kappa
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
-
+                if (listView11.Items.Count < 10)
+                {
+                    listView11.Items.Clear();
+                }
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
