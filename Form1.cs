@@ -2454,7 +2454,7 @@ namespace Kappa
                             byte[] array = m.ReadBytes(result2.ToString("x"), num);
                             if (array != null)
                             {
-                                string itemfound = Encoding.GetEncoding(874).GetString(array); // Ensure null characters are trimmed
+                                string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
 
                                 Console.WriteLine($"{itemfound}");
 
@@ -3568,7 +3568,7 @@ namespace Kappa
         private async Task ItemGet()
         {
             string names = m.ReadString(IDadr);
-            string itemfrom11 = "";
+
             try
             {
                 var items = await GetItemsAsync();
@@ -3582,9 +3582,6 @@ namespace Kappa
 
                     foreach (ListViewItem item12 in listView12.Items)
                     {
-                        foreach(ListViewItem item11 in listView11.Items)
-                        {
-
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
                         int Boxfound = m.ReadInt("MiniA.exe+7B0018");
 
@@ -3597,15 +3594,12 @@ namespace Kappa
                         // Debugging: Log the values being compared
                         Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
 
-                        if (item12.SubItems[2].Text.Contains(item11.SubItems[2].Text))
+                        if (item12.SubItems[2].Text.Contains(TrimedName))
                         {
-                            Console.WriteLine($"Match found! itemId: {item11.SubItems[1].Text}");
-                                itemfrom11 = item11.SubItems[1].Text;
-                                found = true;
+                            Console.WriteLine($"Match found! itemId: {itemId}");
+                            found = true;
                             break;
                         }
-                        }
-
                     }
 
                     if (found)
@@ -3613,18 +3607,19 @@ namespace Kappa
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", itemfrom11.ToString());
+                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
                             await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
                                 await Task.Delay(50);
                             }
 
                             if (m.ReadInt(MATION_CHECK) == 0)
                             {
                                 await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemfrom11.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
                                 break;
