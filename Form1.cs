@@ -2454,8 +2454,8 @@ namespace Kappa
 
                             // Add data to listView11
                             ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                            listViewItem.SubItems.Add(itemName); // Add item name
                             listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                            listViewItem.SubItems.Add(itemName); // Add item name
                             listView11.Items.Add(listViewItem);
                         }
                         items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
