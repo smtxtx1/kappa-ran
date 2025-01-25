@@ -3575,7 +3575,7 @@ namespace Kappa
                     string sstringItemname = itemName.ToString();
                     bool found = false;
                     Console.WriteLine($"found: {itemfound.Trim('\0')}");
-
+                    string TrimedName = itemfound.Trim('\0');
 
                     foreach (ListViewItem item12 in listView12.Items)
                     {
@@ -3591,8 +3591,7 @@ namespace Kappa
                         // Debugging: Log the values being compared
                         Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
 
-                        if (!string.IsNullOrEmpty(itemfound) && !string.IsNullOrEmpty(item12.SubItems[2].Text) &&
-                            itemfound.Contains(item12.SubItems[2].Text))
+                        if (TrimedName.Contains(item12.SubItems[2].Text))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
