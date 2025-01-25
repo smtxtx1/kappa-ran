@@ -3591,7 +3591,7 @@ namespace Kappa
                         // Debugging: Log the values being compared
                         Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
 
-                        if (TrimedName.Contains(item12.SubItems[2].Text))
+                        if (item12.SubItems[2].Text.Contains(TrimedName))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
