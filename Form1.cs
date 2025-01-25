@@ -27,6 +27,7 @@ using Newtonsoft.Json.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using Microsoft.VisualBasic;
 using System.Buffers;
+using Capybara_Ran;
 
 namespace Kappa
 {
@@ -2410,9 +2411,27 @@ namespace Kappa
         private async Task<List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>();
+            await Check_PID_Handle_Module.get_Hanlde(this);
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            MemoryPointer addr_function_getECX = 0x0047ADF0;
+            MemoryPointer ecx = 0x0126A960;
+            uint parameter_lenth = 2;
+            MemoryPointer Entity = 0x2846CA40;
+            int parameter1 = Memory_Tools.ReadInt(Check_PID_Handle_Module.Open_processHD, Entity);
+            int parameter2_half_2 = Memory_Tools.Read2Bytes(Check_PID_Handle_Module.Open_processHD, Entity + 0x2);
+            int parameter2 = (0xFB74 << 16) | parameter2_half_2;
+            uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
+            MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(addr_function_getECX, ecx, parameter_lenth, parameter);
+            Debug.WriteLine($"result1 = {result}");
+
+
+            MemoryPointer addr_function_getName = 0x00499880;
+            var result2 = Memory_Tools.CallExternalThiscallFunction(addr_function_getName, result, 0, new uint[] { });
+            Debug.WriteLine($"result2 = {result2:X}");
+            string itemName = Memory_Tools.ReadString(Check_PID_Handle_Module.Open_processHD, result2, 100);
+
 
             try
             {
