@@ -2408,6 +2408,8 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
+        private readonly HashSet<uint> addedDropIds = new HashSet<uint>();
+
         private async Task<List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>();
@@ -2446,26 +2448,27 @@ namespace Kappa
 
                     if (mobDetails.DropID != 0 && rangefix <= distance_mon)
                     {
-                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
-                        if (array != null)
+                        // Check if DropID is already added using the HashSet
+                        if (!addedDropIds.Contains(mobDetails.DropID))
                         {
-                            string itemName = Encoding.GetEncoding(874).GetString(array);
-                            Console.WriteLine($"{itemName}");
+                            // Add DropID to the HashSet
+                            addedDropIds.Add(mobDetails.DropID);
 
-                            // Add data to listView11
-                            bool dropIdExists = listView11.Items.Cast<ListViewItem>()
-                                                  .Any(item => item.SubItems[2].Text == mobDetails.DropID.ToString());
-
-                            if (!dropIdExists)
+                            byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                            if (array != null)
                             {
+                                string itemName = Encoding.GetEncoding(874).GetString(array);
+                                Console.WriteLine($"{itemName}");
+
                                 // Add data to listView11
                                 ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                                 listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
                                 listViewItem.SubItems.Add(itemName); // Add item name
+
                                 listView11.Items.Add(listViewItem);
                             }
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                         }
-                        items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                     }
 
                     curr = m.GetCode($"{curr:X},8");
