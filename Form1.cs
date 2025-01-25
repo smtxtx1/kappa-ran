@@ -3582,6 +3582,9 @@ namespace Kappa
 
                     foreach (ListViewItem item12 in listView12.Items)
                     {
+                        foreach(ListViewItem item11 in listView11.Items)
+                        {
+
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
                         int Boxfound = m.ReadInt("MiniA.exe+7B0018");
 
@@ -3594,12 +3597,14 @@ namespace Kappa
                         // Debugging: Log the values being compared
                         Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
 
-                        if (item12.SubItems[2].Text.Contains(TrimedName))
+                        if (item12.SubItems[2].Text.Contains(item11.SubItems[2].Text))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
                             break;
                         }
+                        }
+
                     }
 
                     if (found)
