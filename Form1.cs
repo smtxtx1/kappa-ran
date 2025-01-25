@@ -2444,7 +2444,7 @@ namespace Kappa
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (mobDetails.DropID != 0 && rangefix <= distance_mon)
+                    if (mobDetails.DropID != 0 && rangefix <= distance_mon && )
                     {
                         byte[] array = m.ReadBytes(result2.ToString("x"), num);
                         if (array != null)
@@ -2453,10 +2453,17 @@ namespace Kappa
                             Console.WriteLine($"{itemName}");
 
                             // Add data to listView11
-                            ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                            listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                            listViewItem.SubItems.Add(itemName); // Add item name
-                            listView11.Items.Add(listViewItem);
+                            bool dropIdExists = listView11.Items.Cast<ListViewItem>()
+                                                  .Any(item => item.SubItems[2].Text == mobDetails.DropID.ToString());
+
+                            if (!dropIdExists)
+                            {
+                                // Add data to listView11
+                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                listViewItem.SubItems.Add(itemName); // Add item name
+                                listView11.Items.Add(listViewItem);
+                            }
                         }
                         items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                     }
