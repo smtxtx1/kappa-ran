@@ -2446,7 +2446,7 @@ namespace Kappa
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (mobDetails.DropID != 0 && rangefix <= distance_mon)
+                    if (mobDetails.DropID != 0)
                     {
                         // Check if DropID is already added using the HashSet
                         if (!addedDropIds.Contains(mobDetails.DropID))
