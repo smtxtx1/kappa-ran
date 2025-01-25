@@ -2419,8 +2419,6 @@ namespace Kappa
             MemoryPointer Entity = 0x2846CA40;
 
             uint parameter_lenth = 2;
-          //  string itemName = Memory_Tools.ReadString(Check_PID_Handle_Module.Open_processHD, result2, 100);
-
 
             try
             {
@@ -2437,24 +2435,29 @@ namespace Kappa
                     int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
                     int parameter2 = (0xFB74 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
-                    MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle,addr_function_getECX, ecx, parameter_lenth, parameter);
+                    MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
                     Console.WriteLine($"result1 = {result}");
                     MemoryPointer addr_function_getName = 0x0049EF40;
-                    var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle,addr_function_getName, result, 0, new uint[] { });
+                    var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
                     Console.WriteLine($"result2 = {result2:X}");
                     int num = 20;
 
-                    byte[] array = m.ReadBytes(result2.ToString("x"), num);
-                    if (array != null)
-                    {
-                        string @string = Encoding.GetEncoding(874).GetString(array);
-                        Console.WriteLine($"{@string}");
-                    }
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
                     if (mobDetails.DropID != 0 && rangefix <= distance_mon)
                     {
+                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                        if (array != null)
+                        {
+                            string itemName = Encoding.GetEncoding(874).GetString(array);
+                            Console.WriteLine($"{itemName}");
 
+                            // Add data to listView11
+                            ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                            listViewItem.SubItems.Add(itemName); // Add item name
+                            listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                            listView11.Items.Add(listViewItem);
+                        }
                         items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                     }
 
