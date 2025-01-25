@@ -2410,6 +2410,9 @@ namespace Kappa
         private async Task<List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>();
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
 
             try
             {
@@ -2482,7 +2485,7 @@ namespace Kappa
                     X_fromGetMonster = closest_X;
                     Y_fromGetMonster = closest_Y;
                     Z_fromGetMonster = closest_Z;
-
+                 
                     distance_FromGetMonster = closestDistance;
                 }
                 else if (closestDistance > MonDistance)
