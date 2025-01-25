@@ -2466,7 +2466,7 @@ namespace Kappa
                             
                         }
                     }
-
+                    listView11.Items.Clear();
                     curr = m.GetCode($"{curr:X},8");
                 }
             }
