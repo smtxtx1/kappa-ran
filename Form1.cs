@@ -2454,7 +2454,7 @@ namespace Kappa
                             byte[] array = m.ReadBytes(result2.ToString("x"), num);
                             if (array != null)
                             {
-                                string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+                                string itemfound = Encoding.GetEncoding(874).GetString(array); // Ensure null characters are trimmed
 
                                 Console.WriteLine($"{itemfound}");
 
