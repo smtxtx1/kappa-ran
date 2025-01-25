@@ -2437,23 +2437,23 @@ namespace Kappa
                     int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
                     int parameter2 = (0xFB74 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
-                    MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(addr_function_getECX, ecx, parameter_lenth, parameter);
-                    Debug.WriteLine($"result1 = {result}");
+                    MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle,addr_function_getECX, ecx, parameter_lenth, parameter);
+                    Console.WriteLine($"result1 = {result}");
                     MemoryPointer addr_function_getName = 0x0049EF40;
-                    var result2 = Memory_Tools.CallExternalThiscallFunction(addr_function_getName, result, 0, new uint[] { });
-                    Debug.WriteLine($"result2 = {result2:X}");
+                    var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle,addr_function_getName, result, 0, new uint[] { });
+                    Console.WriteLine($"result2 = {result2:X}");
                     int num = 20;
 
                     byte[] array = m.ReadBytes(result2.ToString("x"), num);
                     if (array != null)
                     {
                         string @string = Encoding.GetEncoding(874).GetString(array);
-                        Debug.WriteLine($"{@string}");
+                        Console.WriteLine($"{@string}");
                     }
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (mobDetails.DropID != 0)
+                    if (mobDetails.DropID != 0 && rangefix <= distance_mon)
                     {
-                        float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
                         items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                     }

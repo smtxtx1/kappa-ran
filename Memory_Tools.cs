@@ -243,9 +243,9 @@ namespace Capybara_Ran
                 throw new Exception("Failed to write memory");
             }
         }
-        public static uint CallExternalThiscallFunction(UIntPtr functionAddress, UIntPtr thisPointer, uint argc, uint[] args)
+        public static uint CallExternalThiscallFunction(IntPtr processHD,UIntPtr functionAddress, UIntPtr thisPointer, uint argc, uint[] args)
         {
-            IntPtr processHandle = Check_PID_Handle_Module.Open_processHD;
+            IntPtr processHandle = processHD;
 
             uint callerSize = (uint)(5 + (1 + 4) * argc + 1 + 4 + 1);
             UIntPtr callerAddress = VirtualAllocEx(processHandle, UIntPtr.Zero, callerSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
