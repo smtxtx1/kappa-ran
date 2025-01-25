@@ -3599,7 +3599,7 @@ namespace Kappa
 
                         if (item12.SubItems[2].Text.Contains(item11.SubItems[2].Text))
                         {
-                            Console.WriteLine($"Match found! itemId: {itemId}");
+                            Console.WriteLine($"Match found! itemId: {item11.SubItems[1].Text}");
                             found = true;
                             break;
                         }
