@@ -2458,6 +2458,7 @@ namespace Kappa
                             if (array != null)
                             {
                                 string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+
                                 Console.WriteLine($"{itemfound}");
 
                                 // Add data to listView11
@@ -3584,15 +3585,20 @@ namespace Kappa
                     {
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
                         int Boxfound = m.ReadInt("MiniA.exe+7B0018");
+
                         if (Boxfound != num2 && sstringItemname == "9")
                         {
                             found = true;
                             break;
                         }
 
-                        if (itemfound.Contains(item12.SubItems[2].Text))
+                        // Debugging: Log the values being compared
+                        Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
+
+                        if (!string.IsNullOrEmpty(itemfound) && !string.IsNullOrEmpty(item12.SubItems[2].Text) &&
+                            itemfound.Contains(item12.SubItems[2].Text))
                         {
-                            Console.WriteLine(itemId);
+                            Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
                             break;
                         }
@@ -3608,9 +3614,10 @@ namespace Kappa
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
-                               await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
-                               await Task.Delay(50);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                                await Task.Delay(50);
                             }
+
                             if (m.ReadInt(MATION_CHECK) == 0)
                             {
                                 await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
@@ -3619,7 +3626,6 @@ namespace Kappa
 
                                 break;
                             }
-
                         }
                     }
                 }
