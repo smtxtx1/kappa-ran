@@ -3592,6 +3592,7 @@ namespace Kappa
 
                         if (item12.SubItems[2].Text.Contains(itemfound))
                         {
+                            Console.WriteLine(itemId);
                             found = true;
                             break;
                         }
