@@ -3591,7 +3591,7 @@ namespace Kappa
                             break;
                         }
 
-                        if (item12.SubItems[2].Text.Contains(sstringItemname))
+                        if (item12.SubItems[2].Text.Contains(itemfound))
                         {
                             found = true;
                             break;
