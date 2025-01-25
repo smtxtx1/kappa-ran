@@ -2410,9 +2410,9 @@ namespace Kappa
         }
         private readonly HashSet<uint> addedDropIds = new HashSet<uint>();
 
-        private async Task<List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>> GetItemsAsync()
+        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z)>> GetItemsAsync()
         {
-            var items = new List<(int itemName, uint itemId, float itemDistance, float X, float Y, float Z)>();
+            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z)>();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -2457,7 +2457,7 @@ namespace Kappa
                             byte[] array = m.ReadBytes(result2.ToString("x"), num);
                             if (array != null)
                             {
-                                string itemName = Encoding.GetEncoding(874).GetString(array);
+                                string itemName = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
                                 Console.WriteLine($"{itemName}");
 
                                 // Add data to listView11
@@ -2466,8 +2466,10 @@ namespace Kappa
                                 listViewItem.SubItems.Add(itemName); // Add item name
 
                                 listView11.Items.Add(listViewItem);
+
+                                // Assign itemName to itemfound
+                                items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemName, mobDetails.X, mobDetails.Y, mobDetails.Z));
                             }
-                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, mobDetails.X, mobDetails.Y, mobDetails.Z));
                         }
                     }
 
@@ -3606,7 +3608,7 @@ namespace Kappa
 
                             while (m.ReadInt(MATION_CHECK) == 1)
                             {
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                               await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
                                await Task.Delay(50);
                             }
                             if (m.ReadInt(MATION_CHECK) == 0)
