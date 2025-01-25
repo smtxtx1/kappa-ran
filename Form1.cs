@@ -2444,7 +2444,7 @@ namespace Kappa
 
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (mobDetails.DropID != 0 && rangefix <= distance_mon && )
+                    if (mobDetails.DropID != 0 && rangefix <= distance_mon)
                     {
                         byte[] array = m.ReadBytes(result2.ToString("x"), num);
                         if (array != null)
