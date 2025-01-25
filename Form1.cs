@@ -2408,7 +2408,6 @@ namespace Kappa
         private void buttonOpenRadar_Click(object sender, EventArgs e)
         {
         }
-        private readonly HashSet<uint> addedDropIds = new HashSet<uint>();
 
         private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z)>> GetItemsAsync()
         {
@@ -2449,11 +2448,6 @@ namespace Kappa
                     if (mobDetails.DropID != 0)
                     {
                         // Check if DropID is already added using the HashSet
-                        if (!addedDropIds.Contains(mobDetails.DropID))
-                        {
-                            // Add DropID to the HashSet
-                            addedDropIds.Add(mobDetails.DropID);
-
                             byte[] array = m.ReadBytes(result2.ToString("x"), num);
                             if (array != null)
                             {
@@ -2469,7 +2463,7 @@ namespace Kappa
 
                                 // Assign itemName to itemfound
                                 items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z));
-                            }
+                            
                         }
                     }
 
@@ -3581,6 +3575,7 @@ namespace Kappa
                     string sstringItemname = itemName.ToString();
                     bool found = false;
                     Console.WriteLine($"found: {itemfound.Trim('\0')}");
+
                     int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
                     int Boxfound = m.ReadInt("MiniA.exe+7B0018");
 
