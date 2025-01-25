@@ -3568,7 +3568,7 @@ namespace Kappa
         private async Task ItemGet()
         {
             string names = m.ReadString(IDadr);
-
+            string itemfrom11 = "";
             try
             {
                 var items = await GetItemsAsync();
@@ -3600,7 +3600,8 @@ namespace Kappa
                         if (item12.SubItems[2].Text.Contains(item11.SubItems[2].Text))
                         {
                             Console.WriteLine($"Match found! itemId: {item11.SubItems[1].Text}");
-                            found = true;
+                                itemfrom11 = item11.SubItems[1].Text;
+                                found = true;
                             break;
                         }
                         }
@@ -3612,7 +3613,7 @@ namespace Kappa
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
+                            m.WriteMemory(TARGET_SKILL, "int", itemfrom11.ToString());
                             await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
@@ -3623,7 +3624,7 @@ namespace Kappa
                             if (m.ReadInt(MATION_CHECK) == 0)
                             {
                                 await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemfrom11.ToString(), 3, 50);
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
                                 break;
