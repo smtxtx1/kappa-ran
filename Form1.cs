@@ -2448,7 +2448,7 @@ namespace Kappa
                     if (array != null)
                     {
                         string @string = Encoding.GetEncoding(874).GetString(array);
-                        label1.Text = @string + " " + comboBox1.Text;
+                        Debug.WriteLine($"{@string}");
                     }
 
                     if (mobDetails.DropID != 0)
