@@ -2442,6 +2442,14 @@ namespace Kappa
                     MemoryPointer addr_function_getName = 0x0049EF40;
                     var result2 = Memory_Tools.CallExternalThiscallFunction(addr_function_getName, result, 0, new uint[] { });
                     Debug.WriteLine($"result2 = {result2:X}");
+                    int num = 20;
+
+                    byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                    if (array != null)
+                    {
+                        string @string = Encoding.GetEncoding(874).GetString(array);
+                        label1.Text = @string + " " + comboBox1.Text;
+                    }
 
                     if (mobDetails.DropID != 0)
                     {
