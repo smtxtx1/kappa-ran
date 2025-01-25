@@ -3580,7 +3580,7 @@ namespace Kappa
                 {
                     string sstringItemname = itemName.ToString();
                     bool found = false;
-
+                    Console.WriteLine($"found: {itemfound.Trim('\0')}");
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
