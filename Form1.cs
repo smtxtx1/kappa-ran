@@ -2591,20 +2591,20 @@ namespace Kappa
                 return (0, 0, 0, 0, 0);
             }
         }
-        private float CalculateDistance(float mobX, float mobY, float mobZ)
-        {
-            float myX = m.ReadFloat(CurrentX);
-            float myY = m.ReadFloat(CurrentY);
-            float myZ = m.ReadFloat(CurrentZ);
-            return (float)Math.Round(
-                MathF.Sqrt(
-                    MathF.Pow(mobX - myX, 2) +
-                    MathF.Pow(mobY - myY, 2) +
-                    MathF.Pow(mobZ - myZ, 2)
-                ) / 10,
-                2
-            );
-        }
+private float CalculateDistance(float mobX, float mobY, float mobZ)
+{
+    float myX = m.ReadFloat(CurrentX);
+    float myY = m.ReadFloat(CurrentY);
+    float myZ = m.ReadFloat(CurrentZ);
+    return (float)Math.Round(
+        MathF.Sqrt(
+            MathF.Pow(mobX - myX, 2) +
+            MathF.Pow(mobY - myY, 2) +
+            MathF.Pow(mobZ - myZ, 2)
+        ) / 10, 
+        2
+    );
+}
         private void btnLoad_Click(object sender, EventArgs e)
         {
             // Use the folder path from selectedPathTextBox
@@ -3161,6 +3161,12 @@ namespace Kappa
                             Console.WriteLine($"Can Attack: {MATION != 0}");
 
                         PerformSkill(idskilltype_test1, idskilltype_test2);
+                            if (checkBox15.Checked)
+                            {
+                                await ItemGet();
+
+                            }
+
                         }
                         MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                         float SKILLCHECK = m.ReadFloat(SKILL_TIME);
@@ -3174,6 +3180,12 @@ namespace Kappa
 
                         }
                         PerformSkill(idskilltype_test1, idskilltype_test2);
+                        if (checkBox15.Checked)
+                        {
+                            await ItemGet();
+
+                        }
+
 
                     }
 
@@ -3184,6 +3196,12 @@ namespace Kappa
 
                 if (ShouldStopAttacking(monsterHP, MonDistance, TARGET_RINGs))
                 {
+                    if (checkBox15.Checked)
+                    {
+                        await ItemGet();
+
+                    }
+
                     break;
                 }
                 await Task.Delay(200);
