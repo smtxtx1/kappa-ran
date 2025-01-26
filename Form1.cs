@@ -3159,10 +3159,11 @@ namespace Kappa
                         float SKILLCHECK = m.ReadFloat(SKILL_TIME);
                         await Task.Delay(100);
 
-                        if (MATION == 0 && MATION != 1 && MATION != 3 && checkBox39.Checked && SKILLCHECK != 1f) // if can't hit will move
+                        if (MATION == 0 && MATION != 1 && checkBox39.Checked && SKILLCHECK != 1f) // if can't hit will move
                         {
 
                             label6.Text = "Unable to attack. Retrying...";
+                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             MoveWhileAttacking();
                             await Task.Delay(100);
                             PerformSkill(idskilltype_test1, idskilltype_test2);
