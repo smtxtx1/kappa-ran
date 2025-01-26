@@ -3162,7 +3162,7 @@ namespace Kappa
                         {
 
                             label6.Text = "Unable to attack. Retrying...";
-                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
+                            MATION = m.ReadInt(MATION_CHECK); 
                             await MoveWhileAttacking();
 
                         }
