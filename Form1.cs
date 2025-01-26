@@ -3153,7 +3153,7 @@ namespace Kappa
                             Console.WriteLine($"Monster HP: {monsterHP}, Distance: {distance_FromGetMonster}");
                             Console.WriteLine($"Can Attack: {MATION != 0}");
 
-                            PerformSkill(idskilltype_test1, idskilltype_test2);
+                        PerformSkill(idskilltype_test1, idskilltype_test2);
                         }
                         MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                         float SKILLCHECK = m.ReadFloat(SKILL_TIME);
@@ -3165,7 +3165,6 @@ namespace Kappa
                             label6.Text = "Unable to attack. Retrying...";
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             await MoveWhileAttacking();
-                            await Task.Delay(100);
 
                         }
                         PerformSkill(idskilltype_test1, idskilltype_test2);
