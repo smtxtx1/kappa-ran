@@ -3208,7 +3208,7 @@ namespace Kappa
 
         private bool ShouldStopAttacking(uint monsterHP, float MonDistance, int TARGET_RINGs)
         {
-            return monsterHP < 5 || distance_FromGetMonster > MonDistance || m.ReadInt(TARGET_RING) == -1;
+            return monsterHP < 70 || distance_FromGetMonster > MonDistance || m.ReadInt(TARGET_RING) == -1;
         }
 
 
