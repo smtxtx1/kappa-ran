@@ -3166,9 +3166,9 @@ namespace Kappa
                             MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             await MoveWhileAttacking();
                             await Task.Delay(100);
-                            PerformSkill(idskilltype_test1, idskilltype_test2);
 
                         }
+                        PerformSkill(idskilltype_test1, idskilltype_test2);
 
                     }
 
