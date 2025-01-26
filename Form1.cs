@@ -3074,7 +3074,7 @@ namespace Kappa
             label6.Text = "MoveWhileAttacking";
             // Perform the movement
             RunActive();
-            await Task.Delay(100); // Delay to simulate the move duration
+            await Task.Delay(100); 
             RunDeActive();
 
             // Unlock movement
