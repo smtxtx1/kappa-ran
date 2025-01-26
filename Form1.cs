@@ -3595,7 +3595,7 @@ namespace Kappa
                         Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
 
                         // Use Trim() to remove any surrounding whitespace
-                        if (item12.SubItems[2].Text.Trim().Contains(trimmedName, StringComparison.OrdinalIgnoreCase))
+                        if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
