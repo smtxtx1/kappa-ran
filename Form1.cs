@@ -3163,7 +3163,6 @@ namespace Kappa
                         {
 
                             label6.Text = "Unable to attack. Retrying...";
-                            MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                             MoveWhileAttacking();
                             await Task.Delay(100);
                             PerformSkill(idskilltype_test1, idskilltype_test2);
