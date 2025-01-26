@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<!-- General Configuration -->
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net6.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
@@ -8,33 +9,65 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Platforms>AnyCPU;x86</Platforms>
 		<AssemblyName>svchosts</AssemblyName>
+
+		<!-- Custom Configurations -->
 		<Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-NOAH;NOAH2;RAN-LIBERTY;CAFEx2;Cafex23;RAN-SAIYO;DEBUGSHIYO</Configurations>
+
+		<!-- Manifest and Icon -->
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
 
-		<!-- Added for single-file publishing -->
+		<!-- Single-File Publishing -->
 		<PublishSingleFile>true</PublishSingleFile>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<!-- Use win-x86 for 32-bit builds -->
 		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 		<PublishTrimmed>false</PublishTrimmed>
-		<!-- Disable trimming to avoid issues with Windows Forms -->
+		<!-- Disabled for Windows Forms -->
+
+		<!-- Debugging and Optimization -->
+		<DebugType>portable</DebugType>
+		<Optimize>true</Optimize>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>5</WarningLevel>
 	</PropertyGroup>
 
+	<!-- Icon File -->
 	<ItemGroup>
-		<Content Include="among_us_player_red_icon_156942.ico" />
+		<Content Include="among_us_player_red_icon_156942.ico" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
+	<!-- Package References -->
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
+	<!-- External Library Reference -->
 	<ItemGroup>
 		<Reference Include="Memory">
 			<HintPath>..\..\Memory.dll</HintPath>
+			<Private>true</Private>
 		</Reference>
+	</ItemGroup>
+
+	<!-- Publish Settings -->
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<Optimize>true</Optimize>
+		<DefineConstants>RELEASE</DefineConstants>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<Optimize>false</Optimize>
+		<DefineConstants>DEBUG</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<!-- Content to Include During Publish -->
+	<ItemGroup>
+		<Content Include="app.manifest" CopyToOutputDirectory="PreserveNewest" />
+		<Content Include="..\..\Memory.dll" CopyToOutputDirectory="PreserveNewest" />
 	</ItemGroup>
 
 </Project>
