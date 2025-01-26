@@ -2596,7 +2596,14 @@ namespace Kappa
             float myX = m.ReadFloat(CurrentX);
             float myY = m.ReadFloat(CurrentY);
             float myZ = m.ReadFloat(CurrentZ);
-            return (float)Math.Round(MathF.Sqrt(MathF.Pow(mobX - myX, 2) + MathF.Pow(mobZ - myZ, 2)) / 10, 2);
+            return (float)Math.Round(
+                MathF.Sqrt(
+                    MathF.Pow(mobX - myX, 2) +
+                    MathF.Pow(mobY - myY, 2) +
+                    MathF.Pow(mobZ - myZ, 2)
+                ) / 10,
+                2
+            );
         }
         private void btnLoad_Click(object sender, EventArgs e)
         {
