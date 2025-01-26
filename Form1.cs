@@ -3157,7 +3157,6 @@ namespace Kappa
                         }
                         MATION = m.ReadInt(MATION_CHECK); // Re-read MATION
                         float SKILLCHECK = m.ReadFloat(SKILL_TIME);
-                        await Task.Delay(100);
 
                         if (MATION == 0 && checkBox39.Checked) // if can't hit will move
                         {
