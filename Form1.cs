@@ -3577,24 +3577,25 @@ namespace Kappa
                 {
                     string sstringItemname = itemName.ToString();
                     bool found = false;
-                    Console.WriteLine($"found: {itemfound.Trim('\0')}");
-                    string TrimedName = itemfound.Trim('\0');
+                    string trimmedName = itemfound.Trim('\0'); // Ensure null characters are trimmed
+                    Console.WriteLine($"Trimmed itemfound: {trimmedName}");
 
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
-                        int Boxfound = m.ReadInt("MiniA.exe+7B0018");
+                        int boxFound = m.ReadInt("MiniA.exe+7B0018");
 
-                        if (Boxfound != num2 && sstringItemname == "9")
+                        if (boxFound != num2 && sstringItemname == "9")
                         {
                             found = true;
                             break;
                         }
 
                         // Debugging: Log the values being compared
-                        Console.WriteLine($"Comparing itemfound: {itemfound} with listView12: {item12.SubItems[2].Text}");
+                        Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
 
-                        if (item12.SubItems[2].Text.Contains(TrimedName))
+                        // Use Trim() to remove any surrounding whitespace
+                        if (item12.SubItems[2].Text.Trim().Contains(trimmedName, StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
