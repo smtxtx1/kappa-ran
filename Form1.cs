@@ -2468,6 +2468,7 @@ namespace Kappa
                             string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
                             Console.WriteLine($"{itemfound}");
 
+                            // Add data to listView11
                             ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                             listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
                             listViewItem.SubItems.Add(itemfound); // Add item name
@@ -2489,6 +2490,12 @@ namespace Kappa
                     if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
                     {
                         float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
+
+                        // Add money to listView11
+                        ListViewItem listViewItemMoney = new ListViewItem("Money"); // Set name as "Money"
+                        listViewItemMoney.SubItems.Add(MoneyDetail.ID.ToString()); // Money ID
+                        listViewItemMoney.SubItems.Add("Gold Coins"); // Example item name
+                        listView11.Items.Add(listViewItemMoney);
 
                         // Add to items list with MoneyID
                         items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold));
