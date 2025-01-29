@@ -3653,7 +3653,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
             {
                 var items = await GetItemsAsync();
 
-                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID) in items)
+                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID,MoneyGOLD) in items)
                 {
                     string sstringItemname = itemName.ToString();
                     bool found = false;
