@@ -2503,15 +2503,6 @@ namespace Kappa
 
                     if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
                     {
-                        float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
-
-                        // Add money to listView11
-                        ListViewItem listViewItemMoney = new ListViewItem("Money"); // Set name as "Money"
-                        listViewItemMoney.SubItems.Add(MoneyDetail.ID.ToString()); // Money ID
-                        listViewItemMoney.SubItems.Add("Gold Coins"); // Example item name
-                        listView11.Items.Add(listViewItemMoney);
-
-                        // Add to items list with MoneyID
                         items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold));
                     }
                     currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
