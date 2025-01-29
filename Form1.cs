@@ -2470,14 +2470,14 @@ namespace Kappa
 
                             // Check if itemfound already exists in the ListView
                             bool itemExists = false;
-                            foreach (ListViewItem existingItem in listView11.Items)
-                            {
-                                if (existingItem.SubItems[2].Text == itemfound) // Check the item name column
-                                {
-                                    itemExists = true;
-                                    break;
-                                }
-                            }
+                            //foreach (ListViewItem existingItem in listView11.Items)
+                            //{
+                            //    if (existingItem.SubItems[2].Text == itemfound) // Check the item name column
+                            //    {
+                            //        itemExists = true;
+                            //        break;
+                            //    }
+                            //}
 
                             // Only add the item if it doesn't already exist in the ListView
                             if (!itemExists)
@@ -2503,6 +2503,9 @@ namespace Kappa
 
                     if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
                     {
+                        float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
+
+                        // Add to items list with MoneyID
                         items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold));
                     }
                     currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
