@@ -3659,7 +3659,30 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                     bool found = false;
                     string trimmedName = itemfound.Trim('\0'); // Ensure null characters are trimmed
                     Console.WriteLine($"Trimmed itemfound: {trimmedName}");
+                    if (MoneyGOLD > 0)
+                    {
+                        if (m.ReadInt(MATION_CHECK) != 1)
+                        {
+                            m.WriteMemory(actioncheck, "int", "3");
+                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
+                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
 
+                            while (m.ReadInt(MATION_CHECK) == 1)
+                            {
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                                await Task.Delay(50);
+                            }
+
+                            if (m.ReadInt(MATION_CHECK) == 0)
+                            {
+                                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
+
+                            }
+                        }
+
+                    }
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
