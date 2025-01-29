@@ -2472,6 +2472,10 @@ namespace Kappa
                             {
                                 if (!itemfound.Contains(itemadded.SubItems[2].Text))
                                 {
+                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                    listViewItem.SubItems.Add(itemfound); // Add item name
+                                    listView11.Items.Add(listViewItem);
                                     items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
 
                                 }
