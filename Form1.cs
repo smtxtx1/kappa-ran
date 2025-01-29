@@ -2436,11 +2436,6 @@ namespace Kappa
                 int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
                 UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
 
-                if (listView11.Items.Count < 10)
-                {
-                    listView11.Items.Clear();
-                }
-
                 // Process item data
                 for (int i = 0; i < globalCrow; i++)
                 {
