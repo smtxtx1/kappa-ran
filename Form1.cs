@@ -2467,24 +2467,19 @@ namespace Kappa
                             bool itemExists = false;
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
-                                if (existingItem.SubItems[2].Text == itemfound) // Check the item name column
+                                if (!existingItem.SubItems[2].Text.Contains(itemfound)) // Check the item name column
                                 {
-                                    itemExists = true;
-                                    break;
+                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                    listViewItem.SubItems.Add(itemfound); // Add item name
+                                    listView11.Items.Add(listViewItem);
+
+                                    // Add to items list
+                                    items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
                                 }
                             }
 
                             // Only add the item if it doesn't already exist in the ListView
-                            if (!itemExists)
-                            {
-                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                listViewItem.SubItems.Add(itemfound); // Add item name
-                                listView11.Items.Add(listViewItem);
-
-                                // Add to items list
-                                items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
-                            }
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
