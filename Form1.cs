@@ -4695,9 +4695,12 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
         {
             try
             {
-                for (int i = 1; i <= 10; i++)
+                for (int i = 1; i <= 20; i++)
                 {
-                    // Construct the ListView name dynamically (e.g., listView1, listView2, etc.)
+                    if (i == 11 || i == 12)
+                        continue; // Skip listView11 and listView12
+
+                    // Construct the ListView name dynamically
                     string listViewName = $"listView{i}";
 
                     // Find the ListView control by its name
@@ -4707,18 +4710,14 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                     {
                         // Clear the items in the ListView
                         listView.Items.Clear();
-                        positionCounter = 1;
-                        // MessageBox.Show($"Cleared items from {listViewName}");
-                    }
-                    else
-                    {
-                        //MessageBox.Show($"ListView {listViewName} not found");
                     }
                 }
+
+                positionCounter = 1; // Reset positionCounter only once
             }
             catch (Exception ex)
             {
-                // MessageBox.Show("Error clearing items: " + ex.Message);
+                Console.WriteLine("Error clearing items: " + ex.Message);
             }
         }
 
