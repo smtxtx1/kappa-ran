@@ -2796,24 +2796,37 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
         }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedItem != null && !string.IsNullOrEmpty(selectedFilePath))
+            if (!string.IsNullOrEmpty(selectedFilePath))
             {
-                //saveID = m.ReadString(IDadr);
-                string key = comboBox3.SelectedItem.ToString();
-                if (listViewDictionary.TryGetValue(key, out var listView))
+                try
                 {
-                    string filePath = Path.Combine(selectedFilePath, $"{key}.json");
-                    SaveListViewToJSON(listView, filePath);
-                    MessageBox.Show($"{comboBox2.SelectedItem} saved successfully.", "Save Complete");
+                    for (int i = 1; i <= 20; i++)
+                    {
+                        if (i == 11 || i == 12)
+                            continue; // Skip listView11 and listView12
+
+                        string listViewName = $"listView{i}";
+
+                        // Find the ListView control by its name
+                        ListView listView = FindControlRecursive(this, listViewName) as ListView;
+
+                        if (listView != null)
+                        {
+                            string filePath = Path.Combine(selectedFilePath, $"{listViewName}.json");
+                            SaveListViewToJSON(listView, filePath);
+                        }
+                    }
+
+                    MessageBox.Show("All ListViews (except 11 & 12) saved successfully.", "Save Complete");
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("No matching ListView found.", "Error");
+                    MessageBox.Show($"Error saving ListViews: {ex.Message}", "Error");
                 }
             }
             else
             {
-                MessageBox.Show("Please select a folder and an item from the combo box.", "Warning");
+                MessageBox.Show("Please select a folder to save the files.", "Warning");
             }
         }
 
