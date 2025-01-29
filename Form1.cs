@@ -3662,57 +3662,31 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
         private async Task ItemGet()
         {
             string names = m.ReadString(IDadr);
-
             try
             {
                 var items = await GetItemsAsync();
 
-                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID,MoneyGOLD) in items)
+                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ, MoneyID, MoneyGOLD) in items)
                 {
-                    string sstringItemname = itemName.ToString();
+                    string sstringItemname = itemName.ToString(); // Declare sstringItemname
                     bool found = false;
                     string trimmedName = itemfound.Trim('\0'); // Ensure null characters are trimmed
                     Console.WriteLine($"Trimmed itemfound: {trimmedName}");
-                    if (MoneyGOLD > 0)
+
+                    if (MoneyGOLD > 0 && m.ReadInt(MATION_CHECK) != 1)
                     {
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "4");
-                            m.WriteMemory(TARGET_SKILL, "int", MoneyID.ToString());
-                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
-                                await Task.Delay(50);
-                            }
-
-                            if (m.ReadInt(MATION_CHECK) == 0)
-                            {
-                                await WriteMemoryMultipleTimes(actioncheck, "int", "4", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", MoneyID.ToString(), 3, 50);
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
-
-                            }
-                        }
-
+                        await PerformAttack((uint)MoneyID);
                     }
+
                     foreach (ListViewItem item12 in listView12.Items)
                     {
-                        int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
+                        int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value); // Declare num2
                         int boxFound = m.ReadInt("MiniA.exe+7B0018");
 
-                        if (boxFound != num2 && sstringItemname == "9")
-                        {
-                            found = true;
-                            break;
-                        }
+                        if (boxFound != num2 && sstringItemname == "9") continue;
 
-                        // Debugging: Log the values being compared
-                        Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
-
-                        // Use Trim() to remove any surrounding whitespace
-                        if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                        // Comparing names with more strict condition
+                        if (trimmedName.Equals(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
@@ -3720,29 +3694,9 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         }
                     }
 
-                    if (found)
+                    if (found && m.ReadInt(MATION_CHECK) != 1)
                     {
-                        if (m.ReadInt(MATION_CHECK) != 1)
-                        {
-                            m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
-                            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
-
-                            while (m.ReadInt(MATION_CHECK) == 1)
-                            {
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
-                                await Task.Delay(50);
-                            }
-
-                            if (m.ReadInt(MATION_CHECK) == 0)
-                            {
-                                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
-                                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
-
-                                break;
-                            }
-                        }
+                        await PerformAttack(itemId);
                     }
                 }
             }
@@ -3753,6 +3707,33 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
 
             await Task.Delay(20);
         }
+
+        private async Task PerformAttack(uint targetId)
+        {
+            m.WriteMemory(actioncheck, "int", "3");
+            m.WriteMemory(TARGET_SKILL, "int", targetId.ToString());
+            await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
+
+            while (m.ReadInt(MATION_CHECK) == 1)
+            {
+                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 100);
+                await Task.Delay(50);
+            }
+
+            if (m.ReadInt(MATION_CHECK) == 0)
+            {
+                await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
+                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", targetId.ToString(), 3, 50);
+                await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
+            }
+        }
+
+        private bool ShouldSkipItem(string sstringItemname, ListViewItem item12, int num2)
+        {
+            int boxFound = m.ReadInt("MiniA.exe+7B0018");
+            return boxFound != num2 && sstringItemname == "9";
+        }
+
 
         private async Task ItemGetAll()
         {
