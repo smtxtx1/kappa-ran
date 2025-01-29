@@ -3664,7 +3664,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
                             m.WriteMemory(actioncheck, "int", "3");
-                            m.WriteMemory(TARGET_SKILL, "int", itemId.ToString());
+                            m.WriteMemory(TARGET_SKILL, "int", MoneyID.ToString());
                             await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 1, 50);
 
                             while (m.ReadInt(MATION_CHECK) == 1)
@@ -3676,7 +3676,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                             if (m.ReadInt(MATION_CHECK) == 0)
                             {
                                 await WriteMemoryMultipleTimes(actioncheck, "int", "3", 3, 50);
-                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
+                                await WriteMemoryMultipleTimes(TARGET_SKILL, "int", MoneyID.ToString(), 3, 50);
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
                             }
