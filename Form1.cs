@@ -2480,7 +2480,7 @@ namespace Kappa
                             //}
 
                             // Only add the item if it doesn't already exist in the ListView
-                            if (!itemExists)
+                            if (itemfound.Contains(listView11.Items[2].Text))
                             {
                                 ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                                 listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
