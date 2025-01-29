@@ -2419,7 +2419,7 @@ namespace Kappa
 
         private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID)>> GetItemsAsync()
         {
-            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID)>();
+            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID,int MoneyGold)>();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -2475,7 +2475,7 @@ namespace Kappa
                             listView11.Items.Add(listViewItem);
 
                             // Add to items list
-                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0));
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0,0));
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
