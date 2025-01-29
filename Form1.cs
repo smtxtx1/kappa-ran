@@ -2554,7 +2554,7 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
-        private async Task<(int ID, float X, float Y, float Z,)> ReadMoneyDetails(UIntPtr data)
+        private async Task<(int ID, float X, float Y, float Z)> ReadMoneyDetails(UIntPtr data)
         {
             try
             {
@@ -2566,7 +2566,6 @@ namespace Kappa
                 float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
-                uint dropValue_ID = await Task.Run(() => m.ReadUInt(drop_ID.ToString("X")));
 
                 return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z);
             }
