@@ -2458,7 +2458,7 @@ namespace Kappa
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
                     Console.WriteLine($"result2 = {result2:X}");
                     int num = 20;
-
+                    float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y,MoneyDetail.Z);
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
                     if (mobDetails.DropID != 0)
