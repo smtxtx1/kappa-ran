@@ -2469,17 +2469,21 @@ namespace Kappa
                             {
                                 if (!existingItem.SubItems[2].Text.Contains(itemfound)) // Check the item name column
                                 {
-                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                    listViewItem.SubItems.Add(itemfound); // Add item name
-                                    listView11.Items.Add(listViewItem);
-
-                                    // Add to items list
-                                    items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
+                                    itemExists = true;
                                 }
                             }
 
                             // Only add the item if it doesn't already exist in the ListView
+                            if (!itemExists)
+                            {
+                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                listViewItem.SubItems.Add(itemfound); // Add item name
+                                listView11.Items.Add(listViewItem);
+
+                                // Add to items list
+                                items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
+                            }
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
@@ -3700,7 +3704,6 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         if (boxFound != num2 && sstringItemname == "9")
                         {
                             found = true;
-                            continue;
                         }
 
                         // Debugging: Log the values being compared
@@ -3711,7 +3714,6 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         {
                             Console.WriteLine($"Match found! itemId: {itemId}");
                             found = true;
-                            continue;
                         }
                     }
 
@@ -3735,7 +3737,6 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                                 await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
-                                continue;
                             }
                         }
                     }
