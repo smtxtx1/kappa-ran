@@ -2433,8 +2433,8 @@ namespace Kappa
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
-                int globalMoney = m.ReadInt("MiniA.exe+7A8B30,4B7C");
-                UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,4B80");
+                int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
+                UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
 
                 if (listView11.Items.Count < 10)
                 {
@@ -2573,7 +2573,7 @@ namespace Kappa
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0, 0, 0);
+                return (0, 0, 0, 0);
             }
         }
 
