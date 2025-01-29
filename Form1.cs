@@ -2498,7 +2498,7 @@ namespace Kappa
                         listView11.Items.Add(listViewItemMoney);
 
                         // Add to items list with MoneyID
-                        items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID));
+                        items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID,MoneyDetail.Gold));
                     }
                     currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
                 }
@@ -2571,7 +2571,7 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
-        private async Task<(int ID, float X, float Y, float Z)> ReadMoneyDetails(UIntPtr data)
+        private async Task<(int ID, float X, float Y, float Z,int Gold)> ReadMoneyDetails(UIntPtr data)
         {
             try
             {
@@ -2579,18 +2579,20 @@ namespace Kappa
                 UIntPtr mob_X = m.GetCode($"{data:X},C");
                 UIntPtr mob_Y = m.GetCode($"{data:X},10");
                 UIntPtr mob_Z = m.GetCode($"{data:X},14");
+                UIntPtr mob_Gold = m.GetCode($"{data:X},14");
+
                 int mobValue = await Task.Run(() => m.Read2Byte(mobID.ToString("X")));
                 float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
                 float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
                 float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
-
-                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z);
+                int goldValue = await Task.Run(() => m.Read2Byte(mob_Gold.ToString("X")));
+                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z,goldValue);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error reading monster details: {ex.Message}");
 
-                return (0, 0, 0, 0);
+                return (0, 0, 0, 0,0);
             }
         }
 
