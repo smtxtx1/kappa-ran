@@ -2436,18 +2436,10 @@ namespace Kappa
                 int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
                 UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
 
-                listView11.Invoke((MethodInvoker)delegate
+                if (listView11.Items.Count < 10)
                 {
-                    listView11.BeginUpdate();
-
-                    // Remove oldest entries if more than 10
-                    while (listView11.Items.Count > 10)
-                    {
-                        listView11.Items.RemoveAt(0);
-                    }
-
-                    listView11.EndUpdate();
-                });
+                    listView11.Items.Clear();
+                }
 
                 // Process item data
                 for (int i = 0; i < globalCrow; i++)
@@ -2461,8 +2453,10 @@ namespace Kappa
                     int parameter2 = (0xFB74 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
+                    Console.WriteLine($"result1 = {result}");
                     MemoryPointer addr_function_getName = 0x0049EF40;
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
+                    Console.WriteLine($"result2 = {result2:X}");
                     int num = 20;
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
@@ -2471,23 +2465,14 @@ namespace Kappa
                         byte[] array = m.ReadBytes(result2.ToString("x"), num);
                         if (array != null)
                         {
-                            string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Trim null characters
+                            string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+                            Console.WriteLine($"{itemfound}");
 
-                            listView11.Invoke((MethodInvoker)delegate
-                            {
-                                listView11.BeginUpdate();
-
-                                // Check for duplicates
-                                if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == mobDetails.DropID.ToString()))
-                                {
-                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString());
-                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString());
-                                    listViewItem.SubItems.Add(itemfound);
-                                    listView11.Items.Add(listViewItem);
-                                }
-
-                                listView11.EndUpdate();
-                            });
+                            // Add data to listView11
+                            ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                            listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                            listViewItem.SubItems.Add(itemfound); // Add item name
+                            listView11.Items.Add(listViewItem);
 
                             // Add to items list
                             items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
@@ -2506,21 +2491,11 @@ namespace Kappa
                     {
                         float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
 
-                        listView11.Invoke((MethodInvoker)delegate
-                        {
-                            listView11.BeginUpdate();
-
-                            // Check for duplicates
-                            if (!listView11.Items.Cast<ListViewItem>().Any(item => item.SubItems[1].Text == MoneyDetail.ID.ToString()))
-                            {
-                                ListViewItem listViewItemMoney = new ListViewItem("Money");
-                                listViewItemMoney.SubItems.Add(MoneyDetail.ID.ToString());
-                                listViewItemMoney.SubItems.Add("Gold Coins");
-                                listView11.Items.Add(listViewItemMoney);
-                            }
-
-                            listView11.EndUpdate();
-                        });
+                        // Add money to listView11
+                        ListViewItem listViewItemMoney = new ListViewItem("Money"); // Set name as "Money"
+                        listViewItemMoney.SubItems.Add(MoneyDetail.ID.ToString()); // Money ID
+                        listViewItemMoney.SubItems.Add("Gold Coins"); // Example item name
+                        listView11.Items.Add(listViewItemMoney);
 
                         // Add to items list with MoneyID
                         items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold));
@@ -2535,7 +2510,6 @@ namespace Kappa
 
             return items;
         }
-
         private async Task GetMonstersAsync()
         {
             try
