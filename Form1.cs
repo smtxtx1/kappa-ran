@@ -2433,6 +2433,9 @@ namespace Kappa
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
+                int globalMoney = m.ReadInt("MiniA.exe+7A8B30,4B7C");
+                UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,4B80");
+
                 if (listView11.Items.Count < 10)
                 {
                     listView11.Items.Clear();
@@ -2440,6 +2443,8 @@ namespace Kappa
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
+                    UIntPtr dataMoney = m.GetCode($"{currMoney:X},0");
+                    var MoneyDetail = await ReadMoneyDetails(data);
                     var mobDetails = await ReadItemsDetailsAsync(data);
                     UIntPtr mobID = m.GetCode($"{data:X},0");
                     Entity = mobID;
@@ -2549,6 +2554,30 @@ namespace Kappa
                 Console.WriteLine($"Error in GetMonsters: {ex.Message}");
             }
         }
+        private async Task<(int ID, float X, float Y, float Z,)> ReadMoneyDetails(UIntPtr data)
+        {
+            try
+            {
+                UIntPtr mobID = m.GetCode($"{data:X},8");
+                UIntPtr mob_X = m.GetCode($"{data:X},C");
+                UIntPtr mob_Y = m.GetCode($"{data:X},10");
+                UIntPtr mob_Z = m.GetCode($"{data:X},14");
+                int mobValue = await Task.Run(() => m.Read2Byte(mobID.ToString("X")));
+                float mobVaLue_X = await Task.Run(() => m.ReadFloat(mob_X.ToString("x")));
+                float mobVaLue_Y = await Task.Run(() => m.ReadFloat(mob_Y.ToString("x")));
+                float mobVaLue_Z = await Task.Run(() => m.ReadFloat(mob_Z.ToString("x")));
+                uint dropValue_ID = await Task.Run(() => m.ReadUInt(drop_ID.ToString("X")));
+
+                return (mobValue, mobVaLue_X, mobVaLue_Y, mobVaLue_Z);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error reading monster details: {ex.Message}");
+
+                return (0, 0, 0, 0, 0);
+            }
+        }
+
         private async Task<(int ID, float X, float Y, float Z, uint DropID)> ReadItemsDetailsAsync(UIntPtr data)
         {
             try
