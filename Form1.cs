@@ -2470,6 +2470,7 @@ namespace Kappa
                                 if (!existingItem.SubItems[2].Text.Contains(itemfound)) // Check the item name column
                                 {
                                     itemExists = true;
+                                    break;
                                 }
                             }
 
