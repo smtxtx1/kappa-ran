@@ -117,7 +117,9 @@ namespace Kappa
         public long AOB_FastPET;
         public long AOB_SABUD2;
         public long AOB_SABUD;
+        private long AOB_QUA;
 
+        private string QUA_ADR_RESULT = "";
         public string FASTPET_ADR_RESULT;
         public string Guildselected;
         public string SKILLPET_ADR_RESULT;
@@ -504,6 +506,7 @@ namespace Kappa
             IEnumerable<long> AoB_Scan_Nolimit = await m.AoBScan("c7 81 80 01 00 00 ? ? ? ? 89 44", false, true);
             var AoB_Scan_SuperCUT = await m.AoBScan("ff 86 ? ? ? ? 3b bb", false, true);
             //e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 47 ? 2b c2
+            var AoB_Scan_QUA = await m.AoBScan("76 ? 66 8b ? ? 0f b7 ? 8d 8c ? ? ? ? ? 66 89 ? 66 8b ? ? 66 89 ? ? 66 ff ? ? ? ? ? 83 c0 ? 47 3b c2 75 ? 33 c0 66 39 ? ? ? ? ? 5f 5e 5d 0f 95 ? 5b 83 c4 ? c2 ? ? cc cc cc cc cc cc cc 83 ec", false, true);
             var AoB_Scan_SABUD = await m.AoBScan("e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 54 ? ? 55 57 52 50 8b ce e8 ? ? ? ? 5f 5e 5d 5b 83 c4 ? c2 ? ? 8b 4f", false, true);
             var AoB_Scan_SABUD2 = await m.AoBScan("83 ec ? 0f b7 ? ? ? 53 6b c0 ? 8b 5c", false, true);
             var AoB_Scan_Monview = await m.AoBScan("8B 81 A4 17 00 00", false, true);
@@ -525,6 +528,7 @@ namespace Kappa
             long AOB_SKILLPET = AoB_Scan_SKILLPET.FirstOrDefault();
             AOB_SABUD = AoB_Scan_SABUD.FirstOrDefault();
             AOB_SABUD2 = AoB_Scan_SABUD2.FirstOrDefault();
+            AOB_QUA = AoB_Scan_QUA.FirstOrDefault();
 
             AOB_LONGBUFF = AoB_Scan_LB.FirstOrDefault();
             long AOB_ANTIDELAY = AoB_Scan_ANTIDELAY.FirstOrDefault();
@@ -541,6 +545,7 @@ namespace Kappa
          //   byte[] SabudByte = m.ReadBytes(SaBUDtest, 5);
          //   ConvertSabud = BitConverter.ToString(SabudByte).Replace("-", " ");
         //    MessageBox.Show($"{AOB_SABUD2.ToString("x")}");
+
             AOB_ANTICB = AoB_Scan_ANTICB.FirstOrDefault();
             long AOB_ATKBP = AoB_Scan_ATKBP.FirstOrDefault();
             AOB_NOLIMIT = AoB_Scan_Nolimit.FirstOrDefault();
@@ -561,6 +566,8 @@ namespace Kappa
             AOB_BA = AoB_Scan_BA.FirstOrDefault();
             AOB_ANTIAFK = AoB_Scan_ANTI_AFK.FirstOrDefault();
             //
+
+            QUA_ADR_RESULT = AOB_QUA.ToString("x");
             SABUDWRITE_ADR_RESULT = AOB_SABUD.ToString("x");
             SKILLPET_ADR_RESULT = AOB_SKILLPET.ToString("x");
             FASTPET_ADR_RESULT = AOB_FastPET.ToString("x");
