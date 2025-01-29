@@ -2417,7 +2417,7 @@ namespace Kappa
         {
         }
 
-        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID)>> GetItemsAsync()
+        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID,int MoneyGold)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID,int MoneyGold)>();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
