@@ -3740,7 +3740,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                                 await WriteMemoryMultipleTimes(TARGET_SKILL, "int", itemId.ToString(), 3, 50);
                                 await WriteMemoryMultipleTimes(forceattack_adr, "int", "4", 3, 50);
 
-                                break;
+                                continue;
                             }
                         }
                     }
