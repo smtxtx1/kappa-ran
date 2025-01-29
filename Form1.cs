@@ -2468,6 +2468,14 @@ namespace Kappa
                             string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
                             Console.WriteLine($"{itemfound}");
 
+                            foreach (ListViewItem itemadded in listView11.Items)
+                            {
+                                if (!itemfound.Contains(itemadded.SubItems[2].Text))
+                                {
+                                    items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
+
+                                }
+                            }
                             // Check if itemfound already exists in the ListView
                             bool itemExists = false;
                             //foreach (ListViewItem existingItem in listView11.Items)
@@ -2478,18 +2486,8 @@ namespace Kappa
                             //        break;
                             //    }
                             //}
-
-                            // Only add the item if it doesn't already exist in the ListView
-                            if (!itemfound.Contains(listView11.Items[2].Text))
-                            {
-                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                listViewItem.SubItems.Add(itemfound); // Add item name
-                                listView11.Items.Add(listViewItem);
-
                                 // Add to items list
-                                items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
-                            }
+                            
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
