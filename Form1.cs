@@ -2417,9 +2417,9 @@ namespace Kappa
         {
         }
 
-        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z)>> GetItemsAsync()
+        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID)>> GetItemsAsync()
         {
-            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z)>();
+            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID)>();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -2440,11 +2440,11 @@ namespace Kappa
                 {
                     listView11.Items.Clear();
                 }
+
+                // Process item data
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    UIntPtr dataMoney = m.GetCode($"{currMoney:X},0");
-                    var MoneyDetail = await ReadMoneyDetails(data);
                     var mobDetails = await ReadItemsDetailsAsync(data);
                     UIntPtr mobID = m.GetCode($"{data:X},0");
                     Entity = mobID;
@@ -2458,32 +2458,49 @@ namespace Kappa
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
                     Console.WriteLine($"result2 = {result2:X}");
                     int num = 20;
-                    float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y,MoneyDetail.Z);
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
                     if (mobDetails.DropID != 0)
                     {
-                        // Check if DropID is already added using the HashSet
-                            byte[] array = m.ReadBytes(result2.ToString("x"), num);
-                            if (array != null)
-                            {
-                                string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                        if (array != null)
+                        {
+                            string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+                            Console.WriteLine($"{itemfound}");
 
-                                Console.WriteLine($"{itemfound}");
+                            // Add data to listView11
+                            ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                            listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                            listViewItem.SubItems.Add(itemfound); // Add item name
+                            listView11.Items.Add(listViewItem);
 
-                                // Add data to listView11
-                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                listViewItem.SubItems.Add(itemfound); // Add item name
-                                listView11.Items.Add(listViewItem);
-
-                                // Assign itemName to itemfound
-                                items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z));
-                            
+                            // Add to items list
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0));
                         }
                     }
-                    
-                    curr = m.GetCode($"{curr:X},8");
+                    curr = m.GetCode($"{curr:X},8"); // Move to next item
+                }
+
+                // Process money data
+                for (int i2 = 0; i2 < globalMoney; i2++)
+                {
+                    UIntPtr dataMoney = m.GetCode($"{currMoney:X},0");
+                    var MoneyDetail = await ReadMoneyDetails(dataMoney);
+
+                    if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
+                    {
+                        float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
+
+                        // Add money to listView11
+                        ListViewItem listViewItemMoney = new ListViewItem("Money"); // Set name as "Money"
+                        listViewItemMoney.SubItems.Add(MoneyDetail.ID.ToString()); // Money ID
+                        listViewItemMoney.SubItems.Add("Gold Coins"); // Example item name
+                        listView11.Items.Add(listViewItemMoney);
+
+                        // Add to items list with MoneyID
+                        items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID));
+                    }
+                    currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
                 }
             }
             catch (Exception ex)
@@ -3634,7 +3651,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
             {
                 var items = await GetItemsAsync();
 
-                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ) in items)
+                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID) in items)
                 {
                     string sstringItemname = itemName.ToString();
                     bool found = false;
