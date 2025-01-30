@@ -2469,14 +2469,12 @@ namespace Kappa
                             bool itemExists = false;
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
-                                if (!existingItem.SubItems[2].Text.Contains(itemfound)) // Check the item name column
+                                if (itemfound.Contains(existingItem.SubItems[2].Text)) // Check the item name column
                                 {
                                     ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                                     listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
                                     listViewItem.SubItems.Add(itemfound); // Add item name
                                     listView11.Items.Add(listViewItem);
-
-
                                 }
                             }
                         }
