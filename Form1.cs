@@ -2415,52 +2415,92 @@ namespace Kappa
         {
         }
 
-        private Dictionary<uint, string> itemNameCache = new Dictionary<uint, string>();
 
         private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
+            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
+            Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+            processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             MemoryPointer addr_function_getECX = 0x0047ADF0;
             MemoryPointer ecx = 0x0126A960;
+            MemoryPointer Entity = 0x2846CA40;
+
             uint parameter_lenth = 2;
 
             try
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
+                int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
+                UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
 
+                // Process item data
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadItemsDetailsAsync(data);
                     UIntPtr mobID = m.GetCode($"{data:X},0");
-
-                    int parameter1 = m.ReadInt(mobID.ToString());
-                    int parameter2_half_2 = m.Read2Byte((mobID + 0x2).ToString());
+                    Entity = mobID;
+                    int parameter1 = m.ReadInt(Entity.ToString());
+                    int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
                     int parameter2 = (0xFB74 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
-
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
+                    Console.WriteLine($"result1 = {result}");
                     MemoryPointer addr_function_getName = 0x0049EF40;
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
-
-                    string itemfound;
-                    if (itemNameCache.TryGetValue(result2, out itemfound))
-                    {
-                        Console.WriteLine($"Cache hit: {itemfound}");
-                    }
-                    else
-                    {
-                        byte[] array = m.ReadBytes(result2.ToString("x"), 20);
-                        itemfound = array != null ? Encoding.GetEncoding(874).GetString(array).Trim('\0') : "Unknown";
-                        itemNameCache[result2] = itemfound; // บันทึกลงแคช
-                        Console.WriteLine($"Cache miss: {itemfound}");
-                    }
-
+                    Console.WriteLine($"result2 = {result2:X}");
+                    int num = 20;
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
-                    items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0, 0));
 
-                    curr = m.GetCode($"{curr:X},8");
+                    if (mobDetails.DropID != 0)
+                    {
+                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                        if (array != null)
+                        {
+                            string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
+                            Console.WriteLine($"{itemfound}");
+
+                            // Check if itemfound already exists in the ListView
+                            bool isDuplicate = false;
+
+                            foreach (ListViewItem existingItem in listView11.Items)
+                            {
+                                if (existingItem.SubItems[2].Text == itemfound) // Check if item already exists
+                                {
+                                    isDuplicate = true;
+                                    break; // Stop checking once a duplicate is found
+                                }
+                            }
+
+                            if (!isDuplicate) // Only add if no duplicate is found
+                            {
+                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                listViewItem.SubItems.Add(itemfound); // Add item name
+                                listView11.Items.Add(listViewItem);
+                            }
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0, 0));
+
+                        }
+                    }
+                    curr = m.GetCode($"{curr:X},8"); // Move to next item
+                }
+
+                // Process money data
+                for (int i2 = 0; i2 < globalMoney; i2++)
+                {
+                    UIntPtr dataMoney = m.GetCode($"{currMoney:X},0");
+                    var MoneyDetail = await ReadMoneyDetails(dataMoney);
+
+                    if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
+                    {
+                        float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
+
+                        items.Add((0, 0, 0, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold, distance_money));
+                    }
+                    currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
                 }
             }
             catch (Exception ex)
