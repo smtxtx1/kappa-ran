@@ -278,7 +278,6 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(402, 352);
             tabControl1.TabIndex = 0;
-            tabControl1.Visible = false;
             // 
             // tabPage1
             // 
