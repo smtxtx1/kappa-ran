@@ -2479,9 +2479,6 @@ namespace Kappa
 
                                 }
                             }
-
-                            // Only add the item if it doesn't already exist in the ListView
-
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
