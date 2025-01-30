@@ -2465,15 +2465,23 @@ namespace Kappa
                             Console.WriteLine($"{itemfound}");
 
                             // Check if itemfound already exists in the ListView
+                            bool isDuplicate = false;
+
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
-                                if (!itemfound.Contains(existingItem.SubItems[2].Text)) // Check the item name column
+                                if (existingItem.SubItems[2].Text == itemfound) // Check if item already exists
                                 {
-                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                    listViewItem.SubItems.Add(itemfound); // Add item name
-                                    listView11.Items.Add(listViewItem);
+                                    isDuplicate = true;
+                                    break; // Stop checking once a duplicate is found
                                 }
+                            }
+
+                            if (!isDuplicate) // Only add if no duplicate is found
+                            {
+                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                listViewItem.SubItems.Add(itemfound); // Add item name
+                                listView11.Items.Add(listViewItem);
                             }
                             items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
 
