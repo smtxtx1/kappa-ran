@@ -2418,9 +2418,9 @@ namespace Kappa
         {
         }
 
-        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold)>> GetItemsAsync()
+        private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold,float distance_money)>> GetItemsAsync()
         {
-            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold)>();
+            var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
             IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
@@ -2483,7 +2483,7 @@ namespace Kappa
                                 listViewItem.SubItems.Add(itemfound); // Add item name
                                 listView11.Items.Add(listViewItem);
                             }
-                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0,0));
 
                         }
                     }
@@ -2500,7 +2500,7 @@ namespace Kappa
                     {
                         float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
 
-                        items.Add((0, 0, distance_money, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold));
+                        items.Add((0, 0, 0, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold,distance_money));
                     }
                     currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
                 }
@@ -3667,7 +3667,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
             {
                 var items = await GetItemsAsync();
 
-                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID,MoneyGOLD) in items)
+                foreach (var (itemName, itemId, itemDistance, itemfound, itemX, itemY, itemZ,MoneyID,MoneyGOLD,distance_money) in items)
                 {
                     string sstringItemname = itemName.ToString();
                     bool found = false;
