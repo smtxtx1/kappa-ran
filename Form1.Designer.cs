@@ -1032,7 +1032,6 @@
             checkBox39.TabIndex = 15;
             checkBox39.Text = "กันติดขอบ";
             checkBox39.UseVisualStyleBackColor = true;
-            checkBox39.Visible = false;
             // 
             // checkBox31
             // 
