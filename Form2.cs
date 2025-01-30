@@ -22,7 +22,7 @@ namespace LOGIN
         public static api KeyAuthApp = new api(
             name: "RAN-SAIYO", // App name
             ownerid: "zbtz7lqHV9", // Account ID
-            version: "3.0" // Application version. Used for automatic downloads see video here https://www.youtube.com/watch?v=kW195PLCBKs
+            version: "3.1" // Application version. Used for automatic downloads see video here https://www.youtube.com/watch?v=kW195PLCBKs
                            //path: @"Your_Path_Here" // (OPTIONAL) see tutorial here https://www.youtube.com/watch?v=I9rxt821gMk&t=1s
         ); private IContainer components;
 
