@@ -2466,7 +2466,6 @@ namespace Kappa
                             items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
 
                             // Check if itemfound already exists in the ListView
-                            bool itemExists = false;
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
                                 if (itemfound.Contains(existingItem.SubItems[2].Text)) // Check the item name column
