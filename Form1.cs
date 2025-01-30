@@ -2463,7 +2463,6 @@ namespace Kappa
                         {
                             string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
                             Console.WriteLine($"{itemfound}");
-                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
 
                             // Check if itemfound already exists in the ListView
                             foreach (ListViewItem existingItem in listView11.Items)
@@ -2476,6 +2475,8 @@ namespace Kappa
                                     listView11.Items.Add(listViewItem);
                                 }
                             }
+                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0));
+
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
