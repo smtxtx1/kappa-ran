@@ -2420,9 +2420,10 @@ namespace Kappa
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
+
             MemoryPointer addr_function_getECX = 0x0047ADF0;
             MemoryPointer ecx = 0x0126A960;
-            MemoryPointer Entity = 0x2846CA40;
+            MemoryPointer addr_function_getName = 0x0049EF40;
 
             uint parameter_lenth = 2;
 
@@ -2433,69 +2434,70 @@ namespace Kappa
                 int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
                 UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
 
-                // Process item data
+                var entityList = new List<UIntPtr>(); // Store all entity pointers
+
+                // 1. Collect all entity pointers first
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    var mobDetails = await ReadItemsDetailsAsync(data);
                     UIntPtr mobID = m.GetCode($"{data:X},0");
-                    Entity = mobID;
+
+                    if (mobID != UIntPtr.Zero)
+                        entityList.Add(mobID); // Store entity pointer
+
+                    curr = m.GetCode($"{curr:X},8"); // Move to next entity
+                }
+
+                // 2. Process each entity
+                foreach (var Entity in entityList)
+                {
+                    var mobDetails = await ReadItemsDetailsAsync(Entity);
+                    if (mobDetails.DropID == 0) continue; // Skip empty drops
+
                     int parameter1 = m.ReadInt(Entity.ToString());
                     int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
                     int parameter2 = (0xFB74 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
+
+                    // Call getECX function
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
-                    Console.WriteLine($"result1 = {result}");
-                    MemoryPointer addr_function_getName = 0x0049EF40;
-                    var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
-                    Console.WriteLine($"result2 = {result2:X}");
-                    int num = 20;
-                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (result == UIntPtr.Zero) continue; // Ensure valid pointer
 
-                    if (mobDetails.DropID != 0)
+                    // Call getName function
+                    MemoryPointer result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
+                    if (result2 == UIntPtr.Zero) continue;
+
+                    // Read item name
+                    int nameLength = 20;
+                    byte[] array = m.ReadBytes(result2.ToString(), nameLength);
+                    if (array == null) continue;
+
+                    string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0');
+                    Console.WriteLine($"{itemfound}");
+
+                    // Check for duplicates
+                    bool isDuplicate = listView11.Items.Cast<ListViewItem>().Any(existingItem => existingItem.SubItems[2].Text == itemfound);
+                    if (!isDuplicate)
                     {
-                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
-                        if (array != null)
-                        {
-                            string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
-                            Console.WriteLine($"{itemfound}");
-
-                            // Check if itemfound already exists in the ListView
-                            bool isDuplicate = false;
-
-                            foreach (ListViewItem existingItem in listView11.Items)
-                            {
-                                if (existingItem.SubItems[2].Text == itemfound) // Check if item already exists
-                                {
-                                    isDuplicate = true;
-                                    break; // Stop checking once a duplicate is found
-                                }
-                            }
-
-                            if (!isDuplicate) // Only add if no duplicate is found
-                            {
-                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                listViewItem.SubItems.Add(itemfound); // Add item name
-                                listView11.Items.Add(listViewItem);
-                            }
-                            items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0, 0));
-
-                        }
+                        ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString());
+                        listViewItem.SubItems.Add(mobDetails.DropID.ToString());
+                        listViewItem.SubItems.Add(itemfound);
+                        listView11.Items.Add(listViewItem);
                     }
-                    curr = m.GetCode($"{curr:X},8"); // Move to next item
+
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0, 0));
                 }
 
-                // Process money data
-                for (int i2 = 0; i2 < globalMoney; i2++)
+                // 3. Process money drops
+                for (int i = 0; i < globalMoney; i++)
                 {
                     UIntPtr dataMoney = m.GetCode($"{currMoney:X},0");
                     var MoneyDetail = await ReadMoneyDetails(dataMoney);
 
-                    if (MoneyDetail.ID != 0) // Ensure it's a valid money drop
+                    if (MoneyDetail.ID != 0)
                     {
                         float distance_money = CalculateDistance(MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z);
-
                         items.Add((0, 0, 0, "Money", MoneyDetail.X, MoneyDetail.Y, MoneyDetail.Z, MoneyDetail.ID, MoneyDetail.Gold, distance_money));
                     }
                     currMoney = m.GetCode($"{currMoney:X},8"); // Move to next money entry
