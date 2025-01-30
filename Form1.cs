@@ -1932,8 +1932,8 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     await GetMonstersAsync();
+                    await Task.Delay(100);
                     await GetItemsAsync();
-                    await Task.Delay(100); // Adjust the delay as needed
                 }
             }
             catch (Exception ex)

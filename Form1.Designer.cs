@@ -905,9 +905,9 @@
             // groupBox11
             // 
             groupBox11.Controls.Add(listView12);
-            groupBox11.Location = new Point(191, 129);
+            groupBox11.Location = new Point(202, 129);
             groupBox11.Name = "groupBox11";
-            groupBox11.Size = new Size(204, 145);
+            groupBox11.Size = new Size(183, 145);
             groupBox11.TabIndex = 31;
             groupBox11.TabStop = false;
             groupBox11.Text = "ไอเท็มที่จะเก็บ";
@@ -963,7 +963,7 @@
             listView11.HeaderStyle = ColumnHeaderStyle.Nonclickable;
             listView11.Location = new Point(3, 22);
             listView11.Name = "listView11";
-            listView11.Size = new Size(176, 118);
+            listView11.Size = new Size(194, 121);
             listView11.TabIndex = 15;
             listView11.UseCompatibleStateImageBehavior = false;
             listView11.View = View.Details;
