@@ -2471,21 +2471,16 @@ namespace Kappa
                             {
                                 if (!existingItem.SubItems[2].Text.Contains(itemfound)) // Check the item name column
                                 {
-                                    itemExists = true;
-                                    break;
+                                    ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
+                                    listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
+                                    listViewItem.SubItems.Add(itemfound); // Add item name
+                                    listView11.Items.Add(listViewItem);
+
+
                                 }
                             }
 
                             // Only add the item if it doesn't already exist in the ListView
-                            if (!itemExists)
-                            {
-                                ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
-                                listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
-                                listViewItem.SubItems.Add(itemfound); // Add item name
-                                listView11.Items.Add(listViewItem);
-
-                                // Add to items list
-                            }
 
                         }
                     }
