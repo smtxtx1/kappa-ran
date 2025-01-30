@@ -2468,7 +2468,7 @@ namespace Kappa
                             // Check if itemfound already exists in the ListView
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
-                                if (itemfound.Contains(existingItem.SubItems[2].Text)) // Check the item name column
+                                if (!itemfound.Contains(existingItem.SubItems[2].Text)) // Check the item name column
                                 {
                                     ListViewItem listViewItem = new ListViewItem(mobDetails.ID.ToString()); // Add mob ID
                                     listViewItem.SubItems.Add(mobDetails.DropID.ToString()); // Add Drop ID
