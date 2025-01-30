@@ -3673,7 +3673,7 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                     bool found = false;
                     string trimmedName = itemfound.Trim('\0'); // Ensure null characters are trimmed
                     Console.WriteLine($"Trimmed itemfound: {trimmedName}");
-                    if (MoneyGOLD > 0)
+                    if (MoneyGOLD > 0 && distance_money < rangefix)
                     {
                         if (m.ReadInt(MATION_CHECK) != 1)
                         {
@@ -3697,24 +3697,28 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         }
 
                     }
+
                     foreach (ListViewItem item12 in listView12.Items)
                     {
                         int num2 = int.Parse(((ComboBoxItem)comboBox5.SelectedItem).Value);
                         int boxFound = m.ReadInt("MiniA.exe+7B0018");
-
-                        if (boxFound != num2 && sstringItemname == "9")
+                        if (itemDistance < rangefix)
                         {
-                            found = true;
-                        }
+                            if (boxFound != num2 && sstringItemname == "9")
+                            {
+                                found = true;
+                            }
 
-                        // Debugging: Log the values being compared
-                        Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
+                            // Debugging: Log the values being compared
+                            Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
 
-                        // Use Trim() to remove any surrounding whitespace
-                        if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
-                        {
-                            Console.WriteLine($"Match found! itemId: {itemId}");
-                            found = true;
+                            // Use Trim() to remove any surrounding whitespace
+                            if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                            {
+                                Console.WriteLine($"Match found! itemId: {itemId}");
+                                found = true;
+                            }
+
                         }
                     }
 
