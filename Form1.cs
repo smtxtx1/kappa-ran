@@ -1930,9 +1930,8 @@ namespace Kappa
                 {
                     //   label2.Text = MonDistance.ToString();
                     var monstersTask = GetMonstersAsync();
-                    var itemsTask = GetItemsAsync();
 
-                    await Task.WhenAll(monstersTask, itemsTask); // Run both in parallel
+                    await Task.WhenAll(monstersTask); // Run both in parallel
                     await Task.Delay(100);
                 }
             }
