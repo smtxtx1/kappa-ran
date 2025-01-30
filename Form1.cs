@@ -2419,9 +2419,7 @@ namespace Kappa
         private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
-            processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             MemoryPointer addr_function_getECX = 0x0047ADF0;
             MemoryPointer ecx = 0x0126A960;
             MemoryPointer Entity = 0x2846CA40;
