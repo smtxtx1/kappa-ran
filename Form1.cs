@@ -364,6 +364,8 @@ namespace Kappa
         private IntPtr allocate_adr_BUFF;
         private IntPtr allocate_adr_SP_CUT;
         private IntPtr allocate_adr_SABUD;
+        private IntPtr processHandle;
+
         public string Expirydaysleft()
         {
             Login.KeyAuthApp.check();
@@ -489,6 +491,7 @@ namespace Kappa
 
 
             selectedProcessId = int.Parse(comboBox1.SelectedItem.ToString());
+            processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
 
             IEnumerable<long> AoB_Scan_AOE = await m.AoBScan("D8 5C 24 0C DF E0 F6 C4 05 7A 06 B8", false, true);
             IEnumerable<long> AoB_Scan_LR = await m.AoBScan("D9 5C 24 44 FF 50 10 85 C0 74 36 D9 85 EC 78 00 00", false, true);
@@ -721,7 +724,6 @@ namespace Kappa
             if (!Sabud_)
             {
                 // Open the process for memory manipulation
-                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 if (processHandle == IntPtr.Zero)
                 {
                     Console.WriteLine("Failed to open process.");
@@ -861,7 +863,6 @@ namespace Kappa
                 m.WriteMemory("00FF6600", "int", textBox2.Text);
             }
 
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             if (allocate_adr_aoe == IntPtr.Zero)
             {
@@ -936,7 +937,6 @@ namespace Kappa
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (textBox3.Text != null && checkBox3.Checked)
@@ -1379,7 +1379,6 @@ namespace Kappa
 
             if (checkBox6.Checked)
             {
-                IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                 Process ProcessbyID = Process.GetProcessById(selectedProcessId);
                 allocate_adr_Path = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
                 getadr = allocate_adr_Path.ToString("x");
@@ -1421,7 +1420,6 @@ namespace Kappa
             {
                 if (allocate_adr_Path != IntPtr.Zero)
                 {
-                    IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
                     VirtualFreeEx(processHandle, allocate_adr_Path, 0, 0x8000);
                     allocate_adr_Path = IntPtr.Zero;
                 }
@@ -1544,7 +1542,6 @@ namespace Kappa
 
         private void checkBox10_CheckedChanged(object sender, EventArgs e)
         {
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
             allocate_adr_Monview = VirtualAllocEx(processHandle, IntPtr.Zero, 2048, MEM_COMMIT, PAGE_READWRITE);
             if (checkBox10.Checked)
@@ -2423,7 +2420,6 @@ namespace Kappa
         private async Task<List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>> GetItemsAsync()
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
-            IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, selectedProcessId);
             MemoryPointer addr_function_getECX = 0x0047ADF0;
             MemoryPointer ecx = 0x0126A960;
             uint parameter_lenth = 2;
