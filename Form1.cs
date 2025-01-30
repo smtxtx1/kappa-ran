@@ -2435,13 +2435,13 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
                 int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
                 UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
-                UIntPtr data = m.GetCode($"{curr:X},0");
-                var mobDetails = await ReadItemsDetailsAsync(data);
-                UIntPtr mobID = m.GetCode($"{data:X},0");
-                Entity = mobID;
-
+                // Process item data
                 for (int i = 0; i < globalCrow; i++)
                 {
+                    UIntPtr data = m.GetCode($"{curr:X},0");
+                    var mobDetails = await ReadItemsDetailsAsync(data);
+                    UIntPtr mobID = m.GetCode($"{data:X},0");
+                    Entity = mobID;
 
                     int parameter1 = m.ReadInt(Entity.ToString());
                     int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
