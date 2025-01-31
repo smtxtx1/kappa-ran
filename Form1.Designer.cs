@@ -320,7 +320,6 @@
             groupBox12.TabIndex = 19;
             groupBox12.TabStop = false;
             groupBox12.Text = "Gm Alert";
-            groupBox12.Visible = false;
             // 
             // checkBox42
             // 

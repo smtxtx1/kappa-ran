@@ -2434,6 +2434,7 @@ namespace Kappa
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
                 int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
                 UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
+
                 // Process item data
                 for (int i = 0; i < globalCrow; i++)
                 {
@@ -2448,15 +2449,17 @@ namespace Kappa
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
                     Console.WriteLine($"result1 = {result}");
+
                     MemoryPointer addr_function_getName = 0x0049EF40;
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
                     Console.WriteLine($"result2 = {result2:X}");
+
                     int num = 20;
                     float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
                     if (mobDetails.DropID != 0)
                     {
-                        byte[] array = m.ReadBytes(result2.ToString("x"), num);
+                        byte[] array = m.ReadBytes($"0x{result2:X}", num);
                         if (array != null)
                         {
                             string itemfound = Encoding.GetEncoding(874).GetString(array).Trim('\0'); // Ensure null characters are trimmed
@@ -2464,7 +2467,6 @@ namespace Kappa
 
                             // Check if itemfound already exists in the ListView
                             bool isDuplicate = false;
-
                             foreach (ListViewItem existingItem in listView11.Items)
                             {
                                 if (existingItem.SubItems[2].Text == itemfound) // Check if item already exists
@@ -2482,7 +2484,6 @@ namespace Kappa
                                 listView11.Items.Add(listViewItem);
                             }
                             items.Add((mobDetails.ID, mobDetails.DropID, distance_mon, itemfound, mobDetails.X, mobDetails.Y, mobDetails.Z, 0, 0, 0));
-
                         }
                     }
                     curr = m.GetCode($"{curr:X},8"); // Move to next item
