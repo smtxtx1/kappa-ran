@@ -1929,9 +1929,7 @@ namespace Kappa
                 while (!monitoringCts.Token.IsCancellationRequested)
                 {
                     //   label2.Text = MonDistance.ToString();
-                    var monstersTask = GetMonstersAsync();
-
-                    await Task.WhenAll(monstersTask); // Run both in parallel
+                    GetMonstersAsync();
                     await Task.Delay(100);
                 }
             }
