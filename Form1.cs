@@ -2148,6 +2148,49 @@ namespace Kappa
                         {
                         }
                     }
+                    if (IsKeyPressed(Keys.X) && checkBox38.Checked)
+                    {
+
+                        Attacknow = true;
+
+                    }
+                    else
+                    {
+                        Attacknow = false;
+                    }
+                    if (Attacknow && SendID != 0)
+                    {
+
+                        for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                        {
+                            if (!Attacknow && SendID == 0)
+                            {
+                                break;
+                            }
+                            label2.Text = Guild;
+                            int RUN = m.Read2Byte(MATION_CHECK);
+
+                            int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                            int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                            if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                            {
+                                m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                                m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                                m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                                PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+                                if (RUN == 1 && checkBox40.Checked)
+                                {
+                                    m.WriteMemory(MATION_CHECK, "int", "3");
+                                }
+
+                                Console.WriteLine($"{RUN}");
+                            }
+
+                            await Task.Delay(1);
+                        }
+
+                    }
 
                     if (IsNameInListView12_GM(NAMEGET) && checkBox36.Checked)
                     {
@@ -2204,49 +2247,6 @@ namespace Kappa
 
 
 
-                if (IsKeyPressed(Keys.X) && checkBox38.Checked)
-                {
-
-                    Attacknow = true;
-
-                }
-                else
-                {
-                    Attacknow = false;
-                }
-                if (Attacknow && SendID != 0)
-                {
-
-                    for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
-                    {
-                        if (!Attacknow && SendID == 0)
-                        {
-                            break;
-                        }
-                        label2.Text = Guild;
-                        int RUN = m.Read2Byte(MATION_CHECK);
-
-                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
-                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
-
-                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
-                        {
-                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
-                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
-                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
-                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
-                            if (RUN == 1 && checkBox40.Checked)
-                            {
-                                m.WriteMemory(MATION_CHECK, "int", "3");
-                            }
-
-                            Console.WriteLine($"{RUN}");
-                        }
-
-                        await Task.Delay(1);
-                    }
-
-                }
                 await Task.Delay(10);
             }
 
