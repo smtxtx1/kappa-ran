@@ -2121,10 +2121,12 @@ namespace Kappa
                     AddToListView(playerName);
                     float distance = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && mobDetails.HP > 50)
+                    if (distance <= MonDistance && distance < closestDistance &&
+                        !playerGuild.Contains(Guildselected) &&
+                        !IsNameInListView12(playerName) && mobDetails.HP > 50)
                     {
                         closestDistance = distance;
-                        closestPlayerID = mobDetails.ID;
+                        closestPlayerID = mobDetails.ID;  // Make sure closestPlayerID is updated
                     }
 
                     if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && mobDetails.HP < 50)
