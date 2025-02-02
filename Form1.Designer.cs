@@ -1644,6 +1644,7 @@
             checkBox28.TabIndex = 38;
             checkBox28.Text = "No limit";
             checkBox28.UseVisualStyleBackColor = true;
+            checkBox28.CheckedChanged += checkBox28_CheckedChanged;
             // 
             // checkBox41
             // 
