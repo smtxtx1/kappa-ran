@@ -2121,12 +2121,10 @@ namespace Kappa
                     AddToListView(playerName);
                     float distance = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (distance <= MonDistance && distance < closestDistance &&
-                        !playerGuild.Contains(Guildselected) &&
-                        !IsNameInListView12(playerName) && mobDetails.HP > 50)
+                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && mobDetails.HP > 50)
                     {
                         closestDistance = distance;
-                        closestPlayerID = mobDetails.ID;  // Make sure closestPlayerID is updated
+                        closestPlayerID = mobDetails.ID;
                     }
 
                     if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && mobDetails.HP < 50)
@@ -2166,18 +2164,7 @@ namespace Kappa
                 sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
                 sendRes = (closestDistancePlayer <= MonDistance) ? resPlayer : 0;
                 resNow = IsKeyPressed(Keys.Z) && checkBox38.Checked;
-                if (IsKeyPressed(Keys.X) && checkBox38.Checked)
-                {
-                    attackNow = true;
-                    if (closestDistance <= MonDistance)
-                    {
-                        sendID = closestPlayerID;  // Update sendID dynamically
-                    }
-                }
-                else
-                {
-                    attackNow = false;
-                }
+                attackNow = IsKeyPressed(Keys.X) && checkBox38.Checked;
 
                 if (resNow && sendRes != 0)
                 {
@@ -2197,7 +2184,6 @@ namespace Kappa
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
         }
-
         private void TerminateProcess(int processId)
         {
             try
