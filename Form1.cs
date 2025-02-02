@@ -3709,8 +3709,13 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                             // Debugging: Log the values being compared
                             Console.WriteLine($"Comparing trimmedName: '{trimmedName}' with listView12: '{item12.SubItems[2].Text.Trim()}'");
 
-                            // Use Trim() to remove any surrounding whitespace
-                            if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                            if (checkBox31.Checked && trimmedName.Length > 1)
+                            {
+                                Console.WriteLine($"Match found! itemId: {itemId}");
+
+                                found = true;
+                            }
+                            if (trimmedName.Contains(item12.SubItems[2].Text.Trim(), StringComparison.OrdinalIgnoreCase) && !checkBox31.Checked)
                             {
                                 Console.WriteLine($"Match found! itemId: {itemId}");
                                 found = true;
