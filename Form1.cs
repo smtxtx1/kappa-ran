@@ -2084,110 +2084,231 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
-            bool foundGm = false;
-            int closestPlayerID = 0, sendID = 0, sendRes = 0, resPlayer = 0;
-            int globalCrow;
-            float closestDistance = float.MaxValue, closestDistancePlayer = float.MaxValue;
-
+            bool FoundGm = false;
+            bool ResNOW = false;
+            bool Attacknow = false;
+            int GETPlAYERID = 0; // Closest Player ID
+            int SendID = 0; // ID to send for targeting
+            int SendRES = 0; // ID to send for targeting
+            int Res_Player = 0;
+            int globalCrow = int.MaxValue;
             try
             {
+                string Guild = "";
+                string NAMEGET = "";
                 globalCrow = m.ReadInt("MiniA.exe+7A8B30,D84C");
-                if (globalCrow <= 0) return;
-
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,D850");
-
-                if (checkBox42.Checked)
+                bool PressedBackCard = false;
+                if (globalCrow > 0 & !PressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
                 {
-                    TerminateProcess(selectedProcessId);
-                    StopMonitoringPlayer();
-                    return;
-                }
-
-                bool pressedBackCard = false;
-                if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
-                {
-                    pressedBackCard = true;
+                    PressedBackCard = true;
                     await Getback(globalCrow);
-                    pressedBackCard = false;
+                    PressedBackCard = false;
                 }
+                if (globalCrow > 0 && checkBox42.Checked)
+                {
+                    try
+                    {
+                        Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                        processToTerminate.Kill();
+                        processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                        MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        StopMonitoringPlayer();
 
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+
+                }
+                float closestDistance = float.MaxValue;
+                float closestDistancePlayer = float.MaxValue;
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
                     var mobDetails = await ReadPlayerDetailsAsync(data);
-                    string playerName = ReadString(m.GetCode($"{data:X},1E0"));
-                    string playerGuild = ReadString(m.GetCode($"{data:X},22C"));
+                    UIntPtr PlayerID = m.GetCode($"{data:X},28C");
 
-                    AddToListView(playerName);
-                    float distance = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    // Read Guild and Player Name
+                    UIntPtr PlayerGUILD = m.GetCode($"{data:X},22C");
+                    UIntPtr PlayerNAMEGET = m.GetCode($"{data:X},1E0");
 
-                    // Find closest attack target
-                    if (distance <= MonDistance && distance < closestDistance &&
-                        !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) &&
-                        mobDetails.HP > 50)
+                    int num = 30;
+                    byte[] guildArray = m.ReadBytes(PlayerGUILD.ToString("x"), num);
+                    if (guildArray != null)
                     {
-                        closestDistance = distance;
-                        closestPlayerID = mobDetails.ID;
+                        Guild = Encoding.GetEncoding(874).GetString(guildArray).TrimEnd('\0');
                     }
 
-                    // Find closest resurrection target
-                    if (distance <= MonDistance && distance < closestDistancePlayer &&
-                        playerGuild.Contains(Guildselected) && mobDetails.HP < 50)
+                    byte[] nameArray = m.ReadBytes(PlayerNAMEGET.ToString("x"), num);
+                    if (nameArray != null)
                     {
-                        closestDistancePlayer = distance;
-                        resPlayer = mobDetails.ID;
-                    }
-
-                    // GM Checks
-                    if (IsNameInListView12_GM(playerName))
-                    {
-                        if (checkBox35.Checked)
+                        NAMEGET = Encoding.GetEncoding(874).GetString(nameArray).TrimEnd('\0');
+                        if (!IsItemAlreadyInList2(NAMEGET))
                         {
-                            await Getback(0);
+                            string[] row = { NAMEGET, NAMEGET, NAMEGET };
+                            listView11.Items.Add(new ListViewItem(row));
                         }
+                    }
 
-                        if (checkBox37.Checked)
+                    float distance_mon = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
+                    if (distance_mon <= MonDistance &&
+                        distance_mon < closestDistance &&
+                        !Guild.Contains(Guildselected) &&
+                        !IsNameInListView12(NAMEGET) && mobDetails.HP > 50)
+
+                    {
+                        closestDistance = distance_mon;
+                        GETPlAYERID = mobDetails.ID;
+                    }
+
+                    if (distance_mon <= MonDistance && distance_mon < closestDistancePlayer && Guild.Contains(Guildselected) && mobDetails.HP < 50)
+                    {
+                        closestDistancePlayer = distance_mon;
+                        Res_Player = mobDetails.ID;
+
+                    }
+                    if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox35.Checked)
+                    {
+                        try
                         {
-                            GMFOUND = playerName;
+                            Getback(0);
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+                    if (IsNameInListView12_GM(NAMEGET) && FoundGm == false && checkBox37.Checked)
+                    {
+                        try
+                        {
+
+                            Console.WriteLine($"ชื่อ {NAMEGET} \n Playeraddress: {PlayerID} \n");
+                            GMFOUND = NAMEGET;
                             GMAlert();
                             if (checkBox36.Checked)
                             {
-                                TerminateProcess(selectedProcessId);
+                                Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                                processToTerminate.Kill();
+                                processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                                MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                             }
-                            foundGm = true;
+                            FoundGm = true;
+                            StopMonitoringPlayer();
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+
+                    if (IsNameInListView12_GM(NAMEGET) && checkBox36.Checked)
+                    {
+                        try
+                        {
+                            Process processToTerminate = Process.GetProcessById(selectedProcessId);
+                            processToTerminate.Kill();
+                            processToTerminate.WaitForExit(); // Optional: Waits for the process to exit
+                            MessageBox.Show($"Process with PID {selectedProcessId} terminated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             StopMonitoringPlayer();
                             break;
                         }
-
-                        if (checkBox36.Checked)
+                        catch (Exception ex)
                         {
-                            TerminateProcess(selectedProcessId);
-                            StopMonitoringPlayer();
+                            MessageBox.Show($"Failed to terminate process with PID {selectedProcessId}. Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             break;
                         }
                     }
+
 
                     curr = m.GetCode($"{curr:X},8");
                 }
 
-                // Update attack/res values
-                sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
-                sendRes = (closestDistancePlayer <= MonDistance) ? resPlayer : 0;
-
-                // Key actions
-                if (IsKeyPressed(Keys.Z) && checkBox38.Checked && sendRes != 0)
+                // Assign the closest player ID if found
+                if (closestDistance <= MonDistance)
                 {
-                    PerformResurrection(sendRes);
-                    await Task.Delay(1);
+                    SendID = GETPlAYERID;
+                }
+                if (closestDistancePlayer <= MonDistance && Guild.Contains(Guildselected))
+                {
+                    SendRES = Res_Player;
+                }
+                if (IsKeyPressed(Keys.Z) && checkBox38.Checked)
+                {
+                    ResNOW = true;
+                }
+                else
+                {
+                    ResNOW = false;
                 }
 
-                if (IsKeyPressed(Keys.X) && checkBox38.Checked && sendID != 0)
+                if (ResNOW && SendRES != 0)
                 {
-                    await PerformAttack(sendID);
+                    m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                    m.WriteMemory($"{TARGET_RING}", "int", SendRES.ToString());
+                    m.WriteMemory($"{TARGET_SKILL}", "int", SendRES.ToString());
+                    m.WriteMemory(actioncheck, "int", "0");
+                    m.WriteMemory(prevskill1_adr, "byte", "E");
+                    m.WriteMemory(prevskill2_adr, "byte", "F");
+                    m.WriteMemory(forceattack_adr, "int", "5");
+                    Task.Delay(1);
+
                 }
 
+
+
+                if (IsKeyPressed(Keys.X) && checkBox38.Checked)
+                {
+
+                    Attacknow = true;
+
+                }
+                else
+                {
+                    Attacknow = false;
+                }
+                if (Attacknow && SendID != 0)
+                {
+
+                    for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                    {
+                        if (!Attacknow && SendID == 0)
+                        {
+                            break;
+                        }
+                        label2.Text = Guild;
+                        int RUN = m.Read2Byte(MATION_CHECK);
+
+                        int idskilltype_test1 = m.ReadByte($"00FE2000,{i3:x}");
+                        int idskilltype_test2 = m.ReadByte($"00FE2000,{(i3 + 0x02):x}");
+
+                        if (idskilltype_test1 != 255 && idskilltype_test2 != 255)
+                        {
+                            m.WriteMemory($"{TARGET_RING_CHECK}", "int", "0");
+                            m.WriteMemory($"{TARGET_RING}", "int", SendID.ToString());
+                            m.WriteMemory($"{TARGET_SKILL}", "int", SendID.ToString());
+                            PerformSkillPlayer(idskilltype_test1, idskilltype_test2);
+                            if (RUN == 1 && checkBox40.Checked)
+                            {
+                                m.WriteMemory(MATION_CHECK, "int", "3");
+                            }
+
+                            Console.WriteLine($"{RUN}");
+                        }
+
+                        await Task.Delay(1);
+                    }
+
+                }
                 await Task.Delay(10);
             }
+
+
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
