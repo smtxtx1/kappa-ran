@@ -239,6 +239,7 @@ namespace Kappa
         public string gotoY = "00FF38A0,7820";
 
         public string gotoZ = "00FF38A0,7824";
+
         public string ConvertSabud = "default";
         /// <summary>
         /// POSITION END
@@ -385,7 +386,7 @@ namespace Kappa
                 textBox11.Text = value;
                 UrlAlert = value;
             }
-            tabControl1.TabPages.Remove(tabPage3);
+        //    tabControl1.TabPages.Remove(tabPage3);
             label4.Text = Expirydaysleft().ToString();
             LoadListView12FromJSON(listView12, "ITEM_COLLECT.json");
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
