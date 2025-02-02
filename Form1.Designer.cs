@@ -330,7 +330,6 @@
             checkBox42.TabIndex = 32;
             checkBox42.Text = "เจอคนหนี";
             checkBox42.UseVisualStyleBackColor = true;
-            checkBox42.Visible = false;
             // 
             // button21
             // 
@@ -351,7 +350,6 @@
             checkBox40.TabIndex = 30;
             checkBox40.Text = "ล็อคขา";
             checkBox40.UseVisualStyleBackColor = true;
-            checkBox40.Visible = false;
             // 
             // textBox10
             // 
@@ -382,7 +380,6 @@
             checkBox38.TabIndex = 9;
             checkBox38.Text = "ล็อคเป้า";
             checkBox38.UseVisualStyleBackColor = true;
-            checkBox38.Visible = false;
             // 
             // checkBox37
             // 
@@ -1034,7 +1031,6 @@
             checkBox39.TabIndex = 15;
             checkBox39.Text = "กันติดขอบ";
             checkBox39.UseVisualStyleBackColor = true;
-            checkBox39.Visible = false;
             // 
             // checkBox31
             // 
