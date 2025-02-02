@@ -2085,30 +2085,30 @@ namespace Kappa
         private async Task GetPlayerAsync()
         {
             bool foundGm = false;
-            bool resNow = false;
-            bool attackNow = false;
             int closestPlayerID = 0, sendID = 0, sendRes = 0, resPlayer = 0;
-            int globalCrow = int.MaxValue;
+            int globalCrow;
             float closestDistance = float.MaxValue, closestDistancePlayer = float.MaxValue;
 
             try
             {
                 globalCrow = m.ReadInt("MiniA.exe+7A8B30,D84C");
+                if (globalCrow <= 0) return;
+
                 UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,D850");
-                bool pressedBackCard = false;
 
-                if (globalCrow > 0 && !pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
-                {
-                    pressedBackCard = true;
-                    await Getback(globalCrow);
-                    pressedBackCard = false;
-                }
-
-                if (globalCrow > 0 && checkBox42.Checked)
+                if (checkBox42.Checked)
                 {
                     TerminateProcess(selectedProcessId);
                     StopMonitoringPlayer();
                     return;
+                }
+
+                bool pressedBackCard = false;
+                if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
+                {
+                    pressedBackCard = true;
+                    await Getback(globalCrow);
+                    pressedBackCard = false;
                 }
 
                 for (int i = 0; i < globalCrow; i++)
@@ -2121,58 +2121,67 @@ namespace Kappa
                     AddToListView(playerName);
                     float distance = CalculateDistance(mobDetails.X, mobDetails.Y, mobDetails.Z);
 
-                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && mobDetails.HP > 50)
+                    // Find closest attack target
+                    if (distance <= MonDistance && distance < closestDistance &&
+                        !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) &&
+                        mobDetails.HP > 50)
                     {
                         closestDistance = distance;
                         closestPlayerID = mobDetails.ID;
                     }
 
-                    if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && mobDetails.HP < 50)
+                    // Find closest resurrection target
+                    if (distance <= MonDistance && distance < closestDistancePlayer &&
+                        playerGuild.Contains(Guildselected) && mobDetails.HP < 50)
                     {
                         closestDistancePlayer = distance;
                         resPlayer = mobDetails.ID;
                     }
 
-                    if (IsNameInListView12_GM(playerName) && checkBox35.Checked)
+                    // GM Checks
+                    if (IsNameInListView12_GM(playerName))
                     {
-                        await Getback(0);
-                    }
+                        if (checkBox35.Checked)
+                        {
+                            await Getback(0);
+                        }
 
-                    if (IsNameInListView12_GM(playerName) && checkBox37.Checked)
-                    {
-                        GMFOUND = playerName;
-                        GMAlert();
+                        if (checkBox37.Checked)
+                        {
+                            GMFOUND = playerName;
+                            GMAlert();
+                            if (checkBox36.Checked)
+                            {
+                                TerminateProcess(selectedProcessId);
+                            }
+                            foundGm = true;
+                            StopMonitoringPlayer();
+                            break;
+                        }
+
                         if (checkBox36.Checked)
                         {
                             TerminateProcess(selectedProcessId);
+                            StopMonitoringPlayer();
+                            break;
                         }
-                        foundGm = true;
-                        StopMonitoringPlayer();
-                        break;
-                    }
-
-                    if (IsNameInListView12_GM(playerName) && checkBox36.Checked)
-                    {
-                        TerminateProcess(selectedProcessId);
-                        StopMonitoringPlayer();
-                        break;
                     }
 
                     curr = m.GetCode($"{curr:X},8");
                 }
 
+                // Update attack/res values
                 sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
                 sendRes = (closestDistancePlayer <= MonDistance) ? resPlayer : 0;
-                resNow = IsKeyPressed(Keys.Z) && checkBox38.Checked;
-                attackNow = IsKeyPressed(Keys.X) && checkBox38.Checked;
 
-                if (resNow && sendRes != 0)
+                // Key actions
+                if (IsKeyPressed(Keys.Z) && checkBox38.Checked && sendRes != 0)
                 {
                     PerformResurrection(sendRes);
                     await Task.Delay(1);
                 }
 
-                if (attackNow && sendID != 0)
+                if (IsKeyPressed(Keys.X) && checkBox38.Checked && sendID != 0)
                 {
                     await PerformAttack(sendID);
                 }
