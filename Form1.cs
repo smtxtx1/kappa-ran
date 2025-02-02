@@ -2164,7 +2164,18 @@ namespace Kappa
                 sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
                 sendRes = (closestDistancePlayer <= MonDistance) ? resPlayer : 0;
                 resNow = IsKeyPressed(Keys.Z) && checkBox38.Checked;
-                attackNow = IsKeyPressed(Keys.X) && checkBox38.Checked;
+                if (IsKeyPressed(Keys.X) && checkBox38.Checked)
+                {
+                    attackNow = true;
+                    if (closestDistance <= MonDistance)
+                    {
+                        sendID = closestPlayerID;  // Update sendID dynamically
+                    }
+                }
+                else
+                {
+                    attackNow = false;
+                }
 
                 if (resNow && sendRes != 0)
                 {
