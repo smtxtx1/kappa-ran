@@ -2119,30 +2119,30 @@ namespace Kappa
                         closestDistancePlayer = distance;
                         resPlayer = player.ID;
                     }
-                    if (globalCrow > 0)
-                    {
-                        if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
-                        {
-                            pressedBackCard = true;
-                            Getback(globalCrow);
-                            pressedBackCard = false;
-                        }
+                    //if (globalCrow > 0)
+                    //{
+                    //    if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
+                    //    {
+                    //        pressedBackCard = true;
+                    //        Getback(globalCrow);
+                    //        pressedBackCard = false;
+                    //    }
 
-                        if (checkBox42.Checked)
-                        {
-                            try
-                            {
-                                Process.GetProcessById(selectedProcessId).Kill();
-                                MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                StopMonitoringPlayer();
-                                return;
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show($"Failed to terminate process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                    }
+                    //    if (checkBox42.Checked)
+                    //    {
+                    //        try
+                    //        {
+                    //            Process.GetProcessById(selectedProcessId).Kill();
+                    //            MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //            StopMonitoringPlayer();
+                    //            return;
+                    //        }
+                    //        catch (Exception ex)
+                    //        {
+                    //            MessageBox.Show($"Failed to terminate process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //        }
+                    //    }
+                    //}
 
                     if (IsNameInListView12_GM(playerName))
                     {
