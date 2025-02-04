@@ -2186,7 +2186,7 @@ namespace Kappa
 
                 if (attackNow && sendID != 0)
                 {
-                    for (int i3 = 0x9A4; i3 <= 0x9C8; i3 += 4)
+                    for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
                     {
                         if (!attackNow || sendID == 0)
                             break;
