@@ -2158,11 +2158,12 @@ namespace Kappa
                             {
                                 Process.GetProcessById(selectedProcessId).Kill();
                                 MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                foundGm = true;
+                                StopMonitoringPlayer();
+                                return;
+
                             }
 
-                            foundGm = true;
-                            StopMonitoringPlayer();
-                            return;
                         }
 
                         if (checkBox35.Checked)
