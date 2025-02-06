@@ -2108,7 +2108,7 @@ namespace Kappa
 
                     float distance = CalculateDistance(player.X, player.Y, player.Z);
 
-                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP !> 10)
+                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP < 10)
                     {
                         closestDistance = distance;
                         closestPlayerID = player.ID;
