@@ -2114,7 +2114,7 @@ namespace Kappa
                         closestPlayerID = player.ID;
                     }
 
-                    if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && player.HP !> 10)
+                    if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && player.HP > 10)
                     {
                         closestDistancePlayer = distance;
                         resPlayer = player.ID;
