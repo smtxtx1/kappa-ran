@@ -1106,9 +1106,9 @@ namespace Kappa
 
                     // แสดงเวลาอีกครั้งหลังจากรอครบ
                     DateTime endTime = DateTime.Now;
-                    m.WriteMemory("0321EF73", "byte", "63");
+                    m.WriteMemory("0322408B", "byte", "63");
                     Thread.Sleep(100);
-                    m.WriteMemory("0321EF73", "byte", "01");
+                    m.WriteMemory("0322408B", "byte", "01");
                         m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
                         m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
                         m.WriteMemory(RUN3_ADR_RESULT, "bytes", "74");
@@ -2855,9 +2855,9 @@ private float CalculateDistance(float mobX, float mobY, float mobZ)
                         m.WriteMemory("0322408A", "byte", "01");
                         Thread.Sleep(2000);
 
-                        m.WriteMemory("0321EF73", "byte", "63");
+                        m.WriteMemory("0322408B", "byte", "63");
                         Thread.Sleep(100);
-                        m.WriteMemory("0321EF73", "byte", "01");
+                        m.WriteMemory("0322408B", "byte", "01");
 
                         m.WriteMemory(RUN1_ADR_RESULT, "bytes", "75 10");
                         m.WriteMemory(RUN2_ADR_RESULT, "bytes", "75 08");
