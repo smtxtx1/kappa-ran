@@ -2106,8 +2106,8 @@ namespace Kappa
 
             try
             {
-                int globalCrow = m.ReadInt("MiniA.exe+7A8B30,D84C");
-                UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,D850");
+                int globalCrow = m.ReadInt("MiniA.exe+7ADC48,D84C");
+                UIntPtr curr = m.GetCode("MiniA.exe+7ADC48,D850");
                 bool pressedBackCard = false;
 
 
@@ -2411,10 +2411,10 @@ namespace Kappa
 
             try
             {
-                int globalCrow = m.ReadInt("MiniA.exe+7A8B30,4B7C");
-                UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,4B80");
-                int globalMoney = m.ReadInt("MiniA.exe+7A8B30,7A68");
-                UIntPtr currMoney = m.GetCode("MiniA.exe+7A8B30,7A6C");
+                int globalCrow = m.ReadInt("MiniA.exe+7ADC48,4B7C");
+                UIntPtr curr = m.GetCode("MiniA.exe+7ADC48,4B80");
+                int globalMoney = m.ReadInt("MiniA.exe+7ADC48,7A68");
+                UIntPtr currMoney = m.GetCode("MiniA.exe+7ADC48,7A6C");
 
                 // Process item data
                 for (int i = 0; i < globalCrow; i++)
@@ -2496,8 +2496,8 @@ namespace Kappa
         {
             try
             {
-                int globalCrow = m.ReadInt("MiniA.exe+7A8B30,A954");
-                UIntPtr curr = m.GetCode("MiniA.exe+7A8B30,A958");
+                int globalCrow = m.ReadInt("MiniA.exe+7ADC48,A954");
+                UIntPtr curr = m.GetCode("MiniA.exe+7ADC48,A958");
 
                 float closestDistance = float.MaxValue;
                 uint closestMonsterID = 0;
