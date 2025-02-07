@@ -2431,7 +2431,7 @@ namespace Kappa
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
                     Console.WriteLine($"result1 = {result}");
 
-                    MemoryPointer addr_function_getName = 0x0049EF40;
+                    MemoryPointer addr_function_getName = 0x0049EAC0;
                     var result2 = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getName, result, 0, new uint[] { });
                     Console.WriteLine($"result2 = {result2:X}");
 
