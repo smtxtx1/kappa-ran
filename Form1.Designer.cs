@@ -245,6 +245,7 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
+            checkBox43 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -1624,6 +1625,7 @@
             // tabPage3
             // 
             tabPage3.BackColor = Color.DimGray;
+            tabPage3.Controls.Add(checkBox43);
             tabPage3.Controls.Add(checkBox28);
             tabPage3.Controls.Add(checkBox41);
             tabPage3.Controls.Add(textBox12);
@@ -1851,6 +1853,16 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
+            // 
+            // checkBox43
+            // 
+            checkBox43.AutoSize = true;
+            checkBox43.Location = new Point(102, 127);
+            checkBox43.Name = "checkBox43";
+            checkBox43.Size = new Size(63, 19);
+            checkBox43.TabIndex = 39;
+            checkBox43.Text = "reverse";
+            checkBox43.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -2121,5 +2133,6 @@
         private ColumnHeader columnHeader41;
         private ColumnHeader columnHeader42;
         private ColumnHeader columnHeader43;
+        private CheckBox checkBox43;
     }
 }

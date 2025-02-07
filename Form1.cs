@@ -998,6 +998,8 @@ namespace Kappa
         {
         }
 
+    public bool bothDirections; // Set this to true if you want both directions
+
         private async void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             MonsterAlloc();
@@ -1008,18 +1010,34 @@ namespace Kappa
         listView13, listView14, listView15,
         listView16, listView17, listView18, listView19, listView20
     };
+            bothDirections = checkBox43.Checked;
 
             while (!backgroundWorker1.CancellationPending)
             {
                 try
                 {
                     RunActive();
+
+                    // First pass: 1 → 20
                     foreach (var listView in listViews)
                     {
                         if (listView.Items.Count > 0)
                         {
                             await UpdateListViewItemsAsync(listView);
-                            RunActive(); // Ensure it's called for each listView update
+                            RunActive();
+                        }
+                    }
+
+                    // Second pass: 20 → 1 (Only if bothDirections is true)
+                    if (bothDirections)
+                    {
+                        foreach (var listView in listViews.AsEnumerable().Reverse())
+                        {
+                            if (listView.Items.Count > 0)
+                            {
+                                await UpdateListViewItemsAsync(listView);
+                                RunActive();
+                            }
                         }
                     }
 
@@ -1036,8 +1054,6 @@ namespace Kappa
 
                 await Task.Delay(10);
             }
-
-            // Unfreeze values and reset AltButton
         }
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
