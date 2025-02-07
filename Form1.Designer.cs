@@ -220,6 +220,7 @@
             button9 = new Button();
             button8 = new Button();
             tabPage3 = new TabPage();
+            checkBox43 = new CheckBox();
             checkBox28 = new CheckBox();
             checkBox41 = new CheckBox();
             textBox12 = new TextBox();
@@ -245,7 +246,6 @@
             backgroundWorker4 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker5 = new System.ComponentModel.BackgroundWorker();
             backgroundWorker6 = new System.ComponentModel.BackgroundWorker();
-            checkBox43 = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox12.SuspendLayout();
@@ -331,7 +331,6 @@
             checkBox42.TabIndex = 32;
             checkBox42.Text = "เจอคนหนี";
             checkBox42.UseVisualStyleBackColor = true;
-            checkBox42.Visible = false;
             // 
             // button21
             // 
@@ -341,7 +340,6 @@
             button21.TabIndex = 31;
             button21.Text = "Boss";
             button21.UseVisualStyleBackColor = true;
-            button21.Visible = false;
             button21.Click += button21_Click_2;
             // 
             // checkBox40
@@ -1639,6 +1637,16 @@
             tabPage3.TabIndex = 3;
             tabPage3.Text = "smt only";
             // 
+            // checkBox43
+            // 
+            checkBox43.AutoSize = true;
+            checkBox43.Location = new Point(102, 127);
+            checkBox43.Name = "checkBox43";
+            checkBox43.Size = new Size(63, 19);
+            checkBox43.TabIndex = 39;
+            checkBox43.Text = "reverse";
+            checkBox43.UseVisualStyleBackColor = true;
+            // 
             // checkBox28
             // 
             checkBox28.AutoSize = true;
@@ -1853,16 +1861,6 @@
             // backgroundWorker6
             // 
             backgroundWorker6.DoWork += backgroundWorker6_DoWork;
-            // 
-            // checkBox43
-            // 
-            checkBox43.AutoSize = true;
-            checkBox43.Location = new Point(102, 127);
-            checkBox43.Name = "checkBox43";
-            checkBox43.Size = new Size(63, 19);
-            checkBox43.TabIndex = 39;
-            checkBox43.Text = "reverse";
-            checkBox43.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
