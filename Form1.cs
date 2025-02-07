@@ -860,7 +860,7 @@ namespace Kappa
         {
             if (textBox2.Text != null && checkBox2.Checked)
             {
-                m.WriteMemory(QUA_ADR_RESULT, "bytes", "90 90");
+             //   m.WriteMemory(QUA_ADR_RESULT, "bytes", "90 90");
                 m.WriteMemory("00FF6000", "float", textBox2.Text);
                 m.WriteMemory("00FF6600", "int", textBox2.Text);
             }
