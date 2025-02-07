@@ -2403,8 +2403,8 @@ namespace Kappa
         {
             var items = new List<(int itemName, uint itemId, float itemDistance, string itemfound, float X, float Y, float Z, int MoneyID, int MoneyGold, float distance_money)>();
             Process ProcessbyID = Process.GetProcessById(selectedProcessId);
-            MemoryPointer addr_function_getECX = 0x0047ADF0;
-            MemoryPointer ecx = 0x0126A960;
+            MemoryPointer addr_function_getECX = 0x0047AD10;
+            MemoryPointer ecx = 0x0126FA78;
             MemoryPointer Entity;
 
             uint parameter_lenth = 2;
