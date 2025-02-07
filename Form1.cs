@@ -2426,7 +2426,7 @@ namespace Kappa
 
                     int parameter1 = m.ReadInt(Entity.ToString());
                     int parameter2_half_2 = m.Read2Byte((Entity + 0x2).ToString());
-                    int parameter2 = (0xFB74 << 16) | parameter2_half_2;
+                    int parameter2 = (0xFB78 << 16) | parameter2_half_2;
                     uint[] parameter = new uint[] { (uint)parameter1, (uint)parameter2 };
                     MemoryPointer result = Memory_Tools.CallExternalThiscallFunction(processHandle, addr_function_getECX, ecx, parameter_lenth, parameter);
                     Console.WriteLine($"result1 = {result}");
