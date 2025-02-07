@@ -331,6 +331,7 @@
             checkBox42.TabIndex = 32;
             checkBox42.Text = "เจอคนหนี";
             checkBox42.UseVisualStyleBackColor = true;
+            checkBox42.Visible = false;
             // 
             // button21
             // 
@@ -340,6 +341,7 @@
             button21.TabIndex = 31;
             button21.Text = "Boss";
             button21.UseVisualStyleBackColor = true;
+            button21.Visible = false;
             button21.Click += button21_Click_2;
             // 
             // checkBox40
