@@ -353,6 +353,7 @@
             checkBox40.TabIndex = 30;
             checkBox40.Text = "ล็อคขา";
             checkBox40.UseVisualStyleBackColor = true;
+            checkBox40.Visible = false;
             // 
             // textBox10
             // 
@@ -383,6 +384,7 @@
             checkBox38.TabIndex = 9;
             checkBox38.Text = "ล็อคเป้า";
             checkBox38.UseVisualStyleBackColor = true;
+            checkBox38.Visible = false;
             // 
             // checkBox37
             // 
