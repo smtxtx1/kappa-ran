@@ -386,7 +386,7 @@ namespace Kappa
                 textBox11.Text = value;
                 UrlAlert = value;
             }
-         tabControl1.TabPages.Remove(tabPage3);
+         // tabControl1.TabPages.Remove(tabPage3);
             label4.Text = Expirydaysleft().ToString();
             LoadListView12FromJSON(listView12, "ITEM_COLLECT.json");
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
