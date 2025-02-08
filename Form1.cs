@@ -2197,7 +2197,7 @@ namespace Kappa
                 if (resNow && sendRes != 0)
                 {
                     PerformResurrection(sendRes);
-                    await Task.Delay(1);
+             //       await Task.Delay(1);
                 }
 
                 if (attackNow && sendID != 0)
@@ -2221,11 +2221,11 @@ namespace Kappa
                                 m.WriteMemory(MATION_CHECK, "int", "3");
                         }
 
-                        await Task.Delay(1);
+                   //     await Task.Delay(1);
                     }
                 }
 
-                await Task.Delay(1);
+               // await Task.Delay(1);
             }
             catch (Exception ex)
             {
