@@ -1946,7 +1946,7 @@ namespace Kappa
                 while (!monitoringCts.Token.IsCancellationRequested)
                 {
                     //   label2.Text = MonDistance.ToString();
-                    GetMonstersAsync();
+                   await GetMonstersAsync();
                     await Task.Delay(100);
                 }
             }
