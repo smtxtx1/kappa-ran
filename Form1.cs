@@ -2101,15 +2101,13 @@ namespace Kappa
         private async Task GetPlayerAsync()
         {
             bool foundGm = false, resNow = false, attackNow = false;
-            int closestPlayerID = 0, sendID = 0, sendRes = 0, resPlayer = 0;
+            int closestPlayerID = 0, resPlayer = 0;
             float closestDistance = float.MaxValue, closestDistancePlayer = float.MaxValue;
 
             try
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7ADC48,D84C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7ADC48,D850");
-                bool pressedBackCard = false;
-
 
                 for (int i = 0; i < globalCrow; i++)
                 {
@@ -2118,48 +2116,29 @@ namespace Kappa
                     string playerName = ReadString(m.GetCode($"{data:X},1E0"));
                     string playerGuild = ReadString(m.GetCode($"{data:X},22C"));
 
-                    // Add to ListView if not present
+                    // Add player to ListView if not present
                     if (!IsItemAlreadyInList2(playerName))
                         listView11.Items.Add(new ListViewItem(new[] { playerName, playerName, playerName }));
 
                     float distance = CalculateDistance(player.X, player.Y, player.Z);
 
-                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP < 10)
+                    // Identify closest attackable enemy
+                    if (distance <= MonDistance && distance < closestDistance &&
+                        !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP < 10)
                     {
                         closestDistance = distance;
                         closestPlayerID = player.ID;
                     }
 
-                    if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && player.HP > 10)
+                    // Identify closest guild member to resurrect
+                    if (distance <= MonDistance && distance < closestDistancePlayer &&
+                        playerGuild.Contains(Guildselected) && player.HP > 10)
                     {
                         closestDistancePlayer = distance;
                         resPlayer = player.ID;
                     }
-                    //if (globalCrow > 0)
-                    //{
-                    //    if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
-                    //    {
-                    //        pressedBackCard = true;
-                    //        Getback(globalCrow);
-                    //        pressedBackCard = false;
-                    //    }
 
-                    //    if (checkBox42.Checked)
-                    //    {
-                    //        try
-                    //        {
-                    //            Process.GetProcessById(selectedProcessId).Kill();
-                    //            MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //            StopMonitoringPlayer();
-                    //            return;
-                    //        }
-                    //        catch (Exception ex)
-                    //        {
-                    //            MessageBox.Show($"Failed to terminate process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        }
-                    //    }
-                    //}
-
+                    // GM Detection Logic
                     if (IsNameInListView12_GM(playerName))
                     {
                         if (!foundGm)
@@ -2177,9 +2156,7 @@ namespace Kappa
                                 foundGm = true;
                                 StopMonitoringPlayer();
                                 return;
-
                             }
-
                         }
 
                         if (checkBox35.Checked)
@@ -2189,47 +2166,46 @@ namespace Kappa
                     curr = m.GetCode($"{curr:X},8");
                 }
 
-                sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
-                sendRes = (closestDistancePlayer <= MonDistance) ? resPlayer : 0;
+                // If key pressed, perform attack or resurrection
                 resNow = IsKeyPressed(Keys.Z) && checkBox38.Checked;
                 attackNow = IsKeyPressed(Keys.X) && checkBox38.Checked;
 
-                if (resNow && sendRes != 0)
-                {
-                    PerformResurrection(sendRes);
-                   // await Task.Delay(1);
-                }
+                if (resNow && resPlayer != 0)
+                    PerformResurrection(resPlayer);
 
-                if (attackNow && sendID != 0)
-                {
-                    for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
-                    {
-                        if (!attackNow || sendID == 0)
-                            break;
-
-                        int idSkillType1 = m.ReadByte($"00FE2000,{i3:X}");
-                        int idSkillType2 = m.ReadByte($"00FE2000,{(i3 + 2):X}");
-
-                        if (idSkillType1 != 255 && idSkillType2 != 255)
-                        {
-                            m.WriteMemory(TARGET_RING_CHECK, "int", "0");
-                            m.WriteMemory(TARGET_RING, "int", sendID.ToString());
-                            m.WriteMemory(TARGET_SKILL, "int", sendID.ToString());
-                            PerformSkillPlayer(idSkillType1, idSkillType2);
-
-                            if (m.Read2Byte(MATION_CHECK) == 1 && checkBox40.Checked)
-                                m.WriteMemory(MATION_CHECK, "int", "3");
-                        }
-
-                      //  await Task.Delay(1);
-                    }
-                }
+                if (attackNow && closestPlayerID != 0)
+                    PerformAttackOnTarget(closestPlayerID);
 
                 await Task.Delay(1);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Attacks the closest target using available skills
+        /// </summary>
+        private void PerformAttackOnTarget(int targetID)
+        {
+            for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
+            {
+                int idSkillType1 = m.ReadByte($"00FE2000,{i3:X}");
+                int idSkillType2 = m.ReadByte($"00FE2000,{(i3 + 2):X}");
+
+                if (idSkillType1 != 255 && idSkillType2 != 255)
+                {
+                    m.WriteMemory(TARGET_RING_CHECK, "int", "0");
+                    m.WriteMemory(TARGET_RING, "int", targetID.ToString());
+                    m.WriteMemory(TARGET_SKILL, "int", targetID.ToString());
+                    PerformSkillPlayer(idSkillType1, idSkillType2);
+
+                    if (m.Read2Byte(MATION_CHECK) == 1 && checkBox40.Checked)
+                        m.WriteMemory(MATION_CHECK, "int", "3");
+
+                    break;  // Attack once, then stop
+                }
             }
         }
         private void TerminateProcess(int processId)
