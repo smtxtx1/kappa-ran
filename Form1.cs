@@ -2222,7 +2222,6 @@ namespace Kappa
                     if (m.Read2Byte(MATION_CHECK) == 1 && checkBox40.Checked)
                         m.WriteMemory(MATION_CHECK, "int", "3");
 
-                    break; // 🔥 Attack instantly and exit
                 }
             }
         }
