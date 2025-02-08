@@ -2100,7 +2100,7 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
-            bool foundGm = false, resNow = false, attackNow = false;
+            bool foundGm = false;
             int closestPlayerID = 0, resPlayer = 0;
             float closestDistance = float.MaxValue, closestDistancePlayer = float.MaxValue;
 
@@ -2116,95 +2116,113 @@ namespace Kappa
                     string playerName = ReadString(m.GetCode($"{data:X},1E0"));
                     string playerGuild = ReadString(m.GetCode($"{data:X},22C"));
 
-                    // Add player to ListView if not present
-                    if (!IsItemAlreadyInList2(playerName))
-                        listView11.Items.Add(new ListViewItem(new[] { playerName, playerName, playerName }));
-
                     float distance = CalculateDistance(player.X, player.Y, player.Z);
 
-                    // Identify closest attackable enemy
-                    if (distance <= MonDistance && distance < closestDistance &&
-                        !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP < 10)
+                    // Closest valid enemy
+                    if (distance < closestDistance && !playerGuild.Contains(Guildselected) &&
+                        !IsNameInListView12(playerName) && player.HP < 10)
                     {
                         closestDistance = distance;
                         closestPlayerID = player.ID;
                     }
 
-                    // Identify closest guild member to resurrect
-                    if (distance <= MonDistance && distance < closestDistancePlayer &&
-                        playerGuild.Contains(Guildselected) && player.HP > 10)
+                    // Closest ally for resurrection
+                    if (distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && player.HP > 10)
                     {
                         closestDistancePlayer = distance;
                         resPlayer = player.ID;
                     }
 
-                    // GM Detection Logic
-                    if (IsNameInListView12_GM(playerName))
+                    // Add players to ListView safely
+                    AddPlayerToListViewSafe(playerName);
+
+                    // GM Detection (UI Safe)
+                    if (IsNameInListView12_GM(playerName) && !foundGm)
                     {
-                        if (!foundGm)
-                        {
-                            if (checkBox37.Checked)
-                            {
-                                GMFOUND = playerName;
-                                GMAlert();
-                            }
-
-                            if (checkBox36.Checked)
-                            {
-                                Process.GetProcessById(selectedProcessId).Kill();
-                                MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                foundGm = true;
-                                StopMonitoringPlayer();
-                                return;
-                            }
-                        }
-
-                        if (checkBox35.Checked)
-                            await Getback(0);
+                        foundGm = true;
+                        HandleGMDetection(playerName);
                     }
 
-                    curr = m.GetCode($"{curr:X},8");
+                    curr = m.GetCode($"{curr:X},8"); // Move to next player
                 }
 
-                // If key pressed, perform attack or resurrection
-                resNow = IsKeyPressed(Keys.Z) && checkBox38.Checked;
-                attackNow = IsKeyPressed(Keys.X) && checkBox38.Checked;
-
-                if (resNow && resPlayer != 0)
+                // UI thread safe actions
+                if (IsKeyPressed(Keys.Z) && checkBox38.Checked && resPlayer != 0)
                     PerformResurrection(resPlayer);
 
-                if (attackNow && closestPlayerID != 0)
-                    PerformAttackOnTarget(closestPlayerID);
-
-                await Task.Delay(1);
+                if (IsKeyPressed(Keys.X) && checkBox38.Checked && closestPlayerID != 0)
+                    PerformFastAttack(closestPlayerID);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
             }
         }
+        private void AddPlayerToListViewSafe(string playerName)
+        {
+            if (listView11.InvokeRequired)
+            {
+                listView11.Invoke(new Action(() => AddPlayerToListView(playerName)));
+            }
+            else
+            {
+                AddPlayerToListView(playerName);
+            }
+        }
+        private void HandleGMDetection(string playerName)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => HandleGMDetection(playerName)));
+                return;
+            }
+
+            if (checkBox37.Checked)
+            {
+                GMFOUND = playerName;
+                GMAlert();
+            }
+
+            if (checkBox36.Checked)
+            {
+                Process.GetProcessById(selectedProcessId).Kill();
+                MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                StopMonitoringPlayer();
+            }
+
+            if (checkBox35.Checked)
+                Getback(0);
+        }
+
+        private void AddPlayerToListView(string playerName)
+        {
+            if (!IsItemAlreadyInList2(playerName))
+                listView11.Items.Add(new ListViewItem(new[] { playerName, playerName, playerName }));
+        }
 
         /// <summary>
         /// Attacks the closest target using available skills
         /// </summary>
-        private void PerformAttackOnTarget(int targetID)
+        private void PerformFastAttack(int targetID)
         {
-            for (int i3 = 0x5EFC; i3 <= 0x5F20; i3 += 4)
-            {
-                int idSkillType1 = m.ReadByte($"00FE2000,{i3:X}");
-                int idSkillType2 = m.ReadByte($"00FE2000,{(i3 + 2):X}");
+            int skillSlotStart = 0x5EFC, skillSlotEnd = 0x5F20;
 
-                if (idSkillType1 != 255 && idSkillType2 != 255)
+            for (int i = skillSlotStart; i <= skillSlotEnd; i += 4)
+            {
+                int idSkill1 = m.ReadByte($"00FE2000,{i:X}");
+                int idSkill2 = m.ReadByte($"00FE2000,{(i + 2):X}");
+
+                if (idSkill1 != 255 && idSkill2 != 255)
                 {
                     m.WriteMemory(TARGET_RING_CHECK, "int", "0");
                     m.WriteMemory(TARGET_RING, "int", targetID.ToString());
                     m.WriteMemory(TARGET_SKILL, "int", targetID.ToString());
-                    PerformSkillPlayer(idSkillType1, idSkillType2);
+                    PerformSkillPlayer(idSkill1, idSkill2);
 
                     if (m.Read2Byte(MATION_CHECK) == 1 && checkBox40.Checked)
                         m.WriteMemory(MATION_CHECK, "int", "3");
 
-                    break;  // Attack once, then stop
+                    break; // 🔥 Attack instantly and exit
                 }
             }
         }
