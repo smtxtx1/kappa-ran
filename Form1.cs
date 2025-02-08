@@ -1978,19 +1978,34 @@ namespace Kappa
         private async Task StartMonitoringPlayerAsync()
         {
             monitoringCtsPlayer = new CancellationTokenSource();
-            try
+
+            await Task.Run(async () =>
             {
-                while (!monitoringCtsPlayer.Token.IsCancellationRequested)
+                try
                 {
-                    //   label2.Text = MonDistance.ToString();
-                    await GetPlayerAsync();
+                    while (!monitoringCtsPlayer.Token.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            GetPlayerAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error in GetPlayerAsync: {ex.Message}");
+                        }
+
+                        await Task.Delay(10, monitoringCtsPlayer.Token); // Prevents CPU overload
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in StartMonitoringMonsters: {ex.Message}");
-                StopMonitoringMonsters(); // Ensure stopping on exception
-            }
+                catch (OperationCanceledException)
+                {
+                    Console.WriteLine("Player monitoring stopped.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unexpected error in StartMonitoringPlayerAsync: {ex.Message}");
+                }
+            }, monitoringCtsPlayer.Token);
         }
 
 
@@ -2100,7 +2115,7 @@ namespace Kappa
 
         private async Task GetPlayerAsync()
         {
-            bool foundGm = false, resNow = false, attackNow = false;
+            bool foundGm = false, resNow, attackNow;
             int closestPlayerID = 0, sendID = 0, sendRes = 0, resPlayer = 0;
             float closestDistance = float.MaxValue, closestDistancePlayer = float.MaxValue;
 
@@ -2108,85 +2123,76 @@ namespace Kappa
             {
                 int globalCrow = m.ReadInt("MiniA.exe+7ADC48,D84C");
                 UIntPtr curr = m.GetCode("MiniA.exe+7ADC48,D850");
-                bool pressedBackCard = false;
 
+                if (globalCrow == 0)
+                    return;
+
+                List<Task> playerTasks = new();
+                List<(string playerName, string playerGuild, float distance, int playerID, int playerHP)> playersData = new();
 
                 for (int i = 0; i < globalCrow; i++)
                 {
                     UIntPtr data = m.GetCode($"{curr:X},0");
-                    var player = await ReadPlayerDetailsAsync(data);
-                    string playerName = ReadString(m.GetCode($"{data:X},1E0"));
-                    string playerGuild = ReadString(m.GetCode($"{data:X},22C"));
 
-                    // Add to ListView if not present
+                    playerTasks.Add(Task.Run(() =>
+                    {
+                        var player = ReadPlayerDetailsAsync(data).Result; // Blocks until finished
+                        string playerName = ReadString(m.GetCode($"{data:X},1E0"));
+                        string playerGuild = ReadString(m.GetCode($"{data:X},22C"));
+                        float distance = CalculateDistance(player.X, player.Y, player.Z);
+
+                        lock (playersData)
+                        {
+                            playersData.Add((playerName, playerGuild, distance, player.ID, player.HP));
+                        }
+                    }));
+
+                    curr = m.GetCode($"{curr:X},8");
+                }
+
+                await Task.WhenAll(playerTasks);
+
+                foreach (var (playerName, playerGuild, distance, playerID, playerHP) in playersData)
+                {
                     if (!IsItemAlreadyInList2(playerName))
                         listView11.Items.Add(new ListViewItem(new[] { playerName, playerName, playerName }));
 
-                    float distance = CalculateDistance(player.X, player.Y, player.Z);
-
-                    if (distance <= MonDistance && distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && player.HP < 10)
+                    if (distance <= MonDistance)
                     {
-                        closestDistance = distance;
-                        closestPlayerID = player.ID;
-                    }
-
-                    if (distance <= MonDistance && distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && player.HP > 10)
-                    {
-                        closestDistancePlayer = distance;
-                        resPlayer = player.ID;
-                    }
-                    //if (globalCrow > 0)
-                    //{
-                    //    if (!pressedBackCard && checkBox37.Checked && !checkBox38.Checked && !checkBox36.Checked)
-                    //    {
-                    //        pressedBackCard = true;
-                    //        Getback(globalCrow);
-                    //        pressedBackCard = false;
-                    //    }
-
-                    //    if (checkBox42.Checked)
-                    //    {
-                    //        try
-                    //        {
-                    //            Process.GetProcessById(selectedProcessId).Kill();
-                    //            MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //            StopMonitoringPlayer();
-                    //            return;
-                    //        }
-                    //        catch (Exception ex)
-                    //        {
-                    //            MessageBox.Show($"Failed to terminate process: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //        }
-                    //    }
-                    //}
-
-                    if (IsNameInListView12_GM(playerName))
-                    {
-                        if (!foundGm)
+                        if (distance < closestDistance && !playerGuild.Contains(Guildselected) && !IsNameInListView12(playerName) && playerHP < 10)
                         {
-                            if (checkBox37.Checked)
-                            {
-                                GMFOUND = playerName;
-                                GMAlert();
-                            }
+                            closestDistance = distance;
+                            closestPlayerID = playerID;
+                        }
 
-                            if (checkBox36.Checked)
-                            {
-                                Process.GetProcessById(selectedProcessId).Kill();
-                                MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                foundGm = true;
-                                StopMonitoringPlayer();
-                                return;
+                        if (distance < closestDistancePlayer && playerGuild.Contains(Guildselected) && playerHP > 10)
+                        {
+                            closestDistancePlayer = distance;
+                            resPlayer = playerID;
+                        }
+                    }
 
-                            }
+                    if (IsNameInListView12_GM(playerName) && !foundGm)
+                    {
+                        if (checkBox37.Checked)
+                        {
+                            GMFOUND = playerName;
+                            GMAlert();
+                        }
 
+                        if (checkBox36.Checked)
+                        {
+                            Process.GetProcessById(selectedProcessId).Kill();
+                            MessageBox.Show($"Process {selectedProcessId} terminated.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            StopMonitoringPlayer();
+                            return;
                         }
 
                         if (checkBox35.Checked)
                             await Getback(0);
-                    }
 
-                    curr = m.GetCode($"{curr:X},8");
+                        foundGm = true;
+                    }
                 }
 
                 sendID = (closestDistance <= MonDistance) ? closestPlayerID : 0;
@@ -2197,7 +2203,6 @@ namespace Kappa
                 if (resNow && sendRes != 0)
                 {
                     PerformResurrection(sendRes);
-             //       await Task.Delay(1);
                 }
 
                 if (attackNow && sendID != 0)
@@ -2220,12 +2225,8 @@ namespace Kappa
                             if (m.Read2Byte(MATION_CHECK) == 1 && checkBox40.Checked)
                                 m.WriteMemory(MATION_CHECK, "int", "3");
                         }
-
-                   //     await Task.Delay(1);
                     }
                 }
-
-               // await Task.Delay(1);
             }
             catch (Exception ex)
             {
