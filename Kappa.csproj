@@ -1,16 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Platforms>AnyCPU;x86</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Platforms>AnyCPU;x86</Platforms>
+		<AssemblyName>svchosts</AssemblyName>
+		<Configurations>Debug;Release;52HzKappa;KAPPA-UPD;Ran-Next;RAN_NEXT_TEST;REN-MELON;RAN-NOAH;NOAH2;RAN-LIBERTY;CAFEx2;Cafex23</Configurations>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<ApplicationIcon>among_us_player_red_icon_156942.ico</ApplicationIcon>
 
-  <ItemGroup>
-    <PackageReference Include="Memory.dll.x64" Version="1.2.24" />
-  </ItemGroup>
+		<!-- Added for single-file publishing -->
+		<PublishSingleFile>true</PublishSingleFile>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<!-- Use win-x86 for 32-bit builds -->
+		<SelfContained>true</SelfContained>
+		<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+		<PublishTrimmed>false</PublishTrimmed>
+		<!-- Disable trimming to avoid issues with Windows Forms -->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="among_us_player_red_icon_156942.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="Memory">
+			<HintPath>..\..\Memory.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
 </Project>
